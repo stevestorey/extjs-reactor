@@ -36,7 +36,9 @@ class MyComponent extends Component {
 
     render() {
         return (
+            <Container>
             <div>Shown</div>
+            </Container>
         )
     }
 
