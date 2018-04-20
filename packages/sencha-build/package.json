@@ -1,16 +1,13 @@
 {
   "name": "@extjs/sencha-build",
   "version": "2.0.0",
-  "description": "sencha-build description",
+  "description": "sencha-build description 2",
   "bin": {
     "sencha-build": "bin/sencha-build.js",
     "build": "bin/sencha-build.js",
     "sb": "bin/sencha-build.js"
   },
   "main": "bin/sencha-build.js",
-  "bundleDependencies": [
-    "@extjs/sencha-cmd"
-  ],
   "dependencies": {
     "@extjs/sencha-cmd": "6.5.3",
     "chalk": "^2.3.2",

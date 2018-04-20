@@ -7,7 +7,6 @@
     "build": "babel src --out-dir lib"
   },
   "dependencies": {
-    "@extjs/sencha-cmd": "6.5.3",
     "@extjs/sencha-build": "2.0.0",
     "glob": "^7.1.2",
     "is-glob": "^4.0.0",
@@ -16,9 +15,6 @@
     "chalk": "^2.3.2",
     "recursive-readdir-sync":"^1.0.6"
   },
-  "bundleDependencies": [
-    "@extjs/sencha-build"
-  ],
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
