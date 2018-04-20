@@ -12,7 +12,7 @@
     "@extjs/sencha-cmd"
   ],
   "dependencies": {
-    "@extjs/sencha-cmd": "^6.5.3",
+    "@extjs/sencha-cmd": "6.5.3",
     "chalk": "^2.3.2",
     "intercept-stdout": "^0.1.2",
     "command-line-args": "^4.0.7",
