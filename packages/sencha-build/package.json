@@ -8,6 +8,9 @@
     "sb": "bin/sencha-build.js"
   },
   "main": "bin/sencha-build.js",
+  "bundleDependencies": [
+    "@extjs/sencha-cmd"
+  ],
   "dependencies": {
     "@extjs/sencha-cmd": "^6.5.3",
     "chalk": "^2.3.2",

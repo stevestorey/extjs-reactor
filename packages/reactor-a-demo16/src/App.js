@@ -31,22 +31,23 @@ export default class App extends Component {
     console.log('The link was clicked.');
   }
 
+  //<Div style={style}>hello</Div>
+//   <Container html={toggle}/>
+//   <Container html={`
+// <div>
+//   <div style={{fontSize:'24px'}}>{toggle.toString()}</div>
+//   <div>z${name}</div>
+// </div>
+// `}> </Container>
 
   render() {
     const { name, toggle, style } = this.state;
     return (
-
-      <Panel 
-      title={name}
-      scrollable 
-      >
-        <Div style={style}>hello</Div>
+      <Panel title={name} layout="vbox">
+        <Button text="click" onTap={this.handleClick.bind(this)}/>
+        <div>hello</div>
       </Panel>
-      
-      
-      )
-
-
+    )
   }
 
 }
