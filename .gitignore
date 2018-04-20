@@ -3,7 +3,7 @@ ExtTester
 ExtReactGrid
 my-app
 aa
-package-lock.json
+packages/extjs-webpack-plugin/package-lock.json
 aaatest
 grid
 node_modules
