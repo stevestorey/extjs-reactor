@@ -8,21 +8,30 @@
   },
   "dependencies": {
     "@extjs/sencha-build": "2.0.0",
-    "glob": "^7.1.2",
-    "is-glob": "^4.0.0",
     "lodash.uniq": "^4.5.0",
-    "schema-utils": "^0.4.0",
-    "chalk": "^2.3.2",
+    "schema-utils": "^0.4.5",
+    "chalk": "^2.4.0",
     "recursive-readdir-sync":"^1.0.6"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
-    "babel-eslint": "^8.2.1",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.26.0",
     "babel-preset-stage-0": "^6.24.1",
-    "babel-register": "^6.26.0"
+    "babel-eslint": "^8.2.3",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-env":"^1.6.1"
+   },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-2",
+      "stage-0"
+    ],
+    "sourceMaps": "inline",
+    "plugins": [
+      "add-module-exports"
+    ]
   },
   "repository": {
     "type": "git",
@@ -34,16 +43,5 @@
   "bugs": {
     "url": "https://github.com/sencha"
   },
-  "homepage": "https://github.com/sencha#readme",
-  "babel": {
-    "presets": [
-      "es2015",
-      "stage-2",
-      "stage-0"
-    ],
-    "sourceMaps": "inline",
-    "plugins": [
-      "add-module-exports"
-    ]
-  }
+  "homepage": "https://github.com/sencha#readme"
 }

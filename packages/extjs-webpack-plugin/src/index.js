@@ -3,7 +3,7 @@ import fs from 'fs';
 import validateOptions from 'schema-utils';
 import uniq from 'lodash.uniq';
 import isGlob from 'is-glob';
-import glob from 'glob';
+//import glob from 'glob';
 import { resolve } from 'path';
 import recursiveReadSync from 'recursive-readdir-sync';
 //const recursiveReadSync = require('recursive-readdir-sync')
