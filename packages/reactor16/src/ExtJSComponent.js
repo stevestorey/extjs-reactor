@@ -20,9 +20,6 @@ export class ExtJSComponent extends Component {
     this.reactElement = {}
     this._getReactStuff(element)
 
-//    var config = this._getConfig()
-//    this.rawConfig = config
-
     this.rawConfigs = this._getConfig()
     this.rawConfigs.$createdByReactor = true
 
@@ -33,15 +30,25 @@ export class ExtJSComponent extends Component {
     }
     else {
       l(`ExtJSComponent: constructor NOTROOT, element: ${this.target}, xtype: ${this.xtype} (this.rawConfig, this)`, this.rawConfig, this)
+
+
+      // for (var i=0; i<this.reactChildren.length; i++) {
+      //   var child = this.reactChildren[i]
+      //   console.log(child)
+      //   const xtype = child.type.toLowerCase().replace(/_/g, '-')
+      //   var extJSClass = Ext.ClassManager.getByAlias(`widget.${xtype}`)
+      //   if (extJSClass == undefined) {
+      //     var config = {xtype: 'container'}
+      //     var widget = Ext.create(config)
+      //     //ReactDOM.render(<div style={{fontSize:'24px'}}>{toggle.toString()}</div>,widget.el.dom)
+      //     ReactDOM.render(child,widget.el.dom)
+      //     if (this.rawitems == undefined) { this.rawitems = [] }
+      //     this.rawitems.push(widget)
+      //   }
+      // }
+
+
     }
-
-    // if (this.xtype == 'segmentedbutton') {
-    //   this.rawListeners = config.listeners
-    //   config.listeners = {}
-    // }
-    // this.cmp = new this.extJSClass(config)
-    // this.cmp.$createdByReactor = true;
-
 
 
     // if (Ext.isClassic) {
@@ -525,7 +532,8 @@ export class ExtJSComponent extends Component {
                       console.log('*****************************************************************setter')
                       console.log(this.cmp.xtype + ' - ' + setter) 
                       console.log('*****************************************************************value')
-                      console.log(value)                      
+                      console.log(key)
+                      console.log(value)
                       this.cmp[setter](value);
                   }
               }

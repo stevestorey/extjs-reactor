@@ -339,7 +339,8 @@ const ExtRenderer = ReactFiberReconciler({
       l(`commitUpdate ${type} (instance, updatePayload, oldProps, newProps)`, instance, updatePayload, oldProps, newProps)
 
       if (instance._applyProps) {
-      instance._applyProps(oldProps, newProps);
+        console.log('_applyProps')
+        instance._applyProps(oldProps, newProps);
       }
       else {
         console.log('Error: _applyProps')

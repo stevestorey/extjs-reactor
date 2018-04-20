@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@extjs/sencha-cmd": "^6.5.3",
+    "@extjs/ext-react": "^6.5.3",
     "chalk": "^2.3.2",
     "ast-traverse": "^0.1.1",
     "astring": "^1.0.2",

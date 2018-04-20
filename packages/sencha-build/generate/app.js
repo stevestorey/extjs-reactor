@@ -93,6 +93,7 @@ require('../XTemplate/js/XTemplate.js');
 class app {
   constructor(options) {
     var CurrWorkingDir = process.cwd()
+//    var SenchaCmdDir = util.getSenchaCmdPath()
     var NodeAppBinDir = path.resolve(__dirname)
     var TemplatesDir = '/extjs-templates' 
     var NodeAppTemplatesDir = path.join(NodeAppBinDir + '/..' + TemplatesDir) 
