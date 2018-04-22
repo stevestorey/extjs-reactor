@@ -68,7 +68,7 @@ export default class Home extends React.Component<void, any> {
      * Filter the store when the user types in the search box
      */
     onSearch = () => {
-        const query = this.query.getValue().toLowerCase(); 
+        const query = this.query.cmp.getValue().toLowerCase(); 
         this.store.clearFilter();
 
         if (query.length) this.store.filterBy(record => {

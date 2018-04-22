@@ -5,7 +5,7 @@ import { medium, large } from './responsiveFormulas';
 import Home from './Home/Home';
 import About from './About/About';
 import NavMenu from './NavMenu';
-
+var REACT_VERSION:any = require('react').version
 declare var Ext:any;
 
 interface LayoutProps {
@@ -48,9 +48,10 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             selection: location.pathname
         }
 
+
         return (
             <Container fullscreen layout="fit">
-                <TitleBar title="ExtReact Boilerplate" docked="top">
+                <TitleBar title={`ExtReact TypeScript Boilerplate  - React v${REACT_VERSION}`} docked="top">
                     {Ext.platformTags.phone && (
                         <Button align="left" iconCls="x-fa fa-bars" handler={this.toggleAppMenu} ripple={false}/>
                     )}

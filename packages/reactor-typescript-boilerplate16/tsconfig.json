@@ -8,6 +8,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "declaration": false,
+    "skipLibCheck": true,
     "noImplicitAny": false,
     "noImplicitReturns": false,
     "removeComments": true,
@@ -19,6 +20,10 @@
       "dom"
     ]
   },
+  "include": [
+    "./src/**/*"
+  ],
+
   "exclude": [
     "dist",
     "build",
