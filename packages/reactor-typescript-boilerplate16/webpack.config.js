@@ -70,6 +70,7 @@ module.exports = function (env) {
                 rules: [
                     {
                         test: /\.(ts|tsx)$/,
+                        //include: path.join(__dirname, 'ExtReact.d.ts'),
                         exclude: /node_modules/,
                         use: [
                             {
@@ -89,7 +90,7 @@ module.exports = function (env) {
             },
 
             resolve: {
-                extensions: ['.ts', '.tsx', '.js'],
+                extensions: ['.ts', '.tsx', '.js', '.json'],
 
                 // The following is only needed when running this boilerplate within the extjs-reactor repo.  You can remove this from your own projects.
                 alias: {
