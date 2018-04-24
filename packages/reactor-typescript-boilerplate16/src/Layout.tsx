@@ -51,7 +51,7 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
 
         return (
             <Container fullscreen layout="fit">
-                <TitleBar title={`ExtReact TypeScript Boilerplate  - React v${REACT_VERSION}`} docked="top">
+                <TitleBar title={`ExtReact TypeScript Boilerplate  - React v${REACT_VERSION} - Ext JS v${Ext.versions.extjs.version}`} docked="top">
                     {Ext.platformTags.phone && (
                         <Button align="left" iconCls="x-fa fa-bars" handler={this.toggleAppMenu} ripple={false}/>
                     )}

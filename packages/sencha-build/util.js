@@ -3,6 +3,59 @@ var fs = require('fs-extra')
 var json = require('comment-json');
 const sencha = require('@extjs/sencha-cmd')
 
+//const spawnSync = require('child_process').spawnSync
+
+// const spawn = require('child_process').spawn;
+var spawn = require('child-process-promise').spawn;
+function executeCommand(cmd, args) {
+    var promise = spawn(cmd, args);
+ 
+    var childProcess = promise.childProcess;
+    
+    console.log('[spawn] childProcess.pid: ', childProcess.pid);
+    childProcess.stdout.on('data', function (data) {
+        console.log('[spawn] stdout: ', data.toString());
+    });
+    childProcess.stderr.on('data', function (data) {
+        console.log('[spawn] stderr: ', data.toString());
+    });
+    return promise;
+}
+
+exports.senchaCmd = (parms) => {
+  process.stdout.cursorTo(0);console.log(app + 'started - sencha ' + parms.toString().replace(/,/g , " ") + '\n')
+  await executeCommand(sencha, parms)
+  process.stdout.cursorTo(0);console.log(app + 'completed - sencha ' + parms.toString().replace(/,/g , " "))
+
+}
+
+
+// async function executer() {
+//     console.log('[MAIN] start');
+//     await executeCommand('echo', ['info']);
+//     console.log('[MAIN] end');
+// }
+ 
+// executer();
+
+exports.senchaCmd2 = (parms) => {
+  process.stdout.cursorTo(0);console.log(app + 'started - sencha ' + parms.toString().replace(/,/g , " ") + '\n')
+  spawnSync(sencha, parms, { stdio: 'inherit', encoding: 'utf-8'})
+  //const child = spawnSync(sencha, parms)
+  //console.log('x'+child.stderr.toString()+'x'); 
+  process.stdout.cursorTo(0);console.log(app + 'completed - sencha ' + parms.toString().replace(/,/g , " "))
+}
+
+
+
+
+
+
+
+
+
+
+
 //exports.err = function err(s) { return chalk.red('[ERR] ') + s }
 //exports.inf = function inf(s) { return chalk.green('[INF] ') + s }
 //exports.wrn = function err(s) { return chalk.yellow('[WRN] ') + s }
@@ -21,15 +74,7 @@ exports.errThrow = errThrow
 exports.dbgThrow = function err(s) { throw chalk.blue('[ERR] ') + s }
 const app = `${chalk.green('ℹ ｢ext｣:')} sencha-build: `;
 
-exports.senchaCmd = (parms) => {
-  const spawnSync = require('child_process').spawnSync
-  process.stdout.cursorTo(0);console.log(app + 'started - sencha ' + parms.toString().replace(/,/g , " ") + '\n')
-  spawnSync(sencha, parms, { stdio: 'inherit', encoding: 'utf-8'})
-  //const child = spawnSync(sencha, parms)
-  //console.log('x'+child.stderr.toString()+'x'); 
-  process.stdout.cursorTo(0);console.log(app + 'completed - sencha ' + parms.toString().replace(/,/g , " "))
 
-}
 
 
   // var intercept = require("intercept-stdout");

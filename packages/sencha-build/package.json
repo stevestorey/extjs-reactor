@@ -11,6 +11,7 @@
   "dependencies": {
     "@extjs/sencha-cmd": "6.5.3",
     "chalk": "^2.3.2",
+    "child-process-promise":"^2.2.1",
     "intercept-stdout": "^0.1.2",
     "command-line-args": "^4.0.7",
     "comment-json": "^1.1.3",
