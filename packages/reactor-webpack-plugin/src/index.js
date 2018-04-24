@@ -20,12 +20,18 @@ const app = `${chalk.green('ℹ ｢ext｣:')} reactor-webpack-plugin: `;
  * @param {Process} build A sencha Cmd process
  */
 const gatherErrors = (cmd) => {
+
   cmd.stdout.on('data', data => {
     const message = data.toString();
     if (message.match(/^\[ERR\]/)) {
       cmdErrors.push(message.replace(/^\[ERR\] /gi, ''));
     }
-  });
+  })
+
+  // cmd.stderr.on('data', (data) => {
+  //   console.error(`E:${data}`);
+  // })
+
   return cmd;
 }
 
@@ -136,20 +142,12 @@ module.exports = class ReactExtJSWebpackPlugin {
   }
 
   emit(compiler, compilation, callback) {
-    //mjg webpack 4 problem??
-
-    // console.log('*****compilation')
-    // console.log(compilation.chunks)
-    // console.log('*****')
-
     const isWebpack4 = compilation.hooks;
     var modules = []
     if (isWebpack4) {
-      //process.stdout.cursorTo(0);console.log(app + 'IS Webpack 4')
       modules = compilation.chunks.reduce((a, b) => a.concat(b._modules), []);
     }
     else {
-//      process.stdout.cursorTo(0);console.log(app + 'NOT Webpack 4')
       modules = compilation.chunks.reduce((a, b) => a.concat(b.modules), []);
     }
     //const modules = compilation.chunks.reduce((a, b) => a.concat(b.modules), []);
@@ -171,9 +169,15 @@ module.exports = class ReactExtJSWebpackPlugin {
     //if (this.asynchronous) callback();
 //    console.log(callback)
     if (callback != null) 
-      {if (this.asynchronous) 
-        {callback();}
+      {
+        if (this.asynchronous) 
+        {callback()}
       }
+
+//    console.log(modules)
+//    console.log(outputPath)
+//    console.log(build)
+
     this._buildExtBundle('ext', modules, outputPath, build)
       .then(() => {
         // const cssVarPath = path.join(this.output, 'css-vars.js');
@@ -233,6 +237,9 @@ module.exports = class ReactExtJSWebpackPlugin {
         console.error(`Error processing ${file}`);
       }
     };
+
+
+
 
     if (compiler.hooks) {
       if (this.asynchronous) {
@@ -416,9 +423,9 @@ module.exports = class ReactExtJSWebpackPlugin {
     * @private
     */
   _buildExtBundle(name, modules, output, { toolkit='modern', theme, packages=[], packageDirs=[], sdk, overrides }) {
-    // console.log('*****')
-    // console.log(modules)
-    // console.log('*****')
+//     console.log('*****')
+//     console.log(modules)
+//     console.log('*****')
 
     let sencha = this._getSenchCmdPath();
     theme = theme || (toolkit === 'classic' ? 'theme-triton' : 'theme-material');
@@ -496,13 +503,13 @@ module.exports = class ReactExtJSWebpackPlugin {
             if (data && data.toString().match(/Waiting for changes\.\.\./)) {
               onBuildDone()
             }
-          });
+          })
           watching.on('exit', onBuildDone)
         }
         if (!cmdRebuildNeeded) onBuildDone();
       } 
       else {
-        const build = gatherErrors(fork(sencha, ['ant', 'build'], { cwd: output, silent: true }));
+        const build = gatherErrors(fork(sencha, ['ant', 'build'], { stdio: 'inherit', encoding: 'utf-8', cwd: output, silent: false }));
         build.stdout.pipe(process.stdout);
         build.stderr.pipe(process.stderr);
         build.on('exit', onBuildDone);

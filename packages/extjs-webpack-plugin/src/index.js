@@ -136,7 +136,7 @@ export default class ExtJSWebpackPlugin {
         var refresh = require('@extjs/sencha-node/app/refresh.js')
         new refresh({})
         //cb()
-        this.emitStats.bind(this)
+        //this.emitStats.bind(this)
 
 
 
@@ -146,52 +146,52 @@ export default class ExtJSWebpackPlugin {
   }
 
 
-  emitStats(curCompiler, callback) {
-    // Get stats.
-    // **Note**: In future, could pass something like `{ showAssets: true }`
-    // to the `getStats()` function for more limited object returned.
-    let stats = curCompiler.getStats().toJson();
+  // emitStats(curCompiler, callback) {
+  //   // Get stats.
+  //   // **Note**: In future, could pass something like `{ showAssets: true }`
+  //   // to the `getStats()` function for more limited object returned.
+  //   let stats = curCompiler.getStats().toJson();
   
-    // Filter to fields.
-    if (this.opts.fields) {
-      stats = this.opts.fields.reduce((memo, key) => {
-        memo[key] = stats[key];
-        return memo;
-      }, {});
-    }
+  //   // Filter to fields.
+  //   if (this.opts.fields) {
+  //     stats = this.opts.fields.reduce((memo, key) => {
+  //       memo[key] = stats[key];
+  //       return memo;
+  //     }, {});
+  //   }
   
-    // Transform to string.
-    let err;
-    return Promise.resolve()
+  //   // Transform to string.
+  //   let err;
+  //   return Promise.resolve()
   
-      // Transform.
-      .then(() => this.opts.transform(stats, {
-        compiler: curCompiler
-      }))
-      .catch((e) => { err = e; })
+  //     // Transform.
+  //     .then(() => this.opts.transform(stats, {
+  //       compiler: curCompiler
+  //     }))
+  //     .catch((e) => { err = e; })
   
-      // Finish up.
-      .then((statsStr) => {
-        // Handle errors.
-        if (err) {
-          curCompiler.errors.push(err);
-          if (callback) { return void callback(err); }
-          throw err;
-        }
+  //     // Finish up.
+  //     .then((statsStr) => {
+  //       // Handle errors.
+  //       if (err) {
+  //         curCompiler.errors.push(err);
+  //         if (callback) { return void callback(err); }
+  //         throw err;
+  //       }
   
-        // Add to assets.
-        curCompiler.assets[this.opts.filename] = {
-          source() {
-            return statsStr;
-          },
-          size() {
-            return statsStr.length;
-          }
-        };
+  //       // Add to assets.
+  //       curCompiler.assets[this.opts.filename] = {
+  //         source() {
+  //           return statsStr;
+  //         },
+  //         size() {
+  //           return statsStr.length;
+  //         }
+  //       };
   
-        if (callback) { return void callback(); }
-      });
-  }
+  //       if (callback) { return void callback(); }
+  //     });
+  // }
   
 
 
