@@ -2,8 +2,14 @@ var chalk = require('chalk');
 var fs = require('fs-extra')
 var json = require('comment-json');
 const sencha = require('@extjs/sencha-cmd')
+const spawnSync = require('child_process').spawnSync
 
-//const spawnSync = require('child_process').spawnSync
+exports.senchaCmd = (parms) => {
+  process.stdout.cursorTo(0);console.log(app + 'started - sencha ' + parms.toString().replace(/,/g , " ") + '\n')
+  spawnSync(sencha, parms, { stdio: 'inherit', encoding: 'utf-8'})
+  process.stdout.cursorTo(0);console.log(app + 'completed - sencha ' + parms.toString().replace(/,/g , " "))
+}
+
 
 // const spawn = require('child_process').spawn;
 var spawn = require('child-process-promise').spawn;
@@ -22,7 +28,7 @@ function executeCommand(cmd, args) {
     return promise;
 }
 
-exports.senchaCmd = (parms) => {
+exports.senchaCmd2 = (parms) => {
   process.stdout.cursorTo(0);console.log(app + 'started - sencha ' + parms.toString().replace(/,/g , " ") + '\n')
   await executeCommand(sencha, parms)
   process.stdout.cursorTo(0);console.log(app + 'completed - sencha ' + parms.toString().replace(/,/g , " "))
@@ -38,13 +44,6 @@ exports.senchaCmd = (parms) => {
  
 // executer();
 
-exports.senchaCmd2 = (parms) => {
-  process.stdout.cursorTo(0);console.log(app + 'started - sencha ' + parms.toString().replace(/,/g , " ") + '\n')
-  spawnSync(sencha, parms, { stdio: 'inherit', encoding: 'utf-8'})
-  //const child = spawnSync(sencha, parms)
-  //console.log('x'+child.stderr.toString()+'x'); 
-  process.stdout.cursorTo(0);console.log(app + 'completed - sencha ' + parms.toString().replace(/,/g , " "))
-}
 
 
 
