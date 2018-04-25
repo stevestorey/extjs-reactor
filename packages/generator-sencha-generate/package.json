@@ -1,6 +1,6 @@
 {
   "name": "@extjs/generator-sencha-generate",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "A Yeoman generator for Ext JS apps",
   "main": "generators/index.js",
   "keywords": ["Ext JS","Sencha Generate","yeoman-generator"],

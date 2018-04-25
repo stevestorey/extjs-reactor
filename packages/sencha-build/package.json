@@ -1,6 +1,6 @@
 {
   "name": "@extjs/sencha-build",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "sencha-build description",
   "bin": {
     "sencha-build": "bin/sencha-build.js",
