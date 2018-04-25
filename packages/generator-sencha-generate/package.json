@@ -5,8 +5,8 @@
   "main": "generators/index.js",
   "keywords": ["Ext JS","Sencha Generate","yeoman-generator"],
   "dependencies": {
-    "@extjs/ext-react": "^6.5.3",
-    "@extjs/sencha-build": "0.0.1",
+    "@extjs/ext": "~6.6.0",
+    "@extjs/sencha-build": "~0.0.1",
     "yeoman-generator": "^2.0.4",
     "chalk": "^2.4.0",
     "lodash": "^4.17.10"
