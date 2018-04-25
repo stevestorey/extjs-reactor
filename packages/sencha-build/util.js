@@ -3,6 +3,7 @@ var fs = require('fs-extra')
 var json = require('comment-json');
 const sencha = require('@extjs/sencha-cmd')
 const spawnSync = require('child_process').spawnSync
+const app = `${chalk.green('ℹ ｢ext｣:')} sencha-build: `;
 
 exports.senchaCmd = (parms) => {
   process.stdout.cursorTo(0);console.log(app + 'started - sencha ' + parms.toString().replace(/,/g , " ") + '\n')
@@ -12,28 +13,28 @@ exports.senchaCmd = (parms) => {
 
 
 // const spawn = require('child_process').spawn;
-var spawn = require('child-process-promise').spawn;
-function executeCommand(cmd, args) {
-    var promise = spawn(cmd, args);
+// var spawn = require('child-process-promise').spawn;
+// function executeCommand(cmd, args) {
+//     var promise = spawn(cmd, args);
  
-    var childProcess = promise.childProcess;
+//     var childProcess = promise.childProcess;
     
-    console.log('[spawn] childProcess.pid: ', childProcess.pid);
-    childProcess.stdout.on('data', function (data) {
-        console.log('[spawn] stdout: ', data.toString());
-    });
-    childProcess.stderr.on('data', function (data) {
-        console.log('[spawn] stderr: ', data.toString());
-    });
-    return promise;
-}
+//     console.log('[spawn] childProcess.pid: ', childProcess.pid);
+//     childProcess.stdout.on('data', function (data) {
+//         console.log('[spawn] stdout: ', data.toString());
+//     });
+//     childProcess.stderr.on('data', function (data) {
+//         console.log('[spawn] stderr: ', data.toString());
+//     });
+//     return promise;
+// }
 
-exports.senchaCmd2 = (parms) => {
-  process.stdout.cursorTo(0);console.log(app + 'started - sencha ' + parms.toString().replace(/,/g , " ") + '\n')
-  await executeCommand(sencha, parms)
-  process.stdout.cursorTo(0);console.log(app + 'completed - sencha ' + parms.toString().replace(/,/g , " "))
+// exports.senchaCmd2 = (parms) => {
+//   process.stdout.cursorTo(0);console.log(app + 'started - sencha ' + parms.toString().replace(/,/g , " ") + '\n')
+//   await executeCommand(sencha, parms)
+//   process.stdout.cursorTo(0);console.log(app + 'completed - sencha ' + parms.toString().replace(/,/g , " "))
 
-}
+// }
 
 
 // async function executer() {
@@ -71,7 +72,6 @@ exports.dbg = function err(s) { return chalk.blue('[DBG] ') + s }
 var errThrow = function err(s) { throw chalk.red('[ERR] ') + s }
 exports.errThrow = errThrow
 exports.dbgThrow = function err(s) { throw chalk.blue('[ERR] ') + s }
-const app = `${chalk.green('ℹ ｢ext｣:')} sencha-build: `;
 
 
 
