@@ -10,24 +10,24 @@ const UPDATE_SIGNAL = {};
 const ExtRenderer = ReactFiberReconciler({
 
   createInstance(type, props, internalInstanceHandle) {
+    debugger;
     let instance = null;
     const xtype = type.toLowerCase().replace(/_/g, '-')
     var extJSClass = Ext.ClassManager.getByAlias(`widget.${xtype}`)
     if (extJSClass == undefined) {
       l(`ExtRenderer: createInstance, type: ${type}, extJSClass UNDEFINED (type, props, internalInstanceHandle)`,type, props, internalInstanceHandle)
-
-
+      var reactifiedClass = reactify2('container') // could send xtype
+      instance =  new reactifiedClass(props);
+      instance.isHTML = true;
+     //instance._applyProps(instance, props)
+      
 
 
       // //create an HTML instance/class (just like below)
       // //console.log('####')
       // //console.log(type)
-      // var htmlifiedClass = htmlify2(type)
-      // instance =  new htmlifiedClass(props);
-
-
-
-
+      //var htmlifiedClass = htmlify2(type)
+      //instance =  new htmlifiedClass(props);
       return instance
     }
     else {
@@ -40,8 +40,10 @@ const ExtRenderer = ReactFiberReconciler({
   },
 
   appendInitialChild(parentInstance, childInstance) {
+    debugger;
     if (childInstance == null) {return}  //this correct??
-    if (childInstance.cmp == undefined) {return}  //this correct??
+    //if (childInstance.cmp == undefined) {return}  //this correct??
+   // if(typeof childInstance === "string" && childInstance === " ") {return}
 
 //    if (parentInstance.xtype == 'html') {return}  //this correct??
     console.log(parentInstance)
@@ -58,11 +60,18 @@ const ExtRenderer = ReactFiberReconciler({
 //     }
 
     if (parentInstance != null && childInstance != null) {
-      l(`ExtRenderer: appendInitialChild, parentxtype: ${parentInstance.rawConfigs.xtype}, childxtype: ${childInstance.cmp.xtype}, (parentInstance, childInstance)`,parentInstance, childInstance)
+     //SK : Do not uncomment below console statement. It will cause error in case of div
+    //  l(`ExtRenderer: appendInitialChild, parentxtype: ${parentInstance.rawConfigs.xtype}, childxtype: ${childInstance.cmp.xtype}, (parentInstance, childInstance)`,parentInstance, childInstance)
       var parentXtype = parentInstance.xtype
       var childXtype = childInstance.xtype
-
-      if (childXtype == 'column'  ||
+      //SK : FOR HTML
+      if (parentInstance.isHTML) {
+        if(typeof childInstance === "string" || typeof childInstance === "number") {
+          if(parentInstance.rawhtml == undefined) { parentInstance.rawhtml = "" }
+            parentInstance.rawhtml+=childInstance
+        } 
+      }
+      else if (childXtype == 'column'  ||
       childXtype == 'treecolumn'  ||
       childXtype == 'textcolumn'  ||
       childXtype == 'checkcolumn' ||
@@ -112,11 +121,22 @@ const ExtRenderer = ReactFiberReconciler({
         l(`new set menu items config (parent xtype,child items)`,ExtJSComponent.rawConfigs.xtype,ExtJSComponent.rawmenuitems)
         ExtJSComponent.rawConfigs.items = ExtJSComponent.rawmenuitems
       }
-
-      if (typeof(props.children) == 'string') {
-        ExtJSComponent.rawConfigs.html = props.children
+      if(ExtJSComponent.rawhtml != undefined) {
+        l(`new set htmml config (parent xtype,child items)`,ExtJSComponent.rawConfigs.xtype,ExtJSComponent.rawhtml)
+        ExtJSComponent.rawConfigs.html = ExtJSComponent.rawhtml;
       }
 
+      if (typeof(props.children) == 'string' || typeof(props.children) == 'number') {
+        if(ExtJSComponent.rawhtml === undefined){
+          ExtJSComponent.rawConfigs.html = props.children
+        } else {
+          ExtJSComponent.rawConfigs.html = ExtJSComponent.rawhtml + props.children
+        }
+      }
+
+     //SK : TO BE DELETED
+      if(ExtJSComponent.isHTML) {
+      }
 
       console.log('right before new')
       console.log(ExtJSComponent)
@@ -256,15 +276,20 @@ const ExtRenderer = ReactFiberReconciler({
     },
 
     appendChildToContainer(parentInstance, childInstance) {
+      //SK : TO BE DELETED
+      if(childInstance === " "){
+        return;
+      }
       //should only be for ExtReact root component
       if (parentInstance != null && childInstance != null) {
         //l('appendChildToContainer (childInstance.target, parentInstance, childInstance)', childInstance.target, parentInstance, childInstance)
         
-        //mjg no more??doAdd(childInstance.xtype, parentInstance, childInstance.cmp, childInstance.reactChildren)
+        //mjg no more??doAdd(childInstance.xtype, parentInstance, childyInstance.cmp, childInstance.reactChildren)
 
         //this section replaces all of doAdd!!!
         var parentCmp = parentInstance
-        var childCmp = childInstance.cmp
+        //SK : TO BE DELETED - MIGHT NOT HAVE TO DO STRING CHECK ANYMORE
+        var childCmp = typeof childInstance === "string" ? childInstance : childInstance.cmp
         if (parentCmp.ExtReactRoot != true) {
           console.log('appendChildToContainer ERROR ExtReactRoot is the only one to be in do Add')
           throw error
@@ -339,7 +364,6 @@ const ExtRenderer = ReactFiberReconciler({
       l(`commitUpdate ${type} (instance, updatePayload, oldProps, newProps)`, instance, updatePayload, oldProps, newProps)
 
       if (instance._applyProps) {
-        console.log('_applyProps')
         instance._applyProps(oldProps, newProps);
       }
       else {
@@ -490,86 +514,86 @@ console.warn('why in doAdd??')
 
 
 
-  if (childPropsChildren == undefined) return
-  if (childPropsChildren.type == undefined) { 
-    if(typeof childPropsChildren === "string") {
-      //PLAIN TEXT CASE
-      var text=childPropsChildren
-      //l(`${text} is PLAIN TEXT`)
-      l(`ExtRenderer.js: doAdd, parentxtype: ${parentCmp.xtype}, childxtype: ${childXtype}, ${text} is PLAIN TEXT`)
-      childCmp.setHtml(text)
-    } 
-    else {
-      l(`ExtRenderer.js: doAdd, parentxtype: ${parentCmp.xtype}, childxtype: ${childXtype}, (children)`, childPropsChildren)
-      for (var i = 0; i < childPropsChildren.length; i++) {
-        var child = childPropsChildren[i]
-        var xtype = null
-        try {
-          var type = child.type
-          if (type == undefined) { 
-            type = child[0].type 
-          }
-          xtype = type.toLowerCase().replace(/_/g, '-')
-        }
-        catch(e) {
-          l(`ExtRenderer.js: doAdd, child ${i}, catch (child)`, child)
-          continue
-        }
-        if (xtype != null) {
-          var target = Ext.ClassManager.getByAlias(`widget.${xtype}`)
-          if (target == undefined) {
-            //l(`${xtype} is HTML`)
-            l(`ExtRenderer.js: doAdd, child ${i}, xtype: ${xtype}, is HTML`)
-            //should call wrapDOMElement(node)??? what does classic do? can widget be used?
-            var widget = Ext.create({xtype:'widget'})
-            childCmp.add(widget)
-            ReactDOM.render(child,widget.el.dom)
-          }
-          else {
-//            l(`xtype is NULL`)
-            l(`ExtRenderer.js: doAdd, child ${i}, xtype: ${xtype}, target ${xtype}`)
-          }
-        }
-        else {
-          l(`ExtRenderer.js: doAdd, children, xtype: ${xtype}, i: ${i}, is null`)
-          //l(`${xtype} is ExtJS`)
-        }
-      }
-    }
+//   if (childPropsChildren == undefined) return
+//   if (childPropsChildren.type == undefined) { 
+//     if(typeof childPropsChildren === "string") {
+//       //PLAIN TEXT CASE
+//       var text=childPropsChildren
+//       //l(`${text} is PLAIN TEXT`)
+//       l(`ExtRenderer.js: doAdd, parentxtype: ${parentCmp.xtype}, childxtype: ${childXtype}, ${text} is PLAIN TEXT`)
+//       childCmp.setHtml(text)
+//     } 
+//     else {
+//       l(`ExtRenderer.js: doAdd, parentxtype: ${parentCmp.xtype}, childxtype: ${childXtype}, (children)`, childPropsChildren)
+//       for (var i = 0; i < childPropsChildren.length; i++) {
+//         var child = childPropsChildren[i]
+//         var xtype = null
+//         try {
+//           var type = child.type
+//           if (type == undefined) { 
+//             type = child[0].type 
+//           }
+//           xtype = type.toLowerCase().replace(/_/g, '-')
+//         }
+//         catch(e) {
+//           l(`ExtRenderer.js: doAdd, child ${i}, catch (child)`, child)
+//           continue
+//         }
+//         if (xtype != null) {
+//           var target = Ext.ClassManager.getByAlias(`widget.${xtype}`)
+//           if (target == undefined) {
+//             //l(`${xtype} is HTML`)
+//             l(`ExtRenderer.js: doAdd, child ${i}, xtype: ${xtype}, is HTML`)
+//             //should call wrapDOMElement(node)??? what does classic do? can widget be used?
+//             var widget = Ext.create({xtype:'widget'})
+//             childCmp.add(widget)
+//             ReactDOM.render(child,widget.el.dom)
+//           }
+//           else {
+// //            l(`xtype is NULL`)
+//             l(`ExtRenderer.js: doAdd, child ${i}, xtype: ${xtype}, target ${xtype}`)
+//           }
+//         }
+//         else {
+//           l(`ExtRenderer.js: doAdd, children, xtype: ${xtype}, i: ${i}, is null`)
+//           //l(`${xtype} is ExtJS`)
+//         }
+//       }
+//     }
     
-  }
-  else {
-    l(childPropsChildren);
-    var child = childPropsChildren
+//   }
+//   else {
+//     l(childPropsChildren);
+//     var child = childPropsChildren
 
-    var xtype = null
-    try {
-      var type = child.type
-      if (type == undefined) { 
-        type = child[0].type 
-      }
-      xtype = type.toLowerCase().replace(/_/g, '-')
-    }
-    catch(e) {
-    }
+//     var xtype = null
+//     try {
+//       var type = child.type
+//       if (type == undefined) { 
+//         type = child[0].type 
+//       }
+//       xtype = type.toLowerCase().replace(/_/g, '-')
+//     }
+//     catch(e) {
+//     }
 
-    if (xtype != null) {
-      var extObject = Ext.ClassManager.getByAlias(`widget.${xtype}`)
-      if (extObject == undefined) {
-        l(`${xtype} is HTML`)
-        //should call wrapDOMElement(node)??? what does classic do? can widget be used?
+//     if (xtype != null) {
+//       var extObject = Ext.ClassManager.getByAlias(`widget.${xtype}`)
+//       if (extObject == undefined) {
+//         l(`${xtype} is HTML`)
+//         //should call wrapDOMElement(node)??? what does classic do? can widget be used?
 
-        var widget = Ext.create({xtype:'widget'})
-        childCmp.add(widget)
-        ReactDOM.render(child,widget.el.dom)
-      }
-      else {
-        l(`xtype is NULL`)
-      }
-    }
-    else {
-      l(`${xtype} is ExtJS`)
-    }
+//         var widget = Ext.create({xtype:'widget'})
+//         childCmp.add(widget)
+//         ReactDOM.render(child,widget.el.dom)
+//       }
+//       else {
+//         l(`xtype is NULL`)
+//       }
+//     }
+//     else {
+//       l(`${xtype} is ExtJS`)
+//     }
 
-  }
+//   }
 }
