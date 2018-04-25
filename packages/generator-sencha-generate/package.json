@@ -1,15 +1,15 @@
 {
   "name": "@extjs/generator-sencha-generate",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A Yeoman generator for Ext JS apps",
   "main": "generators/index.js",
   "keywords": ["Ext JS","Sencha Generate","yeoman-generator"],
   "dependencies": {
     "@extjs/ext-react": "^6.5.3",
-    "@extjs/sencha-build": "2.0.0",
+    "@extjs/sencha-build": "0.0.1",
     "yeoman-generator": "^2.0.4",
-    "chalk": "^2.3.2",
-    "lodash": "^4.17.5"
+    "chalk": "^2.4.0",
+    "lodash": "^4.17.10"
   },
   "scripts": {},
   "author": "Sencha, Inc.",
