@@ -2,7 +2,8 @@ extjs-webpack-plugin
     "glob": "^7.1.2",
     "is-glob": "^4.0.0",
 
-
+npm version patch
+npm publish --access public
 
 
 ln -s /Users/marcgusmano/aaExt/ext-6.5.3 ext

@@ -7,7 +7,7 @@
     "build": "babel src --out-dir lib"
   },
   "dependencies": {
-    "@extjs/sencha-build": "0.0.1",
+    "@extjs/sencha-build": "~0.0.1",
     "lodash.uniq": "^4.5.0",
     "schema-utils": "^0.4.5",
     "chalk": "^2.4.0",
