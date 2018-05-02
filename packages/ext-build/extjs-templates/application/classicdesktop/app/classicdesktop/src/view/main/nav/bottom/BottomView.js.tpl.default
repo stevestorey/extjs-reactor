@@ -1,0 +1,15 @@
+Ext.define('{appName}.view.main.nav.bottom.BottomView', {
+	extend: 'Ext.Toolbar',
+	xtype: 'bottomview',
+	cls: 'bottomview',
+
+	items: [
+		{
+			xtype: 'button',
+			ui: 'bottombutton-toolbar',
+			iconCls: 'x-fa fa-angle-double-left',
+			text: 'Logout',
+			handler: 'onBottomViewLogout'
+		}
+	]
+});

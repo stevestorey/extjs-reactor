@@ -1,0 +1,19 @@
+.bottomview { 
+	border-left: 0; 
+	border-top: 0;
+	padding: 0; 
+	color: $nav-color; 
+	background-color: $nav-background-color ;
+}
+
+@include extjs-button-toolbar-small-ui(
+  $ui: 'bottombutton',
+	$background-color: transparent,
+	$color: $nav-color,
+	$glyph-color: $nav-color,
+	$glyph-font-size: 28px,
+	$icon-spacing: 20px,
+	$font-size: 20px,
+	$line-height: 30px,
+  $border-color: transparent
+);

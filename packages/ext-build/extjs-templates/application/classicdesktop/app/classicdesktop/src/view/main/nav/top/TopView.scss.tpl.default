@@ -1,0 +1,26 @@
+.topview { 
+	border-left: 0; 
+	border-top: 0; 
+	padding: 0 0 0 0;
+	color: $nav-color; 
+	background-color: $nav-background-color;
+}
+
+.topviewtext { 
+	font-size: 28px; 
+	padding: 0 0 0 15px;
+	line-height: 50px;
+}
+
+.topview .x-toolbar-body-el {
+	padding: 8px 0 8px 0;
+	min-height: 48px;
+}
+
+@include extjs-button-toolbar-small-ui(
+  $ui: 'topviewbutton',
+	$background-color: transparent,
+	$color: $nav-color,
+	$glyph-color: $nav-color,
+  $border-color: transparent
+);

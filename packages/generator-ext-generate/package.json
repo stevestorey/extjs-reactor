@@ -1,0 +1,22 @@
+{
+  "name": "@extjs/generator-ext-generate",
+  "version": "0.0.4",
+  "description": "A Yeoman generator for Ext JS apps",
+  "main": "generators/index.js",
+  "keywords": ["Ext JS","Sencha Generate","yeoman-generator"],
+  "dependencies": {
+    "@extjs/ext": "~6.6.0",
+    "@extjs/ext-build": "~0.0.4",
+    "yeoman-generator": "^2.0.4",
+    "chalk": "^2.4.0",
+    "lodash": "^4.17.10"
+  },
+  "scripts": {},
+  "author": "Sencha, Inc.",
+  "license": "MIT",
+  "homepage": "https://github.com/sencha/extjs-reactor#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sencha/extjs-reactor.git"
+  }
+}

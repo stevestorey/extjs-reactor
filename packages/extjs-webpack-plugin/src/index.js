@@ -24,6 +24,14 @@ function getFileAndContextDeps(compilation, files, dirs, cwd) {
   };
 }
 
+
+function callP() {
+  return new Promise(function(resolve, reject) {
+    setTimeout(function(){ resolve(0) }, 5000);
+  })
+}
+
+
 export default class ExtJSWebpackPlugin {
   static defaults = {
     cwd: process.cwd(),
@@ -87,6 +95,23 @@ export default class ExtJSWebpackPlugin {
     }
 
     if (compiler.hooks) {
+
+      console.log(compiler.hooks.emit)
+      compiler.hooks.emit.tapAsync('extjs-emit-async', function (compilation, cb) {
+        process.stdout.cursorTo(0);console.log(app + 'extjs-emit-async')
+        new buildAsync().executeAsync().then(function() {
+          console.log('then call');
+          cb();
+        })
+        // callP().then(function() {
+        //   console.log('then');
+        //   var buildAsync = require('@extjs/sencha-build/app/buildAsync.js')
+        //   new buildAsync().executeAsync()
+        //   cb();
+        // })
+      })
+
+
       compiler.hooks.emit.tap('extjs-emit', (compilation) => {
         process.stdout.cursorTo(0);console.log(app + 'extjs-emit')
 

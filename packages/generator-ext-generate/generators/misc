@@ -1,0 +1,53 @@
+
+
+          //let sencha = _getSenchCmdPath();
+          //var args = ['--sdk', 'node_modules/@extjs/ext-react', 'generate', 'app', '--template', this.template, this.appName, './']
+          //spawnSync('sn',args, {stdio: 'inherit',cwd: output, silent: false});
+
+
+  //   var data = fs.readFileSync(path.resolve(__dirname) + '/config.json')
+  //   //var myObj
+    
+  //   try {
+  //     this.config = JSON.parse(data);
+  //     //console.dir(this.config);
+  //   }
+  //   catch (err) {
+  //     console.log('There has been an error parsing your JSON.')
+  //     console.log(err);
+  //   }
+
+
+
+
+  //   // var myOptions = {
+  //   //   name: 'Avian',
+  //   //   dessert: 'cake',
+  //   //   flavor: 'chocolate',
+  //   //   beverage: 'coffee'
+  //   // };
+  
+  //   // var data = JSON.stringify(myOptions);
+  
+  //   // fs.writeFile( path.resolve(__dirname) + '/config.json', data, function (err) {
+  //   //   if (err) {
+  //   //     console.log('There has been an error saving your configuration data.');
+  //   //     console.log(err.message);
+  //   //     return;
+  //   //   }
+  //   //   console.log('Configuration saved successfully.')
+
+  //   //   var data = fs.readFileSync(path.resolve(__dirname) + '/config.json')
+  //   //   var myObj
+      
+  //   //   try {
+  //   //     myObj = JSON.parse(data);
+  //   //     console.dir(myObj);
+  //   //   }
+  //   //   catch (err) {
+  //   //     console.log('There has been an error parsing your JSON.')
+  //   //     console.log(err);
+  //   //   }
+
+
+  //   // });

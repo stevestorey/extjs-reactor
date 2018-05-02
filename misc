@@ -17,6 +17,10 @@ https://www.worldtimebuddy.com/
 */}
 
 webpack
+
+https://webpack.js.org/api/compilation-hooks/
+
+
 https://github.com/Realytics/fork-ts-checker-webpack-plugin/blob/master/src/index.ts
 https://github.com/wezz/WebpackLifecyclePlugin
 https://github.com/pigcan/extra-watch-webpack-plugin
