@@ -19,7 +19,7 @@ module.exports = class extends Generator {
     super(args, opts)
     var data = fs.readFileSync(path.resolve(__dirname) + '/config.json')
     config = JSON.parse(data);
-    this.log(`\n${chalk.bold.green.underline('Welcome to Sencha Generate - The Ext JS Project Generator for NPM v0.0.1')}\n`)
+    this.log(`\n${chalk.bold.green.underline('Welcome to ExtGenerate - The Ext JS Project Generator for NPM v0.0.1')}\n`)
   }
 
   prompting_defaults() {
