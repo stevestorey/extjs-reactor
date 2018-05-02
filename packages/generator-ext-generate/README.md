@@ -1,12 +1,13 @@
-# generator-ext-js 
+# generator-ext-generate
+
 A Yeoman generator for Ext JS apps.
 
 ## Installation
 
-First, install [Yeoman](http://yeoman.io) and `@extjs/generator-ext-js` using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+First, install [Yeoman](http://yeoman.io) and `@extjs/generator-ext-generate` using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
 
 ```bash
-npm install -g yo @extjs/generator-ext-js
+npm install -g yo @extjs/generator-ext-generate
 ```
 
 ## Creating a new Ext JS App
@@ -31,7 +32,7 @@ To make changes to the generator, run:
 git clone git@github.com:sencha/extjs-reactor.git
 cd extjs-reactor
 npm install
-cd packages/generator-ext-js
+cd packages/generator-ext-generate
 npm link
 ```
 
