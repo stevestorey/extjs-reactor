@@ -1,0 +1,18 @@
+{
+  "usedefaults":false,
+  "createnow":true,
+  "appName":"MyApp",
+  "templateType":"make a selection from a list",
+  "templateType2":"type a folder name",
+  "template":"moderndesktop",
+  "templateFolderName":"~/extjs-templates/Application/moderndesktop",
+  "packageName":"my-app",
+  "version":"0.0.1",
+  "description":"my-app description for Ext JS app MyApp",
+  "gitRepositoryURL":"https://github.com/",
+  "keywords":"\"Ext JS\",\"Sencha\",\"HTML5\"",
+  "author":"Sencha, Inc.",
+  "license":"ISC",
+  "bugsURL":"https://github.com/",
+  "homepageURL":"http://www.sencha.com"
+}

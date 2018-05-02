@@ -1,0 +1,12 @@
+{
+  "apps": [],
+  "frameworks": {
+      "ext": "${workspace.dir}/node_modules/@extjs/ext-react"
+  },
+  "build": {
+      "dir": "${workspace.dir}/build"
+  },
+  "packages": {
+      "dir": "${workspace.dir}/packages,${workspace.dir}/node_modules/@extjs"
+  }
+}

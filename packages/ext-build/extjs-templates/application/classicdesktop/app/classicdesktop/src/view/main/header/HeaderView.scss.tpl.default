@@ -1,0 +1,20 @@
+.headerview {
+	border-left: 0;
+	border-top: 0;
+	color: $header-color;
+	background-color: $header-background-color;
+}
+
+.headerviewtext { 
+	font-size: 28px; 
+	padding: 0 0 0 15px;
+	line-height: 20px;
+}
+
+@include extjs-button-toolbar-small-ui(
+  $ui: 'headerbutton',
+	$background-color: transparent,
+	$color: $nav-color,
+	$glyph-color: $nav-color,
+  $border-color: transparent
+);

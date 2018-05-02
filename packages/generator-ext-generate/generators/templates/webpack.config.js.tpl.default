@@ -1,0 +1,61 @@
+const webpack = require('webpack');
+const path = require('path');
+const ExtJSWebpackPlugin = require('@extjs/extjs-webpack-plugin');
+const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+
+module.exports = function (env) {
+  var port = 8080
+  const nodeEnv = env && env.prod ? 'production' : 'development';
+  const isProd = nodeEnv === 'production';
+
+  return {
+    plugins: [
+      new ExtJSWebpackPlugin(),
+      new webpack.HotModuleReplacementPlugin(),
+      new OpenBrowserPlugin({url: `http://localhost:$\u007Bport}`})
+    ],
+    mode: 'development',
+    devtool: isProd ? 'source-map' : 'cheap-module-source-map',
+    context: path.join(__dirname, './'),
+    entry: {
+      'app': [
+        'react-hot-loader/patch',
+        './app.js'
+      ]
+    },
+    output: {
+      path: path.resolve(__dirname, './build'),
+      filename: '[name].js'
+    },
+    stats: {
+      chunks: false,
+      colors: {
+        green: '\u001b[32m',
+      }
+    },
+    devServer: {
+      contentBase: './',
+      historyApiFallback: true,
+      host: '0.0.0.0',
+      port,
+      disableHostCheck: false,
+      compress: isProd,
+      inline: !isProd,
+      hot: false,
+      stats: {
+        assets: true,
+        children: false,
+        chunks: false,
+        hash: false,
+        modules: false,
+        publicPath: false,
+        timings: true,
+        version: false,
+        warnings: true,
+        colors: {
+          green: '\u001b[32m'
+        }
+      }
+    }
+  }
+};
