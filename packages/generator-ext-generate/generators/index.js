@@ -19,7 +19,7 @@ module.exports = class extends Generator {
     super(args, opts)
     var data = fs.readFileSync(path.resolve(__dirname) + '/config.json')
     config = JSON.parse(data);
-    this.log(`\n${chalk.bold.green.underline('Welcome to ExtGenerate - The Ext JS Project Generator for NPM v0.0.1')}\n`)
+    this.log(`\n${chalk.bold.green.underline('v 0.0.3 Welcome to Sencha Generate - The Ext JS Project Generator for NPM')}\n`)
   }
 
   prompting_defaults() {
@@ -268,7 +268,7 @@ module.exports = class extends Generator {
 
   install() {
     if (this.bad == true) { return }
-    var app = require('@extjs/sencha-build/generate/app.js')
+    var app = require('@extjs/ext-build/generate/app.js')
     var options = { 
       parms: [ 'gen', 'app', this.appName, './' ],
       sdk: path.resolve(__dirname) + '/../node_modules/@extjs/ext',
@@ -278,16 +278,16 @@ module.exports = class extends Generator {
     }
     new app(options)
 
-    console.log(chalk.green('\n[INF]')+ ' NPM Install started')
-    this.installDependencies({
-      bower: false,
-      npm: true,
-      skipMessage: true
-    }).then(() => 
-      {
-        console.log(chalk.green('[INF]')+ ' NPM Install completed')
-      }
-    )
+    // console.log(chalk.green('\n[INF]')+ ' NPM Install started')
+    // this.installDependencies({
+    //   bower: false,
+    //   npm: true,
+    //   skipMessage: true
+    // }).then(() => 
+    //   {
+    //     console.log(chalk.green('[INF]')+ ' NPM Install completed')
+    //   }
+    // )
   }
 
   end() {
