@@ -515,15 +515,9 @@ export class ExtJSComponent extends Component {
 //console.log(keys)
       for (let key of keys) {
           const oldValue = oldProps[key], newValue = props[key];
-        //SK : TO BE DISCUSSED - Might have to find alternative to this
-          if (key === 'children') {
-              if(this.isHTML) {
-                  key = "html";
-                  debugger;
-              } else {
-                  continue;
-              }
-          }
+
+          if (key === 'children') continue;
+
           if (!isEqual(oldValue, newValue)) {
               const eventName = this._eventNameForProp(key);
               if (eventName) {
