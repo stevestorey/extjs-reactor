@@ -10,24 +10,20 @@ const UPDATE_SIGNAL = {};
 const ExtRenderer = ReactFiberReconciler({
 
   createInstance(type, props, internalInstanceHandle) {
-    debugger;
     let instance = null;
     const xtype = type.toLowerCase().replace(/_/g, '-')
     var extJSClass = Ext.ClassManager.getByAlias(`widget.${xtype}`)
     if (extJSClass == undefined) {
       l(`ExtRenderer: createInstance, type: ${type}, extJSClass UNDEFINED (type, props, internalInstanceHandle)`,type, props, internalInstanceHandle)
-      var reactifiedClass = reactify2('container') // could send xtype
-      instance =  new reactifiedClass(props);
-      instance.isHTML = true;
-     //instance._applyProps(instance, props)
-      
 
 
       // //create an HTML instance/class (just like below)
       // //console.log('####')
       // //console.log(type)
-      //var htmlifiedClass = htmlify2(type)
-      //instance =  new htmlifiedClass(props);
+      //SK : HTML Rendering - STEP 1 : Create HTML Instance
+      var htmlifiedClass = htmlify2(type)
+      instance =  new htmlifiedClass(props);
+      //instance = React.createElement(type, props, props.children)
       return instance
     }
     else {
@@ -40,10 +36,8 @@ const ExtRenderer = ReactFiberReconciler({
   },
 
   appendInitialChild(parentInstance, childInstance) {
-    debugger;
     if (childInstance == null) {return}  //this correct??
     //if (childInstance.cmp == undefined) {return}  //this correct??
-   // if(typeof childInstance === "string" && childInstance === " ") {return}
 
 //    if (parentInstance.xtype == 'html') {return}  //this correct??
     console.log(parentInstance)
@@ -64,14 +58,8 @@ const ExtRenderer = ReactFiberReconciler({
     //  l(`ExtRenderer: appendInitialChild, parentxtype: ${parentInstance.rawConfigs.xtype}, childxtype: ${childInstance.cmp.xtype}, (parentInstance, childInstance)`,parentInstance, childInstance)
       var parentXtype = parentInstance.xtype
       var childXtype = childInstance.xtype
-      //SK : FOR HTML
-      if (parentInstance.isHTML) {
-        if(typeof childInstance === "string" || typeof childInstance === "number") {
-          if(parentInstance.rawhtml == undefined) { parentInstance.rawhtml = "" }
-            parentInstance.rawhtml+=childInstance
-        } 
-      }
-      else if (childXtype == 'column'  ||
+
+      if (childXtype == 'column'  ||
       childXtype == 'treecolumn'  ||
       childXtype == 'textcolumn'  ||
       childXtype == 'checkcolumn' ||
@@ -101,7 +89,7 @@ const ExtRenderer = ReactFiberReconciler({
     console.log('setting collection configs and creating EXT component here')
     const xtype = type.toLowerCase().replace(/_/g, '-')
 //    if (ExtJSComponent.extJSClass != null) {
-    if (ExtJSComponent != null) {
+    if (ExtJSComponent.extJSClass != null) {
       l(`ExtRenderer: finalizeInitialChildren, type: ${type}, xtype: ${xtype}, (ExtJSComponent, props)`, ExtJSComponent,props)
       if(ExtJSComponent.rawcolumns != undefined) {
         l(`new set columns config (parent xtype,child columns)`,ExtJSComponent.rawConfigs.xtype,ExtJSComponent.rawcolumns)
@@ -121,22 +109,12 @@ const ExtRenderer = ReactFiberReconciler({
         l(`new set menu items config (parent xtype,child items)`,ExtJSComponent.rawConfigs.xtype,ExtJSComponent.rawmenuitems)
         ExtJSComponent.rawConfigs.items = ExtJSComponent.rawmenuitems
       }
-      if(ExtJSComponent.rawhtml != undefined) {
-        l(`new set htmml config (parent xtype,child items)`,ExtJSComponent.rawConfigs.xtype,ExtJSComponent.rawhtml)
-        ExtJSComponent.rawConfigs.html = ExtJSComponent.rawhtml;
-      }
 
       if (typeof(props.children) == 'string' || typeof(props.children) == 'number') {
         if(ExtJSComponent.rawhtml === undefined){
           ExtJSComponent.rawConfigs.html = props.children
-        } else {
-          ExtJSComponent.rawConfigs.html = ExtJSComponent.rawhtml + props.children
         }
-      }
 
-     //SK : TO BE DELETED
-      if(ExtJSComponent.isHTML) {
-      }
 
       console.log('right before new')
       console.log(ExtJSComponent)
@@ -144,6 +122,11 @@ const ExtRenderer = ReactFiberReconciler({
       l(`ExtRenderer: finalizeInitialChildren, type: ${type}, xtype: ${xtype}, (ExtJSComponent.rawConfigs, ExtJSComponent.cmp)`, ExtJSComponent.rawConfig, ExtJSComponent.cmp)
     }
     else {
+      //SK : HTML Rendering - STEP 2  : Create Widget and Render HTML in its DOM
+      var widget = Ext.create({xtype:'widget'})
+      ReactDOM.render(React.createElement(type, props, props.children),widget.el.dom)
+      ExtJSComponent.cmp = widget
+      l(`ExtRenderer: finalizeInitialChildren, type: ${type}, xtype: ${xtype}, ExtJSComponent == html`,ExtJSComponent)
 
 //        l(`ExtRenderer: finalizeInitialChildren, htmltype: ${ExtJSComponent.htmltype} (ExtJSComponent)`,ExtJSComponent)
 // //       console.log('@@@@')
@@ -197,10 +180,6 @@ const ExtRenderer = ReactFiberReconciler({
 //       // var configs = { ...xtypes, ...props };
 //       // var widget = Ext.create(configs)
 //       //ReactDOM.render(props.children,widget.el.dom)
-
-
-
-
     }
     console.log('')
     return true;
@@ -252,8 +231,11 @@ const ExtRenderer = ReactFiberReconciler({
 
   shouldSetTextContent(type, props) {
     //l(`shouldSetTextContent**********type,props`,type,props)
+    //SK : FOR HTML Nested Components we need to create instance for only parent so we set the text context
+    const xtype = type.toLowerCase().replace(/_/g, '-')
+    var extJSClass = Ext.ClassManager.getByAlias(`widget.${xtype}`)
     return (
-      typeof props.children === 'string' || typeof props.children === 'number'
+      typeof props.children === 'string' || typeof props.children === 'number' || extJSClass === undefined
     );
   },
 
@@ -276,20 +258,15 @@ const ExtRenderer = ReactFiberReconciler({
     },
 
     appendChildToContainer(parentInstance, childInstance) {
-      //SK : TO BE DELETED
-      if(childInstance === " "){
-        return;
-      }
       //should only be for ExtReact root component
       if (parentInstance != null && childInstance != null) {
         //l('appendChildToContainer (childInstance.target, parentInstance, childInstance)', childInstance.target, parentInstance, childInstance)
         
-        //mjg no more??doAdd(childInstance.xtype, parentInstance, childyInstance.cmp, childInstance.reactChildren)
+        //mjg no more??doAdd(childInstance.xtype, parentInstance, childInstance.cmp, childInstance.reactChildren)
 
         //this section replaces all of doAdd!!!
         var parentCmp = parentInstance
-        //SK : TO BE DELETED - MIGHT NOT HAVE TO DO STRING CHECK ANYMORE
-        var childCmp = typeof childInstance === "string" ? childInstance : childInstance.cmp
+        var childCmp = childInstance.cmp
         if (parentCmp.ExtReactRoot != true) {
           console.log('appendChildToContainer ERROR ExtReactRoot is the only one to be in do Add')
           throw error
@@ -364,7 +341,7 @@ const ExtRenderer = ReactFiberReconciler({
       l(`commitUpdate ${type} (instance, updatePayload, oldProps, newProps)`, instance, updatePayload, oldProps, newProps)
 
       if (instance._applyProps) {
-        instance._applyProps(oldProps, newProps);
+        instance._applyProps(oldProps, newProps, instance, type);
       }
       else {
         console.log('Error: _applyProps')
