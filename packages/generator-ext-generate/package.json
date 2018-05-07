@@ -1,6 +1,6 @@
 {
   "name": "@extjs/generator-ext-generate",
-  "version": "0.0.5",
+  "version": "0.0.4",
   "description": "A Yeoman generator for Ext JS apps",
   "main": "generators/index.js",
   "keywords": [
@@ -10,9 +10,9 @@
   ],
   "dependencies": {
     "@extjs/ext": "~6.6.0",
-    "@extjs/ext-build": "~0.0.4",
+    "@extjs/ext-build": "~0.0.1",
     "yeoman-generator": "^2.0.5",
-    "chalk": "^2.4.1",
+    "chalk": "^2.4.0",
     "lodash": "^4.17.10"
   },
   "scripts": {},
