@@ -1,5 +1,6 @@
 yo ../packages/generator-ext-generate
 
+yo ./generator-extjs
 
 extjs-webpack-plugin
     "glob": "^7.1.2",

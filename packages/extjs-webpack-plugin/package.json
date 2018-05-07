@@ -1,13 +1,13 @@
 {
   "name": "@extjs/extjs-webpack-plugin",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "extjs webpack plugin",
   "main": "./lib/index.js",
   "scripts": {
     "build": "babel src --out-dir lib"
   },
   "dependencies": {
-    "@extjs/sencha-build": "~0.0.1",
+    "@extjs/ext-build": "~0.0.1",
     "lodash.uniq": "^4.5.0",
     "schema-utils": "^0.4.5",
     "chalk": "^2.4.0",

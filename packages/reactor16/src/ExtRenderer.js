@@ -183,7 +183,8 @@ const ExtRenderer = ReactFiberReconciler({
     }
     console.log('')
     return true;
-  },
+  }
+},
  
   createTextInstance(text, rootContainerInstance, internalInstanceHandle) {
     //l(`createTextInstance (text, rootContainerInstance, internalInstanceHandle)`,text, rootContainerInstance, internalInstanceHandle)
