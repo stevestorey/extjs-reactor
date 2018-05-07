@@ -96,13 +96,54 @@ export default class ExtJSWebpackPlugin {
 
     if (compiler.hooks) {
 
-      console.log(compiler.hooks.emit)
+      //console.log(compiler.hooks.emit)
+      var me = this
       compiler.hooks.emit.tapAsync('extjs-emit-async', function (compilation, cb) {
         process.stdout.cursorTo(0);console.log(app + 'extjs-emit-async')
-        new buildAsync().executeAsync().then(function() {
-          console.log('then call');
-          cb();
-        })
+
+        var watchedFiles=[]
+        try {watchedFiles = recursiveReadSync('./app')} 
+        catch(err) {if(err.errno === 34){console.log('Path does not exist');} else {throw err;}}
+
+        var doBuild = false
+        for (var file in watchedFiles) {
+          if (me.lastMilliseconds < fs.statSync(watchedFiles[file]).mtimeMs) {
+            if (watchedFiles[file].indexOf("scss") != -1) {doBuild=true;break;}
+          }
+        }
+        me.lastMilliseconds = (new Date).getTime()
+
+        var currentNumFiles = watchedFiles.length
+        var filesource = 'this file enables client reload'
+        compilation.assets[currentNumFiles + 'FilesUnderAppFolder.md'] = {
+          source: function() {return filesource},
+          size: function() {return filesource.length}
+        }
+
+        if (currentNumFiles != me.lastNumFiles || doBuild) {
+
+          var buildAsync = require('@extjs/ext-build/app/buildAsync.js')
+          new buildAsync().executeAsync().then(function() {
+            cb();
+          })
+          
+          // var build = require('@extjs/ext-build/app/build.js')
+          // new build({})
+          //var refresh = require('@extjs/sencha-build/app/refresh.js')
+          //new refresh({})
+        }
+        else {
+          console.log(app + 'Call to Sencha Build not needed, no new files')
+        }
+        me.lastNumFiles = currentNumFiles
+
+
+
+
+
+
+
+
         // callP().then(function() {
         //   console.log('then');
         //   var buildAsync = require('@extjs/sencha-build/app/buildAsync.js')
@@ -112,43 +153,43 @@ export default class ExtJSWebpackPlugin {
       })
 
 
-      compiler.hooks.emit.tap('extjs-emit', (compilation) => {
-        process.stdout.cursorTo(0);console.log(app + 'extjs-emit')
+      // compiler.hooks.emit.tap('extjs-emit', (compilation) => {
+      //   process.stdout.cursorTo(0);console.log(app + 'extjs-emit')
 
-        var watchedFiles=[]
-        try {watchedFiles = recursiveReadSync('./app')} 
-        catch(err) {if(err.errno === 34){console.log('Path does not exist');} else {throw err;}}
+      //   var watchedFiles=[]
+      //   try {watchedFiles = recursiveReadSync('./app')} 
+      //   catch(err) {if(err.errno === 34){console.log('Path does not exist');} else {throw err;}}
 
-        var doBuild = false
-        for (var file in watchedFiles) {
-          if (this.lastMilliseconds < fs.statSync(watchedFiles[file]).mtimeMs) {
-            if (watchedFiles[file].indexOf("scss") != -1) {doBuild=true;break;}
-          }
-        }
-        this.lastMilliseconds = (new Date).getTime()
+      //   var doBuild = false
+      //   for (var file in watchedFiles) {
+      //     if (this.lastMilliseconds < fs.statSync(watchedFiles[file]).mtimeMs) {
+      //       if (watchedFiles[file].indexOf("scss") != -1) {doBuild=true;break;}
+      //     }
+      //   }
+      //   this.lastMilliseconds = (new Date).getTime()
 
-        var currentNumFiles = watchedFiles.length
-        var filesource = 'this file enables client reload'
-        compilation.assets[currentNumFiles + 'FilesUnderAppFolder.md'] = {
-          source: function() {return filesource},
-          size: function() {return filesource.length}
-        }
+      //   var currentNumFiles = watchedFiles.length
+      //   var filesource = 'this file enables client reload'
+      //   compilation.assets[currentNumFiles + 'FilesUnderAppFolder.md'] = {
+      //     source: function() {return filesource},
+      //     size: function() {return filesource.length}
+      //   }
 
-        if (currentNumFiles != this.lastNumFiles || doBuild) {
-          var build = require('@extjs/sencha-build/app/build.js')
-          new build({})
-          //var refresh = require('@extjs/sencha-build/app/refresh.js')
-          //new refresh({})
-        }
-        else {
-          console.log(app + 'Call to Sencha Build not needed, no new files')
-        }
-        this.lastNumFiles = currentNumFiles
-
-
+      //   if (currentNumFiles != this.lastNumFiles || doBuild) {
+      //     var build = require('@extjs/ext-build/app/build.js')
+      //     new build({})
+      //     //var refresh = require('@extjs/sencha-build/app/refresh.js')
+      //     //new refresh({})
+      //   }
+      //   else {
+      //     console.log(app + 'Call to Sencha Build not needed, no new files')
+      //   }
+      //   this.lastNumFiles = currentNumFiles
 
 
-      })
+
+
+      // })
     }
     else {
       compiler.plugin('emit', (compilation, cb) => {
@@ -158,8 +199,18 @@ export default class ExtJSWebpackPlugin {
           source: function() {return filelist},
           size: function() {return filelist.length}
         }
-        var refresh = require('@extjs/sencha-node/app/refresh.js')
+        var refresh = require('@extjs/ext-build/app/refresh.js')
         new refresh({})
+
+        // console.log('THIS IS IT')
+        // var buildAsync = require('@extjs/ext-build/app/buildAsync.js')
+        // console.log(buildAsync)
+        // new buildAsync().executeAsync().then(function() {
+        //   console.log('then call');
+        //   cb();
+        // })
+
+
         //cb()
         //this.emitStats.bind(this)
 

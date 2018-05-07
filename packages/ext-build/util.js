@@ -5,6 +5,42 @@ const sencha = require('@extjs/sencha-cmd')
 const spawnSync = require('child_process').spawnSync
 const app = `${chalk.green('ℹ ｢ext｣:')} sencha-build: `;
 
+
+// async senchaCmdAsync = (parms) => {
+
+
+
+// }
+
+// async executeAsync2(parms) {
+//   return new Promise(function(resolve, reject) {
+//     var child = spawn(sencha, parms)
+//     child.on('exit', function (code, signal) {
+//       resolve(0) 
+//     })
+//     child.stdout.on('data', (data) => {
+//       var substrings = ["[INF] Writing xcontent", '[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"]
+//       if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
+//         var str = data.toString()
+//         var s = str.replace(/\r?\n|\r/g, " ")
+//         var s2 = s.replace("[INF]", "")
+//         console.log(`${app} ${s2}`) 
+//       }
+//     })
+//     child.stderr.on('data', (data) => {
+//       var str = data.toString()
+//       var s = str.replace(/\r?\n|\r/g, " ")
+//       console.log(`${app} ${chalk.red("[ERR]")} ${s}`) 
+//     })
+//   })
+// }
+
+
+
+
+
+
+
 exports.senchaCmd = (parms) => {
   process.stdout.cursorTo(0);console.log(app + 'started - sencha ' + parms.toString().replace(/,/g , " ") + '\n')
   spawnSync(sencha, parms, { stdio: 'inherit', encoding: 'utf-8'})

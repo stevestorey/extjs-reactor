@@ -1,11 +1,11 @@
 {
   "name": "@extjs/ext-build",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "ext-build description",
   "bin": {
-    "ext-builder": "bin/ext-build.js",
+    "extjs-build": "bin/ext-build.js",
     "build": "bin/ext-build.js",
-    "sb": "bin/ext-build.js"
+    "eb": "bin/ext-build.js"
   },
   "main": "bin/ext-build.js",
   "dependencies": {
