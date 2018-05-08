@@ -21,7 +21,7 @@ npm login --registry=http://npm.sencha.com --scope=@extjs
 Then, to create a new Ext JS app, run:
 
 ```bash
-yo @extjs/ext-js
+yo @extjs/ext-generator
 ```
 
 ## Development
@@ -36,7 +36,7 @@ cd packages/generator-ext-generate
 npm link
 ```
 
-Now `yo @extjs/ext-js` will use your local copy of the generator.
+Now `yo @extjs/ext-generate` will use your local copy of the generator.
 
 ## License
 
