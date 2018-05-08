@@ -1,6 +1,6 @@
 {
-  "name": "@extjs/generator-extjs",
-  "version": "0.0.7",
+  "name": "@extjs/generator-ext-generate",
+  "version": "0.0.8",
   "description": "A Yeoman generator for Ext JS apps",
   "main": "generators/index.js",
   "keywords": [
