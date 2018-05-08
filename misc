@@ -2,6 +2,9 @@ yo ../packages/generator-ext-generate
 
 yo ./generator-extjs
 
+npm deprecate @extjs/sencha-build@"< 0.0.5" "name changed to @extjs/ext-build"
+
+
 extjs-webpack-plugin
     "glob": "^7.1.2",
     "is-glob": "^4.0.0",

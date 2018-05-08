@@ -3,7 +3,7 @@
   "version": "0.0.6",
   "description": "ext-build description",
   "bin": {
-    "extjs-build": "bin/ext-build.js",
+    "ext-build": "bin/ext-build.js",
     "build": "bin/ext-build.js",
     "eb": "bin/ext-build.js"
   },

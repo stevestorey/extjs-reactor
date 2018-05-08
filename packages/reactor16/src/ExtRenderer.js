@@ -6,7 +6,7 @@ import ReactFiberReconciler from 'react-reconciler';
 import invariant from 'fbjs/lib/invariant';
 import emptyObject from 'fbjs/lib/emptyObject';
 const UPDATE_SIGNAL = {};
-
+//mjg
 const ExtRenderer = ReactFiberReconciler({
 
   createInstance(type, props, internalInstanceHandle) {
