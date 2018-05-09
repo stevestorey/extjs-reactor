@@ -1,17 +1,17 @@
 {
-  "name": "@extjs/ext-gen",
-  "version": "0.0.14",
+  "name": "ext-gen",
+  "version": "0.0.15",
   "description": "A generator for Ext JS apps in NPM",
-  "main": "bin/index.js",
   "bin": {
-    "ext-gen": "bin/index.js",
-    "ExtGen": "bin/index.js",
-    "eg": "bin/index.js"
+    "ext-gen": "bin/ext-gen.js",
+    "ExtGen": "bin/ext-gen.js",
+    "eg": "bin/ext-gen.js"
   },
   "keywords": [
     "Ext JS",
     "ExtGen"
   ],
+  "preferGlobal": true,
   "dependencies": {},
   "devDependencies": {
     "fs-extra": "^6.0.0",
