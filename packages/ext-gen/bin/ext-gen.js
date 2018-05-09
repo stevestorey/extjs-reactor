@@ -1,15 +1,16 @@
-#!/usr/bin/env node
+#! /usr/bin/env node
+
 const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs-extra');
 const { kebabCase, pick } = require('lodash')
-require('./XTemplate/js/Ext.js');
-require('./XTemplate/js/String.js');
-require('./XTemplate/js/Format.js');
-require('./XTemplate/js/Template.js');
-require('./XTemplate/js/XTemplateParser.js');
-require('./XTemplate/js/XTemplateCompiler.js');
-require('./XTemplate/js/XTemplate.js');
+require('../XTemplate/js/Ext.js');
+require('../XTemplate/js/String.js');
+require('../XTemplate/js/Format.js');
+require('../XTemplate/js/Template.js');
+require('../XTemplate/js/XTemplateParser.js');
+require('../XTemplate/js/XTemplateCompiler.js');
+require('../XTemplate/js/XTemplate.js');
 var config = {}
 var version
 
