@@ -1,6 +1,6 @@
 {
-  "name": "ext-gen",
-  "version": "0.0.15",
+  "name": "@extjs/ext-gen",
+  "version": "0.0.16",
   "description": "A generator for Ext JS apps in NPM",
   "bin": {
     "ext-gen": "bin/ext-gen.js",
@@ -11,9 +11,11 @@
     "Ext JS",
     "ExtGen"
   ],
+  "directories": {
+    "lib": "lib"
+  },
   "preferGlobal": true,
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "fs-extra": "^6.0.0",
     "@extjs/ext-build": "~0.0.1",
     "chalk": "^2.4.1",
