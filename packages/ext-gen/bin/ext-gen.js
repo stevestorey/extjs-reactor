@@ -232,7 +232,8 @@ function stepCreate() {
   //   console.log(`${key} - ${answers[key]}`)
   // }
 
-  var currDir = path.resolve(__dirname)
+  var nodeDir = path.resolve(__dirname)
+  var currDir = process.cwd()
   var destDir = currDir + '/' + answers['packageName']
   if (fs.existsSync(destDir)){
     console.log(`${chalk.red('Error: folder ' + destDir + ' exists')}`)
@@ -256,14 +257,14 @@ function stepCreate() {
     description: answers['description'],
   }
   //console.log(values)
-  var file = currDir + '/templates/package.json.tpl.default'
+  var file = nodeDir + '/templates/package.json.tpl.default'
   var content = fs.readFileSync(file).toString()
   var tpl = new Ext.XTemplate(content)
   var t = tpl.apply(values)
   tpl = null
   //console.log(t)
   fs.writeFileSync(destDir + '/package.json', t);
-  var file = path.resolve(__dirname) + '/templates/webpack.config.js.tpl.default'
+  var file = nodeDir + '/templates/webpack.config.js.tpl.default'
   var content = fs.readFileSync(file).toString()
   var tpl = new Ext.XTemplate(content)
   var t = tpl.apply(values)
