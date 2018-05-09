@@ -1,6 +1,6 @@
 {
   "name": "@extjs/ext-webpack-plugin",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "ext webpack plugin",
   "main": "./lib/index.js",
   "scripts": {
