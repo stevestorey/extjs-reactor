@@ -95,8 +95,6 @@ export default class ExtJSWebpackPlugin {
     }
 
     if (compiler.hooks) {
-
-      //console.log(compiler.hooks.emit)
       var me = this
       compiler.hooks.emit.tapAsync('extjs-emit-async', function (compilation, cb) {
         process.stdout.cursorTo(0);console.log(app + 'extjs-emit-async')
@@ -121,10 +119,10 @@ export default class ExtJSWebpackPlugin {
         }
 
         if (currentNumFiles != me.lastNumFiles || doBuild) {
-
+          me.lastNumFiles = currentNumFiles
           var buildAsync = require('@extjs/ext-build/app/buildAsync.js')
           new buildAsync().executeAsync().then(function() {
-            cb();
+            cb()
           })
           
           // var build = require('@extjs/ext-build/app/build.js')
@@ -133,23 +131,10 @@ export default class ExtJSWebpackPlugin {
           //new refresh({})
         }
         else {
-          console.log(app + 'Call to Sencha Build not needed, no new files')
+          me.lastNumFiles = currentNumFiles
+          console.log(app + 'Call to ExtBuild not needed, no new files')
+          cb()
         }
-        me.lastNumFiles = currentNumFiles
-
-
-
-
-
-
-
-
-        // callP().then(function() {
-        //   console.log('then');
-        //   var buildAsync = require('@extjs/sencha-build/app/buildAsync.js')
-        //   new buildAsync().executeAsync()
-        //   cb();
-        // })
       })
 
 

@@ -42,7 +42,7 @@ class buildAsync {
         resolve(0) 
       })
       child.stdout.on('data', (data) => {
-        var substrings = ["[INF] Writing content", '[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"]
+        var substrings = ["[INF] Writing contentx", '[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"]
         if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
           var str = data.toString()
           var s = str.replace(/\r?\n|\r/g, " ")
