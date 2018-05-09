@@ -4,13 +4,13 @@ const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs-extra');
 const { kebabCase, pick } = require('lodash')
-require('../XTemplate/js/Ext.js');
-require('../XTemplate/js/String.js');
-require('../XTemplate/js/Format.js');
-require('../XTemplate/js/Template.js');
-require('../XTemplate/js/XTemplateParser.js');
-require('../XTemplate/js/XTemplateCompiler.js');
-require('../XTemplate/js/XTemplate.js');
+require('./XTemplate/js/Ext.js');
+require('./XTemplate/js/String.js');
+require('./XTemplate/js/Format.js');
+require('./XTemplate/js/Template.js');
+require('./XTemplate/js/XTemplateParser.js');
+require('./XTemplate/js/XTemplateCompiler.js');
+require('./XTemplate/js/XTemplate.js');
 var config = {}
 var version
 
@@ -39,9 +39,10 @@ var answers = {
 step00()
 
 function step00() {
-  var pkg = (fs.existsSync('package.json') && JSON.parse(fs.readFileSync('package.json', 'utf-8')) || {});
+  var nodeDir = path.resolve(__dirname)
+  var pkg = (fs.existsSync('../package.json') && JSON.parse(fs.readFileSync('../package.json', 'utf-8')) || {});
   version = pkg.version
-  var data = fs.readFileSync(path.resolve(__dirname) + '/config.json')
+  var data = fs.readFileSync(nodeDir + '/config.json')
   config = JSON.parse(data);
   console.log(chalk.bold.green(`\nSencha ExtGen ${version} (The Ext JS Project Generator for NPM)`))
   step01()
@@ -144,55 +145,66 @@ function step07() {
 
 function step08() {
   new Input({
-    message: 'What is the GIT repository URL?',
-    default: config.gitRepositoryURL
+    message: 'What is the description?',
+    default: config.description
   }).run().then(answer => { 
-    answers['gitRepositoryURL'] = answer
+    answers['description'] = answer
     step09()
   })
 }
 
+
 function step09() {
   new Input({
-    message: 'What are the NPM keywords?',
-    default: config.keywords
+    message: 'What is the GIT repository URL?',
+    default: config.gitRepositoryURL
   }).run().then(answer => { 
-    answers['keywords'] = answer
+    answers['gitRepositoryURL'] = answer
     step10()
   })
 }
 
 function step10() {
   new Input({
-    message: `What is the Author's Name?`,
-    default: config.author
+    message: 'What are the NPM keywords?',
+    default: config.keywords
   }).run().then(answer => { 
-    answers['author'] = answer
+    answers['keywords'] = answer
     step11()
   })
 }
 
 function step11() {
   new Input({
-    message: 'What type of License does this project need?',
-    default: config.license
+    message: `What is the Author's Name?`,
+    default: config.author
   }).run().then(answer => { 
-    answers['license'] = answer
+    answers['author'] = answer
     step12()
   })
 }
 
 function step12() {
   new Input({
-    message: 'What is the URL to submit bugsURL?',
-    default: config.bugsURL
+    message: 'What type of License does this project need?',
+    default: config.license
   }).run().then(answer => { 
-    answers['bugsURL'] = answer
+    answers['license'] = answer
     step13()
   })
 }
 
 function step13() {
+  new Input({
+    message: 'What is the URL to submit bugsURL?',
+    default: config.bugsURL
+  }).run().then(answer => { 
+    answers['bugsURL'] = answer
+    step14()
+  })
+}
+
+function step14() {
   new Input({
     message: 'What is the Home Page URL?',
     default: config.homepageURL
@@ -205,8 +217,7 @@ function step13() {
 function step99() {
   if (answers['template'] == null) {
     if (!fs.existsSync(answers['templateFolderName'])) {
-      //this.bad = true
-      //this.template = 'folder'
+      answers['template'] = 'folder'
       console.log('Error, Template folder does not exist - ' + answers['templateFolderName'])
       return
     }
@@ -231,19 +242,16 @@ function stepCreate() {
   // for (var key in answers) {
   //   console.log(`${key} - ${answers[key]}`)
   // }
-
   var nodeDir = path.resolve(__dirname)
   var currDir = process.cwd()
   var destDir = currDir + '/' + answers['packageName']
   if (fs.existsSync(destDir)){
     console.log(`${chalk.red('Error: folder ' + destDir + ' exists')}`)
-    fs.removeSync(destDir)
-//    return
+    //fs.removeSync(destDir)
+    return
   }
   fs.mkdirSync(destDir);
   process.chdir(destDir)
-  //console.log(process.cwd())
-
   var values = {
     appName: answers['appName'],
     packageName: answers['packageName'],
@@ -256,13 +264,11 @@ function stepCreate() {
     homepageURL: answers['homepageURL'],
     description: answers['description'],
   }
-  //console.log(values)
   var file = nodeDir + '/templates/package.json.tpl.default'
   var content = fs.readFileSync(file).toString()
   var tpl = new Ext.XTemplate(content)
   var t = tpl.apply(values)
   tpl = null
-  //console.log(t)
   fs.writeFileSync(destDir + '/package.json', t);
   var file = nodeDir + '/templates/webpack.config.js.tpl.default'
   var content = fs.readFileSync(file).toString()
