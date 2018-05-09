@@ -40,7 +40,7 @@ step00()
 
 function step00() {
   var nodeDir = path.resolve(__dirname)
-  var pkg = (fs.existsSync('../package.json') && JSON.parse(fs.readFileSync('../package.json', 'utf-8')) || {});
+  var pkg = (fs.existsSync(nodeDir + '/package.json') && JSON.parse(fs.readFileSync(nodeDir + '/package.json', 'utf-8')) || {});
   version = pkg.version
   var data = fs.readFileSync(nodeDir + '/config.json')
   config = JSON.parse(data);
@@ -239,9 +239,7 @@ function step99() {
 }
 
 function stepCreate() {
-  // for (var key in answers) {
-  //   console.log(`${key} - ${answers[key]}`)
-  // }
+  // for (var key in answers) { console.log(`${key} - ${answers[key]}`) }
   var nodeDir = path.resolve(__dirname)
   var currDir = process.cwd()
   var destDir = currDir + '/' + answers['packageName']
