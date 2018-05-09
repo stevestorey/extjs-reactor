@@ -1,6 +1,6 @@
 {
   "name": "@extjs/ext-build",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "ext-build description",
   "bin": {
     "ext-build": "bin/ext-build.js",
