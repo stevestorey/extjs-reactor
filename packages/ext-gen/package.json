@@ -1,12 +1,12 @@
 {
   "name": "@extjs/ext-gen",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "A generator for Ext JS apps in NPM",
-  "main": "index.js",
+  "main": "bin/index.js",
   "bin": {
-    "ext-gen": "index.js",
-    "ExtGen": "index.js",
-    "eg": "index.js"
+    "ext-gen": "bin/index.js",
+    "ExtGen": "bin/index.js",
+    "eg": "bin/index.js"
   },
   "keywords": [
     "Ext JS",
