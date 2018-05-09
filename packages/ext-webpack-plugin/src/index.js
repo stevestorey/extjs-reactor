@@ -3,12 +3,9 @@ import fs from 'fs';
 import validateOptions from 'schema-utils';
 import uniq from 'lodash.uniq';
 import isGlob from 'is-glob';
-//import glob from 'glob';
 import { resolve } from 'path';
 import recursiveReadSync from 'recursive-readdir-sync';
-//const recursiveReadSync = require('recursive-readdir-sync')
-
-const app = `${chalk.green('ℹ ｢ext｣:')} extjs-webpack-plugin: `;
+const app = `${chalk.green('ℹ ｢ext｣:')} ext-webpack-plugin: `;
 
 function getFileAndContextDeps(compilation, files, dirs, cwd) {
   const { fileDependencies, contextDependencies } = compilation;
@@ -25,14 +22,14 @@ function getFileAndContextDeps(compilation, files, dirs, cwd) {
 }
 
 
-function callP() {
-  return new Promise(function(resolve, reject) {
-    setTimeout(function(){ resolve(0) }, 5000);
-  })
-}
+// function callP() {
+//   return new Promise(function(resolve, reject) {
+//     setTimeout(function(){ resolve(0) }, 5000);
+//   })
+// }
 
 
-export default class ExtJSWebpackPlugin {
+export default class ExtWebpackPlugin {
   static defaults = {
     cwd: process.cwd(),
     files: [],
@@ -41,17 +38,20 @@ export default class ExtJSWebpackPlugin {
 
   constructor(options = {}) {
     validateOptions(require('../options.json'), options, 'ExtraWatchWebpackPlugin'); // eslint-disable-line
-    this.options = { ...ExtJSWebpackPlugin.defaults, ...options };
+    this.options = { ...ExtWebpackPlugin.defaults, ...options };
   }
 
   apply(compiler) {
 
     if (this.webpackVersion == undefined) {
+      var pkg = (fs.existsSync('../package.json') && JSON.parse(fs.readFileSync('../package.json', 'utf-8')) || {});
+      var version = pkg.version
+  
       const isWebpack4 = compiler.hooks;
       if (isWebpack4) {this.webpackVersion = 'IS webpack 4'}
       else {this.webpackVersion = 'NOT webpack 4'}
-      this.extjsVersion = '6.5.3'
-      process.stdout.cursorTo(0);console.log(app + 'Ext JS v' + this.extjsVersion + ', ' + this.webpackVersion)
+      this.extVersion = '6.5.3'
+      process.stdout.cursorTo(0);console.log(app + 'v' + version + '. Ext JS v' + this.extVersion + ', ' + this.webpackVersion)
     }
 
     let { files, dirs } = this.options;
@@ -60,8 +60,8 @@ export default class ExtJSWebpackPlugin {
     dirs = typeof dirs === 'string' ? [dirs] : dirs;
 
     if (compiler.hooks) {
-      compiler.hooks.afterCompile.tap('extjs-after-compile', (compilation) => {
-        process.stdout.cursorTo(0);console.log(app + 'extjs-after-compile')
+      compiler.hooks.afterCompile.tap('ext-after-compile', (compilation) => {
+        process.stdout.cursorTo(0);console.log(app + 'ext-after-compile')
         const {
           fileDependencies,
           contextDependencies,
@@ -96,8 +96,8 @@ export default class ExtJSWebpackPlugin {
 
     if (compiler.hooks) {
       var me = this
-      compiler.hooks.emit.tapAsync('extjs-emit-async', function (compilation, cb) {
-        process.stdout.cursorTo(0);console.log(app + 'extjs-emit-async')
+      compiler.hooks.emit.tapAsync('ext-emit-async', function (compilation, cb) {
+        process.stdout.cursorTo(0);console.log(app + 'ext-emit-async')
 
         var watchedFiles=[]
         try {watchedFiles = recursiveReadSync('./app')} 
@@ -127,7 +127,7 @@ export default class ExtJSWebpackPlugin {
           
           // var build = require('@extjs/ext-build/app/build.js')
           // new build({})
-          //var refresh = require('@extjs/sencha-build/app/refresh.js')
+          //var refresh = require('@extjs/ext-build/app/refresh.js')
           //new refresh({})
         }
         else {
@@ -138,8 +138,8 @@ export default class ExtJSWebpackPlugin {
       })
 
 
-      // compiler.hooks.emit.tap('extjs-emit', (compilation) => {
-      //   process.stdout.cursorTo(0);console.log(app + 'extjs-emit')
+      compiler.hooks.emit.tap('ext-emit', (compilation) => {
+        process.stdout.cursorTo(0);console.log(app + 'extjs-emit')
 
       //   var watchedFiles=[]
       //   try {watchedFiles = recursiveReadSync('./app')} 
@@ -174,7 +174,7 @@ export default class ExtJSWebpackPlugin {
 
 
 
-      // })
+      })
     }
     else {
       compiler.plugin('emit', (compilation, cb) => {
