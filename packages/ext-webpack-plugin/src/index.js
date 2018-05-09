@@ -21,14 +21,6 @@ function getFileAndContextDeps(compilation, files, dirs, cwd) {
   };
 }
 
-
-// function callP() {
-//   return new Promise(function(resolve, reject) {
-//     setTimeout(function(){ resolve(0) }, 5000);
-//   })
-// }
-
-
 export default class ExtWebpackPlugin {
   static defaults = {
     cwd: process.cwd(),
@@ -132,14 +124,14 @@ export default class ExtWebpackPlugin {
         }
         else {
           me.lastNumFiles = currentNumFiles
-          console.log(app + 'Call to ExtBuild not needed, no new files')
+          console.log(app + 'call to ext-build not needed, no new files')
           cb()
         }
       })
 
 
-      compiler.hooks.emit.tap('ext-emit', (compilation) => {
-        process.stdout.cursorTo(0);console.log(app + 'extjs-emit')
+//      compiler.hooks.emit.tap('ext-emit', (compilation) => {
+//        process.stdout.cursorTo(0);console.log(app + 'ext-emit')
 
       //   var watchedFiles=[]
       //   try {watchedFiles = recursiveReadSync('./app')} 
@@ -171,10 +163,7 @@ export default class ExtWebpackPlugin {
       //   }
       //   this.lastNumFiles = currentNumFiles
 
-
-
-
-      })
+//      })
     }
     else {
       compiler.plugin('emit', (compilation, cb) => {
