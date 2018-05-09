@@ -1,11 +1,17 @@
 {
-  "name": "my-app",
-  "version": "0.0.1",
-  "description": "my-app description for Ext JS app MyApp",
-  "scripts": {
-    "start": "webpack-dev-server -w --progress",
-    "fix": "cp -R ../fashion/node_modules node_modules/@extjs/sencha-cmd/dist/js/node_modules/fashion"
+  "name": "@extjs/ext-gen",
+  "version": "0.0.11",
+  "description": "A generator for Ext JS apps in NPM",
+  "main": "index.js",
+  "bin": {
+    "ext-gen": "index.js",
+    "ExtGen": "index.js",
+    "eg": "index.js"
   },
+  "keywords": [
+    "Ext JS",
+    "ExtGen"
+  ],
   "dependencies": {},
   "devDependencies": {
     "fs-extra": "^6.0.0",
@@ -20,11 +26,6 @@
     "type": "git",
     "url": "https://github.com/"
   },
-  "keywords": [
-    "Ext JS",
-    "Sencha",
-    "HTML5"
-  ],
   "author": "Sencha, Inc.",
   "license": "ISC",
   "bugs": {
