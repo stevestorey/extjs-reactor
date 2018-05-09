@@ -10,10 +10,10 @@ class buildAsync {
 
   async executeAsync() {
     var me = this
-    console.log(`${app} start`) 
+    //console.log(`${app} start`) 
     return new Promise(function(resolve, reject) {
       var parms = ['app','build','development']
-      console.log(`${app} passing to 'sencha app build development'`) 
+      console.log(`${app}  passing to 'sencha app build development'`) 
 
 
 
@@ -26,7 +26,7 @@ class buildAsync {
 
 
       me.executeAsync2(parms).then(function() {
-        console.log(`${app} in execAsync2`) 
+//        console.log(`${app} in execAsync2`) 
         resolve(0)
       })
 
@@ -53,7 +53,7 @@ class buildAsync {
       child.stderr.on('data', (data) => {
         var str = data.toString()
         var s = str.replace(/\r?\n|\r/g, " ")
-        console.log(`${app} ${chalk.red("[ERR]")} ${s}`) 
+        console.log(`${app} ${chalk.black(" [ERR]")} ${s}`) 
       })
     })
   }
