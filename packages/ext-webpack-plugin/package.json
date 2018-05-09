@@ -1,5 +1,5 @@
 {
-  "name": "@extjs/extjs-webpack-plugin",
+  "name": "@extjs/ext-webpack-plugin",
   "version": "0.0.12",
   "description": "extjs webpack plugin",
   "main": "./lib/index.js",

@@ -10,7 +10,7 @@
     "@extjs/ext": "^6.6.0"
   },
   "devDependencies": {
-    "@extjs/extjs-webpack-plugin": "~0.0.1",
+    "@extjs/ext-webpack-plugin": "~0.0.1",
     "open-browser-webpack-plugin": "^0.0.5",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
