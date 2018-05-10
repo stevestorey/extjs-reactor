@@ -1,15 +1,16 @@
 {
   "name": "@extjs/ext-build",
-  "version": "0.0.6",
+  "version": "0.0.27",
   "description": "ext-build description",
   "bin": {
-    "extjs-build": "bin/ext-build.js",
+    "ext-build": "bin/ext-build.js",
     "build": "bin/ext-build.js",
     "eb": "bin/ext-build.js"
   },
   "main": "bin/ext-build.js",
   "dependencies": {
     "@extjs/sencha-cmd": "6.5.3",
+    "@extjs/ext": "6.6.0",
     "chalk": "^2.4.0",
     "child-process-promise": "^2.2.1",
     "intercept-stdout": "^0.1.2",

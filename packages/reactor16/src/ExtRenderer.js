@@ -6,7 +6,7 @@ import ReactFiberReconciler from 'react-reconciler';
 import invariant from 'fbjs/lib/invariant';
 import emptyObject from 'fbjs/lib/emptyObject';
 const UPDATE_SIGNAL = {};
-
+//mjg
 const ExtRenderer = ReactFiberReconciler({
 
   createInstance(type, props, internalInstanceHandle) {
@@ -88,7 +88,6 @@ const ExtRenderer = ReactFiberReconciler({
   finalizeInitialChildren(ExtJSComponent, type, props) {
     console.log('setting collection configs and creating EXT component here')
     const xtype = type.toLowerCase().replace(/_/g, '-')
-//    if (ExtJSComponent.extJSClass != null) {
     if (ExtJSComponent.extJSClass != null) {
       l(`ExtRenderer: finalizeInitialChildren, type: ${type}, xtype: ${xtype}, (ExtJSComponent, props)`, ExtJSComponent,props)
       if(ExtJSComponent.rawcolumns != undefined) {
@@ -111,9 +110,10 @@ const ExtRenderer = ReactFiberReconciler({
       }
 
       if (typeof(props.children) == 'string' || typeof(props.children) == 'number') {
-        if(ExtJSComponent.rawhtml === undefined){
+        if(ExtJSComponent.rawhtml === undefined) {
           ExtJSComponent.rawConfigs.html = props.children
         }
+      }
 
 
       console.log('right before new')
@@ -127,7 +127,7 @@ const ExtRenderer = ReactFiberReconciler({
       ReactDOM.render(React.createElement(type, props, props.children),widget.el.dom)
       ExtJSComponent.cmp = widget
       l(`ExtRenderer: finalizeInitialChildren, type: ${type}, xtype: ${xtype}, ExtJSComponent == html`,ExtJSComponent)
-
+    }
 //        l(`ExtRenderer: finalizeInitialChildren, htmltype: ${ExtJSComponent.htmltype} (ExtJSComponent)`,ExtJSComponent)
 // //       console.log('@@@@')
 // //       console.log(ExtJSComponent.htmltype)
@@ -180,7 +180,6 @@ const ExtRenderer = ReactFiberReconciler({
 //       // var configs = { ...xtypes, ...props };
 //       // var widget = Ext.create(configs)
 //       //ReactDOM.render(props.children,widget.el.dom)
-    }
     console.log('')
     return true;
   }

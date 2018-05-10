@@ -1,0 +1,37 @@
+{
+  "name": "@extjs/ext-gen",
+  "version": "0.0.27",
+  "description": "A generator for Ext JS apps in NPM",
+  "bin": {
+    "ext-gen": "ext-gen.js",
+    "ExtGen": "ext-gen.js",
+    "eg": "ext-gen.js"
+  },
+  "keywords": [
+    "Ext JS",
+    "ExtGen"
+  ],
+  "directories": {
+    "lib": "lib"
+  },
+  "preferGlobal": true,
+  "dependencies": {
+    "fs-extra": "^6.0.0",
+    "@extjs/ext-build": "~0.0.1",
+    "chalk": "^2.4.1",
+    "lodash": "^4.17.10",
+    "prompt-list": "^3.1.2",
+    "prompt-input": "^3.0.0",
+    "prompt-confirm": "^1.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/"
+  },
+  "author": "Sencha, Inc.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/"
+  },
+  "homepage": "http://www.sencha.com"
+}
