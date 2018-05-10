@@ -1,20 +1,29 @@
-# sencha-build
+# ext-build
 
 Sencha Cmd functionality in Node
 
+## Installation
+
+Install [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+
+```bash
+npm install -g @extjs/ext-build
+```
+
+
 ## Command line help
-* sencha-build
-* sn
+* ext-build
+* eb
 
 ## Examples
-* sencha-node generate app --sdk 'Ext/ext-6.5.2' --template 'universalmodern' MyApp ./MyApp
-* sencha-node gen app -s 'Ext/ext-6.5.2' -t 'universalmodern' MyApp ./MyApp
-* sn g a -s 'Ext/ext-6.5.2' -t 'universalmodern' MyApp ./MyApp
-* sencha-node generate viewpackage settings
+* ext-build generate app --sdk 'Ext/ext-6.6.0' --template 'universalmodern' MyApp ./MyApp
+* ext-build gen app -s 'Ext/ext-6.6.0' -t 'universalmodern' MyApp ./MyApp
+* eb g a -s 'Ext/ext-6.6.0' -t 'universalmodern' MyApp ./MyApp
+* ext-build generate viewpackage settings
 
 ## Commands Available
-* sencha-node generate app (name) (path)
-* sencha-node generate viewpackage (view)
+* ext-build generate app (name) (path)
+* ext-build generate viewpackage (view)
 
 ## Commands Options
 * generate, gen, g
@@ -29,4 +38,4 @@ Sencha Cmd functionality in Node
 * --template -t (name of app template to use - only one currently - universalmodern)
 
 ## Comments
-* Tested with Ext JS Version 6.5.2 modern toolkit
+* Tested with Ext JS Version 6.6.0
