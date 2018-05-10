@@ -1,7 +1,7 @@
 {
   "name": "@extjs/ext-webpack-plugin",
   "version": "0.0.27",
-  "description": "ext webpack plugin",
+  "description": "A webpack plugin for new EXTJS applications",
   "main": "./lib/index.js",
   "scripts": {
     "build": "babel src --out-dir lib"
@@ -38,10 +38,10 @@
     "url": "git+https://github.com/sencha/extjs-reactor"
   },
   "keywords": ["webpack","webpack-plugin","EXT JS", "Sencha"],
-  "author": "mgusmano@yahoo.com",
+  "author": "Sencha, Inc.",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sencha"
   },
-  "homepage": "https://github.com/sencha#readme"
+  "homepage": "https://github.com/sencha/extjs-reactor/tree/master/packages/ext-webpack-plugin"
 }

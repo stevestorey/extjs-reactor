@@ -2,13 +2,13 @@ var chalk = require('chalk');
 exports.infoText = `
 
 3 ways to invoke:
-${chalk.green('*')} extjs-build
+${chalk.green('*')} ext-build
 ${chalk.green('*')} build
 ${chalk.green('*')} eb
 
 Examples (replace --sdk with your path to the Ext JS sdk):
 ${chalk.green('*')} build generate app --sdk '/Users/marcgusmano/aaExt/ext-6.5.3' --template 'universalmodern' MyApp ./MyApp
-${chalk.green('*')} extjs-build generate app --template 'moderndesktop' --sdk '/Users/marcgusmano/aaExt/ext-6.5.3' ModernDesktop ./ModernDesktop
+${chalk.green('*')} ext-build generate app --template 'moderndesktop' --sdk '/Users/marcgusmano/aaExt/ext-6.5.3' ModernDesktop ./ModernDesktop
 ${chalk.green('*')} eb generate app --template 'classicdesktop' --sdk '/Users/marcgusmano/aaExt/ext-6.5.3' ClassicDesktop ./ClassicDesktop
 ${chalk.green('*')} eb generate app --template 'universalmodernclassic' --sdk '/Users/marcgusmano/aaExt/ext-6.5.3' UMC ./UMC
 ${chalk.green('*')} eb gen app -s '/Users/marcgusmano/aaExt/ext-6.5.3' -t 'universalmodern' MyApp ./MyApp

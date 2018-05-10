@@ -26,10 +26,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/"
+    "url": "git+https://github.com/sencha/extjs-reactor.git"
   },
   "author": "Sencha, Inc.",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/"
   },
