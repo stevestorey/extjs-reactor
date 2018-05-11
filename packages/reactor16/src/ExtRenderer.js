@@ -182,7 +182,7 @@ const ExtRenderer = ReactFiberReconciler({
 //       //ReactDOM.render(props.children,widget.el.dom)
     console.log('')
     return true;
-  }
+//  }
 },
  
   createTextInstance(text, rootContainerInstance, internalInstanceHandle) {
