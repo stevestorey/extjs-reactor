@@ -1,6 +1,6 @@
 {
   "name": "@extjs/ext-gen",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "description": "A generator for Ext JS apps in NPM",
   "bin": {
     "ext-gen": "ext-gen.js",
@@ -26,10 +26,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/"
+    "url": "git+https://github.com/sencha/extjs-reactor.git"
   },
   "author": "Sencha, Inc.",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/"
   },

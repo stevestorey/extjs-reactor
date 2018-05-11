@@ -2,24 +2,24 @@ var chalk = require('chalk');
 exports.infoText = `
 
 3 ways to invoke:
-${chalk.green('*')} sencha-build
+${chalk.green('*')} ext-build
 ${chalk.green('*')} build
-${chalk.green('*')} sb
+${chalk.green('*')} eb
 
 Examples (replace --sdk with your path to the Ext JS sdk):
 ${chalk.green('*')} build generate app --sdk '/Users/marcgusmano/aaExt/ext-6.5.3' --template 'universalmodern' MyApp ./MyApp
-${chalk.green('*')} sencha-build generate app --template 'moderndesktop' --sdk '/Users/marcgusmano/aaExt/ext-6.5.3' ModernDesktop ./ModernDesktop
-${chalk.green('*')} sb generate app --template 'classicdesktop' --sdk '/Users/marcgusmano/aaExt/ext-6.5.3' ClassicDesktop ./ClassicDesktop
-${chalk.green('*')} sb generate app --template 'universalmodernclassic' --sdk '/Users/marcgusmano/aaExt/ext-6.5.3' UMC ./UMC
-${chalk.green('*')} sb gen app -s '/Users/marcgusmano/aaExt/ext-6.5.3' -t 'universalmodern' MyApp ./MyApp
-${chalk.green('*')} sb g a -s '/Users/marcgusmano/aaExt/ext-6.5.3' -t 'universalmodern' MyApp ./MyApp
-${chalk.green('*')} sb generate viewpackage settings
-${chalk.green('*')} sb generate storepackage employee
+${chalk.green('*')} ext-build generate app --template 'moderndesktop' --sdk '/Users/marcgusmano/aaExt/ext-6.5.3' ModernDesktop ./ModernDesktop
+${chalk.green('*')} eb generate app --template 'classicdesktop' --sdk '/Users/marcgusmano/aaExt/ext-6.5.3' ClassicDesktop ./ClassicDesktop
+${chalk.green('*')} eb generate app --template 'universalmodernclassic' --sdk '/Users/marcgusmano/aaExt/ext-6.5.3' UMC ./UMC
+${chalk.green('*')} eb gen app -s '/Users/marcgusmano/aaExt/ext-6.5.3' -t 'universalmodern' MyApp ./MyApp
+${chalk.green('*')} eb g a -s '/Users/marcgusmano/aaExt/ext-6.5.3' -t 'universalmodern' MyApp ./MyApp
+${chalk.green('*')} eb generate viewpackage settings
+${chalk.green('*')} eb generate storepackage employee
 
 Commands Available
-${chalk.green('*')} sb generate app (name) (path)
-${chalk.green('*')} sb generate viewpackage (view)
-${chalk.green('*')} sb generate storepackage (store)
+${chalk.green('*')} eb generate app (name) (path)
+${chalk.green('*')} eb generate viewpackage (view)
+${chalk.green('*')} eb generate storepackage (store)
 
 Commands Options
 ${chalk.green('*')} generate, gen, g

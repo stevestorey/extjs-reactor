@@ -1,7 +1,7 @@
 {
   "name": "@extjs/ext-build",
-  "version": "0.0.27",
-  "description": "ext-build description",
+  "version": "0.0.28",
+  "description": "Sencha CMD in node",
   "bin": {
     "ext-build": "bin/ext-build.js",
     "build": "bin/ext-build.js",
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/"
+    "url": "git+https://github.com/sencha/extjs-reactor.git"
   },
   "directories": {
     "lib": "lib"
@@ -30,6 +30,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Marc Gusmano <mgusmano@yahoo.com> (http://MarcGusmano.com)",
-  "license": "MIT"
+  "author": "Sencha, Inc.",
+  "license": "MIT",
+  "homepage": "https://github.com/sencha/extjs-reactor/tree/master/packages/ext-build"
 }
