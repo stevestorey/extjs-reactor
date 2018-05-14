@@ -13,24 +13,18 @@ class buildAsync {
     //console.log(`${app} start`) 
     return new Promise(function(resolve, reject) {
       var parms = ['app','build','development']
-      console.log(`${app}  passing to 'sencha app build development'`) 
+      console.log(`${app}  passing to 'sencha app build development'`);
 
-
-
-
-      // util.senchaCmdAsync(parms).then(function() {
-      //   console.log(`${app} in execAsync2`) 
+      // me.executeAsync2(parms).then(function() {
       //   resolve(0)
       // })
 
-
-
-      me.executeAsync2(parms).then(function() {
-//        console.log(`${app} in execAsync2`) 
-        resolve(0)
-      })
-
-
+      try {
+        await util.senchaCmdAsync(parms);
+        resolve(0);
+      } catch(err) {
+        console.log(`${app} ${chalk.red(" [ERR]")} ${err}`) ;
+      }
 
     })
   }
