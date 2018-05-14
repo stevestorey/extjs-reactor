@@ -1,12 +1,13 @@
-yo ../packages/generator-ext-generate
+npm install -g @extjs/ext-gen
 
-yo ./generator-extjs
+git fetch upstream
+git merge upstream/2.0.x-dev
+
+
+
 
 npm deprecate @extjs/sencha-build@"< 0.0.5" "name changed to @extjs/ext-build"
-
     "fix": "cp -R ../fashion/node_modules node_modules/@extjs/sencha-cmd/dist/js/node_modules/fashion"
-
-
 
 extjs-webpack-plugin
     "glob": "^7.1.2",
