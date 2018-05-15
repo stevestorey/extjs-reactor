@@ -18,6 +18,8 @@ var List = require('prompt-list')
 var Input = require('prompt-input')
 var Confirm = require('prompt-confirm')
 
+var util = require('./utils.js');
+
 var answers = {
 'useDefaults': null,
 'appName': null,
@@ -238,8 +240,10 @@ function step99() {
   })
 }
 
-function stepCreate() {
+async function stepCreate() {
   // for (var key in answers) { console.log(`${key} - ${answers[key]}`) }
+  // var spawnPromise = require('./utils.js');
+
   var nodeDir = path.resolve(__dirname)
   var currDir = process.cwd()
   var destDir = currDir + '/' + answers['packageName']
@@ -285,6 +289,15 @@ function stepCreate() {
   }
   new app(options)
 
+
+  try {
+    console.log(chalk.green('NPM install started...'));
+    await util.spawnPromise('npm.cmd', ['install']);
+    console.log(chalk.green('NPM install completed.'));
+  }catch(err) {
+    console.log(chalk.red('Error in NPM install: ' + err));
+  }
+
   console.log(chalk.green('\nYour new Ext JS NPM project is ready!\n'))
-  console.log(chalk.bold(`cd ${answers['packageName']} then "npm install / npm start" to run the development build and open your new application in a web browser.\n`))
+  console.log(chalk.bold(`cd ${answers['packageName']} then "npm start" to run the development build and open your new application in a web browser.\n`))
 }
