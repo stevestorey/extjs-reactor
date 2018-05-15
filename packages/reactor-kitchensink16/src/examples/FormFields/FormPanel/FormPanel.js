@@ -98,10 +98,10 @@ export default class FormPanelExample extends Component {
                             padding: 0
                         }}
                     >
-                        <RadioField disabled={disabled} boxLabel="Red" value="red"/>
-                        <RadioField disabled={disabled} boxLabel="Blue" value="blue"/>
-                        <RadioField disabled={disabled} boxLabel="Green" value="green"/>
-                        <RadioField disabled={disabled} boxLabel="Purple" value="purple"/>
+                        <RadioField name="color" disabled={disabled} boxLabel="Red" value="red"/>
+                        <RadioField name="color" disabled={disabled} boxLabel="Blue" value="blue"/>
+                        <RadioField name="color" disabled={disabled} boxLabel="Green" value="green"/>
+                        <RadioField name="color" disabled={disabled} boxLabel="Purple" value="purple"/>
                     </FieldSet>
                     <Toolbar shadow={false} docked="bottom" layout={{ type: 'hbox', pack: 'right' }}>
                         <Button text={disabled ? 'Enable All' : 'Disable All'} margin="0 10 0 0" handler={this.toggleDisabled.bind(this)}/>

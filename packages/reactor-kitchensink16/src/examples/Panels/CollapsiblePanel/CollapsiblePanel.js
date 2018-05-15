@@ -22,7 +22,7 @@ export default class CollapsibleExample extends Component {
                     }}
                     bodyPadding={10}
                 >
-                    {mediumText}
+                    <div> {mediumText} </div>
                     <Panel 
                         docked="right"
                         width="50%"
@@ -33,7 +33,7 @@ export default class CollapsibleExample extends Component {
                             direction: 'right'
                         }}
                     >
-                        {mediumText}
+                    <div> {mediumText} </div>
                     </Panel>
                 </Panel>
             </Container>

@@ -248,6 +248,11 @@ const ExtRenderer = ReactFiberReconciler({
     appendChild(parentInstance, childInstance) {
 //      console.warn('appendChild should not be called')
 //      l('appendChild (childInstance.xtype, parentInstance, child)')
+      if(childInstance.cmp === undefined) {
+        // plain text instance
+        console.log("plain text")
+        return false;
+      }
       if (parentInstance != null && childInstance != null) {
         l('appendChild (childInstance.xtype, parentInstance, child)', childInstance.xtype, parentInstance, childInstance)
         doAdd(childInstance.xtype, parentInstance.cmp, childInstance.cmp, childInstance.reactChildren)
@@ -311,8 +316,14 @@ const ExtRenderer = ReactFiberReconciler({
         //not working commented out for tab panel close - does this cause anything to break??
 
         if (parentInstance.xtype == 'html') return //correct??
-
-        parentInstance.cmp.remove(child.cmp, true)
+        if (child.cmp != undefined) {
+          console.log("CHECK BEFORE REMOVE")
+          if(parentInstance.cmp.getItems().get(child.cmp.getItemId())) {
+            parentInstance.cmp.remove(child.cmp, true)
+          } else {
+            console.log("DID NOTHING IN REMOVE")
+          }   
+        }
       }
       else {
         console.warn('removeChild - both are null')

@@ -43,7 +43,7 @@ const columnProps = {
         flex:1,
         editable: true
     }, {
-        xtype:'treecolumn',
+        xtype:'textcolumn',
         text:"Class Name",
         dataIndex:"className",
         flex:1,
