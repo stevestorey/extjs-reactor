@@ -8,10 +8,10 @@ class buildAsync {
   // constructor(options) {
   // }
 
-  async executeAsync() {
+  executeAsync() {
     var me = this
     //console.log(`${app} start`) 
-    return new Promise(function(resolve, reject) {
+    return new Promise(async function(resolve, reject) {
       var parms = ['app','build','development']
       console.log(`${app}  passing to 'sencha app build development'`);
 
