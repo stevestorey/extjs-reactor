@@ -13,11 +13,6 @@ export default class TreeGridExample extends Component {
     render() {
         return (
           <Container layout='vbox'>
-            <Grid title="Grid" store={this.store} shadow flex={1}>
-              <TreeColumn text="Name" dataIndex="text" width="200"/>
-              <Column  text="# Items" dataIndex="numItems" width="100" align="center" format="0,0"/>
-            </Grid>
-
             <Tree title="Tree Grid" store={this.store} shadow flex={1}>
               <TreeColumn text="Name" dataIndex="text" width="200"/>
               <NumberColumn  text="# Items" dataIndex="numItems" width="100" align="center" format="0,0"/>
