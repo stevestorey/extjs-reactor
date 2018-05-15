@@ -1,6 +1,6 @@
 {
   "name": "@extjs/ext-build",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "description": "Sencha CMD in node",
   "bin": {
     "ext-build": "bin/ext-build.js",
