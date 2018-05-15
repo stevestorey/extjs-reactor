@@ -292,7 +292,7 @@ async function stepCreate() {
 
   try {
     console.log(chalk.green('NPM install started...'));
-    await util.spawnPromise('npm.cmd', ['install']);
+    await util.spawnPromise('npm.cmd', ['install'], { stdio: 'inherit', encoding: 'utf-8' });
     console.log(chalk.green('NPM install completed.'));
   }catch(err) {
     console.log(chalk.red('Error in NPM install: ' + err));
