@@ -30,35 +30,7 @@ export class ExtJSComponent extends Component {
     }
     else {
       l(`ExtJSComponent: constructor NOTROOT, element: ${this.target}, xtype: ${this.xtype} (this.rawConfig, this)`, this.rawConfig, this)
-
-
-      // for (var i=0; i<this.reactChildren.length; i++) {
-      //   var child = this.reactChildren[i]
-      //   console.log(child)
-      //   const xtype = child.type.toLowerCase().replace(/_/g, '-')
-      //   var extJSClass = Ext.ClassManager.getByAlias(`widget.${xtype}`)
-      //   if (extJSClass == undefined) {
-      //     var config = {xtype: 'container'}
-      //     var widget = Ext.create(config)
-      //     //ReactDOM.render(<div style={{fontSize:'24px'}}>{toggle.toString()}</div>,widget.el.dom)
-      //     ReactDOM.render(child,widget.el.dom)
-      //     if (this.rawitems == undefined) { this.rawitems = [] }
-      //     this.rawitems.push(widget)
-      //   }
-      // }
-
-
     }
-
-
-    // if (Ext.isClassic) {
-    //   this.cmp.on('resize', () => this.cmp && this.cmp.updateLayout());
-    //   this.el = this.cmp.el.dom;
-    // } else {
-    //   this.el = this.cmp.renderElement.dom;
-    // }
-    //this.cmp.$reactorComponentName = componentName;
-    //l(`in ExtJSComponent constructor for ${this.target}, Ext.create ${this.xtype}`, config)
   }
 
   componentWillMount() {
@@ -110,13 +82,8 @@ export class ExtJSComponent extends Component {
         this.reactProps = element.props
       }
     }
-//    l(`element`, element)
-//    l(`reactProps`, this.reactProps)
-//    l(`reactChildren`, this.reactChildren)
     this.reactElement.props = this.reactProps
     this.reactElement.children = this.reactChildren
-//    l(`reactElement`, this.reactElement)
-    /*******reactElement */
   }
 
   _getConfig() {
@@ -138,18 +105,13 @@ export class ExtJSComponent extends Component {
           console.warn('function for ' + key + ' event is not defined')
         }
       }
-      //mjg else if (this.xtype == 'segmentedbutton' && key == 'value') { /*skip*/ }
+
       else {
         config[key] = props[key]
-        //MetaData
+
       }
     }
-    // if (config['cls'] != undefined) {
-    //   config['cls'] = config['cls'] + ' ' + 'XR' + this.xtype
-    // }
-    // else {
-    //   config['cls'] = 'XR' + this.xtype
-    // }
+
     if (config['className'] != undefined) {
       config['cls'] = config['cls'] + ' ' + config['className']
     }
@@ -213,27 +175,6 @@ export class ExtJSComponent extends Component {
     return this.cmp;
   }
 
-
-  // _renderRootComponent(renderToDOMNode, config) {
-  //     defaults(config, {
-  //         height: '100%',
-  //         width: '100%'
-  //     });
-
-  //     config.renderTo = renderToDOMNode;
-
-  //     this.cmp = this.createExtJSComponent(config);
-
-  //     if (Ext.isClassic) {
-  //         this.cmp.el.on('resize', () => this.cmp && this.cmp.updateLayout());
-  //         this.el = this.cmp.el.dom;
-  //     } else {
-  //         this.el = this.cmp.renderElement.dom;
-  //     }
-
-  //     return { node: this.el, children: [] };
-  // }
-
   _applyDefaults({ defaults, children }) {
       if (defaults) {
           return Children.map(children, child => {
@@ -247,60 +188,6 @@ export class ExtJSComponent extends Component {
           return children;
       }
   }
-
-//   /**
-//    * Creates an Ext JS component config from react element props
-//    * @private
-//    */
-//   _createInitialConfig(element) {
-//       const { props } = this.reactElement;
-//       const config = this._createConfig(props, false);
-
-//       this._ensureResponsivePlugin(config);
-
-// //      const items = [], dockedItems = [];
-      
-//       // if (children) {
-//       //     //const children = this.mountChildren(this._applyDefaults(props), transaction, context);
-//       //     //const children = props.children
-
-//       //     for (let i=0; i<children.length; i++) {
-//       //         const item = children[i];
-
-//       //         if (item instanceof Ext.Base) {
-//       //           console.log('should never get here...')
-//       //             const prop = this._propForChildElement(item);
-
-//       //             if (prop) {
-//       //                 item.$reactorConfig = true;
-//       //                 const value = config;
-
-//       //                 if (prop.array) {
-//       //                     let array = config[prop.name];
-//       //                     if (!array) array = config[prop.name] = [];
-//       //                     array.push(item);
-//       //                 } else {
-//       //                     config[prop.name] = prop.value || item;
-//       //                 }
-//       //             } else {
-//       //                 (item.dock ? dockedItems : items).push(item);
-//       //             }
-//       //         } else if (item.node) {
-//       //             items.push(wrapDOMElement(item));
-//       //         } else if (typeof item === 'string') {
-//       //             // will get here when rendering html elements in react-test-renderer
-//       //             // no need to do anything
-//       //         } else {
-//       //             throw new Error('Could not render child item: ' + item);
-//       //         }
-//       //     }
-//       // }
-
-//       // if (items.length) config.items = items;
-//       // if (dockedItems.length) config.dockedItems = dockedItems;
-
-//       return config;
-//   }
 
   /**
    * Determines whether a child element corresponds to a config or a container item based on the presence of a rel config or
