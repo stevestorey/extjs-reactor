@@ -16,13 +16,14 @@
   },
   "preferGlobal": true,
   "dependencies": {
-    "fs-extra": "^6.0.0",
     "@extjs/ext-build": "~0.0.1",
     "chalk": "^2.4.1",
+    "cross-spawn": "^6.0.5",
+    "fs-extra": "^6.0.0",
     "lodash": "^4.17.10",
-    "prompt-list": "^3.1.2",
+    "prompt-confirm": "^1.2.0",
     "prompt-input": "^3.0.0",
-    "prompt-confirm": "^1.2.0"
+    "prompt-list": "^3.1.2"
   },
   "repository": {
     "type": "git",
