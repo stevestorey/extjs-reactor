@@ -1,11 +1,11 @@
+const crossSpawn = require('cross-spawn');
 
 exports.spawnPromise = (command, args, options) => {
 let child;
     let promise = new Promise((resolve, reject) => {
     let stdout = Buffer.alloc(0);
     let stderr = Buffer.alloc(0);
-    child = require('child_process')
-                .spawn(command, args, options)
+    child = crossSpawn(command, args, options)
                 .on('close', (code, signal) => {
                     resolve({ code, signal, stderr, stdout});
                 })

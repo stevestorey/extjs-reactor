@@ -226,7 +226,7 @@ function step99() {
   }
 
   new Confirm({
-    message: 'Would you like to generate the Ext JS NPM project now?',
+    message: 'Would you like to generate the Ext JS NPM project with above config now?',
     default: config.createNow
   }).run().then(answer => {
     answers['createNow'] = answer
@@ -280,6 +280,7 @@ async function stepCreate() {
   fs.writeFileSync(destDir + '/webpack.config.js', t);
 
   var app = require('@extjs/ext-build/generate/app.js')
+  console.log(currDir);
   var options = { 
     parms: [ 'gen', 'app', answers['appName'], './' ],
     sdk: currDir + '/../node_modules/@extjs/ext',
@@ -292,7 +293,7 @@ async function stepCreate() {
 
   try {
     console.log(chalk.green('NPM install started...'));
-    await util.spawnPromise('npm.cmd', ['install'], { stdio: 'inherit', encoding: 'utf-8' });
+    await util.spawnPromise('npm', ['install'], { stdio: 'inherit', encoding: 'utf-8' });
     console.log(chalk.green('NPM install completed.'));
   }catch(err) {
     console.log(chalk.red('Error in NPM install: ' + err));
