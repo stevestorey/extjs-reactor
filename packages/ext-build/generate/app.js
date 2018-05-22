@@ -148,6 +148,7 @@ class app {
     if (n == -1) {
       SdkVal = 'ext'
       Packages = '$\u007Bworkspace.dir}/packages'
+      //"$\u007Bworkspace.dir}/node_modules/@extjs/ext"
     }
     else {
       //need this to be a variable - Sdk?
