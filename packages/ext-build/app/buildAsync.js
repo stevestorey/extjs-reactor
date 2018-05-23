@@ -13,7 +13,7 @@ class buildAsync {
     //console.log(`${app} start`) 
     return new Promise(async function(resolve, reject) {
       var parms = ['app','build','development']
-      console.log(`${app}  passing to 'sencha app build development'`);
+      console.log(`${app} passing to 'sencha app build development'`);
 
       // me.executeAsync2(parms).then(function() {
       //   resolve(0)
@@ -29,27 +29,6 @@ class buildAsync {
     })
   }
 
-  async executeAsync2(parms) {
-    return new Promise(function(resolve, reject) {
-      var child = spawn(sencha, parms)
-      child.on('exit', function (code, signal) {
-        resolve(0) 
-      })
-      child.stdout.on('data', (data) => {
-        var substrings = ["[INF] Writing content", '[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"]
-        if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
-          var str = data.toString()
-          var s = str.replace(/\r?\n|\r/g, " ")
-          var s2 = s.replace("[INF]", "")
-          console.log(`${app} ${s2}`) 
-        }
-      })
-      child.stderr.on('data', (data) => {
-        var str = data.toString()
-        var s = str.replace(/\r?\n|\r/g, " ")
-        console.log(`${app} ${chalk.black(" [ERR]")} ${s}`) 
-      })
-    })
-  }
+
 }
 module.exports = buildAsync
