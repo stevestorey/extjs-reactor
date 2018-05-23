@@ -10,7 +10,7 @@
     "@extjs/ext-build": "~0.0.1",
     "lodash.uniq": "^4.5.0",
     "schema-utils": "^0.4.5",
-    "chalk": "^2.4.0",
+    "chalk": "^2.4.1",
     "recursive-readdir-sync":"^1.0.6"
   },
   "devDependencies": {
@@ -20,7 +20,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-eslint": "^8.2.3",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-env":"^1.6.1"
+    "babel-preset-env":"^1.7.0"
    },
   "babel": {
     "presets": [
