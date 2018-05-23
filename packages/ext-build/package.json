@@ -1,6 +1,6 @@
 {
   "name": "@extjs/ext-build",
-  "version": "0.0.333",
+  "version": "0.0.34",
   "description": "ExtBuild - Sencha Cmd in node",
   "bin": {
     "ext-build": "bin/ext-build.js",
@@ -10,7 +10,7 @@
   "main": "bin/ext-build.js",
   "dependencies": {
     "@extjs/ext": "6.6.0",
-    "@extjs/sencha-cmd": "6.5.3",
+    "@extjs/sencha-cmd": "6.6.0",
     "chalk": "^2.4.0",
     "child-process-promise": "^2.2.1",
     "command-line-args": "^4.0.7",
