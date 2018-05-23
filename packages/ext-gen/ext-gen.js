@@ -294,7 +294,8 @@ async function stepCreate() {
 
   try {
     console.log(chalk.green('NPM install started...'));
-    await util.spawnPromise('npm', ['install'], { stdio: 'inherit', encoding: 'utf-8' });
+    const substrings = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
+    await util.spawnPromise('npm', ['install'], { stdio: 'inherit', encoding: 'utf-8', substrings });
     console.log(chalk.green('NPM install completed.'));
   }catch(err) {
     console.log(chalk.red('Error in NPM install: ' + err));
