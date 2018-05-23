@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import path from 'path'
 import fs from 'fs';
 import validateOptions from 'schema-utils';
 import uniq from 'lodash.uniq';
@@ -36,14 +37,18 @@ export default class ExtWebpackPlugin {
   apply(compiler) {
 
     if (this.webpackVersion == undefined) {
-      var pkg = (fs.existsSync('../package.json') && JSON.parse(fs.readFileSync('../package.json', 'utf-8')) || {});
-      var version = pkg.version
+      var pluginPath = path.resolve(__dirname,'..')
+      var pluginPkg = (fs.existsSync(pluginPath+'/package.json') && JSON.parse(fs.readFileSync(pluginPath+'/package.json', 'utf-8')) || {});
+      var pluginVersion = pluginPkg.version
   
+      var extPath = path.resolve(pluginPath,'../ext')
+      var extPkg = (fs.existsSync(extPath+'/package.json') && JSON.parse(fs.readFileSync(extPath+'/package.json', 'utf-8')) || {});
+      var extVersion = extPkg.version
+
       const isWebpack4 = compiler.hooks;
       if (isWebpack4) {this.webpackVersion = 'IS webpack 4'}
       else {this.webpackVersion = 'NOT webpack 4'}
-      this.extVersion = '6.5.3'
-      process.stdout.cursorTo(0);console.log(app + 'v' + version + '. Ext JS v' + this.extVersion + ', ' + this.webpackVersion)
+      process.stdout.cursorTo(0);console.log(app + 'v' + pluginVersion + '. Ext JS v' + extVersion + ', ' + this.webpackVersion)
     }
 
     let { files, dirs } = this.options;

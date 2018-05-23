@@ -2,15 +2,66 @@ var chalk = require('chalk');
 var fs = require('fs-extra')
 var json = require('comment-json');
 const sencha = require('@extjs/sencha-cmd')
-const spawnSync = require('child_process').spawnSync;
-const crossSpawn = require('cross-spawn');
+const spawnSync = require('child_process').spawnSync
+const spawn = require('child_process').spawn
+const crossSpawn = require('cross-spawn')
 
-const app = `${chalk.green('ℹ ｢ext｣:')} sencha-build: `;
+const app = `${chalk.green('ℹ ｢ext｣:')} ext-build:`;
 const DEFAULT_SUBSTRS = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
 
 exports.senchaCmdAsync = async (parms, substrings = DEFAULT_SUBSTRS) => {
   return spawnPromise(sencha, parms, { stdio: 'inherit', encoding: 'utf-8', substrings});
+  //return spawnPromise(sencha, parms, {substrings});
 }
+
+var spawnPromise = (command, args, options) => {
+  let child;
+  let promise = new Promise((resolve, reject) => {
+//    let stdout = Buffer.alloc(0);
+//    let stderr = Buffer.alloc(0);
+//    child = crossSpawn(command, args, options)
+    child = spawn(command, args, {stdio: 'pipe', encoding: 'utf-8'})
+                .on('close', (code, signal) => {
+                  resolve({code, signal})
+
+                  //resolve({ code, signal, stderr, stdout})
+                })
+                .on('error', (error) => {
+//                  error.stdout = stdout;
+//                  error.stderr = stderr;
+                  reject(error);
+                })
+    if (child.stdout) {
+//      console.log('here23')
+      child.stdout
+            .on('data', (data) => {
+              var substrings = options.substrings;
+              if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
+                var str = data.toString()
+                var s = str.replace(/\r?\n|\r/g, " ")
+                var s2 = s.replace("[INF]", "")
+                console.log(`${app}${s2}`) 
+//                stdout = Buffer.concat([stdout, Buffer.from(`${app} ${s2}`, 'utf-8')]);
+              }
+            })
+    }
+    if (child.stderr) {
+      child.stderr
+            .on('data', (data) => {
+              var str = data.toString()
+              var s = str.replace(/\r?\n|\r/g, " ")
+              console.log(`${app} ${chalk.black(" [ERR]")}${s}`)
+              //stderr = Buffer.concat([stderr, Buffer.from(`${app} ${chalk.black(" [ERR]")} ${s}`, 'utf-8')]);  
+            });
+    }
+  });
+  promise.child = child;
+  return promise;
+}
+
+
+
+
 
 // async executeAsync2(parms) {
 //   return new Promise(function(resolve, reject) {
@@ -261,46 +312,7 @@ exports.handleOutput = (child) => {
   return child;
 }
 
-var spawnPromise = (command, args, options) => {
-  let child;
-  let promise = new Promise((resolve, reject) => {
-    let stdout = Buffer.alloc(0);
-    let stderr = Buffer.alloc(0);
-    child = crossSpawn(command, args, options)
-                .on('close', (code, signal) => {
-                    resolve({ code, signal, stderr, stdout});
-                })
-                .on('error', (error) => {
-                  error.stdout = stdout;
-                  error.stderr = stderr;
-                  reject(error);
-                });
-    if (child.stdout) {
-      child.stdout
-            .on('data', (data) => {
-              var substrings = options.substrings;
-              if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
-                var str = data.toString()
-                var s = str.replace(/\r?\n|\r/g, " ")
-                var s2 = s.replace("[INF]", "")
-                // console.log(`${app} ${s2}`) 
-                stdout = Buffer.concat([stdout, Buffer.from(`${app} ${s2}`, 'utf8')]);
-              }
-            });
-    }
-    if (child.stderr) {
-      child.stderr
-            .on('data', (data) => {
-              var str = data.toString()
-              var s = str.replace(/\r?\n|\r/g, " ")
-              // console.log(`${app} ${chalk.black(" [ERR]")} ${s}`)
-              stderr = Buffer.concat([stderr, Buffer.from(`${app} ${chalk.black(" [ERR]")} ${s}`, 'uft8')]);  
-            });
-    }
-  });
-  promise.child = child;
-  return promise;
-}
+
 
 
 
