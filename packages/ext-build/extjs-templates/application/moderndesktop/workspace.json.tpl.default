@@ -11,5 +11,3 @@
     "extract": "$\u007Bworkspace.dir}/packages/remote"
   }
 }
-
-//"$\u007Bworkspace.dir}/node_modules/@extjs/ext"

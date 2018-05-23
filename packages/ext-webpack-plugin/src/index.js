@@ -48,7 +48,7 @@ export default class ExtWebpackPlugin {
       const isWebpack4 = compiler.hooks;
       if (isWebpack4) {this.webpackVersion = 'IS webpack 4'}
       else {this.webpackVersion = 'NOT webpack 4'}
-      process.stdout.cursorTo(0);console.log(app + 'v' + pluginVersion + '. Ext JS v' + extVersion + ', ' + this.webpackVersion)
+      process.stdout.cursorTo(0);console.log(app + 'v' + pluginVersion + ', Ext JS v' + extVersion + ', ' + this.webpackVersion)
     }
 
     let { files, dirs } = this.options;

@@ -23,7 +23,6 @@ var spawnPromise = (command, args, options) => {
     child = spawn(command, args, {stdio: 'pipe', encoding: 'utf-8'})
                 .on('close', (code, signal) => {
                   resolve({code, signal})
-
                   //resolve({ code, signal, stderr, stdout})
                 })
                 .on('error', (error) => {
@@ -50,7 +49,7 @@ var spawnPromise = (command, args, options) => {
             .on('data', (data) => {
               var str = data.toString()
               var s = str.replace(/\r?\n|\r/g, " ")
-              console.log(`${app} ${chalk.black(" [ERR]")}${s}`)
+              console.log(`${app} ${chalk.black("[ERR]")} ${s}`)
               //stderr = Buffer.concat([stderr, Buffer.from(`${app} ${chalk.black(" [ERR]")} ${s}`, 'utf-8')]);  
             });
     }
@@ -58,90 +57,6 @@ var spawnPromise = (command, args, options) => {
   promise.child = child;
   return promise;
 }
-
-
-
-
-
-// async executeAsync2(parms) {
-//   return new Promise(function(resolve, reject) {
-//     var child = spawn(sencha, parms)
-//     child.on('exit', function (code, signal) {
-//       resolve(0) 
-//     })
-//     child.stdout.on('data', (data) => {
-//       var substrings = ["[INF] Writing xcontent", '[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"]
-//       if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
-//         var str = data.toString()
-//         var s = str.replace(/\r?\n|\r/g, " ")
-//         var s2 = s.replace("[INF]", "")
-//         console.log(`${app} ${s2}`) 
-//       }
-//     })
-//     child.stderr.on('data', (data) => {
-//       var str = data.toString()
-//       var s = str.replace(/\r?\n|\r/g, " ")
-//       console.log(`${app} ${chalk.red("[ERR]")} ${s}`) 
-//     })
-//   })
-// }
-
-
-
-
-
-
-
-exports.senchaCmd = (parms) => {
-  process.stdout.cursorTo(0);console.log(app + 'started - sencha ' + parms.toString().replace(/,/g , " ") + '\n')
-  spawnSync(sencha, parms, { stdio: 'inherit', encoding: 'utf-8'})
-  process.stdout.cursorTo(0);console.log(app + 'completed - sencha ' + parms.toString().replace(/,/g , " "))
-}
-
-
-// const spawn = require('child_process').spawn;
-// var spawn = require('child-process-promise').spawn;
-// function executeCommand(cmd, args) {
-//     var promise = spawn(cmd, args);
- 
-//     var childProcess = promise.childProcess;
-    
-//     console.log('[spawn] childProcess.pid: ', childProcess.pid);
-//     childProcess.stdout.on('data', function (data) {
-//         console.log('[spawn] stdout: ', data.toString());
-//     });
-//     childProcess.stderr.on('data', function (data) {
-//         console.log('[spawn] stderr: ', data.toString());
-//     });
-//     return promise;
-// }
-
-// exports.senchaCmd2 = (parms) => {
-//   process.stdout.cursorTo(0);console.log(app + 'started - sencha ' + parms.toString().replace(/,/g , " ") + '\n')
-//   await executeCommand(sencha, parms)
-//   process.stdout.cursorTo(0);console.log(app + 'completed - sencha ' + parms.toString().replace(/,/g , " "))
-
-// }
-
-
-// async function executer() {
-//     console.log('[MAIN] start');
-//     await executeCommand('echo', ['info']);
-//     console.log('[MAIN] end');
-// }
- 
-// executer();
-
-
-
-
-
-
-
-
-
-
-
 
 //exports.err = function err(s) { return chalk.red('[ERR] ') + s }
 //exports.inf = function inf(s) { return chalk.green('[INF] ') + s }
@@ -160,81 +75,6 @@ var errThrow = function err(s) { throw chalk.red('[ERR] ') + s }
 exports.errThrow = errThrow
 exports.dbgThrow = function err(s) { throw chalk.blue('[ERR] ') + s }
 
-
-
-
-  // var intercept = require("intercept-stdout");
- 
-  // var unhook_intercept = intercept(function(txt) {
-  //   return str.slice(0, -1);
-  //   //return txt.replace( 'INF' , 'that' );
-  // });
-   
-  // console.log("/n/nINF text is being modified");
-  // // -> that text is being modified 
-
-  // var stream = require('stream');
-  // var grabber = new stream.Writable();
-  
-  // grabber._write = function(chunk, enc, done) {
-  //     console.log('Chunk:');
-  //     console.log(String(chunk));
-  //     done();
-  // };
-
-
-
-
-  //console.log(child.stdout.toString());
-  //console.log(child.stderr.toString()); 
-
-//   child.on('exit', function (code, signal) {
-//     console.log(`child process exited with code ${code} and signal ${signal}`);
-//   });
-//   child.stdout.on('data', (data) => {
-// //    var substrings = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"]
-// //    if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
-//       var str = data.toString()
-//       var s = str.replace(/\r?\n|\r/g, " ")
-//       console.log(`${s}`) 
-// //    }
-//   });
-//   child.stderr.on('data', (data) => {
-//     var str = data.toString()
-//     var s = str.replace(/\r?\n|\r/g, " ")
-//     console.log(`${chalk.red("[ERR]")} ${s}`) 
-//   });
-//   return child;
-
-
-//   const sync = require('child_process').spawnSync
-//   const { spawn } = require('child_process')
-
-
-
-//   child.on('exit', function (code, signal) {
-//     console.log(`child process exited with code ${code} and signal ${signal}`);
-//   });
-//   child.stdout.on('data', (data) => {
-// //    var substrings = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"]
-// //    if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
-//       var str = data.toString()
-//       var s = str.replace(/\r?\n|\r/g, " ")
-//       console.log(`${s}`) 
-// //    }
-//   });
-//   child.stderr.on('data', (data) => {
-//     var str = data.toString()
-//     var s = str.replace(/\r?\n|\r/g, " ")
-//     console.log(`${chalk.red("[ERR]")} ${s}`) 
-//   });
-//   return child;
-
-
-
-
-
-
 exports.getAppName = function getAppName(CurrWorkingDir) {
 	var appJsonFileName = getAppJson(CurrWorkingDir)
 	if (appJsonFileName == '') {
@@ -244,8 +84,6 @@ exports.getAppName = function getAppName(CurrWorkingDir) {
 	var appName = objAppJson.name
 	return appName
 }
-
-
 
 function getAppJson(CurrWorkingDir) {
 	var myStringArray = CurrWorkingDir.split('/')
@@ -289,11 +127,6 @@ exports.getSenchaCmdPath = function getSenchaCmdPath(toPath, path) {
 	return pathSenchaCmd
 }
 
-
-
-
-
-
 exports.handleOutput = (child) => {
   child.on('exit', function (code, signal) {
     console.log(`child process exited with code ${code} and signal ${signal}`);
@@ -317,29 +150,85 @@ exports.handleOutput = (child) => {
 
 
 
+
+// async executeAsync2(parms) {
 //   return new Promise(function(resolve, reject) {
-//     const { spawn } = require('child_process')
-
-//     console.log(`\n\n invoking Sencha Build...`);
-//     const child = spawn(sencha, parms)
-// //    console.log('x'+child.stderr.toString()+'x'); 
-// //    console.log(`\n ...Sencha Build completed\n\n`);
-
+//     var child = spawn(sencha, parms)
 //     child.on('exit', function (code, signal) {
-//       console.log(`child process exited with code ${code} and signal ${signal}`);
-//       resolve({code:code,signal:signal});
-//     });
+//       resolve(0) 
+//     })
 //     child.stdout.on('data', (data) => {
-//   //    var substrings = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"]
-//   //    if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
+//       var substrings = ["[INF] Writing xcontent", '[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"]
+//       if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
 //         var str = data.toString()
 //         var s = str.replace(/\r?\n|\r/g, " ")
-//         console.log(`${s}`) 
-//   //    }
-//     });
+//         var s2 = s.replace("[INF]", "")
+//         console.log(`${app} ${s2}`) 
+//       }
+//     })
 //     child.stderr.on('data', (data) => {
 //       var str = data.toString()
 //       var s = str.replace(/\r?\n|\r/g, " ")
-//       console.log(`${chalk.red("[ERR]")} ${s}`) 
+//       console.log(`${app} ${chalk.red("[ERR]")} ${s}`) 
+//     })
+//   })
+// }
+
+
+
+
+
+
+
+
+// exports.senchaCmd = (parms) => {
+//   process.stdout.cursorTo(0);console.log(app + 'started - sencha ' + parms.toString().replace(/,/g , " ") + '\n')
+//   spawnSync(sencha, parms, { stdio: 'inherit', encoding: 'utf-8'})
+//   process.stdout.cursorTo(0);console.log(app + 'completed - sencha ' + parms.toString().replace(/,/g , " "))
+// }
+
+
+
+
+
+
+
+// const spawn = require('child_process').spawn;
+// var spawn = require('child-process-promise').spawn;
+// function executeCommand(cmd, args) {
+//     var promise = spawn(cmd, args);
+ 
+//     var childProcess = promise.childProcess;
+    
+//     console.log('[spawn] childProcess.pid: ', childProcess.pid);
+//     childProcess.stdout.on('data', function (data) {
+//         console.log('[spawn] stdout: ', data.toString());
 //     });
-// //reject(err);
+//     childProcess.stderr.on('data', function (data) {
+//         console.log('[spawn] stderr: ', data.toString());
+//     });
+//     return promise;
+// }
+
+// exports.senchaCmd2 = (parms) => {
+//   process.stdout.cursorTo(0);console.log(app + 'started - sencha ' + parms.toString().replace(/,/g , " ") + '\n')
+//   await executeCommand(sencha, parms)
+//   process.stdout.cursorTo(0);console.log(app + 'completed - sencha ' + parms.toString().replace(/,/g , " "))
+
+// }
+
+
+// async function executer() {
+//     console.log('[MAIN] start');
+//     await executeCommand('echo', ['info']);
+//     console.log('[MAIN] end');
+// }
+ 
+// executer();
+
+
+
+
+
+
+
