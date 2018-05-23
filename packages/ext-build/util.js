@@ -20,7 +20,7 @@ var spawnPromise = (command, args, options) => {
 //    let stdout = Buffer.alloc(0);
 //    let stderr = Buffer.alloc(0);
 //    child = crossSpawn(command, args, options)
-    child = spawn(command, args, {stdio: 'pipe', encoding: 'utf-8'})
+    child = crossSpawn(command, args, {stdio: 'pipe', encoding: 'utf-8'})
                 .on('close', (code, signal) => {
                   resolve({code, signal})
                   //resolve({ code, signal, stderr, stdout})
