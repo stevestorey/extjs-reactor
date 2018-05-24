@@ -284,7 +284,7 @@ async function stepCreate() {
   var options = { 
     parms: [ 'gen', 'app', answers['appName'], './' ],
     //sdk: currDir + '/../node_modules/@extjs/ext',
-    sdk: '$\u007Bworkspace.dir}/node_modules/@extjs/ext',
+    sdk: 'node_modules/@extjs/ext',
     template: answers['template'],
     templateFull: answers['templateFolderName'],
     force: false 
