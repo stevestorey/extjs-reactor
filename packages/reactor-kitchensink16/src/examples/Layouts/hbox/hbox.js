@@ -7,10 +7,7 @@ export default class HBoxLayoutExample extends Component {
     render() {
         const panelProps = {
             height: 75,
-            margin: '0 0 40 0',
-            defaults: {
-                layout: 'center'
-            }
+            margin: '0 0 40 0'
         };
 
         return (
@@ -20,51 +17,51 @@ export default class HBoxLayoutExample extends Component {
                 </Panel>
                 <Container><div style={styles.heading}>align: 'stretch'</div></Container>
                 <Panel shadow layout="hbox" {...panelProps}>
-                    <Container style={colors.card.red} flex={1}>Item 1</Container>
-                    <Container style={colors.card.blue} flex={1}>Item 2</Container>
-                    <Container style={colors.card.green} flex={1}>Item 3</Container>
+                    <Container layout="center" style={colors.card.red} flex={1}>Item 1</Container>
+                    <Container layout="center" style={colors.card.blue} flex={1}>Item 2</Container>
+                    <Container layout="center" style={colors.card.green} flex={1}>Item 3</Container>
                 </Panel>
                 <Container><div style={styles.heading}>align: 'top'</div></Container>
                 <Panel shadow layout={{ type: 'hbox', align: 'top' }} {...panelProps}>
-                    <Container style={colors.card.red} flex={1}>Item 1</Container>
-                    <Container style={colors.card.blue} flex={1}>Item 2</Container>
-                    <Container style={colors.card.green} flex={1}>Item 3</Container>
+                    <Container layout="center" style={colors.card.red} flex={1}>Item 1</Container>
+                    <Container layout="center" style={colors.card.blue} flex={1}>Item 2</Container>
+                    <Container layout="center" style={colors.card.green} flex={1}>Item 3</Container>
                 </Panel>
                 <Container><div style={styles.heading}>align: 'bottom'</div></Container>
                 <Panel shadow layout={{ type: 'hbox', align: 'bottom' }} {...panelProps}>
-                    <Container style={colors.card.red} flex={1}>Item 1</Container>
-                    <Container style={colors.card.blue} flex={1}>Item 2</Container>
-                    <Container style={colors.card.green} flex={1}>Item 3</Container>
+                    <Container layout="center" style={colors.card.red} flex={1}>Item 1</Container>
+                    <Container layout="center" style={colors.card.blue} flex={1}>Item 2</Container>
+                    <Container layout="center"style={colors.card.green} flex={1}>Item 3</Container>
                 </Panel>
                 <Container><div style={styles.heading}>pack: 'start'</div></Container>
                 <Panel shadow layout={{ type: 'hbox', pack: 'start' }} {...panelProps}>
-                    <Container style={colors.card.red}>Item 1</Container>
-                    <Container style={colors.card.blue}>Item 2</Container>
-                    <Container style={colors.card.green}>Item 3</Container>
+                    <Container layout="center" style={colors.card.red}>Item 1</Container>
+                    <Container layout="center" style={colors.card.blue}>Item 2</Container>
+                    <Container layout="center" style={colors.card.green}>Item 3</Container>
                 </Panel>
                 <Container><div style={styles.heading}>pack: 'center'</div></Container>
                 <Panel shadow layout={{ type: 'hbox', pack: 'center' }} {...panelProps}>
-                    <Container style={colors.card.red}>Item 1</Container>
-                    <Container style={colors.card.blue}>Item 2</Container>
-                    <Container style={colors.card.green}>Item 3</Container>
+                    <Container layout="center" style={colors.card.red}>Item 1</Container>
+                    <Container layout="center" style={colors.card.blue}>Item 2</Container>
+                    <Container layout="center" style={colors.card.green}>Item 3</Container>
                 </Panel>
                 <Container><div style={styles.heading}>pack: 'end'</div></Container>
                 <Panel shadow layout={{ type: 'hbox', pack: 'end' }} {...panelProps}>
-                    <Container style={colors.card.red}>Item 1</Container>
-                    <Container style={colors.card.blue}>Item 2</Container>
-                    <Container style={colors.card.green}>Item 3</Container>
+                    <Container layout="center" style={colors.card.red}>Item 1</Container>
+                    <Container layout="center" style={colors.card.blue}>Item 2</Container>
+                    <Container layout="center" style={colors.card.green}>Item 3</Container>
                 </Panel>
                 <Container><div style={styles.heading}>pack: 'space-between'</div></Container>
                 <Panel shadow layout={{ type: 'hbox', pack: 'space-between' }} {...panelProps}>
-                    <Container style={colors.card.red}>Item 1</Container>
-                    <Container style={colors.card.blue}>Item 2</Container>
-                    <Container style={colors.card.green}>Item 3</Container>
+                    <Container layout="center" style={colors.card.red}>Item 1</Container>
+                    <Container layout="center" style={colors.card.blue}>Item 2</Container>
+                    <Container layout="center" style={colors.card.green}>Item 3</Container>
                 </Panel>
                 <Container><div style={styles.heading}>pack: 'space-around'</div></Container>
                 <Panel shadow layout={{ type: 'hbox', pack: 'space-around' }} {...panelProps}>
-                    <Container style={colors.card.red}>Item 1</Container>
-                    <Container style={colors.card.blue}>Item 2</Container>
-                    <Container style={colors.card.green}>Item 3</Container>
+                    <Container layout="center" style={colors.card.red}>Item 1</Container>
+                    <Container layout="center" style={colors.card.blue}>Item 2</Container>
+                    <Container layout="center" style={colors.card.green}>Item 3</Container>
                 </Panel>
             </Container>
         )
