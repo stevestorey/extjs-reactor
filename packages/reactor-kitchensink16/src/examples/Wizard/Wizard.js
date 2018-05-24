@@ -45,15 +45,14 @@ var t = <div style={styles.tooltipHeader}>&lt;Indicator tapMode="direction" /&gt
                             `
                           }}>
                         </Button>
-                        <Button text="item" value="item">
-                            <ToolTip maxWidth="300" align="t-b" anchor html={`
-                                <div style={styles.tooltipHeader}>&lt;Indicator tapMode="item" /&gt;</div>
-                                <p>
-                                    Clicking on a dot in the indicator will move the wizard to the corresponding step.
-                                </p>
-                            `}>
-                            </ToolTip>
-                        </Button>
+                        <Button text="item" value="item"
+                         tooltip={{
+                            maxWidth:"300",
+                            html:`<div style="font-weight:bold;font-size:14px;font-family:courier;">&lt;Indicator tapMode="item" /&gt;</div>
+                            <p>
+                                Clicking on a dot in the indicator will move the wizard to the corresponding step.
+                            </p>`
+                         }}/>
                     </SegmentedButton>
                 </Container>
 
