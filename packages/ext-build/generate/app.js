@@ -104,7 +104,7 @@ class app {
 		var ApplicationDir = parms[3];util.dbgLog('ApplicationDir: ' + ApplicationDir)
 		var Template = options.template;util.dbgLog('Template: ' + Template)
 		var Builds = options.builds;util.dbgLog('Builds: ' + Builds)
-		var Sdk = path.join(options.sdk);util.dbgLog('Sdk: ' + Sdk)
+		var Sdk = options.sdk;util.dbgLog('Sdk: ' + Sdk)
 		
 		var Force = options.force;util.dbgLog('Force: ' + Force)
 		if(Template == undefined) {throw '--template parameter is required'}
@@ -148,14 +148,13 @@ class app {
     if (n == -1) {
       SdkVal = 'ext'
       Packages = '$\u007Bworkspace.dir}/packages'
-      //"$\u007Bworkspace.dir}/node_modules/@extjs/ext"
     }
     else {
       //need this to be a variable - Sdk?
       SdkVal = Sdk
 //      SdkVal = 'node_modules/@extjs/ext'
       Packages = '$\u007Bworkspace.dir}/packages,node_modules/@extjs'
-    }
+		}
 
 		walkSync(TemplateDir, TemplateDir.length+1, ApplicationDir, ApplicationName, Template, SdkVal, Packages)
     var f
