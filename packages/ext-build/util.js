@@ -39,7 +39,8 @@ var spawnPromise = (command, args, options) => {
                 var str = data.toString()
                 var s = str.replace(/\r?\n|\r/g, " ")
                 var s2 = s.replace("[INF]", "")
-                console.log(`${app}${s2}`) 
+                var s3 = s2.replace(process.cwd(), '');
+                console.log(`${app}${s3}`) 
 //                stdout = Buffer.concat([stdout, Buffer.from(`${app} ${s2}`, 'utf-8')]);
               }
             })
