@@ -3,7 +3,8 @@ npm install -g @extjs/ext-gen
 git fetch upstream
 git merge upstream/2.0.x-dev
 
-
+app.framework.version=6.5.3.57
+app.cmd.version=6.5.3.6
 
 
 npm deprecate @extjs/sencha-build@"< 0.0.5" "name changed to @extjs/ext-build"
@@ -17,7 +18,7 @@ npm version patch
 npm publish --access public
 
 
-
+ln -s /Sencha/ext-6.5.3 ext
 
 mklink /J ext c:\sencha\ext-6.5.3
 
