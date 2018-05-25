@@ -1,6 +1,6 @@
 {
-  "usedefaults":false,
-  "createnow":true,
+  "useDefaults":false,
+  "createNow":true,
   "appName":"MyApp",
   "templateType":"make a selection from a list",
   "templateType2":"type a folder name",
