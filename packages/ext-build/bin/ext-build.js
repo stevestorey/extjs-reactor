@@ -37,7 +37,7 @@ const optionDefinitions = [
 
 
   debug = false
-  console.log(chalk.green('sencha-build v' + PackageJson.version))
+  console.log(chalk.green('ext-build v' + PackageJson.version))
 
   var CurrWorkingDir = process.cwd()
   var SenchaCmdDir = util.getSenchaCmdPath()
@@ -111,7 +111,8 @@ const optionDefinitions = [
       }
       break;
     default:
-      throw util.err('Unknown Category: "' + Category + '"')
+      util.senchaCmd([...options.parms]);
+      //throw util.err('Unknown Category: "' + Category + '"')
   }
 // }
 // catch(e) {

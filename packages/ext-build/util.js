@@ -9,6 +9,12 @@ const crossSpawn = require('cross-spawn')
 const app = `${chalk.green('ℹ ｢ext｣:')} ext-build:`;
 const DEFAULT_SUBSTRS = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
 
+exports.senchaCmd = (parms) => {
+  process.stdout.cursorTo(0);console.log(app + 'started - sencha ' + parms.toString().replace(/,/g , " ") + '\n')
+  spawnSync(sencha, parms, { stdio: 'inherit', encoding: 'utf-8'})
+  process.stdout.cursorTo(0);console.log(app + 'completed - sencha ' + parms.toString().replace(/,/g , " "))
+}
+
 exports.senchaCmdAsync = async (parms, substrings = DEFAULT_SUBSTRS) => {
   return spawnPromise(sencha, parms, { stdio: 'inherit', encoding: 'utf-8', substrings});
   //return spawnPromise(sencha, parms, {substrings});
@@ -17,21 +23,15 @@ exports.senchaCmdAsync = async (parms, substrings = DEFAULT_SUBSTRS) => {
 var spawnPromise = (command, args, options) => {
   let child;
   let promise = new Promise((resolve, reject) => {
-//    let stdout = Buffer.alloc(0);
-//    let stderr = Buffer.alloc(0);
-//    child = crossSpawn(command, args, options)
     child = crossSpawn(command, args, {stdio: 'pipe', encoding: 'utf-8'})
                 .on('close', (code, signal) => {
                   resolve({code, signal})
                   //resolve({ code, signal, stderr, stdout})
                 })
                 .on('error', (error) => {
-//                  error.stdout = stdout;
-//                  error.stderr = stderr;
                   reject(error);
                 })
     if (child.stdout) {
-//      console.log('here23')
       child.stdout
             .on('data', (data) => {
               var substrings = options.substrings;
@@ -41,7 +41,6 @@ var spawnPromise = (command, args, options) => {
                 var s2 = s.replace("[INF]", "")
                 var s3 = s2.replace(process.cwd(), '');
                 console.log(`${app}${s3}`) 
-//                stdout = Buffer.concat([stdout, Buffer.from(`${app} ${s2}`, 'utf-8')]);
               }
             })
     }
@@ -51,7 +50,6 @@ var spawnPromise = (command, args, options) => {
               var str = data.toString()
               var s = str.replace(/\r?\n|\r/g, " ")
               console.log(`${app} ${chalk.black("[ERR]")} ${s}`)
-              //stderr = Buffer.concat([stderr, Buffer.from(`${app} ${chalk.black(" [ERR]")} ${s}`, 'utf-8')]);  
             });
     }
   });
@@ -182,11 +180,6 @@ exports.handleOutput = (child) => {
 
 
 
-// exports.senchaCmd = (parms) => {
-//   process.stdout.cursorTo(0);console.log(app + 'started - sencha ' + parms.toString().replace(/,/g , " ") + '\n')
-//   spawnSync(sencha, parms, { stdio: 'inherit', encoding: 'utf-8'})
-//   process.stdout.cursorTo(0);console.log(app + 'completed - sencha ' + parms.toString().replace(/,/g , " "))
-// }
 
 
 
