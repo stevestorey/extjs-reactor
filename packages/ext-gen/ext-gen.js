@@ -266,60 +266,109 @@ async function stepCreate() {
     homepageURL: answers['homepageURL'],
     description: answers['description'],
   }
+
+  console.log(chalk.green('package.json create started...'));
   var file = nodeDir + '/templates/package.json.tpl.default'
   var content = fs.readFileSync(file).toString()
   var tpl = new Ext.XTemplate(content)
   var t = tpl.apply(values)
   tpl = null
   fs.writeFileSync(destDir + '/package.json', t);
+  console.log(chalk.green('package.json create completed...'));
+
+  console.log(chalk.green('webpack.config.js create started...'));
   var file = nodeDir + '/templates/webpack.config.js.tpl.default'
   var content = fs.readFileSync(file).toString()
   var tpl = new Ext.XTemplate(content)
   var t = tpl.apply(values)
   tpl = null
   fs.writeFileSync(destDir + '/webpack.config.js', t);
-
-  var app = require('@extjs/ext-build/generate/app.js')
-  console.log(currDir);
-  var options = { 
-    parms: [ 'gen', 'app', answers['appName'], './' ],
-    //sdk: currDir + '/../node_modules/@extjs/ext',
-    sdk: 'node_modules/@extjs/ext',
-    template: answers['template'],
-    templateFull: answers['templateFolderName'],
-    force: false
-  }
-  new app(options)
-
+  console.log(chalk.green('webpack.config.js create completed...'));
 
   try {
     console.log(chalk.green('NPM install started...'));
     const substrings = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
     await util.spawnPromise('npm', ['install'], { stdio: 'inherit', encoding: 'utf-8', substrings });
-    
-    var frameworkPath = path.join(process.cwd(), 'node_modules', '@extjs', 'ext', 'package.json');
-    var cmdPath = path.join(process.cwd(), 'node_modules', '@extjs', 'sencha-cmd', 'package.json');
-    var senchaCfg = path.join(process.cwd(), '.sencha', 'app', 'sencha.cfg');
-
-    var frameworkPkg = require(frameworkPath);
-    var cmdPkg = require(cmdPath);
-
-    fs.readFile(senchaCfg, 'utf8', function (err,data) {
-      if (err) {
-        return console.log(err);
-      }
-      var result = data.replace('{cmdVer}', cmdPkg.version_full)
-                        .replace('{frameVer}', frameworkPkg.sencha.version);
-
-      fs.writeFileSync(senchaCfg, result, 'utf8', function (err) {
-        if (err) return console.log(err);
-      });
-    });
-
     console.log(chalk.green('NPM install completed.'));
   }catch(err) {
     console.log(chalk.red('Error in NPM install: ' + err));
   }
+
+  console.log(chalk.green('Get versions started...'));
+  var frameworkPath = path.join(process.cwd(), 'node_modules', '@extjs', 'ext', 'package.json');
+  var cmdPath = path.join(process.cwd(), 'node_modules', '@extjs', 'sencha-cmd', 'package.json');
+  var frameworkPkg = require(frameworkPath);
+  var cmdPkg = require(cmdPath);
+  var cmdVersion = cmdPkg.version_full
+  var frameworkVersion = frameworkPkg.sencha.version
+  console.log(chalk.green('Get versions completed...'));
+
+
+//maybe NPM install first and pass into the generate/app the framework version and cmd version
+//let generate/app do the replacement work in sencha.cfg
+//that way command line will also work
+
+  console.log(chalk.green('Generate App started...'));
+  var app = require('@extjs/ext-build/generate/app.js')
+  console.log(currDir);
+  var options = { 
+    parms: [ 'generate', 'app', answers['appName'], './' ],
+    sdk: 'node_modules/@extjs/ext',
+    template: answers['template'],
+    templateFull: answers['templateFolderName'],
+    cmdVersion: cmdVersion,
+    frameworkVersion: frameworkVersion,
+    force: false
+  }
+  new app(options)
+  console.log(chalk.green('Generate App completed...'));
+
+  console.log(chalk.green('Update sencha.cfg started... (eventually in generate app)'));
+  var senchaCfg = path.join(process.cwd(), '.sencha', 'app', 'sencha.cfg');
+  fs.readFile(senchaCfg, 'utf8', function (err,data) {
+    if (err) {
+      return console.log(err);
+    }
+    var result = data.replace('{cmdVer}', cmdVersion)
+                      .replace('{frameVer}', frameworkVersion);
+    fs.writeFileSync(senchaCfg, result, 'utf8', function (err) {
+      if (err) return console.log(err);
+    });
+  });
+  console.log(chalk.green('Update sencha.cfg completed...'));
+
+
+
+
+
+  // try {
+  //   console.log(chalk.green('NPM install started...'));
+  //   const substrings = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
+  //   await util.spawnPromise('npm', ['install'], { stdio: 'inherit', encoding: 'utf-8', substrings });
+    
+  //   var frameworkPath = path.join(process.cwd(), 'node_modules', '@extjs', 'ext', 'package.json');
+  //   var cmdPath = path.join(process.cwd(), 'node_modules', '@extjs', 'sencha-cmd', 'package.json');
+  //   var senchaCfg = path.join(process.cwd(), '.sencha', 'app', 'sencha.cfg');
+
+  //   var frameworkPkg = require(frameworkPath);
+  //   var cmdPkg = require(cmdPath);
+
+  //   fs.readFile(senchaCfg, 'utf8', function (err,data) {
+  //     if (err) {
+  //       return console.log(err);
+  //     }
+  //     var result = data.replace('{cmdVer}', cmdPkg.version_full)
+  //                       .replace('{frameVer}', frameworkPkg.sencha.version);
+  //     fs.writeFileSync(senchaCfg, result, 'utf8', function (err) {
+  //       if (err) return console.log(err);
+  //     });
+  //   });
+
+
+  //   console.log(chalk.green('NPM install completed.'));
+  // }catch(err) {
+  //   console.log(chalk.red('Error in NPM install: ' + err));
+  // }
 
   console.log(chalk.green('\nYour new Ext JS NPM project is ready!\n'))
   console.log(chalk.bold(`cd ${answers['packageName']} then "npm start" to run the development build and open your new application in a web browser.\n`))
