@@ -1,13 +1,10 @@
 #!/usr/bin/env node
-
 const { spawn } = require('child_process');
-
 const chalk = require('chalk');
 const fs = require('fs-extra')
 const path = require('path')
 const util = require('../util.js')
 const help = require('../help.js')
-
 const json = require('comment-json');
 const PackageJson = require('../package.json');
 const commandLineArgs = require('command-line-args')
@@ -31,13 +28,8 @@ const optionDefinitions = [
 // //    }
 //   });
 
-
-
-
-
-
   debug = false
-  console.log(chalk.green('ext-build v' + PackageJson.version))
+  console.log(chalk.green('Sencha ExtBuild v' + PackageJson.version))
 
   var CurrWorkingDir = process.cwd()
   var SenchaCmdDir = util.getSenchaCmdPath()
@@ -79,7 +71,7 @@ const optionDefinitions = [
           new watch(options)
           break;
         case 'build': case 'b':
-          var build = require('../app/build.js')
+          var build = require('../app/buildAsync.js')
           new build(options)
           break;
         case 'refresh': case 'r':
