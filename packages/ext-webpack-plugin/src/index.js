@@ -43,12 +43,16 @@ export default class ExtWebpackPlugin {
   
       var extPath = path.resolve(pluginPath,'../ext')
       var extPkg = (fs.existsSync(extPath+'/package.json') && JSON.parse(fs.readFileSync(extPath+'/package.json', 'utf-8')) || {});
-      var extVersion = extPkg.version
+      var extVersion = extPkg.sencha.version
+
+      var cmdPath = path.resolve(pluginPath,'../sencha-cmd')
+      var cmdPkg = (fs.existsSync(cmdPath+'/package.json') && JSON.parse(fs.readFileSync(cmdPath+'/package.json', 'utf-8')) || {});
+      var cmdVersion = cmdPkg.version_full
 
       const isWebpack4 = compiler.hooks;
       if (isWebpack4) {this.webpackVersion = 'IS webpack 4'}
       else {this.webpackVersion = 'NOT webpack 4'}
-      process.stdout.cursorTo(0);console.log(app + 'v' + pluginVersion + ', Ext JS v' + extVersion + ', ' + this.webpackVersion)
+      process.stdout.cursorTo(0);console.log(app + 'v' + pluginVersion + ', Ext JS v' + extVersion + ', Sencha Cmd v' + cmdVersion + ', ' + this.webpackVersion)
     }
 
     let { files, dirs } = this.options;
