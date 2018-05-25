@@ -316,21 +316,18 @@ async function stepCreate() {
     console.log(chalk.green('NPM install started...'));
     const substrings = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
     await util.spawnPromise('npm', ['install'], { stdio: 'inherit', encoding: 'utf-8', substrings });
-    console.log(chalk.green('NPM install completed.'));
     console.log(`${app} NPM install completed`)
 
   }catch(err) {
     console.log(chalk.red('Error in NPM install: ' + err));
   }
 
-//  console.log(chalk.green('Get versions started...'));
   var frameworkPath = path.join(process.cwd(), 'node_modules', '@extjs', 'ext', 'package.json');
   var cmdPath = path.join(process.cwd(), 'node_modules', '@extjs', 'sencha-cmd', 'package.json');
   var frameworkPkg = require(frameworkPath);
   var cmdPkg = require(cmdPath);
   var cmdVersion = cmdPkg.version_full
   var frameworkVersion = frameworkPkg.sencha.version
-//  console.log(chalk.green('Get versions completed...'));
   console.log(`${app} Get versions completed`)
 
 
@@ -338,9 +335,8 @@ async function stepCreate() {
 //let generate/app do the replacement work in sencha.cfg
 //that way command line will also work
 
-  console.log(chalk.green('Generate App started...'));
+  console.log(`${app} Generate App started...`)
   var generateApp = require('@extjs/ext-build/generate/app.js')
-  console.log(currDir);
   var options = { 
     parms: [ 'generate', 'app', answers['appName'], './' ],
     sdk: 'node_modules/@extjs/ext',
@@ -351,10 +347,8 @@ async function stepCreate() {
     force: false
   }
   new generateApp(options)
- // console.log(chalk.green('Generate App completed...'));
   console.log(`${app} Generate App completed`)
 
-//  console.log(chalk.green('Update sencha.cfg started... (eventually in generate app)'));
   var senchaCfg = path.join(process.cwd(), '.sencha', 'app', 'sencha.cfg');
   fs.readFile(senchaCfg, 'utf8', function (err,data) {
     if (err) {
@@ -366,8 +360,7 @@ async function stepCreate() {
       if (err) return console.log(err);
     });
   });
-  //console.log(chalk.green('Update sencha.cfg completed...'));
-  console.log(`${app} Update sencha.cfg completed`)
+  console.log(`${app} Update to sencha.cfg completed`)
 
 
 
