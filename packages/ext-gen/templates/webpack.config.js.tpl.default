@@ -27,12 +27,6 @@ module.exports = function (env) {
       path: path.resolve(__dirname, './build'),
       filename: '[name].js'
     },
-    stats: {
-      chunks: false,
-      colors: {
-        green: '\u001b[32m',
-      }
-    },
     devServer: {
       contentBase: './',
       historyApiFallback: true,
@@ -43,15 +37,16 @@ module.exports = function (env) {
       inline: !isProd,
       hot: false,
       stats: {
-        assets: true,
+        entrypoints: false,
+        assets: false,
         children: false,
         chunks: false,
         hash: false,
         modules: false,
         publicPath: false,
-        timings: true,
+        timings: false,
         version: false,
-        warnings: true,
+        warnings: false,
         colors: {
           green: '\u001b[32m'
         }
