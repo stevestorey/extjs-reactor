@@ -46,14 +46,14 @@ function step00() {
   version = pkg.version
   var data = fs.readFileSync(nodeDir + '/config.json')
   config = JSON.parse(data);
-  console.log(chalk.bold.green(`\nSencha ExtGen ${version} (The Ext JS Project Generator for NPM)`))
+  console.log(chalk.bold.green(`\nSencha ExtGen v${version} (The Ext JS Project Generator for NPM)`))
 
   console.log(`config.json:`)
   console.log(path.join(__dirname , 'config.json'))
   console.log('')
 
-  console.log(`usedefaults:\t\t${config.usedefaults}`)
-  console.log(`createnow:\t\t${config.createnow}`)
+  console.log(`useDefaults:\t\t${config.useDefaults}`)
+  console.log(`createNow:\t\t${config.createNow}`)
   console.log(`appName:\t\t${config.appName}`)
   console.log(`templateType:\t\t${config.templateType}`)
   console.log(`template:\t\t${config.template}`)
@@ -75,7 +75,7 @@ function step00() {
 function step01() {
   new Confirm({
     message: 'Would you like to use these defaults from config.json?',
-    default: config.usedefaults
+    default: config.useDefaults
   }).run().then(answer => {
     answers['useDefaults'] = answer
     if(answers['useDefaults'] == true) {
