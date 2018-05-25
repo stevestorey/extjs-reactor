@@ -94,9 +94,13 @@ const optionDefinitions = [
           require('../generate/viewpackage.js').init(CurrWorkingDir, SenchaCmdDir, options, NodeAppTemplatesDir)
           break;
         case 'application': case 'app':  case 'a':
+
+          options.cmdVersion = '6.6.0.11' // cmdVersion,
+          options.frameworkVersion = '6.6.0.195' //frameworkVersion,
+          
           //require('../generate/application.js').init(CurrWorkingDir, SenchaCmdDir, options, NodeAppTemplatesDir)
-          var app = require('../generate/app.js')
-          new app(options)
+          var generateApp = require('../generate/app.js')
+          new generateApp(options)
           break;
         default:
           throw util.err('Unknown command: "' + command + '" for category "' + category + '"')

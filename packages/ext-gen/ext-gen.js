@@ -74,7 +74,7 @@ function step00() {
 
 function step01() {
   new Confirm({
-    message: 'Would you like to use defaults from config.json?',
+    message: 'Would you like to use these defaults from config.json?',
     default: config.usedefaults
   }).run().then(answer => {
     answers['useDefaults'] = answer
@@ -338,19 +338,19 @@ async function stepCreate() {
   new generateApp(options)
   console.log(`${app} Generate App completed`)
 
-  var senchaCfg = path.join(process.cwd(), '.sencha', 'app', 'sencha.cfg');
-  fs.readFile(senchaCfg, 'utf8', function (err,data) {
-    if (err) {
-      return console.log(err);
-    }
-    var result = data.replace('{cmdVer}', cmdVersion)
-                      .replace('{frameVer}', frameworkVersion);
-    fs.writeFileSync(senchaCfg, result, 'utf8', function (err) {
-      if (err) return console.log(err);
-    });
-  });
-  console.log(`${app} Update to sencha.cfg completed`)
+  // var senchaCfg = path.join(process.cwd(), '.sencha', 'app', 'sencha.cfg');
+  // fs.readFile(senchaCfg, 'utf8', function (err,data) {
+  //   if (err) {
+  //     return console.log(err);
+  //   }
+  //   var result = data.replace('{cmdVer}', cmdVersion)
+  //                     .replace('{frameVer}', frameworkVersion);
+  //   fs.writeFileSync(senchaCfg, result, 'utf8', function (err) {
+  //     if (err) return console.log(err);
+  //   });
+  // });
+  // console.log(`${app} Update to sencha.cfg completed`)
+
   console.log(chalk.green('\nYour new Ext JS NPM project is ready!\n'))
   console.log(chalk.bold(`cd ${answers['packageName']} then "npm start" to run the development build and open your new application in a web browser.\n`))
-  process.chdir(`${answers['packageName']}`);
-}
+ }

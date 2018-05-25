@@ -164,6 +164,27 @@ class app {
     //fs.copySync(f, ApplicationDir + '/.sencha');util.dbgLog(ApplicationDir + '/.sencha' + ' created')
     f='/.sencha';fs.copySync(NodeAppApplicationTemplatesDir  + '/sencha', ApplicationDir + f);util.dbgLog(ApplicationDir + f+' created')
 
+
+
+    var cmdVersion = options.cmdVersion
+    var frameworkVersion = options.frameworkVersion
+
+    var senchaCfg = path.join(ApplicationDir, '.sencha', 'app', 'sencha.cfg');
+    fs.readFile(senchaCfg, 'utf8', function (err,data) {
+      if (err) {
+        return console.log(err);
+      }
+      var result = data.replace('{cmdVer}', cmdVersion)
+                        .replace('{frameVer}', frameworkVersion);
+      fs.writeFileSync(senchaCfg, result, 'utf8', function (err) {
+        if (err) return console.log(err);
+      });
+    });
+    //console.log(`${app} Update to sencha.cfg completed`)
+
+
+
+
 //    util.infLog('App creation completed')
 //		util.infLog('Template: ' + chalk.green(TemplateDir))
     
