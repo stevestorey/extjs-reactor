@@ -8,6 +8,8 @@ const help = require('../help.js')
 const json = require('comment-json');
 const PackageJson = require('../package.json');
 const commandLineArgs = require('command-line-args')
+const app = `${chalk.green('ℹ ｢ext｣:')} ext-build:`;
+
 const optionDefinitions = [
   { name: 'builds', type: String },
   { name: 'debug', alias: 'd', type: Boolean },
@@ -101,6 +103,11 @@ const optionDefinitions = [
           //require('../generate/application.js').init(CurrWorkingDir, SenchaCmdDir, options, NodeAppTemplatesDir)
           var generateApp = require('../generate/app.js')
           new generateApp(options)
+
+          console.log(chalk.green('\nYour new Ext JS project is ready!\n'))
+          console.log(chalk.bold(`cd ${options.parms[2]} then "ExtBuild app watch" to run the development build.\n`))
+        
+
           break;
         default:
           throw util.err('Unknown command: "' + command + '" for category "' + category + '"')
