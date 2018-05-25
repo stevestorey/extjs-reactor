@@ -1,5 +1,4 @@
 #! /usr/bin/env node
-
 const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs-extra');
@@ -11,6 +10,8 @@ require('./XTemplate/js/Template.js');
 require('./XTemplate/js/XTemplateParser.js');
 require('./XTemplate/js/XTemplateCompiler.js');
 require('./XTemplate/js/XTemplate.js');
+const app = `${chalk.green('ℹ ｢ext｣:')} ext-gen:`;
+
 var config = {}
 var version
 
@@ -47,6 +48,28 @@ function step00() {
   var data = fs.readFileSync(nodeDir + '/config.json')
   config = JSON.parse(data);
   console.log(chalk.bold.green(`\nSencha ExtGen ${version} (The Ext JS Project Generator for NPM)`))
+
+  console.log(`config.json:`)
+  console.log(path.join(__dirname , 'config.json'))
+  console.log('')
+
+  console.log(`usedefaults:\t\t${config.usedefaults}`)
+  console.log(`createnow:\t\t${config.createnow}`)
+  console.log(`appName:\t\t${config.appName}`)
+  console.log(`templateType:\t\t${config.templateType}`)
+  console.log(`template:\t\t${config.template}`)
+  console.log(`templateFolderName:\t${config.templateFolderName}`)
+  console.log(`packageName:\t\t${config.packageName}`)
+  console.log(`version:\t\t${config.version}`)
+  console.log(`description:\t\t${config.description}`)
+  console.log(`gitRepositoryURL:\t${config.gitRepositoryURL}`)
+  console.log(`keywords:\t\t${config.keywords}`)
+  console.log(`author:\t\t\t${config.author}`)
+  console.log(`license:\t\t${config.license}`)
+  console.log(`bugsURL:\t\t${config.bugsURL}`)
+  console.log(`homepageURL:\t\t${config.homepageURL}`)
+  console.log('')
+
   step01()
 }
 
@@ -243,6 +266,7 @@ function step99() {
 async function stepCreate() {
   // for (var key in answers) { console.log(`${key} - ${answers[key]}`) }
   // var spawnPromise = require('./utils.js');
+  const app = `${chalk.green('ℹ ｢ext｣:')} ext-gen:`;
 
   var nodeDir = path.resolve(__dirname)
   var currDir = process.cwd()
@@ -267,41 +291,47 @@ async function stepCreate() {
     description: answers['description'],
   }
 
-  console.log(chalk.green('package.json create started...'));
+  //console.log(chalk.green('package.json create started...'));
   var file = nodeDir + '/templates/package.json.tpl.default'
   var content = fs.readFileSync(file).toString()
   var tpl = new Ext.XTemplate(content)
   var t = tpl.apply(values)
   tpl = null
   fs.writeFileSync(destDir + '/package.json', t);
-  console.log(chalk.green('package.json create completed...'));
+  //console.log(chalk.green('package.json create completed...'));
+  console.log(`${app} package.json created`)
 
-  console.log(chalk.green('webpack.config.js create started...'));
+  //console.log(chalk.green('webpack.config.js create started...'));
   var file = nodeDir + '/templates/webpack.config.js.tpl.default'
   var content = fs.readFileSync(file).toString()
   var tpl = new Ext.XTemplate(content)
   var t = tpl.apply(values)
   tpl = null
   fs.writeFileSync(destDir + '/webpack.config.js', t);
-  console.log(chalk.green('webpack.config.js create completed...'));
+  //console.log(chalk.green('webpack.config.js create completed...'));
+  console.log(`${app} webpack.config.js created`)
 
   try {
+    console.log(`${app} NPM install started...`)
     console.log(chalk.green('NPM install started...'));
     const substrings = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
     await util.spawnPromise('npm', ['install'], { stdio: 'inherit', encoding: 'utf-8', substrings });
     console.log(chalk.green('NPM install completed.'));
+    console.log(`${app} NPM install completed`)
+
   }catch(err) {
     console.log(chalk.red('Error in NPM install: ' + err));
   }
 
-  console.log(chalk.green('Get versions started...'));
+//  console.log(chalk.green('Get versions started...'));
   var frameworkPath = path.join(process.cwd(), 'node_modules', '@extjs', 'ext', 'package.json');
   var cmdPath = path.join(process.cwd(), 'node_modules', '@extjs', 'sencha-cmd', 'package.json');
   var frameworkPkg = require(frameworkPath);
   var cmdPkg = require(cmdPath);
   var cmdVersion = cmdPkg.version_full
   var frameworkVersion = frameworkPkg.sencha.version
-  console.log(chalk.green('Get versions completed...'));
+//  console.log(chalk.green('Get versions completed...'));
+  console.log(`${app} Get versions completed`)
 
 
 //maybe NPM install first and pass into the generate/app the framework version and cmd version
@@ -309,7 +339,7 @@ async function stepCreate() {
 //that way command line will also work
 
   console.log(chalk.green('Generate App started...'));
-  var app = require('@extjs/ext-build/generate/app.js')
+  var generateApp = require('@extjs/ext-build/generate/app.js')
   console.log(currDir);
   var options = { 
     parms: [ 'generate', 'app', answers['appName'], './' ],
@@ -320,10 +350,11 @@ async function stepCreate() {
     frameworkVersion: frameworkVersion,
     force: false
   }
-  new app(options)
-  console.log(chalk.green('Generate App completed...'));
+  new generateApp(options)
+ // console.log(chalk.green('Generate App completed...'));
+  console.log(`${app} Generate App completed`)
 
-  console.log(chalk.green('Update sencha.cfg started... (eventually in generate app)'));
+//  console.log(chalk.green('Update sencha.cfg started... (eventually in generate app)'));
   var senchaCfg = path.join(process.cwd(), '.sencha', 'app', 'sencha.cfg');
   fs.readFile(senchaCfg, 'utf8', function (err,data) {
     if (err) {
@@ -335,7 +366,9 @@ async function stepCreate() {
       if (err) return console.log(err);
     });
   });
-  console.log(chalk.green('Update sencha.cfg completed...'));
+  //console.log(chalk.green('Update sencha.cfg completed...'));
+  console.log(`${app} Update sencha.cfg completed`)
+
 
 
 
