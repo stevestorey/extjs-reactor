@@ -310,7 +310,7 @@ async function stepCreate() {
   try {
     console.log(`${app} NPM install started...`)
     const substrings = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
-    await util.spawnPromise('npm', ['install'], { stdio: 'inherit', encoding: 'utf-8', substrings });
+    await util.spawnPromise('npm', ['install','-s'], { stdio: 'inherit', encoding: 'utf-8', substrings });
     console.log(`${app} NPM install completed`)
 
   }catch(err) {
