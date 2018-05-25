@@ -136,7 +136,12 @@ class app {
 		}
 
     if(ApplicationDir != './') {
-      fs.mkdirSync(ApplicationDir);util.infLog(ApplicationDir + ' created')
+      fs.mkdirSync(ApplicationDir)
+
+      console.log(`${app} ${ApplicationDir} created`)
+
+
+      //util.infLog(ApplicationDir + ' created')
     }
     // else {
     //   console.log('Existing directory: ' + ApplicationDir)
