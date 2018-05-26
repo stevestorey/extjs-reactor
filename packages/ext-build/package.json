@@ -1,6 +1,6 @@
 {
   "name": "@extjs/ext-build",
-  "version": "0.0.55",
+  "version": "0.0.56",
   "description": "ExtBuild - CLI tool for Sencha Ext JS",
   "bin": {
     "ext-build": "bin/ext-build.js",
