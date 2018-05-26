@@ -1,6 +1,6 @@
 {
   "seeDefaults":false,
-  "useDefaults":false,
+  "useDefaults":true,
   "createNow":true,
   "appName":"MyApp",
   "templateType":"make a selection from a list",
