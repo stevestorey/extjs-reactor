@@ -70,10 +70,9 @@ function step00() {
 }
 
 function step00a() {
+  console.log(`Defaults for package can be used - would you like to see the defaults in:`)
   new Confirm({
     message: 
-      'Defaults for some steps can be used - ' + 
-      'would you like to see the defaults in:\n' + 
       path.join(__dirname , 'config.json') + '?',
     default: config.seeDefaults
   }).run().then(answer => {
