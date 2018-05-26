@@ -85,7 +85,7 @@ class generateApp {
 
 		walkSync(TemplateDir, TemplateDir.length+1, ApplicationDir, ApplicationName, Template, SdkVal, Packages)
     var f
-    f='/.sencha';fs.copySync(NodeAppApplicationTemplatesDir  + '/sencha', ApplicationDir + f);console.log(ApplicationDir + f+' created')
+    f='/.sencha';fs.copySync(CurrJSFilePath + '/' + TemplatesDir + '/application' + '/sencha', ApplicationDir + f);console.log(ApplicationDir + f+' created')
 
     var cmdVersion = options.cmdVersion
     var frameworkVersion = options.frameworkVersion
@@ -114,7 +114,7 @@ module.exports = generateApp
 		var files = fs.readdirSync(dir);
 		files.forEach(function(file) {
 			if (fs.statSync(path.join(dir, file)).isDirectory()) {
-        console.log('file (directory): ' + file)
+//        console.log('file (directory): ' + file)
 				var all = path.join(dir, file);console.log('all: ' + all)
         var small = all.slice(len)
 //        try {
@@ -127,7 +127,7 @@ module.exports = generateApp
 				walkSync(path.join(dir, file), len, ApplicationDir, ApplicationName, Template, SdkVal, Packages);
 			}
 			else {
-				console.log('file (file): ' + file)
+//				console.log('file (file): ' + file)
 				if (file.substr(file.length - 7) != 'default') { return }
 				var i = 'People';//mjg
 				iSmall = i.toLowerCase()
@@ -158,13 +158,13 @@ module.exports = generateApp
 					viewBaseClass: "Ext.panel.Panel",
 					viewNameSmall: viewNameSmall
 				}
-				var all = path.join(dir, file);console.log('all: ' + all)
+        var all = path.join(dir, file)
+        //console.log('all: ' + all)
 				var content = fs.readFileSync(all).toString()
 				if (file.substr(file.length - 11) == 'tpl.default') { 
 					var tpl = new Ext.XTemplate(content)
           var t = tpl.apply(values)
           tpl = null
-//					delete tpl
 					var small = all.slice(len)
 					var filename = small.substr(0, small.length - (11+1))
 					fs.writeFileSync(ApplicationDir + '/' + filename, t);
@@ -176,5 +176,5 @@ module.exports = generateApp
 					fs.createReadStream(all).pipe(fs.createWriteStream(theNonTplPath));
 				}
 			}
-		});
+		})
 	}
