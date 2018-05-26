@@ -359,7 +359,7 @@ async function stepCreate() {
   var frameworkVersion = frameworkPkg.sencha.version
   console.log(`${app} Get Ext JS and Sencha Cmd versions completed`)
 
-  var generateApp = require('@extjs/ext-build/generate/app.js')
+  var generateApp = require('@extjs/ext-build-generate-app/generateApp.js')
   var options = { 
     parms: [ 'generate', 'app', answers['appName'], './' ],
     sdk: 'node_modules/@extjs/ext',
