@@ -92,10 +92,9 @@ require('./XTemplate/js/XTemplate.js');
 
 
 
-class app {
+class generateApp {
   constructor(options) {
     var CurrWorkingDir = process.cwd()
-//    var SenchaCmdDir = util.getSenchaCmdPath()
     var NodeAppBinDir = path.resolve(__dirname)
     var TemplatesDir = '/extjs-templates' 
     var NodeAppTemplatesDir = path.join(NodeAppBinDir + '/..' + TemplatesDir) 
@@ -128,26 +127,19 @@ class app {
     }
     
     if (!fs.existsSync(TemplateDir)){throw 'Template ' + Template + ' does not exist'}
-		if (Force) {
-			try {
-				fs.removeSync(ApplicationDir)
-				util.infLog(ApplicationDir + ' deleted (--force is set)')
-			} catch(e) {
-				if (e.code == 'EEXIST') throw e;
-			}
-		}
+    if (Force) {
+      try {
+        fs.removeSync(ApplicationDir)
+        util.infLog(ApplicationDir + ' deleted (--force is set)')
+      } catch(e) {
+        if (e.code == 'EEXIST') throw e;
+      }
+    }
 
     if(ApplicationDir != './') {
       fs.mkdirSync(ApplicationDir)
-
       console.log(`${app} ${ApplicationDir} created`)
-
-
-      //util.infLog(ApplicationDir + ' created')
     }
-    // else {
-    //   console.log('Existing directory: ' + ApplicationDir)
-    // }
 
     var SdkVal
     var Packages
@@ -157,21 +149,13 @@ class app {
       Packages = '$\u007Bworkspace.dir}/packages'
     }
     else {
-      //need this to be a variable - Sdk?
       SdkVal = Sdk
-//      SdkVal = 'node_modules/@extjs/ext'
       Packages = '$\u007Bworkspace.dir}/packages,node_modules/@extjs'
 		}
 
 		walkSync(TemplateDir, TemplateDir.length+1, ApplicationDir, ApplicationName, Template, SdkVal, Packages)
     var f
-
-    //console.log(NodeAppBinDir)
-    //f=NodeAppBinDir + '/../../@extjs/sencha-cmd/dist/templates/app/{senchadir}/app'
-    //fs.copySync(f, ApplicationDir + '/.sencha');console.log(ApplicationDir + '/.sencha' + ' created')
     f='/.sencha';fs.copySync(NodeAppApplicationTemplatesDir  + '/sencha', ApplicationDir + f);console.log(ApplicationDir + f+' created')
-
-
 
     var cmdVersion = options.cmdVersion
     var frameworkVersion = options.frameworkVersion
@@ -182,60 +166,11 @@ class app {
         return console.log(err);
       }
       var result = data.replace('{cmdVer}', cmdVersion)
-                        .replace('{frameVer}', frameworkVersion);
+                      .replace('{frameVer}', frameworkVersion);
       fs.writeFileSync(senchaCfg, result, 'utf8', function (err) {
         if (err) return console.log(err);
       });
     });
-    //console.log(`${app} Update to sencha.cfg completed`)
-
-
-
-
-//    util.infLog('App creation completed')
-//		util.infLog('Template: ' + chalk.green(TemplateDir))
-    
-    
-
-		// util.infLog('Copying the framework from ' + Sdk)
-		// var eDir = ApplicationDir + '/ext';fs.mkdirSync(eDir)
-
-		// f='/index.js';fs.copySync(Sdk+f,eDir+f);console.log(eDir+f+' created')
-		// f='/license.txt';fs.copySync(Sdk+f,eDir+f);console.log(eDir+f+' created')
-		// f='/package.json';fs.copySync(Sdk+f,eDir+f);console.log(eDir+f+' created')
-		// f='/cmd';fs.copySync(Sdk + f, eDir + f);console.log(eDir+f+' created')
-    // f='/sass';fs.copySync(Sdk + f, eDir + f);console.log(eDir+f+' created')
-    
-    // var n = Sdk.indexOf("@extjs");
-    // if (n == -1) {
-    //   f='/build.xml';fs.copySync(Sdk+f,eDir+f);console.log(eDir+f+' created')
-    //   f='/ext-bootstrap.js';fs.copySync(Sdk+f,eDir+f);console.log(eDir+f+' created')
-    //   f='/version.properties';fs.copySync(Sdk+f,eDir+f);console.log(eDir+f+' created')
-    //   f='/.sencha';fs.copySync(Sdk + f, eDir + f);console.log(eDir+f+' created')
-    //   f='/classic';fs.copySync(Sdk + f, eDir + f);console.log(eDir+f+' created')
-      
-    //   f='/licenses';fs.copySync(Sdk + f, eDir + f);console.log(eDir+f+' created')
-    //   f='/modern';fs.copySync(Sdk + f, eDir + f);console.log(eDir+f+' created')
-    //   f='/packages';fs.copySync(Sdk + f, eDir + f);console.log(eDir+f+' created')
-
-    //   var fromBuild = Sdk + '/build'
-    //   var toBuild = eDir + '/build'
-    //   fs.mkdirSync(toBuild);console.log(toBuild+' created')
-    //   fs.readdir(fromBuild, function(err, filenames) {
-    //     filenames.forEach(function(filename) {
-    //       if (filename.substr(filename.length - 3) == '.js') {
-    //         console.log(toBuild + '/' + filename + ' created')
-    //         fs.copySync(fromBuild + '/' + filename, toBuild + '/' + filename)
-    //       }
-    //     });
-    //     util.infLog('Copying the framework is completed')
-    //     util.infLog(chalk.green(`The application '${ApplicationName}' is ready in the '${ApplicationDir}' folder!`))
-
-    //     var viewpackage = chalk.yellow(`cd ${ApplicationDir}/desktop/app/view; sn gen vp settings; cd ../../../`)
-    //     var watch = chalk.yellow(`cd ${ApplicationDir}; sencha app watch -port 1841 moderndesktop`)
-    //     console.log(help.finishText(ApplicationDir, viewpackage, watch))
-    //   });
-    //  }
   }
 }
-module.exports = app
+module.exports = generateApp
