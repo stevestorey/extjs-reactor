@@ -327,8 +327,11 @@ async function stepCreate() {
   //const app = `${chalk.green('ℹ ｢ext｣:')} ext-gen:`;
 
   var nodeDir = path.resolve(__dirname)
+  console.log(`${app} nodeDir: ${nodeDir}`)
   var currDir = process.cwd()
+  console.log(`${app} currDir: ${currDir}`)
   var destDir = currDir + '/' + answers['packageName']
+  console.log(`${app} destDir: ${destDir}`)
   if (fs.existsSync(destDir)){
     console.log(`${chalk.red('Error: folder ' + destDir + ' exists')}`)
     //fs.removeSync(destDir)
@@ -374,8 +377,8 @@ async function stepCreate() {
     console.log(chalk.red('Error in npm install: ' + err));
   }
 
-  var frameworkPath = path.join(process.cwd(), 'node_modules', '@extjs', 'ext', 'package.json');
-  var cmdPath = path.join(process.cwd(), 'node_modules', '@extjs', 'sencha-cmd', 'package.json');
+  var frameworkPath = path.join(currDir, 'node_modules', '@extjs', 'ext', 'package.json');
+  var cmdPath = path.join(currDir, 'node_modules', '@extjs', 'sencha-cmd', 'package.json');
   var frameworkPkg = require(frameworkPath);
   var cmdPkg = require(cmdPath);
   var cmdVersion = cmdPkg.version_full
