@@ -11,16 +11,13 @@ require('./XTemplate/js/XTemplateParser.js');
 require('./XTemplate/js/XTemplateCompiler.js');
 require('./XTemplate/js/XTemplate.js');
 const app = `${chalk.green('ℹ ｢ext｣:')} ext-gen:`;
-
-var config = {}
-var version
-
 var List = require('prompt-list')
 var Input = require('prompt-input')
 var Confirm = require('prompt-confirm')
 var util = require('./utils.js');
 
 var answers = {
+'seeDefaults': null,
 'useDefaults': null,
 'appName': null,
 'templateType': null,
@@ -37,6 +34,8 @@ var answers = {
 'homepageURL': null,
 'createNow': null,
 }
+var version
+var config = {}
 
 step00()
 
@@ -61,12 +60,20 @@ function step00a() {
     answers['seeDefaults'] = answer
     if(answers['seeDefaults'] == true) {
       console.log('')
+      console.log(`For controlling ExtGen:`)
+      console.log(`seeDefaults:\t\t${config.seeDefaults}`)
       console.log(`useDefaults:\t\t${config.useDefaults}`)
       console.log(`createNow:\t\t${config.createNow}`)
+      console.log('')
+      console.log(`For Ext JS app name:`)
       console.log(`appName:\t\t${config.appName}`)
+      console.log('')
+      console.log(`For template selection:`)
       console.log(`templateType:\t\t${config.templateType}`)
       console.log(`template:\t\t${config.template}`)
       console.log(`templateFolderName:\t${config.templateFolderName}`)
+      console.log('')
+      console.log(`For package.json:`)
       console.log(`packageName:\t\t${config.packageName}`)
       console.log(`version:\t\t${config.version}`)
       console.log(`description:\t\t${config.description}`)
@@ -87,15 +94,15 @@ function step00a() {
 
 function step01() {
   new Confirm({
-    message: 'Would you like to use the defaults from config.json?',
+    message: 'Would you like to create a package.json file with the defaults from config.json?',
     default: config.useDefaults
   }).run().then(answer => {
     answers['useDefaults'] = answer
     if(answers['useDefaults'] == true) {
       answers['appName'] = config.appName
-      answers['templateType'] = config.templateType
-      answers['template'] = config.template
-      answers['templateFolderName'] = config.templateFolderName
+      //answers['templateType'] = config.templateType
+      //answers['template'] = config.template
+      //answers['templateFolderName'] = config.templateFolderName
       answers['packageName'] = config.packageName
       answers['version'] = config.version
       answers['description'] = config.description
@@ -105,7 +112,7 @@ function step01() {
       answers['license'] = config.license
       answers['bugsURL'] = config.bugsURL
       answers['homepageURL'] = config.homepageURL
-      step99()
+      step02()
     }
     else {
       step02()
@@ -119,7 +126,10 @@ function step02() {
     default:  config.appName
   }).run().then(answer => {
     answers['appName'] = answer
+    answers['packageName'] = kebabCase(answers['appName'])
+
     step03()
+
   })
 }
 
@@ -146,7 +156,14 @@ function step04() {
     default: 'moderndesktop'
   }).run().then(answer => {
     answers['template'] = answer
-    step06()
+
+    if(answers['useDefaults'] == true) {
+      step99()
+    }
+    else {
+      step06()
+    }
+
   })
 }
 
@@ -156,7 +173,14 @@ function step05() {
     default:  config.templateFolderName
   }).run().then(answer => { 
     answers['templateFolderName'] = answer
-    step06()
+
+    if(answers['useDefaults'] == true) {
+      step99()
+    }
+    else {
+      step06()
+    }
+
   })
 }
 
@@ -189,7 +213,6 @@ function step08() {
     step09()
   })
 }
-
 
 function step09() {
   new Input({
@@ -288,9 +311,9 @@ async function stepCreate() {
     //fs.removeSync(destDir)
     return
   }
-  fs.mkdirSync(destDir);
-  console.log(`${app} ${destDir} created`)
+  fs.mkdirSync(destDir)
   process.chdir(destDir)
+  console.log(`${app} ${destDir} created`)
   var values = {
     appName: answers['appName'],
     packageName: answers['packageName'],
@@ -303,8 +326,6 @@ async function stepCreate() {
     homepageURL: answers['homepageURL'],
     description: answers['description'],
   }
-
-  //console.log(chalk.green('package.json create started...'));
   var file = nodeDir + '/templates/package.json.tpl.default'
   var content = fs.readFileSync(file).toString()
   var tpl = new Ext.XTemplate(content)
@@ -322,13 +343,12 @@ async function stepCreate() {
   console.log(`${app} webpack.config.js created`)
 
   try {
-    console.log(`${app} npm install started...`)
+    console.log(`${app} npm install started`)
     const substrings = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
-    await util.spawnPromise('npm', ['install','-s'], { stdio: 'inherit', encoding: 'utf-8', substrings });
+    await util.spawnPromise('npm', ['install','-s'], { stdio: 'inherit', encoding: 'utf-8', substrings }, substrings);
     console.log(`${app} npm install completed`)
-
-  }catch(err) {
-    console.log(chalk.red('Error in NPM install: ' + err));
+  } catch(err) {
+    console.log(chalk.red('Error in npm install: ' + err));
   }
 
   var frameworkPath = path.join(process.cwd(), 'node_modules', '@extjs', 'ext', 'package.json');
