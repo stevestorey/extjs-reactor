@@ -70,7 +70,7 @@ function step00() {
 }
 
 function step00a() {
-  console.log(`Defaults for package can be used - would you like to see the defaults in:`)
+  console.log(`Defaults for package.json can be used - would you like to see the defaults in:`)
   new Confirm({
     message: 
       path.join(__dirname , 'config.json') + '?',
@@ -154,7 +154,7 @@ function step02() {
 
 function step03() {
   new List({
-    message: 'What type of Template do want?',
+    message: 'What type of Ext JS template do you want?',
     choices: ['make a selection from a list','type a folder name'],
     default: 'make a selection from a list'
   }).run().then(answer => {
@@ -170,7 +170,7 @@ function step03() {
 
 function step04() {
   new List({
-    message: 'What Template would you like to use?',
+    message: 'What Ext JS template would you like to use?',
     choices: ['moderndesktop', 'universalmodern', 'classicdesktop'],
     default: 'moderndesktop'
   }).run().then(answer => {
@@ -205,7 +205,7 @@ function step05() {
 
 function step06() {
   new Input({
-    message: 'What would you like to name the NPM Package?',
+    message: 'What would you like to name the npm Package?',
     default:  kebabCase(answers['appName'])
   }).run().then(answer => { 
     answers['packageName'] = answer
@@ -215,7 +215,7 @@ function step06() {
 
 function step07() {
   new Input({
-    message: 'What NPM version is this?',
+    message: 'What version is your Ext JS application?',
     default: config.version
   }).run().then(answer => { 
     answers['version'] = answer
@@ -245,7 +245,7 @@ function step09() {
 
 function step10() {
   new Input({
-    message: 'What are the NPM keywords?',
+    message: 'What are the npm keywords?',
     default: config.keywords
   }).run().then(answer => { 
     answers['keywords'] = answer
@@ -275,7 +275,7 @@ function step12() {
 
 function step13() {
   new Input({
-    message: 'What is the URL to submit bugsURL?',
+    message: 'What is the URL to submit bugs?',
     default: config.bugsURL
   }).run().then(answer => { 
     answers['bugsURL'] = answer
@@ -303,7 +303,7 @@ function step99() {
   }
 
   new Confirm({
-    message: 'Would you like to generate the Ext JS NPM project with above config now?',
+    message: 'Would you like to generate the Ext JS npm project with above config now?',
     default: config.createNow
   }).run().then(answer => {
     answers['createNow'] = answer

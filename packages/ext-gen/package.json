@@ -1,7 +1,7 @@
 {
   "name": "@extjs/ext-gen",
-  "version": "0.0.67",
-  "description": "A generator for Ext JS apps in NPM",
+  "version": "0.0.68",
+  "description": "A generator for Ext JS apps in npm",
   "bin": {
     "ext-gen": "ext-gen.js",
     "ExtGen": "ext-gen.js"
