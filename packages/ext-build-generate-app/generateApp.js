@@ -52,7 +52,7 @@ class generateApp {
       TemplateDir = options.templateFull
     }
     else {
-      TemplateDir = path.join(CurrJSFilePath + '/' + TemplatesDir + '/' + Template);console.log('TemplateDir: ' + TemplateDir)
+      TemplateDir = path.join(CurrJSFilePath + '/' + TemplatesDir + '/application/' + Template);console.log('TemplateDir: ' + TemplateDir)
 //      TemplateDir = path.join(NodeAppApplicationTemplatesDir + '/' + Template);console.log('TemplateDir: ' + TemplateDir)
     }
     
