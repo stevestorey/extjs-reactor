@@ -34,7 +34,6 @@ function boldGreen (s) {
 var List = require('prompt-list')
 var Input = require('prompt-input')
 var Confirm = require('prompt-confirm')
-var util = require('./utils.js');
 
 var answers = {
 'seeDefaults': null,
@@ -384,7 +383,7 @@ async function stepCreate() {
   var cmdPkg = require(cmdPath);
   var cmdVersion = cmdPkg.version_full
   var frameworkVersion = frameworkPkg.sencha.version
-  console.log(`${app} Get Ext JS and Sencha Cmd versions completed`)
+  //console.log(`${app} Get Ext JS and Sencha Cmd versions completed`)
 
   var generateApp = require('@extjs/ext-build-generate-app/generateApp.js')
   var options = { 
@@ -397,21 +396,7 @@ async function stepCreate() {
     force: false
   }
   new generateApp(options)
-  console.log(`${app} Generate App completed`)
-
-  // var senchaCfg = path.join(process.cwd(), '.sencha', 'app', 'sencha.cfg');
-  // fs.readFile(senchaCfg, 'utf8', function (err,data) {
-  //   if (err) {
-  //     return console.log(err);
-  //   }
-  //   var result = data.replace('{cmdVer}', cmdVersion)
-  //                     .replace('{frameVer}', frameworkVersion);
-  //   fs.writeFileSync(senchaCfg, result, 'utf8', function (err) {
-  //     if (err) return console.log(err);
-  //   });
-  // });
-  // console.log(`${app} Update to sencha.cfg completed`)
-
+  //console.log(`${app} Generate App completed`)
   console.log(chalk.green('\nYour new Ext JS NPM project is ready!\n'))
-  console.log(chalk.bold(`cd ${answers['packageName']} then "npm start" to run the development build and open your new application in a web browser.\n`))
+  console.log(chalk.bold(`type "cd ${answers['packageName']}" then "npm start" to run the development build and open your new application in a web browser\n`))
  }
