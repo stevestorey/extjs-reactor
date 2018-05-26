@@ -10,7 +10,9 @@ require('./XTemplate/js/Template.js');
 require('./XTemplate/js/XTemplateParser.js');
 require('./XTemplate/js/XTemplateCompiler.js');
 require('./XTemplate/js/XTemplate.js');
-const app = `${chalk.green('ℹ ｢ext｣:')} ext-gen:`;
+//const app = `${chalk.green('ℹ ｢ext｣:')} ext-gen:`;
+const app = `\x1b[32m\x1b[1mℹ ｢ext｣:\x1b[0m ext-gen:`;
+
 var List = require('prompt-list')
 var Input = require('prompt-input')
 var Confirm = require('prompt-confirm')
@@ -152,7 +154,7 @@ function step03() {
 function step04() {
   new List({
     message: 'What Template would you like to use?',
-    choices: ['universalmodern', 'moderndesktop', 'classicdesktop'],
+    choices: ['moderndesktop', 'universalmodern', 'classicdesktop'],
     default: 'moderndesktop'
   }).run().then(answer => {
     answers['template'] = answer
@@ -301,7 +303,7 @@ function step99() {
 async function stepCreate() {
   // for (var key in answers) { console.log(`${key} - ${answers[key]}`) }
   // var spawnPromise = require('./utils.js');
-  const app = `${chalk.green('ℹ ｢ext｣:')} ext-gen:`;
+  //const app = `${chalk.green('ℹ ｢ext｣:')} ext-gen:`;
 
   var nodeDir = path.resolve(__dirname)
   var currDir = process.cwd()

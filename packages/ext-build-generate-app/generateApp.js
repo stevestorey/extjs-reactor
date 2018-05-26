@@ -16,6 +16,95 @@ require('./XTemplate/js/XTemplateParser.js');
 require('./XTemplate/js/XTemplateCompiler.js');
 require('./XTemplate/js/XTemplate.js');
 
+class generateApp {
+  constructor(options) {
+    var CurrJSFilePath = __dirname;;console.log('CurrJSFilePath: ' + CurrJSFilePath)
+    var CurrWorkingDir = process.cwd();console.log('CurrWorkingDir: ' + CurrWorkingDir)
+    var NodeAppBinDir = path.resolve(__dirname);console.log('NodeAppBinDir: ' + NodeAppBinDir)
+    var TemplatesDir = '/extjs-templates';console.log('TemplatesDir: ' + TemplatesDir)
+    var NodeAppTemplatesDir = path.join(NodeAppBinDir + '/..' + TemplatesDir);console.log('NodeAppTemplatesDir: ' + NodeAppTemplatesDir)
+    
+    var parms = options.parms
+		if(parms[5] != undefined) {throw err('Only 3 parameters are allowed')}
+		var ApplicationName = parms[2];console.log('ApplicationName: ' + ApplicationName)
+		var ApplicationDir = parms[3];console.log('ApplicationDir: ' + ApplicationDir)
+		var Template = options.template;console.log('Template: ' + Template)
+		var Builds = options.builds;console.log('Builds: ' + Builds)
+		var Sdk = options.sdk;console.log('Sdk: ' + Sdk)
+    var Force = options.force;console.log('Force: ' + Force)
+    
+		if(Template == undefined) {throw '--template parameter is required'}
+		if(Sdk == undefined) {throw '--sdk parameter is required'}
+		if(ApplicationName == undefined) {throw 'Application Name parameter is empty'}
+    if(ApplicationDir == undefined) {throw 'Application Directory parameter is empty'}
+    
+//		if (!fs.existsSync(Sdk)){throw Sdk + ' sdk folder does not exist'}
+		var NodeAppApplicationTemplatesDir = path.join(NodeAppTemplatesDir + '/Application');console.log('NodeAppApplicationTemplatesDir: ' + NodeAppApplicationTemplatesDir)
+
+    //var TemplateDir = path.join(NodeAppApplicationTemplatesDir + '/' + Template);console.log('TemplateDir: ' + TemplateDir)
+
+
+    //var TemplateDir = path.join(NodeAppBinDir + '/node_modules/@extjs/apptemplate-' + Template + '/template');console.log('TemplateDir: ' + TemplateDir)
+    //var TemplateDir = o.options.templateFull
+
+    var TemplateDir = ''
+    if(Template == 'folder') {
+      TemplateDir = options.templateFull
+    }
+    else {
+      TemplateDir = path.join(CurrJSFilePath + '/' + TemplatesDir + '/' + Template);console.log('TemplateDir: ' + TemplateDir)
+//      TemplateDir = path.join(NodeAppApplicationTemplatesDir + '/' + Template);console.log('TemplateDir: ' + TemplateDir)
+    }
+    
+    if (!fs.existsSync(TemplateDir)){throw 'Template ' + Template + ' does not exist'}
+    if (Force) {
+      try {
+        fs.removeSync(ApplicationDir)
+        util.infLog(ApplicationDir + ' deleted (--force is set)')
+      } catch(e) {
+        if (e.code == 'EEXIST') throw e;
+      }
+    }
+
+    if(ApplicationDir != './') {
+      fs.mkdirSync(ApplicationDir)
+      console.log(`${app} ${ApplicationDir} created`)
+    }
+
+    var SdkVal
+    var Packages
+    var n = Sdk.indexOf("@extjs");
+    if (n == -1) {
+      SdkVal = 'ext'
+      Packages = '$\u007Bworkspace.dir}/packages'
+    }
+    else {
+      SdkVal = Sdk
+      Packages = '$\u007Bworkspace.dir}/packages,node_modules/@extjs'
+		}
+
+		walkSync(TemplateDir, TemplateDir.length+1, ApplicationDir, ApplicationName, Template, SdkVal, Packages)
+    var f
+    f='/.sencha';fs.copySync(NodeAppApplicationTemplatesDir  + '/sencha', ApplicationDir + f);console.log(ApplicationDir + f+' created')
+
+    var cmdVersion = options.cmdVersion
+    var frameworkVersion = options.frameworkVersion
+
+    var senchaCfg = path.join(ApplicationDir, '.sencha', 'app', 'sencha.cfg');
+    fs.readFile(senchaCfg, 'utf8', function (err,data) {
+      if (err) {
+        return console.log(err);
+      }
+      var result = data.replace('{cmdVer}', cmdVersion)
+                      .replace('{frameVer}', frameworkVersion);
+      fs.writeFileSync(senchaCfg, result, 'utf8', function (err) {
+        if (err) return console.log(err);
+      });
+    });
+  }
+}
+module.exports = generateApp
+
 	// List all files in a directory in Node.js recursively in a synchronous fashion
 	//https://gist.github.com/kethinov/6658166
 	//const walkSync = (d) => fs.statSync(d).isDirectory() ? fs.readdirSync(d).map(f => walkSync(path.join(d, f)+'\n')) : d;
@@ -89,88 +178,3 @@ require('./XTemplate/js/XTemplate.js');
 			}
 		});
 	}
-
-
-
-class generateApp {
-  constructor(options) {
-    var CurrWorkingDir = process.cwd()
-    var NodeAppBinDir = path.resolve(__dirname)
-    var TemplatesDir = '/extjs-templates' 
-    var NodeAppTemplatesDir = path.join(NodeAppBinDir + '/..' + TemplatesDir) 
-    
-    var parms = options.parms
-		if(parms[5] != undefined) {throw err('Only 3 parameters are allowed')}
-		var ApplicationName = parms[2];console.log('ApplicationName: ' + ApplicationName)
-		var ApplicationDir = parms[3];console.log('ApplicationDir: ' + ApplicationDir)
-		var Template = options.template;console.log('Template: ' + Template)
-		var Builds = options.builds;console.log('Builds: ' + Builds)
-		var Sdk = options.sdk;console.log('Sdk: ' + Sdk)
-		
-		var Force = options.force;console.log('Force: ' + Force)
-		if(Template == undefined) {throw '--template parameter is required'}
-		if(Sdk == undefined) {throw '--sdk parameter is required'}
-		if(ApplicationName == undefined) {throw 'Application Name parameter is empty'}
-		if(ApplicationDir == undefined) {throw 'Application Directory parameter is empty'}
-//		if (!fs.existsSync(Sdk)){throw Sdk + ' sdk folder does not exist'}
-		var NodeAppApplicationTemplatesDir = path.join(NodeAppTemplatesDir + '/Application');console.log('NodeAppApplicationTemplatesDir: ' + NodeAppApplicationTemplatesDir)
-		var TemplateDir = path.join(NodeAppApplicationTemplatesDir + '/' + Template);console.log('TemplateDir: ' + TemplateDir)
-    //var TemplateDir = path.join(NodeAppBinDir + '/node_modules/@extjs/apptemplate-' + Template + '/template');console.log('TemplateDir: ' + TemplateDir)
-    //var TemplateDir = o.options.templateFull
-
-    var TemplateDir = ''
-    if(Template == 'folder') {
-      TemplateDir = options.templateFull
-    }
-    else {
-      TemplateDir = path.join(NodeAppApplicationTemplatesDir + '/' + Template);console.log('TemplateDir: ' + TemplateDir)
-    }
-    
-    if (!fs.existsSync(TemplateDir)){throw 'Template ' + Template + ' does not exist'}
-    if (Force) {
-      try {
-        fs.removeSync(ApplicationDir)
-        util.infLog(ApplicationDir + ' deleted (--force is set)')
-      } catch(e) {
-        if (e.code == 'EEXIST') throw e;
-      }
-    }
-
-    if(ApplicationDir != './') {
-      fs.mkdirSync(ApplicationDir)
-      console.log(`${app} ${ApplicationDir} created`)
-    }
-
-    var SdkVal
-    var Packages
-    var n = Sdk.indexOf("@extjs");
-    if (n == -1) {
-      SdkVal = 'ext'
-      Packages = '$\u007Bworkspace.dir}/packages'
-    }
-    else {
-      SdkVal = Sdk
-      Packages = '$\u007Bworkspace.dir}/packages,node_modules/@extjs'
-		}
-
-		walkSync(TemplateDir, TemplateDir.length+1, ApplicationDir, ApplicationName, Template, SdkVal, Packages)
-    var f
-    f='/.sencha';fs.copySync(NodeAppApplicationTemplatesDir  + '/sencha', ApplicationDir + f);console.log(ApplicationDir + f+' created')
-
-    var cmdVersion = options.cmdVersion
-    var frameworkVersion = options.frameworkVersion
-
-    var senchaCfg = path.join(ApplicationDir, '.sencha', 'app', 'sencha.cfg');
-    fs.readFile(senchaCfg, 'utf8', function (err,data) {
-      if (err) {
-        return console.log(err);
-      }
-      var result = data.replace('{cmdVer}', cmdVersion)
-                      .replace('{frameVer}', frameworkVersion);
-      fs.writeFileSync(senchaCfg, result, 'utf8', function (err) {
-        if (err) return console.log(err);
-      });
-    });
-  }
-}
-module.exports = generateApp
