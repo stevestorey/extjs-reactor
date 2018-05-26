@@ -23,7 +23,7 @@ exports.senchaCmdAsync = async (parms, substrings = DEFAULT_SUBSTRS) => {
 var spawnPromise = (command, args, options) => {
   let child;
   let promise = new Promise((resolve, reject) => {
-    child = crossSpawn(command, args, {stdio: 'pipe', encoding: 'utf-8'})
+    child = crossSpawn(command, args, {stdio: 'inherit', encoding: 'utf-8'})
                 .on('close', (code, signal) => {
                   resolve({code, signal})
                   //resolve({ code, signal, stderr, stdout})
