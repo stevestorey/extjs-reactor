@@ -48,28 +48,41 @@ function step00() {
   config = JSON.parse(data);
   console.log(chalk.bold.green(`\nSencha ExtGen v${version} (The Ext JS Project Generator for NPM)`))
 
-  console.log(`config.json:`)
-  console.log(path.join(__dirname , 'config.json'))
-  console.log('')
+  step00a()
+}
 
-  console.log(`useDefaults:\t\t${config.useDefaults}`)
-  console.log(`createNow:\t\t${config.createNow}`)
-  console.log(`appName:\t\t${config.appName}`)
-  console.log(`templateType:\t\t${config.templateType}`)
-  console.log(`template:\t\t${config.template}`)
-  console.log(`templateFolderName:\t${config.templateFolderName}`)
-  console.log(`packageName:\t\t${config.packageName}`)
-  console.log(`version:\t\t${config.version}`)
-  console.log(`description:\t\t${config.description}`)
-  console.log(`gitRepositoryURL:\t${config.gitRepositoryURL}`)
-  console.log(`keywords:\t\t${config.keywords}`)
-  console.log(`author:\t\t\t${config.author}`)
-  console.log(`license:\t\t${config.license}`)
-  console.log(`bugsURL:\t\t${config.bugsURL}`)
-  console.log(`homepageURL:\t\t${config.homepageURL}`)
-  console.log('')
-
-  step01()
+function step00a() {
+  new Confirm({
+    message: 'Would you like to see the defaults in config.json?',
+    default: config.seeDefaults
+  }).run().then(answer => {
+    answers['seeDefaults'] = answer
+    if(answers['seeDefaults'] == true) {
+      console.log(`config.json:`)
+      console.log(path.join(__dirname , 'config.json'))
+      console.log('')
+      console.log(`useDefaults:\t\t${config.useDefaults}`)
+      console.log(`createNow:\t\t${config.createNow}`)
+      console.log(`appName:\t\t${config.appName}`)
+      console.log(`templateType:\t\t${config.templateType}`)
+      console.log(`template:\t\t${config.template}`)
+      console.log(`templateFolderName:\t${config.templateFolderName}`)
+      console.log(`packageName:\t\t${config.packageName}`)
+      console.log(`version:\t\t${config.version}`)
+      console.log(`description:\t\t${config.description}`)
+      console.log(`gitRepositoryURL:\t${config.gitRepositoryURL}`)
+      console.log(`keywords:\t\t${config.keywords}`)
+      console.log(`author:\t\t\t${config.author}`)
+      console.log(`license:\t\t${config.license}`)
+      console.log(`bugsURL:\t\t${config.bugsURL}`)
+      console.log(`homepageURL:\t\t${config.homepageURL}`)
+      console.log('')
+      step01()
+    }
+    else {
+      step01()
+    }
+  })
 }
 
 function step01() {
@@ -276,6 +289,7 @@ async function stepCreate() {
     return
   }
   fs.mkdirSync(destDir);
+  console.log(`${app} ${destDir} created`)
   process.chdir(destDir)
   var values = {
     appName: answers['appName'],
@@ -308,10 +322,10 @@ async function stepCreate() {
   console.log(`${app} webpack.config.js created`)
 
   try {
-    console.log(`${app} NPM install started...`)
+    console.log(`${app} npm install started...`)
     const substrings = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
     await util.spawnPromise('npm', ['install','-s'], { stdio: 'inherit', encoding: 'utf-8', substrings });
-    console.log(`${app} NPM install completed`)
+    console.log(`${app} npm install completed`)
 
   }catch(err) {
     console.log(chalk.red('Error in NPM install: ' + err));
