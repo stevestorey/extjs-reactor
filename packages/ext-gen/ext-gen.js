@@ -47,6 +47,8 @@ function step00() {
   var data = fs.readFileSync(nodeDir + '/config.json')
   config = JSON.parse(data);
   console.log(chalk.bold.green(`\nSencha ExtGen v${version} (The Ext JS Project Generator for NPM)`))
+  console.log(`config.json is here:`)
+  console.log(path.join(__dirname , 'config.json'))
 
   step00a()
 }
@@ -58,8 +60,6 @@ function step00a() {
   }).run().then(answer => {
     answers['seeDefaults'] = answer
     if(answers['seeDefaults'] == true) {
-      console.log(`config.json:`)
-      console.log(path.join(__dirname , 'config.json'))
       console.log('')
       console.log(`useDefaults:\t\t${config.useDefaults}`)
       console.log(`createNow:\t\t${config.createNow}`)
@@ -87,7 +87,7 @@ function step00a() {
 
 function step01() {
   new Confirm({
-    message: 'Would you like to use these defaults from config.json?',
+    message: 'Would you like to use the defaults from config.json?',
     default: config.useDefaults
   }).run().then(answer => {
     answers['useDefaults'] = answer
