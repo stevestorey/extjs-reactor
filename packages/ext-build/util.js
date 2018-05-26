@@ -16,40 +16,38 @@ exports.senchaCmd = (parms) => {
 }
 
 exports.senchaCmdAsync = async (parms, substrings = DEFAULT_SUBSTRS) => {
-  return spawnPromise(sencha, parms, { stdio: 'inherit', encoding: 'utf-8', substrings});
-  //return spawnPromise(sencha, parms, {substrings});
+  return spawnPromise(sencha, parms, { stdio: 'pipe', encoding: 'utf-8'}, substrings);
 }
 
-var spawnPromise = (command, args, options) => {
+var spawnPromise = (command, args, options, substrings) => {
   let child;
   let promise = new Promise((resolve, reject) => {
-    child = crossSpawn(command, args, {stdio: 'inherit', encoding: 'utf-8'})
-                .on('close', (code, signal) => {
-                  resolve({code, signal})
-                })
-                .on('error', (error) => {
-                  reject(error);
-                })
+    child = crossSpawn(command, args, options)
+      .on('close', (code, signal) => {
+        resolve({code, signal})
+      })
+      .on('error', (error) => {
+        reject(error);
+      })
     if (child.stdout) {
       child.stdout
-            .on('data', (data) => {
-              var substrings = options.substrings;
-              if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
-                var str = data.toString()
-                var s = str.replace(/\r?\n|\r/g, " ")
-                var s2 = s.replace("[INF]", "")
-                var s3 = s2.replace(process.cwd(), '');
-                console.log(`${app}${s3}`) 
-              }
-            })
+        .on('data', (data) => {
+          if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
+            var str = data.toString()
+            var s = str.replace(/\r?\n|\r/g, " ")
+            var s2 = s.replace("[INF]", "")
+            var s3 = s2.replace(process.cwd(), '');
+            console.log(`${app}${s3}`) 
+          }
+        })
     }
     if (child.stderr) {
       child.stderr
-            .on('data', (data) => {
-              var str = data.toString()
-              var s = str.replace(/\r?\n|\r/g, " ")
-              console.log(`${app} ${chalk.black("[ERR]")} ${s}`)
-            });
+        .on('data', (data) => {
+          var str = data.toString()
+          var s = str.replace(/\r?\n|\r/g, " ")
+          console.log(`${app} ${chalk.black("[ERR]")} ${s}`)
+        });
     }
   });
   promise.child = child;
