@@ -1,12 +1,7 @@
 var fs = require('fs-extra')
-//var _ = require('underscore')
 var chalk = require('chalk');
 var path = require('path')
-//var util = require('./util.js')
 err = function err(s) { return chalk.red('[ERR] ') + s }
-
-//const help = require('./help.js')
-//var debug = false
 
 require('./XTemplate/js/Ext.js');
 require('./XTemplate/js/String.js');
@@ -18,32 +13,41 @@ require('./XTemplate/js/XTemplate.js');
 
 class generateApp {
   constructor(options) {
-    var CurrJSFilePath = __dirname;;console.log('CurrJSFilePath: ' + CurrJSFilePath)
-    var CurrWorkingDir = process.cwd();console.log('CurrWorkingDir: ' + CurrWorkingDir)
-    var NodeAppBinDir = path.resolve(__dirname);console.log('NodeAppBinDir: ' + NodeAppBinDir)
-    var TemplatesDir = '/extjs-templates';console.log('TemplatesDir: ' + TemplatesDir)
-    var NodeAppTemplatesDir = path.join(NodeAppBinDir + '/..' + TemplatesDir);console.log('NodeAppTemplatesDir: ' + NodeAppTemplatesDir)
-    
+    var CurrJSFilePath = __dirname
+    var CurrWorkingDir = process.cwd()
+    var NodeAppBinDir = path.resolve(__dirname)
+    var TemplatesDir = '/extjs-templates'
+    var NodeAppTemplatesDir = path.join(NodeAppBinDir + '/..' + TemplatesDir)
     var parms = options.parms
 		if(parms[5] != undefined) {throw err('Only 3 parameters are allowed')}
-		var ApplicationName = parms[2];console.log('ApplicationName: ' + ApplicationName)
-		var ApplicationDir = parms[3];console.log('ApplicationDir: ' + ApplicationDir)
-		var Template = options.template;console.log('Template: ' + Template)
-		var Builds = options.builds;console.log('Builds: ' + Builds)
-		var Sdk = options.sdk;console.log('Sdk: ' + Sdk)
-    var Force = options.force;console.log('Force: ' + Force)
-    
+    var ApplicationName = parms[2]
+    var ApplicationDir = parms[3]
+    var Template = options.template
+    var Builds = options.builds
+    var Sdk = options.sdk
+    var Force = options.force
+    var NodeAppApplicationTemplatesDir = path.join(NodeAppTemplatesDir + '/Application')
+
+    //console.log('CurrJSFilePath: ' + CurrJSFilePath)
+    //console.log('CurrWorkingDir: ' + CurrWorkingDir)
+    //console.log('NodeAppBinDir: ' + NodeAppBinDir)
+    //console.log('TemplatesDir: ' + TemplatesDir)
+    //console.log('NodeAppTemplatesDir: ' + NodeAppTemplatesDir)
+    //console.log('ApplicationName: ' + ApplicationName)
+    //console.log('ApplicationDir: ' + ApplicationDir)
+    //console.log('Template: ' + Template)
+    //console.log('Builds: ' + Builds)
+    //console.log('Sdk: ' + Sdk)
+    //console.log('Force: ' + Force)
+    //console.log('NodeAppApplicationTemplatesDir: ' + NodeAppApplicationTemplatesDir)
+
 		if(Template == undefined) {throw '--template parameter is required'}
 		if(Sdk == undefined) {throw '--sdk parameter is required'}
 		if(ApplicationName == undefined) {throw 'Application Name parameter is empty'}
     if(ApplicationDir == undefined) {throw 'Application Directory parameter is empty'}
     
-//		if (!fs.existsSync(Sdk)){throw Sdk + ' sdk folder does not exist'}
-		var NodeAppApplicationTemplatesDir = path.join(NodeAppTemplatesDir + '/Application');console.log('NodeAppApplicationTemplatesDir: ' + NodeAppApplicationTemplatesDir)
-
+    //if (!fs.existsSync(Sdk)){throw Sdk + ' sdk folder does not exist'}
     //var TemplateDir = path.join(NodeAppApplicationTemplatesDir + '/' + Template);console.log('TemplateDir: ' + TemplateDir)
-
-
     //var TemplateDir = path.join(NodeAppBinDir + '/node_modules/@extjs/apptemplate-' + Template + '/template');console.log('TemplateDir: ' + TemplateDir)
     //var TemplateDir = o.options.templateFull
 
@@ -52,10 +56,8 @@ class generateApp {
       TemplateDir = options.templateFull
     }
     else {
-      TemplateDir = path.join(CurrJSFilePath + '/' + TemplatesDir + '/application/' + Template);console.log('TemplateDir: ' + TemplateDir)
-//      TemplateDir = path.join(NodeAppApplicationTemplatesDir + '/' + Template);console.log('TemplateDir: ' + TemplateDir)
+      TemplateDir = path.join(CurrJSFilePath + '/' + TemplatesDir + '/application/' + Template)
     }
-    
     if (!fs.existsSync(TemplateDir)){throw 'Template ' + Template + ' does not exist'}
     if (Force) {
       try {
@@ -85,7 +87,9 @@ class generateApp {
 
 		walkSync(TemplateDir, TemplateDir.length+1, ApplicationDir, ApplicationName, Template, SdkVal, Packages)
     var f
-    f='/.sencha';fs.copySync(CurrJSFilePath + '/' + TemplatesDir + '/application' + '/sencha', ApplicationDir + f);console.log(ApplicationDir + f+' created')
+    f='/.sencha';fs.copySync(CurrJSFilePath + '/' + TemplatesDir + '/application' + '/sencha', ApplicationDir + f)
+    //console.log(ApplicationDir + f + ' created')
+    console.log(`${app} ${f} created`)
 
     var cmdVersion = options.cmdVersion
     var frameworkVersion = options.frameworkVersion
@@ -99,8 +103,8 @@ class generateApp {
                       .replace('{frameVer}', frameworkVersion);
       fs.writeFileSync(senchaCfg, result, 'utf8', function (err) {
         if (err) return console.log(err);
-      });
-    });
+      })
+    })
   }
 }
 module.exports = generateApp
@@ -173,7 +177,8 @@ module.exports = generateApp
 				else {
 					var small = all.slice(len)
 					var filename = small.substr(0, small.length - (7+1))
-					var theNonTplPath = ApplicationDir + '/' + filename;console.log('theNonTplPath: ' + theNonTplPath)
+          var theNonTplPath = ApplicationDir + '/' + filename
+          //console.log('theNonTplPath: ' + theNonTplPath)
 					fs.createReadStream(all).pipe(fs.createWriteStream(theNonTplPath));
 				}
 			}
