@@ -26,7 +26,6 @@ var spawnPromise = (command, args, options) => {
     child = crossSpawn(command, args, {stdio: 'inherit', encoding: 'utf-8'})
                 .on('close', (code, signal) => {
                   resolve({code, signal})
-                  //resolve({ code, signal, stderr, stdout})
                 })
                 .on('error', (error) => {
                   reject(error);
