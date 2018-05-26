@@ -3,15 +3,32 @@ const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs-extra');
 const { kebabCase, pick } = require('lodash')
-require('./XTemplate/js/Ext.js');
-require('./XTemplate/js/String.js');
-require('./XTemplate/js/Format.js');
-require('./XTemplate/js/Template.js');
-require('./XTemplate/js/XTemplateParser.js');
-require('./XTemplate/js/XTemplateCompiler.js');
-require('./XTemplate/js/XTemplate.js');
+// require('./XTemplate/js/Ext.js');
+// require('./XTemplate/js/String.js');
+// require('./XTemplate/js/Format.js');
+// require('./XTemplate/js/Template.js');
+// require('./XTemplate/js/XTemplateParser.js');
+// require('./XTemplate/js/XTemplateCompiler.js');
+// require('./XTemplate/js/XTemplate.js');
 //const app = `${chalk.green('ℹ ｢ext｣:')} ext-gen:`;
-const app = `\x1b[32m\x1b[1mℹ ｢ext｣:\x1b[0m ext-gen:`;
+//const app = `\x1b[32m\x1b[1mℹ ｢ext｣:\x1b[0m ext-gen:`;
+//const app = `${chalk.green('ℹ ｢ext｣:')} ext-gen:`;
+//const app = `\x1b[32m\x1b[1mℹ ｢ext｣:\x1b[0m ext-gen:`;
+const appOrig = `\x1b[31m\x1b[1mℹ ｢ext｣:\x1b[0m ext-gen:`;
+
+var prefix = `ℹ ｢ext｣`
+var greenbold = `\x1b[32m\x1b[1m`
+var green = `\x1b[32m`
+var redbold = `\x1b[31m\x1b[1m`
+var red = `\x1b[31m`
+var end = `\x1b[0m`
+var app =(`${green}${prefix}${end} ext-gen:`)
+
+function boldGreen (s) {
+  var boldgreencolor = `\x1b[32m\x1b[1m`
+  return (`${boldgreencolor}${s}${end}`)
+}
+
 
 var List = require('prompt-list')
 var Input = require('prompt-input')
@@ -47,7 +64,11 @@ function step00() {
   version = pkg.version
   var data = fs.readFileSync(nodeDir + '/config.json')
   config = JSON.parse(data);
-  console.log(chalk.bold.green(`\nSencha ExtGen v${version} (The Ext JS Project Generator for NPM)`))
+
+  //console.log(chalk.bold.green(`\nSencha ExtGen v${version} (The Ext JS Project Generator for npm)`))
+  console.log(boldGreen(`\nSencha ExtGen v${version} (The Ext JS Project Generator for npm)`))
+  //console.log(`${greenbold}\nSencha ExtGen v${version} (The Ext JS Project Generator for npm)${end}`)
+
   console.log(`config.json is here:`)
   console.log(path.join(__dirname , 'config.json'))
 
