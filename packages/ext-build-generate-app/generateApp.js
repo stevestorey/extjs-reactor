@@ -2,6 +2,10 @@ var fs = require('fs-extra')
 var chalk = require('chalk');
 var path = require('path')
 err = function err(s) { return chalk.red('[ERR] ') + s }
+var green = `\x1b[32m`
+var prefix = `ℹ ｢ext｣`
+var end = `\x1b[0m`
+var app = `${green}${prefix}${end} ext-build-generate-app:`
 
 require('./XTemplate/js/Ext.js');
 require('./XTemplate/js/String.js');
