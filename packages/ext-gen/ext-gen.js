@@ -3,6 +3,7 @@ const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs-extra');
 const { kebabCase, pick } = require('lodash')
+const util = require('./util.js')
 require('./XTemplate/js/Ext.js');
 require('./XTemplate/js/String.js');
 require('./XTemplate/js/Format.js');
@@ -377,8 +378,8 @@ async function stepCreate() {
     console.log(chalk.red('Error in npm install: ' + err));
   }
 
-  var frameworkPath = path.join(currDir, 'node_modules', '@extjs', 'ext', 'package.json');
-  var cmdPath = path.join(currDir, 'node_modules', '@extjs', 'sencha-cmd', 'package.json');
+  var frameworkPath = path.join(destDir, 'node_modules', '@extjs', 'ext', 'package.json');
+  var cmdPath = path.join(destDir, 'node_modules', '@extjs', 'sencha-cmd', 'package.json');
   var frameworkPkg = require(frameworkPath);
   var cmdPkg = require(cmdPath);
   var cmdVersion = cmdPkg.version_full

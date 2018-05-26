@@ -115,7 +115,8 @@ module.exports = generateApp
 		files.forEach(function(file) {
 			if (fs.statSync(path.join(dir, file)).isDirectory()) {
 //        console.log('file (directory): ' + file)
-				var all = path.join(dir, file);console.log('all: ' + all)
+        var all = path.join(dir, file)
+        //console.log('all: ' + all)
         var small = all.slice(len)
 //        try {
           fs.mkdirSync(ApplicationDir + '/' + small);
