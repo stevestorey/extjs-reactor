@@ -171,7 +171,7 @@ function step00b() {
 
 function step01() {
   new Confirm({
-    message: 'Would you like to create a package.json file with the defaults from config.json?',
+    message: 'Would you like to create a package.json file with defaults from config.json?',
     default: config.useDefaults
   }).run().then(answer => {
     answers['useDefaults'] = answer
