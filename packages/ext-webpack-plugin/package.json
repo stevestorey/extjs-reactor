@@ -1,18 +1,20 @@
 {
   "name": "@extjs/ext-webpack-plugin",
-  "version": "0.0.69",
+  "version": "0.0.70",
   "description": "A webpack plugin for new Ext JS applications",
   "main": "./lib/index.js",
   "scripts": {
     "build": "babel src --out-dir lib"
-  },  
-  "config" : { "loglevel" : "silent" },
+  },
+  "config": {
+    "loglevel": "silent"
+  },
   "dependencies": {
     "@extjs/ext-build": "~0.0.1",
     "lodash.uniq": "^4.5.0",
     "schema-utils": "^0.4.5",
     "chalk": "^2.4.1",
-    "recursive-readdir-sync":"^1.0.6"
+    "recursive-readdir-sync": "^1.0.6"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -21,8 +23,8 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-eslint": "^8.2.3",
     "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-env":"^1.7.0"
-   },
+    "babel-preset-env": "^1.7.0"
+  },
   "babel": {
     "presets": [
       "env",
@@ -38,7 +40,12 @@
     "type": "git",
     "url": "git+https://github.com/sencha/extjs-reactor"
   },
-  "keywords": ["webpack","webpack-plugin","EXT JS", "Sencha"],
+  "keywords": [
+    "webpack",
+    "webpack-plugin",
+    "EXT JS",
+    "Sencha"
+  ],
   "author": "Sencha, Inc.",
   "license": "MIT",
   "bugs": {
