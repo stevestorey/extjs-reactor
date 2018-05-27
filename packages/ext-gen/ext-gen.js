@@ -415,7 +415,8 @@ async function stepCreate() {
   try {
     console.log(`${app} npm install started`)
     const substrings = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
-    await util.spawnPromise('npm', ['install','-s'], { stdio: 'inherit', encoding: 'utf-8', substrings }, substrings);
+    var npmCmd = `npm${/^win/.test(require('os').platform()) ? ".cmd" : ""}`
+    await util.spawnPromise(npmCmd, ['install','-s'], {stdio: 'inherit', encoding: 'utf-8'}, substrings);
     console.log(`${app} npm install completed`)
   } catch(err) {
     console.log(boldRed('Error in npm install: ' + err));
@@ -441,6 +442,6 @@ async function stepCreate() {
   }
   new generateApp(options)
   //console.log(`${app} Generate App completed`)
-  console.log(boldGreen('\nYour new Ext JS NPM project is ready!\n'))
-  console.log(boldGreen(`type "cd ${answers['packageName']}" then "npm start" to run the development build and open your new application in a web browser\n`))
+  console.log('${app} Your Ext JS npm project is ready')
+  console.log(boldGreen(`\ntype "cd ${answers['packageName']}" then "npm start" to run the development build and open your new application in a web browser\n`))
  }
