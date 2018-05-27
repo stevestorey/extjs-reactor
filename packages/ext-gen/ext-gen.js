@@ -23,7 +23,7 @@ var redbold = `\x1b[31m\x1b[1m`
 var red = `\x1b[31m`
 var prefix = `ℹ ｢ext｣`
 var end = `\x1b[0m`
-var app =(`${green}${prefix}${end} ext-gen:`)
+var app =(`${greenbold}${prefix}${end} ext-gen:`)
 
 function boldGreen (s) {
   var boldgreencolor = `\x1b[32m\x1b[1m`
@@ -376,10 +376,6 @@ async function stepCreate() {
   var currDir = process.cwd()
   var destDir = currDir + '/' + answers['packageName']
 
-  //console.log(`${app} nodeDir: ${nodeDir}`)
-  //console.log(`${app} currDir: ${currDir}`)
-  //console.log(`${app} destDir: ${destDir}`)
-
   if (fs.existsSync(destDir)){
     console.log(`${boldRed('Error: folder ' + destDir + ' exists')}`)
     //fs.removeSync(destDir) //danger!  if you want to enable this, warn the user
@@ -446,5 +442,5 @@ async function stepCreate() {
   new generateApp(options)
   //console.log(`${app} Generate App completed`)
   console.log(boldGreen('\nYour new Ext JS NPM project is ready!\n'))
-  console.log(`type "cd ${answers['packageName']}" then "npm start" to run the development build and open your new application in a web browser\n`)
+  console.log(boldGreen(`type "cd ${answers['packageName']}" then "npm start" to run the development build and open your new application in a web browser\n`))
  }
