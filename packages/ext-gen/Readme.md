@@ -9,7 +9,7 @@ Install [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js
 npm install -g @extjs/ext-gen
 ```
 
-## Creating a new ExtGen App
+## Creating a new ext-gen App
 
 If you haven't already, log into Sencha's private registry using the credentials you received in your ExtReact trial or subscription activation email. If you don't have credentials, you can get them by [signing up for a trial of ExtReact](https://www.sencha.com/products/extreact/evaluate/).
 
@@ -17,10 +17,10 @@ If you haven't already, log into Sencha's private registry using the credentials
 npm login --registry=http://npm.sencha.com --scope=@extjs
 ```
 
-Then, to create a new ExtGen app, run:
+Then, to create a new ext-gen app, run:
 
 ```bash
-@extjs/ext-gen
+ext-gen
 ```
 
 ## Development
@@ -35,7 +35,7 @@ cd packages/ext-gen
 npm link
 ```
 
-Now `@extjs/ext-gen` will use your local copy of the generator.
+Now `ext-gen` will use your local copy of the generator.
 
 ## License
 

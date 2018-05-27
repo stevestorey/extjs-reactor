@@ -31,7 +31,7 @@ const optionDefinitions = [
 //   });
 
   debug = false
-  console.log(chalk.green('Sencha ExtBuild v' + PackageJson.version))
+  console.log(chalk.green('Sencha ext-build v' + PackageJson.version))
 
   var CurrWorkingDir = process.cwd()
   var SenchaCmdDir = util.getSenchaCmdPath()
@@ -74,7 +74,8 @@ const optionDefinitions = [
           break;
         case 'build': case 'b':
           var build = require('../app/buildAsync.js')
-          new build(options)
+          //new build(options)
+          new build().executeAsync().then(function() {})
           break;
         case 'refresh': case 'r':
           var refresh = require('../app/refresh.js')
@@ -105,7 +106,7 @@ const optionDefinitions = [
           new generateApp(options)
 
           console.log(chalk.green('\nYour new Ext JS project is ready!\n'))
-          console.log(chalk.bold(`cd ${options.parms[2]} then "ExtBuild app watch" to run the development build.\n`))
+          console.log(chalk.bold(`cd ${options.parms[2]} then "ext-build app watch" to run the development build.\n`))
         
 
           break;

@@ -1,23 +1,22 @@
 var chalk = require('chalk');
 exports.infoText = `
-2 ways to invoke:
+to invoke:
 ${chalk.green('*')} ext-build
-${chalk.green('*')} ExtBuild
 
 Examples (replace --sdk with your path to the Ext JS sdk):
-${chalk.green('*')} ExtBuild generate app --sdk '/Sencha/ext-6.5.3' --template 'universalmodern' MyApp ./MyApp
-${chalk.green('*')} ExtBuild generate app --template 'moderndesktop' --sdk '/Sencha/ext-6.5.3' ModernDesktop ./ModernDesktop
-${chalk.green('*')} ExtBuild generate app --template 'classicdesktop' --sdk '/Sencha/ext-6.5.3' ClassicDesktop ./ClassicDesktop
-${chalk.green('*')} ExtBuild generate app --template 'universalmodernclassic' --sdk '/Sencha/ext-6.5.3' UMC ./UMC
-${chalk.green('*')} ExtBuild gen app -s '/Sencha/ext-6.5.3' -t 'universalmodern' MyApp ./MyApp
-${chalk.green('*')} ExtBuild g a -s '/Sencha/ext-6.5.3' -t 'universalmodern' MyApp ./MyApp
-${chalk.green('*')} ExtBuild generate viewpackage settings
-${chalk.green('*')} ExtBuild generate storepackage employee
+${chalk.green('*')} ext-build generate app --sdk '/Sencha/ext-6.5.3' --template 'universalmodern' MyApp ./MyApp
+${chalk.green('*')} ext-build generate app --template 'moderndesktop' --sdk '/Sencha/ext-6.5.3' ModernDesktop ./ModernDesktop
+${chalk.green('*')} ext-build generate app --template 'classicdesktop' --sdk '/Sencha/ext-6.5.3' ClassicDesktop ./ClassicDesktop
+${chalk.green('*')} ext-build generate app --template 'universalmodernclassic' --sdk '/Sencha/ext-6.5.3' UMC ./UMC
+${chalk.green('*')} ext-build gen app -s '/Sencha/ext-6.5.3' -t 'universalmodern' MyApp ./MyApp
+${chalk.green('*')} ext-build g a -s '/Sencha/ext-6.5.3' -t 'universalmodern' MyApp ./MyApp
+${chalk.green('*')} ext-build generate viewpackage settings
+${chalk.green('*')} ext-build generate storepackage employee
 
 Commands Available
-${chalk.green('*')} ExtBuild generate app (name) (path)
-${chalk.green('*')} ExtBuild generate viewpackage (view)
-${chalk.green('*')} ExtBuild generate storepackage (store)
+${chalk.green('*')} ext-build generate app (name) (path)
+${chalk.green('*')} ext-build generate viewpackage (view)
+${chalk.green('*')} ext-build generate storepackage (store)
 
 Commands Options
 ${chalk.green('*')} generate, gen, g
