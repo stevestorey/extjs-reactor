@@ -3,7 +3,9 @@
   "version": "{version}",
   "description": "{description}",
   "scripts": {
-    "start": "webpack-dev-server -w --progress"
+    "start": "webpack-dev-server -w --progress",
+    "buildtest": "ext-build app build testing",
+    "buildprod": "ext-build app build production"
   },
   "dependencies": {
     "@extjs/ext": "^6.6.0"

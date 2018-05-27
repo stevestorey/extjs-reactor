@@ -122,7 +122,8 @@ export default class ExtWebpackPlugin {
         if (currentNumFiles != me.lastNumFiles || doBuild) {
           me.lastNumFiles = currentNumFiles
           var buildAsync = require('@extjs/ext-build/app/buildAsync.js')
-          new buildAsync().executeAsync().then(function() {
+          var options = {parms: ['app','build','development']}
+          new buildAsync(options).executeAsync().then(function() {
             cb()
           })
           

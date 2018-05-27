@@ -68,7 +68,7 @@ function step00() {
   version = pkg.version
   var data = fs.readFileSync(nodeDir + '/config.json')
   config = JSON.parse(data);
-  console.log(boldGreen(`\nSencha ExtGen v${version} (The Ext JS Project Generator for npm)`))
+  console.log(boldGreen(`\nSencha ext-gen v${version} (The Ext JS Project Generator for npm)`))
   console.log(`Getting started: http://docs.sencha.com/ext-gen/1.0.0/guides/getting_started.html`)
   console.log('Defaults: ' + path.join(__dirname , 'config.json'))
   console.log('')
@@ -82,19 +82,19 @@ function stepHelp() {
     message: 
 `readme: https://github.com/sencha/extjs-reactor/tree/2.0.x-dev/packages/ext-gen
  
-${boldGreen('ExtGen')} is a tool create a Sencha Ext JS application with open source tooling:
+${boldGreen('ext-gen')} is a tool create a Sencha Ext JS application with open source tooling:
 - npm
 - webpack and webpack-dev-server
-- Sencha ExtBuild
+- Sencha ext-build
 - Ext JS framework as npm packages from Sencha npm repository
  
 You can create the package.json file for your app using defaults
 from the config.json file mentioned above.  You can edit the config.json
  
-You can select from 3 Ext JS templates provided by ExtGen
+You can select from 3 Ext JS templates provided by ext-gen
  
 ${boldGreen('moderndesktop (default)')}
-This template is the default template in ExtGen. 1 profile is configured to use the modern toolkit of Ext JS for a desktop application 
+This template is the default template in ext-gen. 1 profile is configured to use the modern toolkit of Ext JS for a desktop application 
  
 ${boldGreen('universalmodern')}
 This template contains 2 profiles, 1 for desktop and 1 for mobile. Both profiles use the modern toolkit
@@ -136,7 +136,7 @@ function step00b() {
     }
     if(answers['seeDefaults'] == true) {
       console.log('')
-      console.log(`For controlling ExtGen:`)
+      console.log(`For controlling ext-gen:`)
       console.log(`seeDefaults:\t\t${config.seeDefaults}`)
       console.log(`useDefaults:\t\t${config.useDefaults}`)
       console.log(`createNow:\t\t${config.createNow}`)
