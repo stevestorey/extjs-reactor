@@ -32,7 +32,8 @@ function boldGreen (s) {
 
 function boldRed (s) {
   var boldredcolor = `\x1b[31m\x1b[1m`
-  return (`${boldredcolor}${s}${end}`)
+  var endMarker = `\x1b[0m`
+  return (`${boldredcolor}${s}${endMarker}`)
 }
 
 var List = require('prompt-list')
@@ -442,6 +443,6 @@ async function stepCreate() {
   }
   new generateApp(options)
   //console.log(`${app} Generate App completed`)
-  console.log('${app} Your Ext JS npm project is ready')
+  console.log(`${app} Your Ext JS npm project is ready`)
   console.log(boldGreen(`\ntype "cd ${answers['packageName']}" then "npm start" to run the development build and open your new application in a web browser\n`))
  }

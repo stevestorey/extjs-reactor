@@ -1,7 +1,12 @@
 var fs = require('fs-extra')
-var chalk = require('chalk');
+//var chalk = require('chalk');
+function boldRed (s) {
+  var boldredcolor = `\x1b[31m\x1b[1m`
+  var endMarker = `\x1b[0m`
+  return (`${boldredcolor}${s}${endMarker}`)
+}
 var path = require('path')
-err = function err(s) { return chalk.red('[ERR] ') + s }
+err = function err(s) { return boldRed('[ERR] ') + s }
 var greenbold = `\x1b[32m\x1b[1m`
 var prefix = `ℹ ｢ext｣`
 var end = `\x1b[0m`
@@ -45,15 +50,10 @@ class generateApp {
     //console.log('Force: ' + Force)
     //console.log('NodeAppApplicationTemplatesDir: ' + NodeAppApplicationTemplatesDir)
 
-		if(Template == undefined) {throw '--template parameter is required'}
-		if(Sdk == undefined) {throw '--sdk parameter is required'}
-		if(ApplicationName == undefined) {throw 'Application Name parameter is empty'}
+    if(Template == undefined) {throw '--template parameter is required'}
+    if(Sdk == undefined) {throw '--sdk parameter is required'}
+    if(ApplicationName == undefined) {throw 'Application Name parameter is empty'}
     if(ApplicationDir == undefined) {throw 'Application Directory parameter is empty'}
-    
-    //if (!fs.existsSync(Sdk)){throw Sdk + ' sdk folder does not exist'}
-    //var TemplateDir = path.join(NodeAppApplicationTemplatesDir + '/' + Template);console.log('TemplateDir: ' + TemplateDir)
-    //var TemplateDir = path.join(NodeAppBinDir + '/node_modules/@extjs/apptemplate-' + Template + '/template');console.log('TemplateDir: ' + TemplateDir)
-    //var TemplateDir = o.options.templateFull
 
     var TemplateDir = ''
     if(Template == 'folder') {
@@ -90,21 +90,16 @@ class generateApp {
 		}
 
 		walkSync(TemplateDir, TemplateDir.length+1, ApplicationDir, ApplicationName, Template, SdkVal, Packages)
-    var f
-    f='/.sencha';fs.copySync(CurrJSFilePath + '/' + TemplatesDir + '/application' + '/sencha', ApplicationDir + f)
-    //console.log(ApplicationDir + f + ' created')
-    console.log(`${app} ${f} created`)
-
+    var f='/.sencha';fs.copySync(CurrJSFilePath + '/' + TemplatesDir + '/application' + '/sencha', ApplicationDir + f)
     var cmdVersion = options.cmdVersion
     var frameworkVersion = options.frameworkVersion
-
     var senchaCfg = path.join(ApplicationDir, '.sencha', 'app', 'sencha.cfg');
     fs.readFile(senchaCfg, 'utf8', function (err,data) {
       if (err) {
         return console.log(err);
       }
       var result = data.replace('{cmdVer}', cmdVersion)
-                      .replace('{frameVer}', frameworkVersion);
+                       .replace('{frameVer}', frameworkVersion);
       fs.writeFileSync(senchaCfg, result, 'utf8', function (err) {
         if (err) return console.log(err);
       })

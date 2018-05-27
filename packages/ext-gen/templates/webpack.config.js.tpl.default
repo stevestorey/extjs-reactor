@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtWebpackPlugin = require('@extjs/ext-webpack-plugin');
-const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = function (env) {
   var port = 8080
@@ -11,8 +10,7 @@ module.exports = function (env) {
   return {
     plugins: [
       new ExtWebpackPlugin(),
-      new webpack.HotModuleReplacementPlugin(),
-      new OpenBrowserPlugin({url: `http://localhost:$\u007Bport}`})
+      new webpack.HotModuleReplacementPlugin()
     ],
     mode: 'development',
     devtool: isProd ? 'source-map' : 'cheap-module-source-map',

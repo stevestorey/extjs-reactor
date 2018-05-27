@@ -3,7 +3,7 @@
   "version": "{version}",
   "description": "{description}",
   "scripts": {
-    "start": "webpack-dev-server -w --progress",
+    "start": "webpack-dev-server -w --progress --open",
     "buildtest": "ext-build app build testing",
     "buildprod": "ext-build app build production"
   },
@@ -12,7 +12,6 @@
   },
   "devDependencies": {
     "@extjs/ext-webpack-plugin": "~0.0.1",
-    "open-browser-webpack-plugin": "^0.0.5",
     "react": "^16.4.0",
     "react-hot-loader": "^4.2.0",
     "webpack": "^4.9.1",
