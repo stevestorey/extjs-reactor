@@ -1,13 +1,15 @@
 {
   "name": "@extjs/ext-build",
-  "version": "0.0.69",
+  "version": "0.0.70",
   "description": "ExtBuild - CLI tool for Sencha Ext JS",
   "bin": {
     "ext-build": "bin/ext-build.js",
     "ExtBuild": "bin/ext-build.js"
   },
   "main": "bin/ext-build.js",
-  "config" : { "loglevel" : "silent" },
+  "config": {
+    "loglevel": "silent"
+  },
   "dependencies": {
     "@extjs/sencha-cmd": "~6.6.0",
     "chalk": "^2.4.1",
