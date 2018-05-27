@@ -1,9 +1,11 @@
 const crossSpawn = require('cross-spawn');
-var chalk = require('chalk');
-const app = `${chalk.green('ℹ ｢ext｣:')} ext-gen:`;
+var greenbold = `\x1b[32m\x1b[1m`
+var prefix = `ℹ ｢ext｣`
+var end = `\x1b[0m`
+var app =(`${greenbold}${prefix}${end} ext-gen:`)
 
 exports.spawnPromise = (command, args, options, substrings) => {
-  let child;
+  let child
   let promise = new Promise((resolve, reject) => {
   child = crossSpawn(command, args, options)
     .on('close', (code, signal) => {
@@ -16,7 +18,6 @@ exports.spawnPromise = (command, args, options, substrings) => {
     console.log(`${app} has stdout`) 
     child.stdout
       .on('data', (data) => {
-      //var substrings = options.substrings;
       if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
         var str = data.toString()
         var s = str.replace(/\r?\n|\r/g, " ")
@@ -24,11 +25,6 @@ exports.spawnPromise = (command, args, options, substrings) => {
         console.log(`${app}${s2}`) 
       }
     })
-
-      // child.stdout
-      //     .on('data', (data) => {
-      //         stdout = Buffer.concat([stdout, data]);
-      //     });
   }
   if (child.stderr) {
     console.log(`${app} has stderr`) 
