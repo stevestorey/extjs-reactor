@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-const chalk = require('chalk');
+//const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs-extra');
 const { kebabCase, pick } = require('lodash')
@@ -15,7 +15,7 @@ require('./XTemplate/js/XTemplate.js');
 //const app = `\x1b[32m\x1b[1mℹ ｢ext｣:\x1b[0m ext-gen:`;
 //const app = `${chalk.green('ℹ ｢ext｣:')} ext-gen:`;
 //const app = `\x1b[32m\x1b[1mℹ ｢ext｣:\x1b[0m ext-gen:`;
-const appOrig = `\x1b[31m\x1b[1mℹ ｢ext｣:\x1b[0m ext-gen:`;
+//const appOrig = `\x1b[31m\x1b[1mℹ ｢ext｣:\x1b[0m ext-gen:`;
 
 var greenbold = `\x1b[32m\x1b[1m`
 var green = `\x1b[32m`
@@ -28,6 +28,11 @@ var app =(`${green}${prefix}${end} ext-gen:`)
 function boldGreen (s) {
   var boldgreencolor = `\x1b[32m\x1b[1m`
   return (`${boldgreencolor}${s}${end}`)
+}
+
+function boldRed (s) {
+  var boldredcolor = `\x1b[31m\x1b[1m`
+  return (`${boldredcolor}${s}${end}`)
 }
 
 var List = require('prompt-list')
@@ -63,20 +68,72 @@ function step00() {
   version = pkg.version
   var data = fs.readFileSync(nodeDir + '/config.json')
   config = JSON.parse(data);
-  //console.log(chalk.bold.green(`\nSencha ExtGen v${version} (The Ext JS Project Generator for npm)`))
-  console.log(boldGreen(`\nSencha ExtGen v${version} (The Ext JS Project Generator for npm)\n`))
+  console.log(boldGreen(`\nSencha ExtGen v${version} (The Ext JS Project Generator for npm)`))
+  console.log(`Getting started: http://docs.sencha.com/ext-gen/1.0.0/guides/getting_started.html`)
+  console.log('Defaults: ' + path.join(__dirname , 'config.json'))
+  console.log('')
 
   step00a()
 }
 
-function step00a() {
-  console.log(`Defaults for package.json can be used - would you like to see the defaults in:`)
+function stepHelp() {
+
   new Confirm({
     message: 
-      path.join(__dirname , 'config.json') + '?',
+`readme: https://github.com/sencha/extjs-reactor/tree/2.0.x-dev/packages/ext-gen
+ 
+${boldGreen('ExtGen')} is a tool create a Sencha Ext JS application with open source tooling:
+- npm
+- webpack and webpack-dev-server
+- Sencha ExtBuild
+- Ext JS framework as npm packages from Sencha npm repository
+ 
+You can create the package.json file for your app using defaults
+from the config.json file mentioned above.  You can edit the config.json
+ 
+You can select from 3 Ext JS templates provided by ExtGen
+ 
+${boldGreen('moderndesktop (default)')}
+This template is the default template in ExtGen. 1 profile is configured to use the modern toolkit of Ext JS for a desktop application 
+ 
+${boldGreen('universalmodern')}
+This template contains 2 profiles, 1 for desktop and 1 for mobile. Both profiles use the modern toolkit
+ 
+${boldGreen('classicdesktop')}
+This template is similar to the moderndesktop template, 1 profile is configured to use the classic toolkit of Ext JS for a desktop application
+ 
+Type Enter or Y to continue
+`
+  }).run().then(answer => {
+    step00b()
+  })
+}
+
+function step00a() {
+  var prompt = new  Confirm({
+    message: 'Would you like to see help?',
+    default: false
+  }).run().then(answer => {
+    if (answer === true) {
+      stepHelp()
+    }
+    else {
+      step00b()
+    }
+  })
+}
+
+function step00b() {
+  new Confirm({
+    message: 
+    `would you like to see the defaults in config.json?`,
     default: config.seeDefaults
   }).run().then(answer => {
     answers['seeDefaults'] = answer
+    if (answer == 'h') {
+      stepHelp()
+      return
+    }
     if(answers['seeDefaults'] == true) {
       console.log('')
       console.log(`For controlling ExtGen:`)
@@ -92,7 +149,7 @@ function step00a() {
       console.log(`template:\t\t${config.template}`)
       console.log(`templateFolderName:\t${config.templateFolderName}`)
       console.log('')
-      console.log(`For package.json:`)
+      console.log(boldGreen(`For package.json:`))
       console.log(`packageName:\t\t${config.packageName}`)
       console.log(`version:\t\t${config.version}`)
       console.log(`description:\t\t${config.description}`)
@@ -119,9 +176,6 @@ function step01() {
     answers['useDefaults'] = answer
     if(answers['useDefaults'] == true) {
       answers['appName'] = config.appName
-      //answers['templateType'] = config.templateType
-      //answers['template'] = config.template
-      //answers['templateFolderName'] = config.templateFolderName
       answers['packageName'] = config.packageName
       answers['version'] = config.version
       answers['description'] = config.description
@@ -146,9 +200,7 @@ function step02() {
   }).run().then(answer => {
     answers['appName'] = answer
     answers['packageName'] = kebabCase(answers['appName'])
-
     step03()
-
   })
 }
 
@@ -175,14 +227,12 @@ function step04() {
     default: 'moderndesktop'
   }).run().then(answer => {
     answers['template'] = answer
-
     if(answers['useDefaults'] == true) {
       step99()
     }
     else {
       step06()
     }
-
   })
 }
 
@@ -311,7 +361,7 @@ function step99() {
       stepCreate()
     }
     else {
-      console.log(`\n${chalk.red('Create has been cancelled')}\n`)
+      console.log(`\n${boldRed('Create has been cancelled')}\n`)
       return
     }
   })
@@ -331,7 +381,7 @@ async function stepCreate() {
   //console.log(`${app} destDir: ${destDir}`)
 
   if (fs.existsSync(destDir)){
-    console.log(`${chalk.red('Error: folder ' + destDir + ' exists')}`)
+    console.log(`${boldRed('Error: folder ' + destDir + ' exists')}`)
     //fs.removeSync(destDir) //danger!  if you want to enable this, warn the user
     return
   }
@@ -372,7 +422,7 @@ async function stepCreate() {
     await util.spawnPromise('npm', ['install','-s'], { stdio: 'inherit', encoding: 'utf-8', substrings }, substrings);
     console.log(`${app} npm install completed`)
   } catch(err) {
-    console.log(chalk.red('Error in npm install: ' + err));
+    console.log(boldRed('Error in npm install: ' + err));
   }
 
   var frameworkPath = path.join(destDir, 'node_modules', '@extjs', 'ext', 'package.json');
@@ -395,6 +445,6 @@ async function stepCreate() {
   }
   new generateApp(options)
   //console.log(`${app} Generate App completed`)
-  console.log(chalk.green('\nYour new Ext JS NPM project is ready!\n'))
-  console.log(chalk.bold(`type "cd ${answers['packageName']}" then "npm start" to run the development build and open your new application in a web browser\n`))
+  console.log(boldGreen('\nYour new Ext JS NPM project is ready!\n'))
+  console.log(`type "cd ${answers['packageName']}" then "npm start" to run the development build and open your new application in a web browser\n`)
  }

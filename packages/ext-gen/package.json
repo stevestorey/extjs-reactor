@@ -1,6 +1,6 @@
 {
   "name": "@extjs/ext-gen",
-  "version": "0.0.70",
+  "version": "0.0.71",
   "description": "A generator for Ext JS apps in npm",
   "bin": {
     "ext-gen": "ext-gen.js",
@@ -16,7 +16,6 @@
   "preferGlobal": true,
   "dependencies": {
     "@extjs/ext-build-generate-app": "~0.0.1",
-    "chalk": "^2.4.1",
     "cross-spawn": "^6.0.5",
     "fs-extra": "^6.0.1",
     "lodash": "^4.17.10",
