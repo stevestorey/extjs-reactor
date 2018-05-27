@@ -3,7 +3,7 @@ const path = require('path');
 const ExtWebpackPlugin = require('@extjs/ext-webpack-plugin');
 
 module.exports = function (env) {
-  var port = 8080
+  var port = 1962
   const nodeEnv = env && env.prod ? 'production' : 'development';
   const isProd = nodeEnv === 'production';
 

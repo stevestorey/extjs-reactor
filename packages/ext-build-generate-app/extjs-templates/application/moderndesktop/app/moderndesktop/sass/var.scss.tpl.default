@@ -2,6 +2,8 @@
 //$nav-background-color: #094158;
 //$base-color: lighten($nav-background-color,25%);
 
+//$base-color:red;
+
 $nav-background-color: darken($base-color,25%);
 $nav-color: white;
 

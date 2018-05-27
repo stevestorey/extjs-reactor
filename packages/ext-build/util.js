@@ -43,15 +43,19 @@ var spawnPromise = (command, args, options, substrings) => {
     }
     if (child.stderr) {
       child.stderr
-        .on('data', (data) => {
-          var str = data.toString()
-          var s = str.replace(/\r?\n|\r/g, " ")
+      .on('data', (data) => {
+        var str = data.toString()
+        var s = str.replace(/\r?\n|\r/g, " ")
+        var strJavaOpts = "Picked up _JAVA_OPTIONS";
+        var includes = s.includes(strJavaOpts)
+        if (!includes) {
           console.log(`${app} ${chalk.black("[ERR]")} ${s}`)
-        });
+        }
+      })
     }
   });
-  promise.child = child;
-  return promise;
+  promise.child = child
+  return promise
 }
 
 //exports.err = function err(s) { return chalk.red('[ERR] ') + s }
