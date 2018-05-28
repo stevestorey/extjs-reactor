@@ -22,28 +22,37 @@ exports.senchaCmdAsync = async (parms, substrings = DEFAULT_SUBSTRS) => {
 var spawnPromise = (command, args, options, substrings) => {
   let child;
   let promise = new Promise((resolve, reject) => {
-    child = crossSpawn(command, args, options)
-      .on('close', (code, signal) => {
-        resolve({code, signal})
-      })
-      .on('error', (error) => {
-        reject(error);
-      })
+    child = crossSpawn(
+      command, 
+      args, 
+      options
+    )
+    child.on('exit', (code, signal) => {
+      console.log('child process exited with ' +
+      `code ${code} and signal ${signal}`)
+    })
+    child.on('close', (code, signal) => {
+      resolve({code, signal})
+    })
+    child.on('error', (error) => {
+      reject(error)
+    })
     if (child.stdout) {
-      child.stdout
-        .on('data', (data) => {
-          if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
-            var str = data.toString()
-            var s = str.replace(/\r?\n|\r/g, " ")
-            var s2 = s.replace("[INF]", "")
-            var s3 = s2.replace(process.cwd(), '');
-            console.log(`${app}${s3}`) 
-          }
-        })
+      child.stdout.on('data', (data) => {
+        if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
+          var str = data.toString()
+          var s = str.replace(/\r?\n|\r/g, " ")
+          var s2 = s.replace("[INF]", "")
+          var s3 = s2.replace(process.cwd(), '');
+          console.log(`${app}${s3}`) 
+        }
+      })
+    }
+    else {
+      console.log(`${app} ${chalk.red('[ERR]')} no stdout`) 
     }
     if (child.stderr) {
-      child.stderr
-      .on('data', (data) => {
+      child.stderr.on('data', (data) => {
         var str = data.toString()
         var s = str.replace(/\r?\n|\r/g, " ")
         var strJavaOpts = "Picked up _JAVA_OPTIONS";
@@ -52,6 +61,9 @@ var spawnPromise = (command, args, options, substrings) => {
           console.log(`${app} ${chalk.black("[ERR]")} ${s}`)
         }
       })
+    }
+    else {
+      console.log(`${app} ${chalk.red('[ERR]')} no stderr`) 
     }
   });
   promise.child = child

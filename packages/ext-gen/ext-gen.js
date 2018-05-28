@@ -416,8 +416,12 @@ async function stepCreate() {
   try {
     console.log(`${app} npm install started`)
     const substrings = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
-    var npmCmd = `npm${/^win/.test(require('os').platform()) ? ".cmd" : ""}`
-    await util.spawnPromise(npmCmd, ['install','-s'], {stdio: 'inherit', encoding: 'utf-8'}, substrings);
+    var command = `npm${/^win/.test(require('os').platform()) ? ".cmd" : ""}`
+    let args = [
+      'install'
+    ]
+    let options = {cwd: path.join(__dirname), stdio: 'pipe', encoding: 'utf-8'}
+    await util.spawnPromise(command, args, options, substrings);
     console.log(`${app} npm install completed`)
   } catch(err) {
     console.log(boldRed('Error in npm install: ' + err));
