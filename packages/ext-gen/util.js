@@ -37,7 +37,8 @@ exports.spawnPromise = (command, args, options, substrings) => {
       })
     }
     else {
-      console.log(`no child`)
+//      var s = `no stdout`
+//      console.log(`${app} ${boldRed("[ERR]")} ${s}`)
     }
     if (child.stderr) {
       console.log(`${app} has stderr`) 
@@ -49,7 +50,8 @@ exports.spawnPromise = (command, args, options, substrings) => {
         });
     }
     else {
-      console.log(`no child`)
+      // var s = `no stderr`
+      // console.log(`${app} ${boldRed("[ERR]")} ${s}`)
     }
   })
   promise.child = child
