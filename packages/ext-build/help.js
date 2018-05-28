@@ -4,12 +4,12 @@ to invoke:
 ${chalk.green('*')} ext-build
 
 Examples (replace --sdk with your path to the Ext JS sdk):
-${chalk.green('*')} ext-build generate app --sdk '/Sencha/ext-6.5.3' --template 'universalmodern' MyApp ./MyApp
-${chalk.green('*')} ext-build generate app --template 'moderndesktop' --sdk '/Sencha/ext-6.5.3' ModernDesktop ./ModernDesktop
-${chalk.green('*')} ext-build generate app --template 'classicdesktop' --sdk '/Sencha/ext-6.5.3' ClassicDesktop ./ClassicDesktop
-${chalk.green('*')} ext-build generate app --template 'universalmodernclassic' --sdk '/Sencha/ext-6.5.3' UMC ./UMC
-${chalk.green('*')} ext-build gen app -s '/Sencha/ext-6.5.3' -t 'universalmodern' MyApp ./MyApp
-${chalk.green('*')} ext-build g a -s '/Sencha/ext-6.5.3' -t 'universalmodern' MyApp ./MyApp
+${chalk.green('*')} ext-build generate app --sdk '/Sencha/ext-6.x.x' --template 'universalmodern' MyApp ./MyApp
+${chalk.green('*')} ext-build generate app --template 'moderndesktop' --sdk '/Sencha/ext-6.x.x' ModernDesktop ./ModernDesktop
+${chalk.green('*')} ext-build generate app --template 'classicdesktop' --sdk '/Sencha/ext-6.x.x' ClassicDesktop ./ClassicDesktop
+${chalk.green('*')} ext-build generate app --template 'universalmodernclassic' --sdk '/Sencha/ext-6.x.x' UMC ./UMC
+${chalk.green('*')} ext-build gen app -s '/Sencha/ext-6.x.x' -t 'universalmodern' MyApp ./MyApp
+${chalk.green('*')} ext-build g a -s '/Sencha/ext-6.x.x' -t 'universalmodern' MyApp ./MyApp
 ${chalk.green('*')} ext-build generate viewpackage settings
 ${chalk.green('*')} ext-build generate storepackage employee
 
