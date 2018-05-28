@@ -403,7 +403,7 @@ async function stepCreate() {
   var t = tpl.apply(values)
   tpl = null
   fs.writeFileSync(destDir + '/package.json', t);
-  console.log(`${app} package.json created`)
+  console.log(`${app} package.json created for ${answers['packageName']}`)
 
   var file = nodeDir + '/templates/webpack.config.js.tpl.default'
   var content = fs.readFileSync(file).toString()
@@ -411,10 +411,10 @@ async function stepCreate() {
   var t = tpl.apply(values)
   tpl = null
   fs.writeFileSync(destDir + '/webpack.config.js', t);
-  console.log(`${app} webpack.config.js created`)
+  console.log(`${app} webpack.config.js created for ${answers['packageName']}`)
 
   try {
-    console.log(`${app} npm install started`)
+    console.log(`${app} npm install started for ${answers['packageName']}`)
     const substrings = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
     var command = `npm${/^win/.test(require('os').platform()) ? ".cmd" : ""}`
     let args = [
@@ -422,7 +422,7 @@ async function stepCreate() {
     ]
     let options = {stdio: 'inherit', encoding: 'utf-8'}
     await util.spawnPromise(command, args, options, substrings);
-    console.log(`${app} npm install completed`)
+    console.log(`${app} npm install completed for ${answers['packageName']}`)
   } catch(err) {
     console.log(boldRed('Error in npm install: ' + err));
   }
