@@ -383,7 +383,7 @@ async function stepCreate() {
     return
   }
   fs.mkdirSync(destDir)
-  //process.chdir(destDir)
+  process.chdir(destDir)
   console.log(`${app} ${destDir} created`)
   var values = {
     appName: answers['appName'],
@@ -420,7 +420,7 @@ async function stepCreate() {
     let args = [
       'install'
     ]
-    let options = {cwd: path.join(__dirname, destDir), stdio: 'pipe', encoding: 'utf-8'}
+    let options = {stdio: 'inherit', encoding: 'utf-8'}
     await util.spawnPromise(command, args, options, substrings);
     console.log(`${app} npm install completed`)
   } catch(err) {
