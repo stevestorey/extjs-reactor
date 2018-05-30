@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import { launch } from '@extjs/reactor';
-import App from './App'
+import App from './AppRenderer'
 
 let viewport;
 
@@ -21,5 +21,5 @@ const render = (Component, target) => {
 launch(target => render(App, viewport = target));
 
 if (module.hot) {
-  module.hot.accept('./App', () => render(App, viewport));
+  module.hot.accept('./AppRenderer', () => render(App, viewport));
 }

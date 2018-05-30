@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const ExtReactWebpackPlugin = require('@extjs/reactor-webpack-plugin');
 const portfinder = require('portfinder');
@@ -61,7 +62,12 @@ module.exports = function (env) {
               }),
               new webpack.NamedModulesPlugin(),
               new webpack.HotModuleReplacementPlugin(),
-  
+              
+              new CopyWebpackPlugin([{
+                from: path.join(__dirname, 'resources'), 
+                to: 'resources'
+              }]),
+
               new HtmlWebpackPlugin({
                 template: 'index.html',
                 hash: true

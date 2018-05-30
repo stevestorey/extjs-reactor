@@ -414,15 +414,15 @@ async function stepCreate() {
   console.log(`${app} webpack.config.js created for ${answers['packageName']}`)
 
   try {
-    console.log(`${app} npm install started for ${answers['packageName']}`)
     const substrings = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
     var command = `npm${/^win/.test(require('os').platform()) ? ".cmd" : ""}`
     let args = [
       'install'
     ]
     let options = {stdio: 'inherit', encoding: 'utf-8'}
+    console.log(`${app} npm ${args.toString().replace(',',' ')} started for ${answers['packageName']}`)
     await util.spawnPromise(command, args, options, substrings);
-    console.log(`${app} npm install completed for ${answers['packageName']}`)
+    console.log(`${app} npm ${args.toString().replace(',',' ')} completed for ${answers['packageName']}`)
   } catch(err) {
     console.log(boldRed('Error in npm install: ' + err));
   }
