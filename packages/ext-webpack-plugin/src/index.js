@@ -6,19 +6,6 @@ const uniq = require('lodash.uniq')
 const isGlob = require('is-glob')
 //const resolve = require('path')
 const recursiveReadSync = require('recursive-readdir-sync')
-
-
-
-// import chalk from 'chalk';
-// import path from 'path'
-// import fs from 'fs';
-// import validateOptions from 'schema-utils';
-// import uniq from 'lodash.uniq';
-// import isGlob from 'is-glob';
-// import { resolve } from 'path';
-// import recursiveReadSync from 'recursive-readdir-sync';
-
-
 const app = `${chalk.green('ℹ ｢ext｣:')} ext-webpack-plugin: `;
 
 function getFileAndContextDeps(compilation, files, dirs, cwd) {
@@ -44,7 +31,7 @@ export default class ExtWebpackPlugin {
 
   constructor(options = {}) {
     validateOptions(require('../options.json'), options, 'ExtraWatchWebpackPlugin'); // eslint-disable-line
-    this.options = { ...ExtWebpackPlugin.defaults, ...options };
+    //this.options = { ...ExtWebpackPlugin.defaults, ...options };
 
     var defaults = {
       cwd: process.cwd(),
@@ -52,7 +39,7 @@ export default class ExtWebpackPlugin {
       dirs: ['./app'],
     }
 
-//    this.options = { ...defaults, ...options };
+    this.options = { ...defaults, ...options };
 
 
 
