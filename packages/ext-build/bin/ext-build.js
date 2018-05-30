@@ -75,7 +75,7 @@ const optionDefinitions = [
         case 'build': case 'b':
           var build = require('../app/buildAsync.js')
           //new build(options)
-          new build().executeAsync().then(function() {})
+          new build(options).executeAsync().then(function() {})
           break;
         case 'refresh': case 'r':
           var refresh = require('../app/refresh.js')
