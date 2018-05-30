@@ -3,6 +3,31 @@ npm install -g @extjs/ext-gen
 git fetch upstream
 git merge upstream/2.0.x-dev
 
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-plugin-transform-export-extensions":"^6.22.0",
+    "babel-plugin-transform-object-rest-spread": " ^6.26.0",
+    "babel-plugin-add-module-exports": "^0.2.1"
+  },
+  "babel": {
+    "presets": ["env"],
+    "sourceMaps": "inline",
+    "plugins": [
+      "transform-export-extensions",
+      "transform-object-rest-spread",
+      "add-module-exports"
+    ]
+  },
+
+
+
+
+
+
+
+
 app.framework.version=6.5.3.57
 app.cmd.version=6.5.3.6
 
