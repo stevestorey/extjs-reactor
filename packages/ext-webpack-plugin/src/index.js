@@ -23,15 +23,26 @@ function getFileAndContextDeps(compilation, files, dirs, cwd) {
 }
 
 export default class ExtWebpackPlugin {
-  static defaults = {
-    cwd: process.cwd(),
-    files: [],
-    dirs: ['./app'],
-  };
+  // static defaults = {
+  //   cwd: process.cwd(),
+  //   files: [],
+  //   dirs: ['./app'],
+  // };
 
   constructor(options = {}) {
     validateOptions(require('../options.json'), options, 'ExtraWatchWebpackPlugin'); // eslint-disable-line
     this.options = { ...ExtWebpackPlugin.defaults, ...options };
+
+    var defaults = {
+      cwd: process.cwd(),
+      files: [],
+      dirs: ['./app'],
+    }
+
+//    this.options = { ...defaults, ...options };
+
+
+
   }
 
   apply(compiler) {
