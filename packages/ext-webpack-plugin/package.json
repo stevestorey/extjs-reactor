@@ -1,6 +1,6 @@
 {
   "name": "@extjs/ext-webpack-plugin",
-  "version": "0.0.86",
+  "version": "0.0.87",
   "description": "A webpack plugin for new Ext JS applications",
   "main": "./lib/index.js",
   "scripts": {
@@ -19,16 +19,11 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
-    "babel-register": "^6.26.0",
     "babel-preset-stage-0": "^6.24.1",
-    "babel-eslint": "^8.2.3",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-env": "^1.7.0"
+    "babel-plugin-add-module-exports": "^0.2.1"
   },
   "babel": {
     "presets": [
-      "env",
-      "stage-2",
       "stage-0"
     ],
     "sourceMaps": "inline",
