@@ -1,11 +1,24 @@
-import chalk from 'chalk';
-import path from 'path'
-import fs from 'fs';
-import validateOptions from 'schema-utils';
-import uniq from 'lodash.uniq';
-import isGlob from 'is-glob';
-import { resolve } from 'path';
-import recursiveReadSync from 'recursive-readdir-sync';
+const chalk = require('chalk')
+const path = require('path')
+const fs = require('fs')
+const validateOptions = require('schema-utils')
+const uniq = require('lodash.uniq')
+const isGlob = require('is-glob')
+//const resolve = require('path')
+const recursiveReadSync = require('recursive-readdir-sync')
+
+
+
+// import chalk from 'chalk';
+// import path from 'path'
+// import fs from 'fs';
+// import validateOptions from 'schema-utils';
+// import uniq from 'lodash.uniq';
+// import isGlob from 'is-glob';
+// import { resolve } from 'path';
+// import recursiveReadSync from 'recursive-readdir-sync';
+
+
 const app = `${chalk.green('ℹ ｢ext｣:')} ext-webpack-plugin: `;
 
 function getFileAndContextDeps(compilation, files, dirs, cwd) {
@@ -80,7 +93,7 @@ export default class ExtWebpackPlugin {
         } = getFileAndContextDeps(compilation, files, dirs, cwd);
         if (files.length > 0) {
           fileDependencies.forEach((file) => {
-            compilation.fileDependencies.add(resolve(file));
+            compilation.fileDependencies.add(path.resolve(file));
           });
         }
         if (dirs.length > 0) {
