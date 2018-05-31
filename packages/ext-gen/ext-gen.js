@@ -69,9 +69,25 @@ var answers = {
 var version
 var config = {}
 
+const optionDefinitions = [
+  { name: 'defaults', type: Boolean },
+  { name: 'builds', type: String },
+  { name: 'debug', alias: 'd', type: Boolean },
+  { name: 'sdk', alias: 's', type: String },
+  { name: 'template', alias: 't', type: String },
+  { name: 'parms', type: String, multiple: true, defaultOption: true },
+]
+
+
+const options
 step00()
 
 function step00() {
+
+  options = commandLineArgs(optionDefinitions)
+  console.log(options.defaults)
+
+
   var nodeDir = path.resolve(__dirname)
   var pkg = (fs.existsSync(nodeDir + '/package.json') && JSON.parse(fs.readFileSync(nodeDir + '/package.json', 'utf-8')) || {});
   version = pkg.version

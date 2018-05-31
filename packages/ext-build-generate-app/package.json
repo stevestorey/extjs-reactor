@@ -1,6 +1,6 @@
 {
   "name": "@extjs/ext-build-generate-app",
-  "version": "0.0.93",
+  "version": "0.0.94",
   "description": "ext-build-generate-app - app generator for ext-gen and ext-build",
   "main": "generateApp.js",
   "dependencies": {
