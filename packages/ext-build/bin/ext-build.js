@@ -8,7 +8,16 @@ const help = require('../help.js')
 const json = require('comment-json');
 const PackageJson = require('../package.json');
 const commandLineArgs = require('command-line-args')
-const app = `${chalk.green('ℹ ｢ext｣:')} ext-build:`;
+
+var prefix = ``
+var platform = require('os').platform()
+if (platform == 'darwin') {
+  prefix = `ℹ ｢ext｣:`
+}
+else {
+  prefix = `i [ext]:`
+}
+const app = `${chalk.green(prefix)} ext-build:`
 
 const optionDefinitions = [
   { name: 'builds', type: String },

@@ -21,8 +21,16 @@ var greenbold = `\x1b[32m\x1b[1m`
 var green = `\x1b[32m`
 var redbold = `\x1b[31m\x1b[1m`
 var red = `\x1b[31m`
-var prefix = `ℹ ｢ext｣`
 var end = `\x1b[0m`
+
+var prefix = ``
+var platform = require('os').platform()
+if (platform == 'darwin') {
+  prefix = `ℹ ｢ext｣:`
+}
+else {
+  prefix = `i [ext]:`
+}
 var app =(`${greenbold}${prefix}${end} ext-gen:`)
 
 function boldGreen (s) {

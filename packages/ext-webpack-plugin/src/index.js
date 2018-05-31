@@ -6,7 +6,16 @@ const uniq = require('lodash.uniq')
 const isGlob = require('is-glob')
 //const resolve = require('path')
 const recursiveReadSync = require('recursive-readdir-sync')
-const app = `${chalk.green('ℹ ｢ext｣:')} ext-webpack-plugin: `;
+
+var prefix = ``
+var platform = require('os').platform()
+if (platform == 'darwin') {
+  prefix = `ℹ ｢ext｣:`
+}
+else {
+  prefix = `i [ext]:`
+}
+var app = chalk.green(prefix) + ' ext-webpack-plugin: ';
 
 function getFileAndContextDeps(compilation, files, dirs, cwd) {
   const { fileDependencies, contextDependencies } = compilation;
