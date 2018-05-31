@@ -1,5 +1,4 @@
 #! /usr/bin/env node
-//const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs-extra');
 const { kebabCase, pick } = require('lodash')
@@ -11,11 +10,6 @@ require('./XTemplate/js/Template.js');
 require('./XTemplate/js/XTemplateParser.js');
 require('./XTemplate/js/XTemplateCompiler.js');
 require('./XTemplate/js/XTemplate.js');
-//const app = `${chalk.green('ℹ ｢ext｣:')} ext-gen:`;
-//const app = `\x1b[32m\x1b[1mℹ ｢ext｣:\x1b[0m ext-gen:`;
-//const app = `${chalk.green('ℹ ｢ext｣:')} ext-gen:`;
-//const app = `\x1b[32m\x1b[1mℹ ｢ext｣:\x1b[0m ext-gen:`;
-//const appOrig = `\x1b[31m\x1b[1mℹ ｢ext｣:\x1b[0m ext-gen:`;
 
 var greenbold = `\x1b[32m\x1b[1m`
 var green = `\x1b[32m`
@@ -24,8 +18,7 @@ var red = `\x1b[31m`
 var end = `\x1b[0m`
 
 var prefix = ``
-var platform = require('os').platform()
-if (platform == 'darwin') {
+if (require('os').platform() == 'darwin') {
   prefix = `ℹ ｢ext｣:`
 }
 else {
@@ -58,9 +51,9 @@ var answers = {
 'packageName': null,
 'version': null,
 'description': null,
-'gitRepositoryURL': null,
+'repositoryURL': null,
 'keywords': null,
-'author': null,
+'authorName': null,
 'license': null,
 'bugsURL': null,
 'homepageURL': null,
@@ -70,7 +63,8 @@ var version
 var config = {}
 
 const optionDefinitions = [
-  { name: 'defaults', alias: 'd', type: Boolean }
+  { name: 'defaults', alias: 'd', type: Boolean },
+  { name: 'name', alias: 'n', type: String }
 ]
 
 const commandLineArgs = require('command-line-args')
@@ -91,15 +85,14 @@ function step00() {
 
 
   cmdLine = commandLineArgs(optionDefinitions)
-  //console.log(cmdLineOpts)
+  console.log(cmdLine.name)
   if (cmdLine.defaults == true) {
-    //console.log('true')
     setDefaults()
 
-    answers['appName'] = config.appName
-    answers['packageName'] = kebabCase(answers['appName'])
-    answers['templateType'] = 'make a selection from a list'
-    answers['template'] = 'moderndesktop'
+    // answers['appName'] = config.appName
+    // answers['packageName'] = kebabCase(answers['appName'])
+    // answers['templateType'] = 'make a selection from a list'
+    // answers['template'] = 'moderndesktop'
 
     step99()
   }
@@ -179,43 +172,53 @@ function step00b() {
 function displayDefaults() {
   // console.log('')
   // console.log(`For controlling ext-gen:`)
-  // console.log(`seeDefaults:\t\t${config.seeDefaults}`)
-  // console.log(`useDefaults:\t\t${config.useDefaults}`)
-  // console.log(`createNow:\t\t${config.createNow}`)
+  // console.log(`seeDefaults:\t${config.seeDefaults}`)
+  // console.log(`useDefaults:\t${config.useDefaults}`)
+  // console.log(`createNow:\t${config.createNow}`)
   //console.log('')
   console.log(boldGreen(`Defaults for Ext JS app:`))
-  console.log(`appName:\t\t${config.appName}`)
+  console.log(`appName:\t${config.appName}`)
   //console.log('')
   //console.log(`For template selection:`)
-  //console.log(`templateType:\t\t${config.templateType}`)
-  console.log(`template:\t\t${config.template}`)
+  //console.log(`templateType:\t${config.templateType}`)
+  console.log(`template:\t${config.template}`)
   //console.log(`templateFolderName:\t${config.templateFolderName}`)
   console.log('')
   console.log(boldGreen(`Defaults for package.json:`))
-  console.log(`packageName:\t\t${config.packageName}`)
-  console.log(`version:\t\t${config.version}`)
-  console.log(`description:\t\t${config.description}`)
-  console.log(`gitRepositoryURL:\t${config.gitRepositoryURL}`)
-  console.log(`keywords:\t\t${config.keywords}`)
-  console.log(`author:\t\t\t${config.author}`)
-  console.log(`license:\t\t${config.license}`)
-  console.log(`bugsURL:\t\t${config.bugsURL}`)
-  console.log(`homepageURL:\t\t${config.homepageURL}`)
+  console.log(`packageName:\t${config.packageName}`)
+  console.log(`version:\t${config.version}`)
+  console.log(`description:\t${config.description}`)
+  console.log(`repositoryURL:\t${config.repositoryURL}`)
+  console.log(`keywords:\t${config.keywords}`)
+  console.log(`authorName:\t${config.authorName}`)
+  console.log(`license:\t${config.license}`)
+  console.log(`bugsURL:\t${config.bugsURL}`)
+  console.log(`homepageURL:\t${config.homepageURL}`)
   console.log('')
 }
 
-
 function setDefaults() {
+  
+
+
+  
   answers['appName'] = config.appName
   answers['packageName'] = config.packageName
   answers['version'] = config.version
   answers['description'] = config.description
-  answers['gitRepositoryURL'] = config.gitRepositoryURL
+  answers['repositoryURL'] = config.repositoryURL
   answers['keywords'] = config.keywords
-  answers['author'] = config.author
+  answers['authorName'] = config.authorName
   answers['license'] = config.license
   answers['bugsURL'] = config.bugsURL
   answers['homepageURL'] = config.homepageURL
+
+  answers['appName'] = config.appName
+  answers['packageName'] = kebabCase(answers['appName'])
+  answers['templateType'] = 'make a selection from a list'
+  answers['template'] = 'moderndesktop'
+
+
 }
 
 
@@ -231,9 +234,9 @@ function step01() {
       // answers['packageName'] = config.packageName
       // answers['version'] = config.version
       // answers['description'] = config.description
-      // answers['gitRepositoryURL'] = config.gitRepositoryURL
+      // answers['repositoryURL'] = config.repositoryURL
       // answers['keywords'] = config.keywords
-      // answers['author'] = config.author
+      // answers['authorName'] = config.authorName
       // answers['license'] = config.license
       // answers['bugsURL'] = config.bugsURL
       // answers['homepageURL'] = config.homepageURL
@@ -338,9 +341,9 @@ function step08() {
 function step09() {
   new Input({
     message: 'What is the GIT repository URL?',
-    default: config.gitRepositoryURL
+    default: config.repositoryURL
   }).run().then(answer => { 
-    answers['gitRepositoryURL'] = answer
+    answers['repositoryURL'] = answer
     step10()
   })
 }
@@ -358,9 +361,9 @@ function step10() {
 function step11() {
   new Input({
     message: `What is the Author's Name?`,
-    default: config.author
+    default: config.authorName
   }).run().then(answer => { 
-    answers['author'] = answer
+    answers['authorName'] = answer
     step12()
   })
 }
@@ -449,9 +452,9 @@ async function stepCreate() {
     appName: answers['appName'],
     packageName: answers['packageName'],
     version: answers['version'],
-    gitRepositoryURL: answers['gitRepositoryURL'],
+    repositoryURL: answers['repositoryURL'],
     keywords: answers['keywords'],
-    author: answers['author'],
+    authorName: answers['authorName'],
     license: answers['license'],
     bugsURL: answers['bugsURL'],
     homepageURL: answers['homepageURL'],
