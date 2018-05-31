@@ -9,16 +9,10 @@ var path = require('path')
 err = function err(s) { return boldRed('[ERR] ') + s }
 var greenbold = `\x1b[32m\x1b[1m`
 var prefix = ``
-var platform = require('os').platform()
-if (platform == 'darwin') {
-  prefix = `ℹ ｢ext｣:`
-}
-else {
-  prefix = `i [ext]:`
-}
-const app = `${chalk.green(prefix)} ext-build-generate-app:`
-
-
+if (require('os').platform() == 'darwin') 
+  {prefix = `ℹ ｢ext｣:`}
+else 
+  {prefix = `i [ext]:`}
 var end = `\x1b[0m`
 var app = `${greenbold}${prefix}${end} ext-build-generate-app:`
 
