@@ -78,7 +78,6 @@ const ExtRenderer = ReactFiberReconciler({
         parentInstance.rawcell = childInstance.cmp.initialConfig
       }
       else if (parentXtype == 'column' && childXtype == 'widgetcell') {
-        debugger;
         if(parentInstance.rawcell == undefined) 
         parentInstance.rawcell = childInstance.cmp.initialConfig
       }
