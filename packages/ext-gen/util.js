@@ -1,7 +1,14 @@
 const crossSpawn = require('cross-spawn');
 var greenbold = `\x1b[32m\x1b[1m`
 var redbold = `\x1b[31m\x1b[1m`
-var prefix = `ℹ ｢ext｣`
+
+var prefix = ``
+if (require('os').platform() == 'darwin') {
+  prefix = `ℹ ｢ext｣:`
+}
+else {
+  prefix = `i [ext]:`
+}
 var end = `\x1b[0m`
 var app =(`${greenbold}${prefix}${end} ext-gen:`)
 function boldRed (s) {
