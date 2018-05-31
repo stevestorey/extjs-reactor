@@ -64,6 +64,7 @@ var config = {}
 
 const optionDefinitions = [
   { name: 'defaults', alias: 'd', type: Boolean },
+  { name: 'auto', alias: 'a', type: Boolean },
   { name: 'name', alias: 'n', type: String }
 ]
 
@@ -85,7 +86,7 @@ function step00() {
 
 
   cmdLine = commandLineArgs(optionDefinitions)
-  if (cmdLine.defaults == true) {
+  if (cmdLine.defaults == true || cmdLine.auto == true) {
     setDefaults()
     step99()
   }
@@ -96,14 +97,11 @@ function step00() {
 
 function setDefaults() {
   if (cmdLine.name != undefined) {
-    console.log('a')
     answers['appName'] = cmdLine.name
     answers['packageName'] = kebabCase(answers['appName'])
     answers['description'] = `${answers['packageName']} description for Ext JS app ${answers['appName']}`
   }
   else {
-    console.log('b')
-
     answers['appName'] = config.appName
     answers['packageName'] = config.packageName
     answers['description'] = config.description
@@ -399,6 +397,11 @@ function step99() {
   }
   else {
     message = 'Would you like to generate the Ext JS npm project with above config now?'
+  }
+
+  if (cmdLine.auto == true) {
+    stepCreate()
+    return
   }
 
   new Confirm({
