@@ -85,7 +85,6 @@ function step00() {
 
 
   cmdLine = commandLineArgs(optionDefinitions)
-  console.log(cmdLine.name)
   if (cmdLine.defaults == true) {
     setDefaults()
     step99()
@@ -93,6 +92,31 @@ function step00() {
   else {
     step00a()
   }
+}
+
+function setDefaults() {
+  if (cmdLine.name != undefined) {
+    console.log('a')
+    answers['appName'] = cmdLine.name
+    answers['packageName'] = kebabCase(answers['appName'])
+    answers['description'] = `${answers['packageName']} description for Ext JS app ${answers['appName']}`
+  }
+  else {
+    console.log('b')
+
+    answers['appName'] = config.appName
+    answers['packageName'] = config.packageName
+    answers['description'] = config.description
+  }
+  answers['version'] = config.version
+  answers['repositoryURL'] = config.repositoryURL
+  answers['keywords'] = config.keywords
+  answers['authorName'] = config.authorName
+  answers['license'] = config.license
+  answers['bugsURL'] = config.bugsURL
+  answers['homepageURL'] = config.homepageURL
+  answers['templateType'] = 'make a selection from a list'
+  answers['template'] = 'moderndesktop'
 }
 
 function stepHelp() {
@@ -163,55 +187,6 @@ function step00b() {
   })
 }
 
-function setDefaults() {
-  if (cmdLine.name != undefined) {
-    answers['appName'] =cmdLine.name
-    answers['packageName'] = kebabCase(answers['appName'])
-    answers['description'] = `${answers['packageName']} description for Ext JS app ${answers['appName']}`
-  }
-  else {
-    answers['appName'] = config.appName
-    answers['packageName'] = config.packageName
-    answers['description'] = config.description
-  }
-  answers['version'] = config.version
-  answers['repositoryURL'] = config.repositoryURL
-  answers['keywords'] = config.keywords
-  answers['authorName'] = config.authorName
-  answers['license'] = config.license
-  answers['bugsURL'] = config.bugsURL
-  answers['homepageURL'] = config.homepageURL
-  answers['templateType'] = 'make a selection from a list'
-  answers['template'] = 'moderndesktop'
-}
-
-function displayDefaults() {
-  // console.log('')
-  // console.log(`For controlling ext-gen:`)
-  // console.log(`seeDefaults:\t${config.seeDefaults}`)
-  // console.log(`useDefaults:\t${config.useDefaults}`)
-  // console.log(`createNow:\t${config.createNow}`)
-  //console.log('')
-  console.log(boldGreen(`Defaults for Ext JS app:`))
-  console.log(`appName:\t${config.appName}`)
-  //console.log('')
-  //console.log(`For template selection:`)
-  //console.log(`templateType:\t${config.templateType}`)
-  console.log(`template:\t${config.template}`)
-  //console.log(`templateFolderName:\t${config.templateFolderName}`)
-  console.log('')
-  console.log(boldGreen(`Defaults for package.json:`))
-  console.log(`packageName:\t${config.packageName}`)
-  console.log(`version:\t${config.version}`)
-  console.log(`description:\t${config.description}`)
-  console.log(`repositoryURL:\t${config.repositoryURL}`)
-  console.log(`keywords:\t${config.keywords}`)
-  console.log(`authorName:\t${config.authorName}`)
-  console.log(`license:\t${config.license}`)
-  console.log(`bugsURL:\t${config.bugsURL}`)
-  console.log(`homepageURL:\t${config.homepageURL}`)
-  console.log('')
-}
 
 function step01() {
   new Confirm({
@@ -377,6 +352,35 @@ function step14() {
     answers['homepageURL'] = answer
     step99()
   })
+}
+
+function displayDefaults() {
+  // console.log('')
+  // console.log(`For controlling ext-gen:`)
+  // console.log(`seeDefaults:\t${config.seeDefaults}`)
+  // console.log(`useDefaults:\t${config.useDefaults}`)
+  // console.log(`createNow:\t${config.createNow}`)
+  //console.log('')
+  //console.log('')
+  //console.log(`For template selection:`)
+  //console.log(`templateType:\t${config.templateType}`)
+  //console.log(`templateFolderName:\t${config.templateFolderName}`)
+
+  console.log(boldGreen(`Defaults for Ext JS app:`))
+  console.log(`appName:\t${answers['appName']}`)
+  console.log(`template:\t${answers['template']}`)
+  console.log('')
+  console.log(boldGreen(`Defaults for package.json:`))
+  console.log(`packageName:\t${answers['packageName']}`)
+  console.log(`version:\t${answers['version']}`)
+  console.log(`description:\t${answers['description']}`)
+  console.log(`repositoryURL:\t${answers['repositoryURL']}`)
+  console.log(`keywords:\t${answers['keywords']}`)
+  console.log(`authorName:\t${answers['authorName']}`)
+  console.log(`license:\t${answers['license']}`)
+  console.log(`bugsURL:\t${answers['bugsURL']}`)
+  console.log(`homepageURL:\t${answers['homepageURL']}`)
+  console.log('')
 }
 
 function step99() {
