@@ -6,7 +6,14 @@ const spawnSync = require('child_process').spawnSync
 const spawn = require('child_process').spawn
 const crossSpawn = require('cross-spawn')
 
-const app = `${chalk.green('ℹ ｢ext｣:')} ext-build:`;
+var prefix = ``
+if (require('os').platform() == 'darwin') {
+  prefix = `ℹ ｢ext｣:`
+}
+else {
+  prefix = `i [ext]:`
+}
+const app = `${chalk.green(prefix)} ext-build:`
 const DEFAULT_SUBSTRS = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
 
 exports.senchaCmd = (parms) => {
