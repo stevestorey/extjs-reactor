@@ -88,12 +88,6 @@ function step00() {
   console.log(cmdLine.name)
   if (cmdLine.defaults == true) {
     setDefaults()
-
-    // answers['appName'] = config.appName
-    // answers['packageName'] = kebabCase(answers['appName'])
-    // answers['templateType'] = 'make a selection from a list'
-    // answers['template'] = 'moderndesktop'
-
     step99()
   }
   else {
@@ -169,6 +163,28 @@ function step00b() {
   })
 }
 
+function setDefaults() {
+  if (cmdLine.name != undefined) {
+    answers['appName'] =cmdLine.name
+    answers['packageName'] = kebabCase(answers['appName'])
+    answers['description'] = `${answers['packageName']} description for Ext JS app ${answers['appName']}`
+  }
+  else {
+    answers['appName'] = config.appName
+    answers['packageName'] = config.packageName
+    answers['description'] = config.description
+  }
+  answers['version'] = config.version
+  answers['repositoryURL'] = config.repositoryURL
+  answers['keywords'] = config.keywords
+  answers['authorName'] = config.authorName
+  answers['license'] = config.license
+  answers['bugsURL'] = config.bugsURL
+  answers['homepageURL'] = config.homepageURL
+  answers['templateType'] = 'make a selection from a list'
+  answers['template'] = 'moderndesktop'
+}
+
 function displayDefaults() {
   // console.log('')
   // console.log(`For controlling ext-gen:`)
@@ -197,31 +213,6 @@ function displayDefaults() {
   console.log('')
 }
 
-function setDefaults() {
-  
-
-
-  
-  answers['appName'] = config.appName
-  answers['packageName'] = config.packageName
-  answers['version'] = config.version
-  answers['description'] = config.description
-  answers['repositoryURL'] = config.repositoryURL
-  answers['keywords'] = config.keywords
-  answers['authorName'] = config.authorName
-  answers['license'] = config.license
-  answers['bugsURL'] = config.bugsURL
-  answers['homepageURL'] = config.homepageURL
-
-  answers['appName'] = config.appName
-  answers['packageName'] = kebabCase(answers['appName'])
-  answers['templateType'] = 'make a selection from a list'
-  answers['template'] = 'moderndesktop'
-
-
-}
-
-
 function step01() {
   new Confirm({
     message: 'Would you like to create a package.json file with defaults from config.json?',
@@ -230,16 +221,6 @@ function step01() {
     answers['useDefaults'] = answer
     if(answers['useDefaults'] == true) {
       setDefaults()
-      // answers['appName'] = config.appName
-      // answers['packageName'] = config.packageName
-      // answers['version'] = config.version
-      // answers['description'] = config.description
-      // answers['repositoryURL'] = config.repositoryURL
-      // answers['keywords'] = config.keywords
-      // answers['authorName'] = config.authorName
-      // answers['license'] = config.license
-      // answers['bugsURL'] = config.bugsURL
-      // answers['homepageURL'] = config.homepageURL
       step02()
     }
     else {
