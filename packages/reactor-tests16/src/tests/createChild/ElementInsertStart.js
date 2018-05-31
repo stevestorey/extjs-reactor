@@ -16,7 +16,7 @@ export default class ElementInsertStart extends Component {
         debugger;
         return (
             <Panel>
-                <Container> <div id="inserted">inserted</div> </Container> 
+                {showInserted && <div id="inserted">inserted</div>}
                 <Container>top</Container>
                 <Button handler={this.insert} text="Insert" itemId="insert"/>
                 <Container>bottom</Container>

@@ -6,6 +6,21 @@ import ReactFiberReconciler from 'react-reconciler';
 import invariant from 'fbjs/lib/invariant';
 import emptyObject from 'fbjs/lib/emptyObject';
 const UPDATE_SIGNAL = {};
+const CLASS_CACHE = {
+  Grid: Ext.ClassManager.getByAlias('widget.grid'),
+  Column: Ext.ClassManager.getByAlias('widget.gridcolumn'),
+  Button: Ext.ClassManager.getByAlias('widget.button'),
+  Menu: Ext.ClassManager.getByAlias('widget.menu'),
+  ToolTip: Ext.ClassManager.getByAlias('widget.tooltip'),
+  CellBase: Ext.ClassManager.get('Ext.grid.cell.Base'),
+  WidgetCell: Ext.ClassManager.getByAlias('widget.widgetcell'),
+  Dialog: Ext.ClassManager.getByAlias('widget.dialog'),
+  Field: Ext.ClassManager.getByAlias('widget.field'),
+  FitLayout: Ext.ClassManager.getByAlias('layout.fit'),
+  TabPanel: Ext.ClassManager.getByAlias('widget.tabpanel'),
+  RendererCell: Ext.ClassManager.getByAlias('widget.renderercell'),
+  Field: Ext.ClassManager.getByAlias('widget.field')
+}
 //mjg
 const ExtRenderer = ReactFiberReconciler({
 
@@ -29,7 +44,8 @@ const ExtRenderer = ReactFiberReconciler({
   },
 
   appendInitialChild(parentInstance, childInstance) {
-    if (childInstance == null) {return}
+    // To handle childInstance = " " case
+    if (childInstance == null || (typeof childInstance === "string" && childInstance.trim().length === 0)) {return}
     console.log(parentInstance)
     console.log(childInstance)
 
@@ -56,6 +72,31 @@ const ExtRenderer = ReactFiberReconciler({
       else if (parentXtype == 'menu' && childXtype == 'menuitem') {
         if(parentInstance.rawmenuitems == undefined) { parentInstance.rawmenuitems = [] }
         parentInstance.rawmenuitems.push(childInstance.cmp)
+      }
+      else if (parentXtype == 'column' && childXtype == 'renderercell') {
+        if(parentInstance.rawcell == undefined) 
+        parentInstance.rawcell = childInstance.cmp.initialConfig
+      }
+      else if (parentXtype == 'column' && childXtype == 'widgetcell') {
+        debugger;
+        if(parentInstance.rawcell == undefined) 
+        parentInstance.rawcell = childInstance.cmp.initialConfig
+      }
+      else if (parentXtype == 'column' && childInstance.cmp instanceof CLASS_CACHE.Field ) {
+        if(parentInstance.raweditor == undefined) 
+        parentInstance.raweditor = childInstance.cmp
+      } 
+      else if (parentXtype == 'dialog' && childXtype == 'button') {
+        if(parentInstance.rawbuttons == undefined) { parentInstance.rawbuttons = [] }
+        parentInstance.rawbuttons.push(childInstance.cmp)
+      }
+      else if (parentXtype == 'widgetcell') {
+        if(parentInstance.rawwidget == undefined) 
+        parentInstance.rawwidget = childInstance.cmp.initialConfig
+      }
+      else if (childXtype == 'tooltip') {
+        if(parentInstance.rawtooltip == undefined) 
+        parentInstance.rawtooltip = childInstance.cmp
       }
       else {
         if(parentInstance.rawitems == undefined) { parentInstance.rawitems = [] }
@@ -87,6 +128,34 @@ const ExtRenderer = ReactFiberReconciler({
       if(ExtJSComponent.rawmenuitems != undefined) {
         l(`new set menu items config (parent xtype,child items)`,ExtJSComponent.rawConfigs.xtype,ExtJSComponent.rawmenuitems)
         ExtJSComponent.rawConfigs.items = ExtJSComponent.rawmenuitems
+      }
+
+      if(ExtJSComponent.rawbuttons != undefined) {
+        l(`new set buttons items config (parent xtype,child items)`,ExtJSComponent.rawConfigs.xtype,ExtJSComponent.rawmenuitems)
+        ExtJSComponent.rawConfigs.buttons = ExtJSComponent.rawbuttons
+      }
+      if(ExtJSComponent.rawcell != undefined) {
+        l(`new set cell config (parent xtype,child items)`,ExtJSComponent.rawConfigs.xtype,ExtJSComponent.rawmenu)
+        ExtJSComponent.rawConfigs.cell = ExtJSComponent.rawcell
+      }
+      if(ExtJSComponent.raweditor != undefined) {
+        l(`new set editor config (parent xtype,child items)`,ExtJSComponent.rawConfigs.xtype,ExtJSComponent.rawmenu)
+        ExtJSComponent.rawConfigs.editor = ExtJSComponent.raweditor
+      }
+      if(ExtJSComponent.rawwidget != undefined) {
+        l(`new set widget config (parent xtype,child items)`,ExtJSComponent.rawConfigs.xtype,ExtJSComponent.rawmenu)
+        ExtJSComponent.rawConfigs.widget = ExtJSComponent.rawwidget
+      }
+      if(ExtJSComponent.rawtooltip != undefined) {
+        l(`new set widget config (parent xtype,child items)`,ExtJSComponent.rawConfigs.xtype,ExtJSComponent.rawmenu)
+        ExtJSComponent.rawConfigs.tooltip = ExtJSComponent.rawtooltip
+      }
+
+      if(ExtJSComponent.rawConfigs.renderer != undefined && ExtJSComponent.rawConfigs.xtype == "column") {
+        
+        l(`renderer`,ExtJSComponent.rawConfigs.xtype,ExtJSComponent.rawConfigs.renderer)
+        ExtJSComponent.rawConfigs.cell= ExtJSComponent.rawConfigs.cell || {}
+        ExtJSComponent.rawConfigs.cell.xtype = 'renderercell'
       }
 
       if (typeof(props.children) == 'string' || typeof(props.children) == 'number') {
@@ -217,7 +286,10 @@ const ExtRenderer = ReactFiberReconciler({
         child !== beforeChild,
         'ExtRenderer: Can not insert node before itself',
       );
-      child.injectBefore(beforeChild);
+      if(parentInstance.cmp.insertBefore && typeof parentInstance.cmp.insertBefore === 'function') {
+        parentInstance.cmp.insertBefore(child.cmp, beforeChild.cmp);
+      }
+      //child.injectBefore(beforeChild);
     },
 
     insertInContainerBefore(parentInstance, child, beforeChild) {
@@ -238,7 +310,15 @@ const ExtRenderer = ReactFiberReconciler({
         if (parentInstance.xtype == 'html') return //correct??
         if (child.cmp != undefined) {
           console.log("CHECK BEFORE REMOVE")
-          if(parentInstance.cmp.getItems().get(child.cmp.getItemId())) {
+          if(parentInstance.cmp.xtype == 'grid' && child.cmp.xtype == 'column') {
+            parentInstance.cmp.removeColumn(child.cmp);
+          } 
+          else if(parentInstance.cmp.xtype === "button") {
+            if(child.cmp.xtype === "menu"){
+              parentInstance.cmp.setMenu(null)
+            }
+          }
+          else if(parentInstance.cmp.getItems!= undefined && typeof parentInstance.cmp.getItems == 'function' && parentInstance.cmp.getItems().get(child.cmp.getItemId())) {
             parentInstance.cmp.remove(child.cmp, true)
           } else {
             console.log("DID NOTHING IN REMOVE")
@@ -322,6 +402,17 @@ function wrapDOMElement(node) {
   return cmp;
 }
 
+/**
+ * Returns true if subClass is parentClass or a sub class of parentClass
+ * @param {Ext.Class} subClass
+ * @param {Ext.Class} parentClass
+ * @return {Boolean}
+ */
+function isAssignableFrom(subClass, parentClass) {
+  if (!subClass || !parentClass) return false;
+  return subClass === parentClass || subClass.prototype instanceof parentClass;
+}
+
 //this needs to be refactored
 function doAdd(childXtype, parentCmp, childCmp, childPropsChildren) {
   l(`ExtRenderer.js: doAdd, parentxtype: ${parentCmp.xtype}, childxtype: ${childXtype}, (parentCmp, childCmp, childPropsChildern)`, parentCmp, childCmp, childPropsChildren)
@@ -347,27 +438,18 @@ console.warn('why in doAdd??')
 
   //which other types need special care?
 
-
-  // if (childXtype == 'column' || 
-  //     childXtype == 'treecolumn' || 
-  //     childXtype == 'textcolumn' || 
-  //     childXtype == 'checkcolumn' || 
-  //     childXtype == 'datecolumn' || 
-  //    childXtype == 'rownumberer' ||
-  //     childXtype == 'numbercolumn' ) {
-  //   l(`doAdd use setColumns ${childXtype}`)
-  //   var columns = []
-  //   var newColumns = []
-  //   columns = parentCmp.getColumns()
-  //   for (var item in columns) {
-  //     newColumns.push(columns[item])
-  //   }
-  //   newColumns.push(childCmp)
-  //   parentCmp.setColumns(newColumns)
-  // }
-
-
-  if (parentCmp.xtype == 'tooltip') {
+  if(parentCmp.xtype == 'grid') {
+    if (childXtype == 'column' || 
+    childXtype == 'treecolumn' || 
+    childXtype == 'textcolumn' || 
+    childXtype == 'checkcolumn' || 
+    childXtype == 'datecolumn' || 
+    childXtype == 'rownumberer' ||
+    childXtype == 'numbercolumn' ) {
+    parentCmp.addColumn(childCmp);
+    }
+  }
+  else if (parentCmp.xtype == 'tooltip') {
     parentCmp.setTooltip(childCmp)
   }
   else if (parentCmp.xtype == 'plugin') {

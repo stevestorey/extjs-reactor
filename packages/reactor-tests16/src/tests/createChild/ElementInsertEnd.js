@@ -18,7 +18,7 @@ export default class ElementInsertEnd extends Component {
             <Panel>
                 <Container>top</Container>
                 <Button handler={this.insert} text="Insert" itemId="insert"/>
-                <Container><div id="inserted">inserted</div> </Container>
+                 {showInserted && <div id="inserted">inserted</div>}
             </Panel>
         )
     }
