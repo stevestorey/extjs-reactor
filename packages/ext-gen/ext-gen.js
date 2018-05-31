@@ -70,35 +70,42 @@ var version
 var config = {}
 
 const optionDefinitions = [
-  { name: 'defaults', type: Boolean },
-  { name: 'builds', type: String },
-  { name: 'debug', alias: 'd', type: Boolean },
-  { name: 'sdk', alias: 's', type: String },
-  { name: 'template', alias: 't', type: String },
-  { name: 'parms', type: String, multiple: true, defaultOption: true },
+  { name: 'defaults', alias: 'd', type: Boolean }
 ]
 
-
-const options
+const commandLineArgs = require('command-line-args')
+var cmdLineOpts
 step00()
 
 function step00() {
-
-  options = commandLineArgs(optionDefinitions)
-  console.log(options.defaults)
-
-
   var nodeDir = path.resolve(__dirname)
   var pkg = (fs.existsSync(nodeDir + '/package.json') && JSON.parse(fs.readFileSync(nodeDir + '/package.json', 'utf-8')) || {});
   version = pkg.version
   var data = fs.readFileSync(nodeDir + '/config.json')
-  config = JSON.parse(data);
+  config = JSON.parse(data)
+
   console.log(boldGreen(`\nSencha ext-gen v${version} (The Ext JS Project Generator for npm)`))
-  console.log(`Getting started: http://docs.sencha.com/ext-gen/1.0.0/guides/getting_started.html`)
-  console.log('Defaults: ' + path.join(__dirname , 'config.json'))
+  //console.log(`Getting started: http://docs.sencha.com/ext-gen/1.0.0/guides/getting_started.html`)
+  //console.log('Defaults: ' + path.join(__dirname , 'config.json'))
   console.log('')
 
-  step00a()
+
+  cmdLine = commandLineArgs(optionDefinitions)
+  //console.log(cmdLineOpts)
+  if (cmdLine.defaults == true) {
+    //console.log('true')
+    setDefaults()
+
+    answers['appName'] = config.appName
+    answers['packageName'] = kebabCase(answers['appName'])
+    answers['templateType'] = 'make a selection from a list'
+    answers['template'] = 'moderndesktop'
+
+    step99()
+  }
+  else {
+    step00a()
+  }
 }
 
 function stepHelp() {
@@ -160,31 +167,7 @@ function step00b() {
       return
     }
     if(answers['seeDefaults'] == true) {
-      console.log('')
-      console.log(`For controlling ext-gen:`)
-      console.log(`seeDefaults:\t\t${config.seeDefaults}`)
-      console.log(`useDefaults:\t\t${config.useDefaults}`)
-      console.log(`createNow:\t\t${config.createNow}`)
-      console.log('')
-      console.log(`For Ext JS app name:`)
-      console.log(`appName:\t\t${config.appName}`)
-      console.log('')
-      console.log(`For template selection:`)
-      console.log(`templateType:\t\t${config.templateType}`)
-      console.log(`template:\t\t${config.template}`)
-      console.log(`templateFolderName:\t${config.templateFolderName}`)
-      console.log('')
-      console.log(boldGreen(`For package.json:`))
-      console.log(`packageName:\t\t${config.packageName}`)
-      console.log(`version:\t\t${config.version}`)
-      console.log(`description:\t\t${config.description}`)
-      console.log(`gitRepositoryURL:\t${config.gitRepositoryURL}`)
-      console.log(`keywords:\t\t${config.keywords}`)
-      console.log(`author:\t\t\t${config.author}`)
-      console.log(`license:\t\t${config.license}`)
-      console.log(`bugsURL:\t\t${config.bugsURL}`)
-      console.log(`homepageURL:\t\t${config.homepageURL}`)
-      console.log('')
+      displayDefaults()
       step01()
     }
     else {
@@ -193,6 +176,49 @@ function step00b() {
   })
 }
 
+function displayDefaults() {
+  // console.log('')
+  // console.log(`For controlling ext-gen:`)
+  // console.log(`seeDefaults:\t\t${config.seeDefaults}`)
+  // console.log(`useDefaults:\t\t${config.useDefaults}`)
+  // console.log(`createNow:\t\t${config.createNow}`)
+  //console.log('')
+  console.log(boldGreen(`Defaults for Ext JS app:`))
+  console.log(`appName:\t\t${config.appName}`)
+  //console.log('')
+  //console.log(`For template selection:`)
+  //console.log(`templateType:\t\t${config.templateType}`)
+  console.log(`template:\t\t${config.template}`)
+  //console.log(`templateFolderName:\t${config.templateFolderName}`)
+  console.log('')
+  console.log(boldGreen(`Defaults for package.json:`))
+  console.log(`packageName:\t\t${config.packageName}`)
+  console.log(`version:\t\t${config.version}`)
+  console.log(`description:\t\t${config.description}`)
+  console.log(`gitRepositoryURL:\t${config.gitRepositoryURL}`)
+  console.log(`keywords:\t\t${config.keywords}`)
+  console.log(`author:\t\t\t${config.author}`)
+  console.log(`license:\t\t${config.license}`)
+  console.log(`bugsURL:\t\t${config.bugsURL}`)
+  console.log(`homepageURL:\t\t${config.homepageURL}`)
+  console.log('')
+}
+
+
+function setDefaults() {
+  answers['appName'] = config.appName
+  answers['packageName'] = config.packageName
+  answers['version'] = config.version
+  answers['description'] = config.description
+  answers['gitRepositoryURL'] = config.gitRepositoryURL
+  answers['keywords'] = config.keywords
+  answers['author'] = config.author
+  answers['license'] = config.license
+  answers['bugsURL'] = config.bugsURL
+  answers['homepageURL'] = config.homepageURL
+}
+
+
 function step01() {
   new Confirm({
     message: 'Would you like to create a package.json file with defaults from config.json?',
@@ -200,16 +226,17 @@ function step01() {
   }).run().then(answer => {
     answers['useDefaults'] = answer
     if(answers['useDefaults'] == true) {
-      answers['appName'] = config.appName
-      answers['packageName'] = config.packageName
-      answers['version'] = config.version
-      answers['description'] = config.description
-      answers['gitRepositoryURL'] = config.gitRepositoryURL
-      answers['keywords'] = config.keywords
-      answers['author'] = config.author
-      answers['license'] = config.license
-      answers['bugsURL'] = config.bugsURL
-      answers['homepageURL'] = config.homepageURL
+      setDefaults()
+      // answers['appName'] = config.appName
+      // answers['packageName'] = config.packageName
+      // answers['version'] = config.version
+      // answers['description'] = config.description
+      // answers['gitRepositoryURL'] = config.gitRepositoryURL
+      // answers['keywords'] = config.keywords
+      // answers['author'] = config.author
+      // answers['license'] = config.license
+      // answers['bugsURL'] = config.bugsURL
+      // answers['homepageURL'] = config.homepageURL
       step02()
     }
     else {
@@ -377,8 +404,17 @@ function step99() {
     }
   }
 
+  var message
+  if (cmdLine.defaults == true) {
+    message = 'Generate the Ext JS npm project?'
+    displayDefaults()
+  }
+  else {
+    message = 'Would you like to generate the Ext JS npm project with above config now?'
+  }
+
   new Confirm({
-    message: 'Would you like to generate the Ext JS npm project with above config now?',
+    message: message,
     default: config.createNow
   }).run().then(answer => {
     answers['createNow'] = answer
