@@ -1,16 +1,16 @@
 {
   "name": "@extjs/ext-webpack-plugin",
-  "version": "0.0.90",
+  "version": "0.0.91",
   "description": "A webpack plugin for new Ext JS applications",
   "main": "./lib/index.js",
   "scripts": {
     "build": "babel src --out-dir lib"
   },
-  "config": {
-    "loglevel": "silent"
-  },
+  "bundleDependencies": [],
   "dependencies": {
     "@extjs/ext-build": "~0.0.1",
+    "react": "^16.4.0",
+    "react-hot-loader": "^4.2.0",
     "lodash.uniq": "^4.5.0",
     "schema-utils": "^0.4.5",
     "chalk": "^2.4.1",
