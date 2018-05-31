@@ -10,8 +10,7 @@ const PackageJson = require('../package.json');
 const commandLineArgs = require('command-line-args')
 
 var prefix = ``
-var platform = require('os').platform()
-if (platform == 'darwin') {
+if (require('os').platform() == 'darwin') {
   prefix = `ℹ ｢ext｣:`
 }
 else {
@@ -48,8 +47,8 @@ const optionDefinitions = [
   var TemplatesDir = '/SenchaNodeTemplates' 
   var NodeAppTemplatesDir = path.join(NodeAppBinDir + '/..' + TemplatesDir) 
 
-  const options = commandLineArgs(optionDefinitions)
-  if(options.debug) { debug = true } else { debug = false }
+  const cmdLine = commandLineArgs(optionDefinitions)
+  if(cmdLine.debug) { debug = true } else { debug = false }
 
   //var SenchaCmdTemplatesDir = '/plugins/ext/current'
   //var ApplicationTemplatesDir = TemplatesDir + '/Application'

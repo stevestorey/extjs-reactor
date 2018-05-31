@@ -10,9 +10,9 @@
   "packageName":"my-app",
   "version":"0.0.1",
   "description":"my-app description for Ext JS app MyApp",
-  "gitRepositoryURL":"https://github.com/",
+  "repositoryURL":"https://github.com/",
   "keywords":"\"Ext JS\",\"Sencha\",\"HTML5\"",
-  "author":"Sencha, Inc.",
+  "authorName":"Sencha, Inc.",
   "license":"ISC",
   "bugsURL":"https://github.com/",
   "homepageURL":"http://www.sencha.com"
