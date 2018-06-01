@@ -1,3 +1,7 @@
+    "@extjs/ext-modern-treegrid": "^6.6.0",
+    "@extjs/ext-classic-theme-graphite": "^6.6.0",
+
+
 npm install -g @extjs/ext-gen
 
 git fetch upstream
