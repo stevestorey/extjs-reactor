@@ -184,25 +184,24 @@ function step03() {
 }
 
 function step04() {
-  //    choices: ['moderndesktop', 'universalmodern', 'classicdesktop'],
 
-  choices: {
-    desktopclassic: `Desktop build using classic toolkit`
-    desktopmodern: `Desktop build using modern toolkit`
-    universalclassicmodern: `Universal App: desktop build using classic toolkit, phone build using modern toolkit`
-    universalmodern: `Universal App: desktop build using classic toolkit, phone build using modern toolkit`
-  }
+  // choices: {
+  //   desktopclassic: `Desktop build using classic toolkit`
+  //   desktopmodern: `Desktop build using modern toolkit`
+  //   universalclassicmodern: `Universal App: desktop build using classic toolkit, phone build using modern toolkit`
+  //   universalmodern: `Universal App: desktop build using classic toolkit, phone build using modern toolkit`
+  // }
 
-
+  // choices: [
+  //   `Desktop application: desktop profile using classic toolkit`, //'classicdesktop',
+  //   `Desktop application: desktop profile using modern toolkit`, //'classicdesktop',
+  //   `Universal Application: desktop profile using classic toolkit, phone profile using modern toolkit`,
+  //   `Universal Application: desktop profile using classic toolkit, phone profile using modern toolkit`
+  // ],
 
   new List({
     message: 'What Ext JS template would you like to use?',
-    choices: [
-      `Desktop application: desktop profile using classic toolkit`, //'classicdesktop',
-      `Desktop application: desktop profile using modern toolkit`, //'classicdesktop',
-      `Universal Application: desktop profile using classic toolkit, phone profile using modern toolkit`,
-      `Universal Application: desktop profile using classic toolkit, phone profile using modern toolkit`
-    ],
+    choices: ['classicdesktop', 'moderndesktop', 'universalclassicmodern', 'universalmodern'],
     default: 'classicdesktop'
   }).run().then(answer => {
     answers['template'] = answer
