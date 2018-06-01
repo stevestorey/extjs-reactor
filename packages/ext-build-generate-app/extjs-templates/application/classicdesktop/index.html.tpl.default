@@ -12,7 +12,7 @@
 		Ext.beforeLoad = function (tags) {
 			//var s = location.search;
 			var profile;
-			profile = 'classicdesktop';
+			profile = 'desktop';
 			Ext.manifest ='generatedFiles/' + profile;
 		};
 	</script>

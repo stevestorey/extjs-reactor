@@ -12,9 +12,9 @@
 		Ext.beforeLoad = function (tags) {
 			var s = location.search;
 			var profile;
-			if (s.match(/\u005cbmoderndesktop\u005cb/)) { profile = 'moderndesktop' }
-			else if (s.match(/\u005cbmodernphone\u005cb/)) { profile = 'modernphone' }
-			else { profile = tags.desktop ? 'moderndesktop' : 'modernphone' }
+			if (s.match(/\u005cbdesktop\u005cb/)) { profile = 'desktop' }
+			else if (s.match(/\u005cbphone\u005cb/)) { profile = 'phone' }
+			else { profile = tags.desktop ? 'desktop' : 'phone' }
 			Ext.manifest ='generatedFiles/' + profile;
 		};
 	</script>
