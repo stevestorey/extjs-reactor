@@ -32,7 +32,7 @@
     "@extjs/ext-pivot": "^6.6.0",
     "@extjs/ext-d3": "^6.6.0",
     "@extjs/ext-pivot-d3": "^6.6.0",
-    "@extjs/ext-pivot-locale": "^6.6.0",
+    "@extjs/ext-pivot-locale": "^6.6.0"
   },
   "devDependencies": {
     "@extjs/ext-webpack-plugin": "~0.0.1",
