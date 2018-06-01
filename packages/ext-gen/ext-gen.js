@@ -3,28 +3,22 @@ const path = require('path');
 const fs = require('fs-extra');
 const { kebabCase, pick } = require('lodash')
 const util = require('./util.js')
-require('./XTemplate/js/Ext.js');
-require('./XTemplate/js/String.js');
-require('./XTemplate/js/Format.js');
-require('./XTemplate/js/Template.js');
-require('./XTemplate/js/XTemplateParser.js');
-require('./XTemplate/js/XTemplateCompiler.js');
-require('./XTemplate/js/XTemplate.js');
 
-var greenbold = `\x1b[32m\x1b[1m`
-var green = `\x1b[32m`
-var redbold = `\x1b[31m\x1b[1m`
-var red = `\x1b[31m`
-var end = `\x1b[0m`
+// require('./XTemplate/js/Ext.js');
+// require('./XTemplate/js/String.js');
+// require('./XTemplate/js/Format.js');
+// require('./XTemplate/js/Template.js');
+// require('./XTemplate/js/XTemplateParser.js');
+// require('./XTemplate/js/XTemplateCompiler.js');
+// require('./XTemplate/js/XTemplate.js');
 
-var prefix = ``
-if (require('os').platform() == 'darwin') {
-  prefix = `ℹ ｢ext｣:`
-}
-else {
-  prefix = `i [ext]:`
-}
-var app =(`${greenbold}${prefix}${end} ext-gen:`)
+require('./XTemplate/js')
+
+// var greenbold = `\x1b[32m\x1b[1m`
+// var green = `\x1b[32m`
+// var redbold = `\x1b[31m\x1b[1m`
+// var red = `\x1b[31m`
+// var end = `\x1b[0m`
 
 function boldGreen (s) {
   var boldgreencolor = `\x1b[32m\x1b[1m`
@@ -37,6 +31,16 @@ function boldRed (s) {
   return (`${boldredcolor}${s}${endMarker}`)
 }
 
+var prefix = ``
+if (require('os').platform() == 'darwin') {
+  prefix = `ℹ ｢ext｣:`
+}
+else {
+  prefix = `i [ext]:`
+}
+//var app =(`${greenbold}${prefix}${end} ext-gen:`)
+var app =(`${boldGreen(prefix)} ext-gen:`)
+
 var List = require('prompt-list')
 var Input = require('prompt-input')
 var Confirm = require('prompt-confirm')
@@ -45,6 +49,8 @@ var answers = {
 'seeDefaults': null,
 'useDefaults': null,
 'appName': null,
+'classicTheme': null,
+'modernTheme': null,
 'templateType': null,
 'template': null,
 'templateFolderName': null,
@@ -113,6 +119,8 @@ function setDefaults() {
   answers['license'] = config.license
   answers['bugsURL'] = config.bugsURL
   answers['homepageURL'] = config.homepageURL
+  answers['classicTheme'] = config.classicTheme
+  answers['modernTheme'] = config.modernTheme
   answers['templateType'] = 'make a selection from a list'
   answers['template'] = 'moderndesktop'
 }
@@ -367,6 +375,8 @@ function displayDefaults() {
   console.log(boldGreen(`Defaults for Ext JS app:`))
   console.log(`appName:\t${answers['appName']}`)
   console.log(`template:\t${answers['template']}`)
+  console.log(`classicTheme:\t${answers['classicTheme']}`)
+  console.log(`modernTheme:\t${answers['modernTheme']}`)
   console.log('')
   console.log(boldGreen(`Defaults for package.json:`))
   console.log(`packageName:\t${answers['packageName']}`)
@@ -491,6 +501,8 @@ async function stepCreate() {
     parms: [ 'generate', 'app', answers['appName'], './' ],
     sdk: 'node_modules/@extjs/ext',
     template: answers['template'],
+    classicTheme: answers['classicTheme'],
+    modernTheme: answers['modernTheme'],
     templateFull: answers['templateFolderName'],
     cmdVersion: cmdVersion,
     frameworkVersion: frameworkVersion,

@@ -36,6 +36,10 @@ class generateApp {
     var ApplicationName = parms[2]
     var ApplicationDir = parms[3]
     var Template = options.template
+
+    var classicTheme = options.classicTheme
+    var modernTheme = options.modernTheme
+
     var Builds = options.builds
     var Sdk = options.sdk
     var Force = options.force
@@ -93,7 +97,7 @@ class generateApp {
       Packages = '$\u007Bworkspace.dir}/packages,node_modules/@extjs'
 		}
 
-		walkSync(TemplateDir, TemplateDir.length+1, ApplicationDir, ApplicationName, Template, SdkVal, Packages)
+		walkSync(TemplateDir, TemplateDir.length+1, ApplicationDir, ApplicationName, Template, modernTheme, classicTheme, SdkVal, Packages)
     var f='/.sencha';fs.copySync(CurrJSFilePath + '/' + TemplatesDir + '/application' + '/sencha', ApplicationDir + f)
     var cmdVersion = options.cmdVersion
     var frameworkVersion = options.frameworkVersion
@@ -115,7 +119,7 @@ module.exports = generateApp
 	// List all files in a directory in Node.js recursively in a synchronous fashion
 	//https://gist.github.com/kethinov/6658166
 	//const walkSync = (d) => fs.statSync(d).isDirectory() ? fs.readdirSync(d).map(f => walkSync(path.join(d, f)+'\n')) : d;
-	function walkSync(dir, len, ApplicationDir, ApplicationName, Template, SdkVal, Packages) {
+	function walkSync(dir, len, ApplicationDir, ApplicationName, Template,  modernTheme, classicTheme, SdkVal, Packages) {
 		var path = path || require('path');
 		var fs = fs || require('fs');
 		var files = fs.readdirSync(dir);
@@ -132,7 +136,7 @@ module.exports = generateApp
         //   chalk.red('App already exists')
         //   return
         // }
-				walkSync(path.join(dir, file), len, ApplicationDir, ApplicationName, Template, SdkVal, Packages);
+				walkSync(path.join(dir, file), len, ApplicationDir, ApplicationName, Template,  modernTheme, classicTheme, SdkVal, Packages);
 			}
 			else {
 //				console.log('file (file): ' + file)
@@ -151,15 +155,14 @@ module.exports = generateApp
 					frameworkIsV65: true,
 					fwIs60: false,
 					themeName: 'default',
-					classicTheme: "theme-triton",
-					modernTheme: "theme-material",
+					classicTheme: classicTheme,
+					modernTheme: modernTheme,
 					appName: ApplicationName,
 					name: ApplicationName,
           frameworkKey: 'ext',
           sdkval: SdkVal,
           packages: Packages,
 					uniqueId: uuidv4(),
-//					modernTheme: "theme-material",
 					viewFileName : viewFileName,
 					viewName: iSmall + '.' + viewFileName,
 					viewNamespaceName: ApplicationName + '.' + 'view.' + iSmall + '.' + viewFileName,
