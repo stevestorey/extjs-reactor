@@ -1,9 +1,11 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtWebpackPlugin = require('@extjs/ext-webpack-plugin');
+const portfinder = require('portfinder');
 
-module.exports = function (env) {
-  var port = 1962
+module.exports = async function (env) {
+  portfinder.basePort = 1962;
+  var port = await portfinder.getPortPromise();
   const nodeEnv = env && env.prod ? 'production' : 'development';
   const isProd = nodeEnv === 'production';
 
