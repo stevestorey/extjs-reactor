@@ -8,7 +8,32 @@
     "buildprod": "ext-build app build production"
   },
   "dependencies": {
-    "@extjs/ext": "^6.6.0"
+    "@extjs/ext": "^6.6.0",
+    "@extjs/ext-core": "^6.6.0",
+    "@extjs/ext-modern": "^6.6.0",
+    "@extjs/ext-modern-treegrid": "^6.6.0",
+
+    "@extjs/ext-modern-theme-material": "^6.6.0",
+    "@extjs/ext-modern-theme-ios": "^6.6.0",
+    "@extjs/ext-modern-theme-neptune": "^6.6.0",
+    "@extjs/ext-modern-theme-triton": "^6.6.0",
+
+    "@extjs/ext-classic": "^6.6.0",
+    "@extjs/ext-classic-theme-classic": "^6.6.0",
+    "@extjs/ext-classic-theme-neptune": "^6.6.0",
+    "@extjs/ext-classic-theme-neptune-touch": "^6.6.0",
+    "@extjs/ext-classic-theme-crisp": "^6.6.0",
+    "@extjs/ext-classic-theme-crisp-touch": "^6.6.0",
+    "@extjs/ext-classic-theme-triton": "^6.6.0",
+    //"@extjs/ext-classic-theme-graphite": "^6.6.0"
+
+    "@extjs/ext-calendar": "^6.6.0",
+    "@extjs/ext-charts": "^6.6.0",
+    "@extjs/ext-exporter": "^6.6.0",
+    "@extjs/ext-pivot": "^6.6.0",
+    "@extjs/ext-d3": "^6.6.0",
+    "@extjs/ext-pivot-d3": "^6.6.0",
+    "@extjs/ext-pivot-locale": "^6.6.0",
   },
   "devDependencies": {
     "@extjs/ext-webpack-plugin": "~0.0.1",

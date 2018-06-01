@@ -3,28 +3,16 @@ const path = require('path');
 const fs = require('fs-extra');
 const { kebabCase, pick } = require('lodash')
 const util = require('./util.js')
-
-// require('./XTemplate/js/Ext.js');
-// require('./XTemplate/js/String.js');
-// require('./XTemplate/js/Format.js');
-// require('./XTemplate/js/Template.js');
-// require('./XTemplate/js/XTemplateParser.js');
-// require('./XTemplate/js/XTemplateCompiler.js');
-// require('./XTemplate/js/XTemplate.js');
-
 require('./XTemplate/js')
-
-// var greenbold = `\x1b[32m\x1b[1m`
-// var green = `\x1b[32m`
-// var redbold = `\x1b[31m\x1b[1m`
-// var red = `\x1b[31m`
-// var end = `\x1b[0m`
+var List = require('prompt-list')
+var Input = require('prompt-input')
+var Confirm = require('prompt-confirm')
 
 function boldGreen (s) {
   var boldgreencolor = `\x1b[32m\x1b[1m`
-  return (`${boldgreencolor}${s}${end}`)
+  var endMarker = `\x1b[0m`
+  return (`${boldgreencolor}${s}${endMarker}`)
 }
-
 function boldRed (s) {
   var boldredcolor = `\x1b[31m\x1b[1m`
   var endMarker = `\x1b[0m`
@@ -38,12 +26,7 @@ if (require('os').platform() == 'darwin') {
 else {
   prefix = `i [ext]:`
 }
-//var app =(`${greenbold}${prefix}${end} ext-gen:`)
 var app =(`${boldGreen(prefix)} ext-gen:`)
-
-var List = require('prompt-list')
-var Input = require('prompt-input')
-var Confirm = require('prompt-confirm')
 
 var answers = {
 'seeDefaults': null,
@@ -67,37 +50,43 @@ var answers = {
 }
 var version
 var config = {}
+const commandLineArgs = require('command-line-args')
+var cmdLine
 
 const optionDefinitions = [
+  { name: 'help', alias: 'h', type: Boolean },
   { name: 'defaults', alias: 'd', type: Boolean },
   { name: 'auto', alias: 'a', type: Boolean },
-  { name: 'name', alias: 'n', type: String }
+  { name: 'name', alias: 'n', type: String },
+  { name: 'template', alias: 't', type: String }
 ]
 
-const commandLineArgs = require('command-line-args')
-var cmdLineOpts
-step00()
+stepStart()
 
-function step00() {
+function stepStart() {
   var nodeDir = path.resolve(__dirname)
   var pkg = (fs.existsSync(nodeDir + '/package.json') && JSON.parse(fs.readFileSync(nodeDir + '/package.json', 'utf-8')) || {});
   version = pkg.version
   var data = fs.readFileSync(nodeDir + '/config.json')
   config = JSON.parse(data)
-
+  cmdLine = commandLineArgs(optionDefinitions)
   console.log(boldGreen(`\nSencha ext-gen v${version} (The Ext JS Project Generator for npm)`))
   //console.log(`Getting started: http://docs.sencha.com/ext-gen/1.0.0/guides/getting_started.html`)
   //console.log('Defaults: ' + path.join(__dirname , 'config.json'))
   console.log('')
+  step00()
+}
 
-
-  cmdLine = commandLineArgs(optionDefinitions)
+function step00() {
   if (cmdLine.defaults == true || cmdLine.auto == true) {
     setDefaults()
     step99()
   }
+  else if (cmdLine.help == true) {
+    stepHelp()
+  }
   else {
-    step00a()
+    step00b()
   }
 }
 
@@ -112,6 +101,14 @@ function setDefaults() {
     answers['packageName'] = config.packageName
     answers['description'] = config.description
   }
+  if (cmdLine.template != undefined) {
+    answers['template'] = cmdLine.template
+    answers['templateType'] = "make a selection from a list"
+  }
+  else {
+    answers['template'] = config.template
+    answers['templateType'] = config.templateType
+  }
   answers['version'] = config.version
   answers['repositoryURL'] = config.repositoryURL
   answers['keywords'] = config.keywords
@@ -121,56 +118,22 @@ function setDefaults() {
   answers['homepageURL'] = config.homepageURL
   answers['classicTheme'] = config.classicTheme
   answers['modernTheme'] = config.modernTheme
-  answers['templateType'] = 'make a selection from a list'
-  answers['template'] = 'moderndesktop'
+  
 }
 
-function stepHelp() {
-
-  new Confirm({
-    message: 
-`readme: https://github.com/sencha/extjs-reactor/tree/2.0.x-dev/packages/ext-gen
- 
-${boldGreen('ext-gen')} is a tool create a Sencha Ext JS application with open source tooling:
-- npm
-- webpack and webpack-dev-server
-- Sencha ext-build
-- Ext JS framework as npm packages from Sencha npm repository
- 
-You can create the package.json file for your app using defaults
-from the config.json file mentioned above.  You can edit the config.json
- 
-You can select from 3 Ext JS templates provided by ext-gen
- 
-${boldGreen('moderndesktop (default)')}
-This template is the default template in ext-gen. 1 profile is configured to use the modern toolkit of Ext JS for a desktop application 
- 
-${boldGreen('universalmodern')}
-This template contains 2 profiles, 1 for desktop and 1 for mobile. Both profiles use the modern toolkit
- 
-${boldGreen('classicdesktop')}
-This template is similar to the moderndesktop template, 1 profile is configured to use the classic toolkit of Ext JS for a desktop application
- 
-Type Enter or Y to continue
-`
-  }).run().then(answer => {
-    step00b()
-  })
-}
-
-function step00a() {
-  var prompt = new  Confirm({
-    message: 'Would you like to see help?',
-    default: false
-  }).run().then(answer => {
-    if (answer === true) {
-      stepHelp()
-    }
-    else {
-      step00b()
-    }
-  })
-}
+// function step00a() {
+//   var prompt = new  Confirm({
+//     message: 'Would you like to see help?',
+//     default: false
+//   }).run().then(answer => {
+//     if (answer === true) {
+//       stepHelp()
+//     }
+//     else {
+//       step00b()
+//     }
+//   })
+// }
 
 function step00b() {
   new Confirm({
@@ -192,7 +155,6 @@ function step00b() {
     }
   })
 }
-
 
 function step01() {
   new Confirm({
@@ -513,3 +475,49 @@ async function stepCreate() {
   console.log(`${app} Your Ext JS npm project is ready`)
   console.log(boldGreen(`\ntype "cd ${answers['packageName']}" then "npm start" to run the development build and open your new application in a web browser\n`))
  }
+
+
+function stepHelp() {
+
+  //readme: https://github.com/sencha/extjs-reactor/tree/2.0.x-dev/packages/ext-gen
+
+  var message = `  ext-gen (-h) (-a) (-d) (-n 'name') (-t 'template')
+ 
+  -h --help       show help
+  -a --auto       automatically run (no question prompts)
+  -d --defaults   show defaults for package.json
+  -n --name       name for Ext JS generated app
+  -t --template   name for template used for generate
+
+ 
+  ${boldGreen('ext-gen')} is a tool create a Sencha Ext JS application with open source tooling:
+  - npm
+  - webpack and webpack-dev-server
+  - Sencha ext-build
+  - Ext JS framework as npm packages from Sencha npm repository
+ 
+  You can create the package.json file for your app using defaults
+  from the config.json file mentioned above.  You can edit the config.json
+   
+  You can select from 3 Ext JS templates provided by ext-gen
+   
+  ${boldGreen('moderndesktop (default)')}
+  This template is the default template in ext-gen. 1 profile is configured to use the modern toolkit of Ext JS for a desktop application 
+   
+  ${boldGreen('universalmodern')}
+  This template contains 2 profiles, 1 for desktop and 1 for mobile. Both profiles use the modern toolkit
+   
+  ${boldGreen('classicdesktop')}
+  This template is similar to the moderndesktop template, 1 profile is configured to use the classic toolkit of Ext JS for a desktop application
+`
+  console.log(message)
+
+  //Type Enter or Y to continue
+
+  // new Confirm({
+  //   message: message
+  // }).run().then(answer => {
+  //   //step00b()
+  //   return
+  // })
+}
