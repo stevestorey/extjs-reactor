@@ -4,7 +4,6 @@ const fs = require('fs')
 const validateOptions = require('schema-utils')
 const uniq = require('lodash.uniq')
 const isGlob = require('is-glob')
-//const resolve = require('path')
 const recursiveReadSync = require('recursive-readdir-sync')
 
 var prefix = ``
@@ -22,6 +21,25 @@ function getFileAndContextDeps(compilation, files, dirs, cwd) {
   const isWebpack4 = compilation.hooks;
   let fds = isWebpack4 ? [...fileDependencies] : fileDependencies;
   let cds = isWebpack4 ? [...contextDependencies] : contextDependencies;
+  
+  
+  if (files.length > 0) {
+    files.forEach((pattern) => {
+      let f = pattern;
+      if (isGlob(pattern)) {
+        f = glob.sync(pattern, {
+          cwd,
+          dot: true,
+          absolute: true,
+        });
+      }
+      fds = fds.concat(f);
+    });
+    fds = uniq(fds);
+  }
+  
+  
+  
   if (dirs.length > 0) {
     cds = uniq(cds.concat(dirs));
   }
@@ -44,14 +62,11 @@ export default class ExtWebpackPlugin {
 
     var defaults = {
       cwd: process.cwd(),
-      files: [],
+      files: ['./app.json'],
       dirs: ['./app'],
     }
 
     this.options = { ...defaults, ...options };
-
-
-
   }
 
   apply(compiler) {
@@ -89,6 +104,9 @@ export default class ExtWebpackPlugin {
         } = getFileAndContextDeps(compilation, files, dirs, cwd);
         if (files.length > 0) {
           fileDependencies.forEach((file) => {
+            //console.log(app +  ' ' + path.resolve(file) + ' changed')
+            console.log(`${app} ${path.resolve(file)} changed`)
+
             compilation.fileDependencies.add(path.resolve(file));
           });
         }
@@ -146,11 +164,6 @@ export default class ExtWebpackPlugin {
           new buildAsync(options).executeAsync().then(function() {
             cb()
           })
-          
-          // var build = require('@extjs/ext-build/app/build.js')
-          // new build({})
-          //var refresh = require('@extjs/ext-build/app/refresh.js')
-          //new refresh({})
         }
         else {
           me.lastNumFiles = currentNumFiles
