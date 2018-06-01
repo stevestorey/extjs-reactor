@@ -1,5 +1,9 @@
 var fs = require('fs-extra')
-//var chalk = require('chalk');
+function boldGreen (s) {
+  var boldgreencolor = `\x1b[32m\x1b[1m`
+  var endMarker = `\x1b[0m`
+  return (`${boldgreencolor}${s}${endMarker}`)
+}
 function boldRed (s) {
   var boldredcolor = `\x1b[31m\x1b[1m`
   var endMarker = `\x1b[0m`
@@ -8,21 +12,25 @@ function boldRed (s) {
 var path = require('path')
 err = function err(s) { return boldRed('[ERR] ') + s }
 var greenbold = `\x1b[32m\x1b[1m`
+
 var prefix = ``
 if (require('os').platform() == 'darwin') 
   {prefix = `ℹ ｢ext｣:`}
 else 
   {prefix = `i [ext]:`}
 var end = `\x1b[0m`
-var app = `${greenbold}${prefix}${end} ext-build-generate-app:`
+//var app = `${greenbold}${prefix}${end} ext-build-generate-app:`
+var app =(`${boldGreen(prefix)} ext-build-generate-app:`)
 
-require('./XTemplate/js/Ext.js');
-require('./XTemplate/js/String.js');
-require('./XTemplate/js/Format.js');
-require('./XTemplate/js/Template.js');
-require('./XTemplate/js/XTemplateParser.js');
-require('./XTemplate/js/XTemplateCompiler.js');
-require('./XTemplate/js/XTemplate.js');
+// require('./XTemplate/js/Ext.js');
+// require('./XTemplate/js/String.js');
+// require('./XTemplate/js/Format.js');
+// require('./XTemplate/js/Template.js');
+// require('./XTemplate/js/XTemplateParser.js');
+// require('./XTemplate/js/XTemplateCompiler.js');
+// require('./XTemplate/js/XTemplate.js');
+
+require('./XTemplate/js')
 
 class generateApp {
   constructor(options) {
@@ -44,19 +52,6 @@ class generateApp {
     var Sdk = options.sdk
     var Force = options.force
     var NodeAppApplicationTemplatesDir = path.join(NodeAppTemplatesDir + '/Application')
-
-    //console.log('CurrJSFilePath: ' + CurrJSFilePath)
-    //console.log('CurrWorkingDir: ' + CurrWorkingDir)
-    //console.log('NodeAppBinDir: ' + NodeAppBinDir)
-    //console.log('TemplatesDir: ' + TemplatesDir)
-    //console.log('NodeAppTemplatesDir: ' + NodeAppTemplatesDir)
-    //console.log('ApplicationName: ' + ApplicationName)
-    //console.log('ApplicationDir: ' + ApplicationDir)
-    //console.log('Template: ' + Template)
-    //console.log('Builds: ' + Builds)
-    //console.log('Sdk: ' + Sdk)
-    //console.log('Force: ' + Force)
-    //console.log('NodeAppApplicationTemplatesDir: ' + NodeAppApplicationTemplatesDir)
 
     if(Template == undefined) {throw '--template parameter is required'}
     if(Sdk == undefined) {throw '--sdk parameter is required'}

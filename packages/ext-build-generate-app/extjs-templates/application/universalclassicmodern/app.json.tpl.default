@@ -5,7 +5,7 @@
 	"framework": "{frameworkKey}",
 	"template": "{template}",
 	"indexHtmlPath": "index.html",
-	"requires": [ //** "calendar","charts","d3","pivot","pivot-d3","ux","font-awesome" **//
+	"requires": [
 		"font-awesome"
 	],
 <tpl if="universal == true">
