@@ -11,7 +11,6 @@
     "@extjs/ext": "^6.6.0",
     "@extjs/ext-core": "^6.6.0",
     "@extjs/ext-modern": "^6.6.0",
-    "@extjs/ext-modern-treegrid": "^6.6.0",
 
     "@extjs/ext-modern-theme-material": "^6.6.0",
     "@extjs/ext-modern-theme-ios": "^6.6.0",
