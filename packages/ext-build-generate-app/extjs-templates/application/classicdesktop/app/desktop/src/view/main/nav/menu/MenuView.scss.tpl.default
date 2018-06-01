@@ -1,5 +1,5 @@
-$panel-navigation-background-color: $nav-background-color;
-$nav-text-color: $nav-color;
+$panel-navigation-background-color: $base-color;
+$nav-text-color: white;
 
 $treelist-font-size: 16px;
 
