@@ -22,7 +22,6 @@ function getFileAndContextDeps(compilation, files, dirs, cwd) {
   let fds = isWebpack4 ? [...fileDependencies] : fileDependencies;
   let cds = isWebpack4 ? [...contextDependencies] : contextDependencies;
   
-  
   if (files.length > 0) {
     files.forEach((pattern) => {
       let f = pattern;
@@ -37,8 +36,6 @@ function getFileAndContextDeps(compilation, files, dirs, cwd) {
     });
     fds = uniq(fds);
   }
-  
-  
   
   if (dirs.length > 0) {
     cds = uniq(cds.concat(dirs));
@@ -104,9 +101,7 @@ export default class ExtWebpackPlugin {
         } = getFileAndContextDeps(compilation, files, dirs, cwd);
         if (files.length > 0) {
           fileDependencies.forEach((file) => {
-            //console.log(app +  ' ' + path.resolve(file) + ' changed')
-            console.log(`${app} ${path.resolve(file)} changed`)
-
+            console.log(`${app}${path.resolve(file)} changed ${file}`)
             compilation.fileDependencies.add(path.resolve(file));
           });
         }
@@ -146,6 +141,7 @@ export default class ExtWebpackPlugin {
         for (var file in watchedFiles) {
           if (me.lastMilliseconds < fs.statSync(watchedFiles[file]).mtimeMs) {
             if (watchedFiles[file].indexOf("scss") != -1) {doBuild=true;break;}
+            if (watchedFiles[file].indexOf("json") != -1) {doBuild=true;break;}
           }
         }
         me.lastMilliseconds = (new Date).getTime()
