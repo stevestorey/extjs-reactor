@@ -11,7 +11,7 @@
 	],
 <tpl if="universal == true">
 	"builds": {
-		"classicdesktop": {
+		"desktop": {
 			"toolkit": "classic",
 			"theme": "{classicTheme}"
 		}

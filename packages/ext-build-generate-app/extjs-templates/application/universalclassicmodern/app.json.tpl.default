@@ -10,15 +10,11 @@
 	],
 <tpl if="universal == true">
 	"builds": {
-		"moderndesktop": {
-			"toolkit": "modern",
-			"theme": "{modernTheme}"
-		},
-    "classicdesktop": {
+    "desktop": {
 			"toolkit": "classic",
 			"theme": "{classicTheme}"
 		},
-		"modernphone": {
+		"phone": {
 			"toolkit": "modern",
 			"theme": "{modernTheme}",
 			"packager": "cordova",
