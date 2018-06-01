@@ -71,15 +71,13 @@ function stepStart() {
   config = JSON.parse(data)
   cmdLine = commandLineArgs(optionDefinitions)
   console.log(boldGreen(`\nSencha ext-gen v${version} (The Ext JS Project Generator for npm)`))
-  //console.log(`Getting started: http://docs.sencha.com/ext-gen/1.0.0/guides/getting_started.html`)
-  //console.log('Defaults: ' + path.join(__dirname , 'config.json'))
   console.log('')
   step00()
 }
 
 function step00() {
+  setDefaults()
   if (cmdLine.defaults == true || cmdLine.auto == true) {
-    setDefaults()
     step99()
   }
   else if (cmdLine.help == true) {
@@ -118,22 +116,7 @@ function setDefaults() {
   answers['homepageURL'] = config.homepageURL
   answers['classicTheme'] = config.classicTheme
   answers['modernTheme'] = config.modernTheme
-  
 }
-
-// function step00a() {
-//   var prompt = new  Confirm({
-//     message: 'Would you like to see help?',
-//     default: false
-//   }).run().then(answer => {
-//     if (answer === true) {
-//       stepHelp()
-//     }
-//     else {
-//       step00b()
-//     }
-//   })
-// }
 
 function step00b() {
   new Confirm({
@@ -183,6 +166,7 @@ function step02() {
   })
 }
 
+
 function step03() {
   new List({
     message: 'What type of Ext JS template do you want?',
@@ -200,10 +184,26 @@ function step03() {
 }
 
 function step04() {
+  //    choices: ['moderndesktop', 'universalmodern', 'classicdesktop'],
+
+  choices: {
+    desktopclassic: `Desktop build using classic toolkit`
+    desktopmodern: `Desktop build using modern toolkit`
+    universalclassicmodern: `Universal App: desktop build using classic toolkit, phone build using modern toolkit`
+    universalmodern: `Universal App: desktop build using classic toolkit, phone build using modern toolkit`
+  }
+
+
+
   new List({
     message: 'What Ext JS template would you like to use?',
-    choices: ['moderndesktop', 'universalmodern', 'classicdesktop'],
-    default: 'moderndesktop'
+    choices: [
+      `Desktop application: desktop profile using classic toolkit`, //'classicdesktop',
+      `Desktop application: desktop profile using modern toolkit`, //'classicdesktop',
+      `Universal Application: desktop profile using classic toolkit, phone profile using modern toolkit`,
+      `Universal Application: desktop profile using classic toolkit, phone profile using modern toolkit`
+    ],
+    default: 'classicdesktop'
   }).run().then(answer => {
     answers['template'] = answer
     if(answers['useDefaults'] == true) {
@@ -480,6 +480,8 @@ async function stepCreate() {
 function stepHelp() {
 
   //readme: https://github.com/sencha/extjs-reactor/tree/2.0.x-dev/packages/ext-gen
+  //console.log(`Getting started: http://docs.sencha.com/ext-gen/1.0.0/guides/getting_started.html`)
+  //console.log(`Defaults: ${path.join(__dirname , 'config.json')}`)
 
   var message = `  ext-gen (-h) (-a) (-d) (-n 'name') (-t 'template')
  
@@ -489,6 +491,7 @@ function stepHelp() {
   -n --name       name for Ext JS generated app
   -t --template   name for template used for generate
 
+  Defaults: ${path.join(__dirname , 'config.json')}
  
   ${boldGreen('ext-gen')} is a tool create a Sencha Ext JS application with open source tooling:
   - npm
@@ -509,7 +512,9 @@ function stepHelp() {
    
   ${boldGreen('classicdesktop')}
   This template is similar to the moderndesktop template, 1 profile is configured to use the classic toolkit of Ext JS for a desktop application
-`
+
+
+  `
   console.log(message)
 
   //Type Enter or Y to continue
@@ -521,3 +526,18 @@ function stepHelp() {
   //   return
   // })
 }
+
+
+// function step00a() {
+//   var prompt = new  Confirm({
+//     message: 'Would you like to see help?',
+//     default: false
+//   }).run().then(answer => {
+//     if (answer === true) {
+//       stepHelp()
+//     }
+//     else {
+//       step00b()
+//     }
+//   })
+// }
