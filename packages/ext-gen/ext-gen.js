@@ -502,17 +502,19 @@ function stepHelp() {
   from the config.json file mentioned above.  You can edit the config.json
    
   You can select from 3 Ext JS templates provided by ext-gen
-   
-  ${boldGreen('moderndesktop (default)')}
+ 
+  ${boldGreen('classicdesktop (default)')}
+  This template is similar to the moderndesktop template, 1 profile is configured to use the classic toolkit of Ext JS for a desktop application
+ 
+  ${boldGreen('moderndesktop')}
   This template is the default template in ext-gen. 1 profile is configured to use the modern toolkit of Ext JS for a desktop application 
+   
+  ${boldGreen('universalclassicmodern')}
+  This template contains 2 profiles, 1 for desktop and 1 for mobile. Classic toolkit for desktop, modern toolkit for mobile
    
   ${boldGreen('universalmodern')}
   This template contains 2 profiles, 1 for desktop and 1 for mobile. Both profiles use the modern toolkit
    
-  ${boldGreen('classicdesktop')}
-  This template is similar to the moderndesktop template, 1 profile is configured to use the classic toolkit of Ext JS for a desktop application
-
-
   `
   console.log(message)
 
