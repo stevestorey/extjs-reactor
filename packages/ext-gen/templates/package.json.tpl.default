@@ -25,7 +25,6 @@
     "@extjs/ext-classic-theme-crisp": "^6.6.0",
     "@extjs/ext-classic-theme-crisp-touch": "^6.6.0",
     "@extjs/ext-classic-theme-triton": "^6.6.0",
-    //"@extjs/ext-classic-theme-graphite": "^6.6.0"
 
     "@extjs/ext-calendar": "^6.6.0",
     "@extjs/ext-charts": "^6.6.0",
