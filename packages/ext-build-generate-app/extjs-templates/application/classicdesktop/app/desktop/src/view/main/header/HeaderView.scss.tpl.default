@@ -1,20 +1,12 @@
-.xheaderview {
-	border-left: 0;
-	border-top: 0;
-	color: $header-color;
-	background-color: $header-background-color;
-}
-
-.xheaderviewtext { 
-	font-size: 28px; 
-	padding: 0 0 0 15px;
-	line-height: 20px;
+.headerview {
+	color: $color;
+	background-color: $base-color;
 }
 
 @include extjs-button-toolbar-small-ui(
   $ui: 'headerbutton',
 	$background-color: transparent,
-	$color: white,
-	$glyph-color: white,
+	$color: $color,
+	$glyph-color: $color,
   $border-color: transparent
-);
+)
