@@ -34,10 +34,10 @@ var spawnPromise = (command, args, options, substrings) => {
       args, 
       options
     )
-    child.on('exit', (code, signal) => {
-      console.log('child process exited with ' +
-      `code ${code} and signal ${signal}`)
-    })
+    // child.on('exit', (code, signal) => {
+    //   console.log('child process exited with ' +
+    //   `code ${code} and signal ${signal}`)
+    // })
     child.on('close', (code, signal) => {
       resolve({code, signal})
     })
