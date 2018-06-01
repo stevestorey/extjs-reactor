@@ -2,7 +2,16 @@ const chalk = require('chalk');
 const util = require('../util.js')
 //const sencha = require('@extjs/sencha-cmd')
 //const spawn = require('child_process').spawn
-const app = `${chalk.green('ℹ ｢ext｣:')} ext-build:`;
+
+var prefix = ``
+if (require('os').platform() == 'darwin') {
+  prefix = `ℹ ｢ext｣:`
+}
+else {
+  prefix = `i [ext]:`
+}
+
+var app = `${chalk.green(prefix)} ext-build:`;
 
 class buildAsync {
   constructor(options) {
