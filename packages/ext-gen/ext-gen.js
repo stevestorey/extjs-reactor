@@ -58,7 +58,9 @@ const optionDefinitions = [
   { name: 'defaults', alias: 'd', type: Boolean },
   { name: 'auto', alias: 'a', type: Boolean },
   { name: 'name', alias: 'n', type: String },
-  { name: 'template', alias: 't', type: String }
+  { name: 'template', alias: 't', type: String },
+  { name: 'moderntheme', alias: 'm', type: String },
+  { name: 'classictheme', alias: 'c', type: String },
 ]
 
 stepStart()
@@ -77,11 +79,11 @@ function stepStart() {
 
 function step00() {
   setDefaults()
-  if (cmdLine.defaults == true || cmdLine.auto == true) {
-    step99()
-  }
-  else if (cmdLine.help == true) {
+  if (process.argv.length == 1 || cmdLine.help == true) {
     stepHelp()
+  }
+  else if (cmdLine.defaults == true || cmdLine.auto == true) {
+    step99()
   }
   else {
     step00b()
@@ -107,6 +109,18 @@ function setDefaults() {
     answers['template'] = config.template
     answers['templateType'] = config.templateType
   }
+  if (cmdLine.classictheme != undefined) {
+    answers['classicTheme'] = cmdLine.classictheme
+  }
+  else {
+    answers['classicTheme'] = config.classicTheme
+  }
+  if (cmdLine.moderntheme != undefined) {
+    answers['modernTheme'] = cmdLine.moderntheme
+  }
+  else {
+    answers['modernTheme'] = config.modernTheme
+  }
   answers['version'] = config.version
   answers['repositoryURL'] = config.repositoryURL
   answers['keywords'] = config.keywords
@@ -114,8 +128,6 @@ function setDefaults() {
   answers['license'] = config.license
   answers['bugsURL'] = config.bugsURL
   answers['homepageURL'] = config.homepageURL
-  answers['classicTheme'] = config.classicTheme
-  answers['modernTheme'] = config.modernTheme
 }
 
 function step00b() {
@@ -475,22 +487,22 @@ async function stepCreate() {
   console.log(boldGreen(`\ntype "cd ${answers['packageName']}" then "npm start" to run the development build and open your new application in a web browser\n`))
  }
 
-
 function stepHelp() {
 
   //readme: https://github.com/sencha/extjs-reactor/tree/2.0.x-dev/packages/ext-gen
-  //console.log(`Getting started: http://docs.sencha.com/ext-gen/1.0.0/guides/getting_started.html`)
-  //console.log(`Defaults: ${path.join(__dirname , 'config.json')}`)
 
-  var message = `  ext-gen (-h) (-a) (-d) (-n 'name') (-t 'template')
+  var message = `  ext-gen (-h) (-a) (-d) (-n 'name') (-t 'template') (-m 'modernTheme') (-c 'classicTheme')
  
-  -h --help       show help
-  -a --auto       automatically run (no question prompts)
-  -d --defaults   show defaults for package.json
-  -n --name       name for Ext JS generated app
-  -t --template   name for template used for generate
+  -h --help          show help
+  -a --auto          automatically run (no question prompts)
+  -d --defaults      show defaults for package.json
+  -n --name          name for Ext JS generated app
+  -t --template      name for Ext JS template used for generate
+  -m --moderntheme   theme name for Ext JS modern toolkit
+  -c --classictheme  theme name for Ext JS classic toolkit
 
   Defaults: ${path.join(__dirname , 'config.json')}
+  Getting started: http://docs.sencha.com/ext-gen/1.0.0/guides/getting_started.html
  
   ${boldGreen('ext-gen')} is a tool create a Sencha Ext JS application with open source tooling:
   - npm
@@ -501,19 +513,19 @@ function stepHelp() {
   You can create the package.json file for your app using defaults
   from the config.json file mentioned above.  You can edit the config.json
    
-  You can select from 3 Ext JS templates provided by ext-gen
+  You can select from 4 Ext JS templates provided by ext-gen
  
   ${boldGreen('classicdesktop (default)')}
-  This template is similar to the moderndesktop template, 1 profile is configured to use the classic toolkit of Ext JS for a desktop application
+  This template is the default template in ext-gen. It contains 1 profile, configured to use the classic toolkit of Ext JS for a desktop application
  
   ${boldGreen('moderndesktop')}
-  This template is the default template in ext-gen. 1 profile is configured to use the modern toolkit of Ext JS for a desktop application 
+  This template is similar to the classicdesktop template. It contains 1 profile, configured to use the modern toolkit of Ext JS for a desktop application 
    
   ${boldGreen('universalclassicmodern')}
-  This template contains 2 profiles, 1 for desktop and 1 for mobile. Classic toolkit for desktop, modern toolkit for mobile
+  This template contains 2 profiles, 1 for desktop (using the classic toolkit), and 1 for mobile (using the modern toolkit)
    
   ${boldGreen('universalmodern')}
-  This template contains 2 profiles, 1 for desktop and 1 for mobile. Both profiles use the modern toolkit
+  This template contains 2 profiles, 1 for desktop and 1 for mobile. Both profiles use the modern toolkit.
    
   `
   console.log(message)
