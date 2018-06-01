@@ -101,7 +101,7 @@ export default class ExtWebpackPlugin {
         } = getFileAndContextDeps(compilation, files, dirs, cwd);
         if (files.length > 0) {
           fileDependencies.forEach((file) => {
-            console.log(`${app}${path.resolve(file)} changed ${file}`)
+            //console.log(`${app}${path.resolve(file)} changed ${file}`)
             compilation.fileDependencies.add(path.resolve(file));
           });
         }
@@ -141,10 +141,15 @@ export default class ExtWebpackPlugin {
         for (var file in watchedFiles) {
           if (me.lastMilliseconds < fs.statSync(watchedFiles[file]).mtimeMs) {
             if (watchedFiles[file].indexOf("scss") != -1) {doBuild=true;break;}
-            if (watchedFiles[file].indexOf("json") != -1) {doBuild=true;break;}
           }
         }
+
+        if (me.lastMillisecondsAppJson < fs.statSync('./app.json').mtimeMs) {
+          doBuild=true;
+        }
+
         me.lastMilliseconds = (new Date).getTime()
+        me.lastMillisecondsAppJson = (new Date).getTime()
 
         var currentNumFiles = watchedFiles.length
         var filesource = 'this file enables client reload'
