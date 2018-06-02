@@ -93,20 +93,22 @@ class generateApp {
 		}
 
 		walkSync(TemplateDir, TemplateDir.length+1, ApplicationDir, ApplicationName, Template, modernTheme, classicTheme, SdkVal, Packages)
-    var f='/.sencha';fs.copySync(CurrJSFilePath + '/' + TemplatesDir + '/application' + '/sencha', ApplicationDir + f)
-    var cmdVersion = options.cmdVersion
-    var frameworkVersion = options.frameworkVersion
-    var senchaCfg = path.join(ApplicationDir, '.sencha', 'app', 'sencha.cfg');
-    fs.readFile(senchaCfg, 'utf8', function (err,data) {
-      if (err) {
-        return console.log(err);
-      }
-      var result = data.replace('{cmdVer}', cmdVersion)
-                       .replace('{frameVer}', frameworkVersion);
-      fs.writeFileSync(senchaCfg, result, 'utf8', function (err) {
-        if (err) return console.log(err);
-      })
-    })
+
+    // var f='/.sencha';fs.copySync(CurrJSFilePath + '/' + TemplatesDir + '/application' + '/sencha', ApplicationDir + f)
+    // var cmdVersion = options.cmdVersion
+    // var frameworkVersion = options.frameworkVersion
+    // var senchaCfg = path.join(ApplicationDir, '.sencha', 'app', 'sencha.cfg');
+    // fs.readFile(senchaCfg, 'utf8', function (err,data) {
+    //   if (err) {
+    //     return console.log(err);
+    //   }
+    //   var result = data.replace('{cmdVer}', cmdVersion)
+    //                    .replace('{frameVer}', frameworkVersion);
+    //   fs.writeFileSync(senchaCfg, result, 'utf8', function (err) {
+    //     if (err) return console.log(err);
+    //   })
+    // })
+
   }
 }
 module.exports = generateApp
