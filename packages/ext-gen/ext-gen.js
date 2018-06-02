@@ -2,7 +2,7 @@
 const npmScope = '@extjs'
 const path = require('path');
 const fs = require('fs-extra');
-const { kebabCase, pick } = require('lodash')
+const { kebabCase } = require('lodash')
 const util = require('./util.js')
 require('./XTemplate/js')
 var List = require('prompt-list')
@@ -20,14 +20,19 @@ function boldRed (s) {
   return (`${boldredcolor}${s}${endMarker}`)
 }
 
-var prefix = ``
-if (require('os').platform() == 'darwin') {
-  prefix = `ℹ ｢ext｣:`
+function getPrefix () {
+  var prefix
+  if (require('os').platform() == 'darwin') {
+    prefix = `ℹ ｢ext｣:`
+  }
+  else {
+    prefix = `i [ext]:`
+  }
+  return prefix
 }
-else {
-  prefix = `i [ext]:`
-}
-var app =(`${boldGreen(prefix)} ext-gen:`)
+
+//var prefix = getPrefix()
+var app =(`${boldGreen(getPrefix())} ext-gen:`)
 
 var answers = {
 'seeDefaults': null,
@@ -73,7 +78,7 @@ function stepStart() {
   var data = fs.readFileSync(nodeDir + '/config.json')
   config = JSON.parse(data)
   cmdLine = commandLineArgs(optionDefinitions)
-  console.log(boldGreen(`\nSencha ext-gen v${version} (The Ext JS Project Generator for npm)`))
+  console.log(boldGreen(`\nSencha ExtGen v${version} (The Ext JS Project Generator for npm)`))
   console.log('')
   step00()
 }
@@ -493,41 +498,41 @@ function stepHelp() {
 
   //readme: https://github.com/sencha/extjs-reactor/tree/2.0.x-dev/packages/ext-gen
 
-  var message = `  ext-gen (-h) (-a) (-d) (-n 'name') (-t 'template') (-m 'modernTheme') (-c 'classicTheme')
+  var message = `ext-gen (-h) (-a) (-d) (-n 'name') (-t 'template') (-m 'moderntheme') (-c 'classictheme')
  
-  -h --help          show help
-  -a --auto          automatically run (no question prompts)
-  -d --defaults      show defaults for package.json
-  -n --name          name for Ext JS generated app
-  -t --template      name for Ext JS template used for generate
-  -m --moderntheme   theme name for Ext JS modern toolkit
-  -c --classictheme  theme name for Ext JS classic toolkit
+-h --help          show help
+-a --auto          automatically run (no question prompts)
+-d --defaults      show defaults for package.json
+-n --name          name for Ext JS generated app
+-t --template      name for Ext JS template used for generate
+-m --moderntheme   theme name for Ext JS modern toolkit
+-c --classictheme  theme name for Ext JS classic toolkit
 
-  Defaults: ${path.join(__dirname , 'config.json')}
-  Getting started: http://docs.sencha.com/ext-gen/1.0.0/guides/getting_started.html
+Defaults: ${path.join(__dirname , 'config.json')}
+Getting started: http://docs.sencha.com/ExtGen/1.0.0/guides/getting_started.html
  
-  ${boldGreen('ext-gen')} is a tool create a Sencha Ext JS application with open source tooling:
-  - npm
-  - webpack and webpack-dev-server
-  - Sencha ext-build
-  - Ext JS framework as npm packages from Sencha npm repository
+${boldGreen('Sencha ExtGen')} is a tool create a Sencha Ext JS application with open source tooling:
+- npm
+- webpack and webpack-dev-server
+- Sencha ExtBuild
+- Ext JS framework as npm packages from Sencha npm repository
  
-  You can create the package.json file for your app using defaults
-  from the config.json file mentioned above.  You can edit the config.json
+You can create the package.json file for your app using defaults
+from the config.json file mentioned above.  You can edit the config.json
    
-  You can select from 4 Ext JS templates provided by ext-gen
+You can select from 4 Ext JS templates provided by Sencha ExtGen
  
-  ${boldGreen('classicdesktop (default)')}
-  This template is the default template in ext-gen. It contains 1 profile, configured to use the classic toolkit of Ext JS for a desktop application
+${boldGreen('classicdesktop (default)')}
+This template is the default template in ext-gen. It contains 1 profile, configured to use the classic toolkit of Ext JS for a desktop application
  
-  ${boldGreen('moderndesktop')}
-  This template is similar to the classicdesktop template. It contains 1 profile, configured to use the modern toolkit of Ext JS for a desktop application 
+${boldGreen('moderndesktop')}
+This template is similar to the classicdesktop template. It contains 1 profile, configured to use the modern toolkit of Ext JS for a desktop application 
    
-  ${boldGreen('universalclassicmodern')}
-  This template contains 2 profiles, 1 for desktop (using the classic toolkit), and 1 for mobile (using the modern toolkit)
+${boldGreen('universalclassicmodern')}
+This template contains 2 profiles, 1 for desktop (using the classic toolkit), and 1 for mobile (using the modern toolkit)
    
-  ${boldGreen('universalmodern')}
-  This template contains 2 profiles, 1 for desktop and 1 for mobile. Both profiles use the modern toolkit.
+${boldGreen('universalmodern')}
+This template contains 2 profiles, 1 for desktop and 1 for mobile. Both profiles use the modern toolkit.
    
   `
   console.log(message)
