@@ -85,8 +85,11 @@ function stepStart() {
 
 function step00() {
   setDefaults()
-  if (process.argv.length == 2 || cmdLine.help == true) {
+  if (cmdLine.help == true) {
     stepHelp()
+  }
+  else if (process.argv.length == 2 || cmdLine.help == true) {
+    step00b()
   }
   else if (cmdLine.defaults == true || cmdLine.auto == true) {
     step99()
