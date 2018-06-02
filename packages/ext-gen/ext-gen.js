@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+const npmScope = '@extjs'
 const path = require('path');
 const fs = require('fs-extra');
 const { kebabCase, pick } = require('lodash')
@@ -79,7 +80,7 @@ function stepStart() {
 
 function step00() {
   setDefaults()
-  if (process.argv.length == 1 || cmdLine.help == true) {
+  if (process.argv.length == 2 || cmdLine.help == true) {
     stepHelp()
   }
   else if (cmdLine.defaults == true || cmdLine.auto == true) {
@@ -420,6 +421,7 @@ async function stepCreate() {
   process.chdir(destDir)
   console.log(`${app} ${destDir} created`)
   var values = {
+    npmScope: npmScope,
     appName: answers['appName'],
     packageName: answers['packageName'],
     version: answers['version'],

@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
-const ExtWebpackPlugin = require('@extjs/ext-webpack-plugin');
+const ExtWebpackPlugin = require('{npmScope}/ext-webpack-plugin');
 const portfinder = require('portfinder');
 
 module.exports = async function (env) {
