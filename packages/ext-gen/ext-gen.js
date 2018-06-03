@@ -539,12 +539,12 @@ function stepHelp() {
 // You can create the package.json file for your app using defaults
 
 
-var message = `ext-gen (-h) (-i) (-a) (-d) (-n 'name') (-t 'template') (-m 'moderntheme') (-c 'classictheme')
+var message = `ext-gen (-h) (-d) (-i) (-a) (-n 'name') (-t 'template') (-m 'moderntheme') (-c 'classictheme')
 
 -h --help          show help (no parameters also shows help)
--i --interactive   run in interactive mode (question prompts)
--a --auto          run in automatic mode (NO question prompts - uses defaults or command line options)
 -d --defaults      show defaults for package.json
+-i --interactive   run in interactive mode (question prompts will display)
+-a --auto          run in automatic mode (NO question prompts will display - uses defaults or command line options)
 -n --name          name for Ext JS generated app
 -t --template      name for Ext JS template used for generate
 -c --classictheme  theme name for Ext JS classic toolkit

@@ -78,18 +78,30 @@ Ext.define('{appName}.view.main.MainViewController', {
 		vm.set('navCollapsed', !vm.get('navCollapsed'));
 	},
 
-	onHeaderViewDetailToggle: function (button) {
-		var vm = this.getViewModel();
-		vm.set('detailCollapsed', !vm.get('detailCollapsed'));
-		if(vm.get('detailCollapsed')===true) {
-			button.setIconCls('x-fa fa-arrow-left');
-		}
-		else {
-			button.setIconCls('x-fa fa-arrow-right');
-		}
-	},
+//	onHeaderViewDetailToggle: function (button) {
+//		var vm = this.getViewModel();
+//		vm.set('detailCollapsed', !vm.get('detailCollapsed'));
+//		if(vm.get('detailCollapsed')===true) {
+//			button.setIconCls('x-fa fa-arrow-left');
+//		}
+//		else {
+//			button.setIconCls('x-fa fa-arrow-right');
+//		}
+//	},
 
-	
+
+  onHeaderViewDetailToggle: function () {
+    var vm = this.getViewModel();
+    vm.set('detailCollapsed', !vm.get('detailCollapsed'));
+    var detailtoggle = this.lookup('detailtoggle');
+    if(vm.get('detailCollapsed') === true) {
+      detailtoggle.setType('prev')
+    }
+    else {
+      detailtoggle.setType('next')
+    }
+  },
+
 	onBottomViewLogout: function () {
 		alert('logout')
 //		localStorage.setItem("LoggedIn", false);

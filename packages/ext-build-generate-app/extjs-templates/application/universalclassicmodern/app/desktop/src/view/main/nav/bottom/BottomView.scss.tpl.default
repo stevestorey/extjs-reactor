@@ -2,15 +2,3 @@
 	color: $color; 
 	background-color: darken($base-color, 20%);
 }
-
-@include extjs-button-toolbar-small-ui(
-  $ui: 'bottombutton',
-	$background-color: transparent,
-	$color: $color,
-	$glyph-color: $color,
-	$glyph-font-size: 28px,
-	$icon-spacing: 20px,
-	$font-size: 20px,
-	$line-height: 30px,
-  $border-color: transparent
-);

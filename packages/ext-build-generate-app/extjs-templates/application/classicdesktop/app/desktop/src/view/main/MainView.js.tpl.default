@@ -22,8 +22,8 @@ Ext.define('{appName}.view.main.MainView', {
             selection: "\u007BmenuItem}"
         }
     },
-    { xtype: 'headerview', reference: 'headerview', region: 'north', docked: 'top',    bind: {height: '\u007Bheaderview_height}'}, weight: -2 },
-    { xtype: 'footerview', reference: 'footerview', region: 'south', docked: 'bottom', bind: {height: '\u007Bfooterview_height}'}, weight: -2 },
+    { xtype: 'headerview', reference: 'headerview', region: 'north', docked: 'top',    weight: -2 },
+    { xtype: 'footerview', reference: 'footerview', region: 'south', docked: 'bottom', weight: -2 },
     { xtype: 'centerview', reference: 'centerview', region: 'center', weight: -1 },
     { xtype: 'detailview', reference: 'detailview', region: 'east', docked: 'right',  bind: {width:  '\u007Bdetailview_width}'}  },
   ]

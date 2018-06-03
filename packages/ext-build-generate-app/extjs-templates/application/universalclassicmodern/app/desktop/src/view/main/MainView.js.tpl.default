@@ -4,7 +4,7 @@ Ext.define('{appName}.view.main.MainView', {
 	controller: 'mainviewcontroller',
 	viewModel: {
 		type: 'mainviewmodel'
-	},	
+	},
 	layout: 'border',
 	items: [
 		{

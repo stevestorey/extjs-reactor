@@ -1,12 +1,12 @@
 .topview { 
-	color: $color; 
+  color: white; 
+  font-size: $font-size;
   background-color: darken($base-color, 20%);
 }
 
 @include extjs-button-toolbar-small-ui(
   $ui: 'topviewbutton',
 	$background-color: transparent,
-	$color: $color,
-	$glyph-color: $color,
+	$glyph-color: white,
   $border-color: transparent
 );

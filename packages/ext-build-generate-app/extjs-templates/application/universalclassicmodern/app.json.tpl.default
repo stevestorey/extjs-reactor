@@ -20,7 +20,7 @@
 			"packager": "cordova",
 			"cordova" : {
 				"config": {
-					"platforms": "android", //** "ios", "android", "target": "iPhone (Retina 4-inch)", **//
+					"platforms": "android",
 					"verbose": false,
 					"id": "com.foo.{name}",
 					"name": "{name}"
