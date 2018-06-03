@@ -6,7 +6,6 @@
 	"template": "{template}",
 	"indexHtmlPath": "index.html",
 	"requires": [
-		//** "calendar","charts","d3","pivot","pivot-d3","ux","font-awesome" **//
 		"font-awesome"
 	],
 <tpl if="universal == true">
@@ -15,7 +14,6 @@
 			"toolkit": "classic",
 			"theme": "{classicTheme}"
 		}
-
 	},
 </tpl>
 	"classpath": ["<tpl if="universal == true">app/shared/</tpl>src"<tpl if="universal == true">,"app/$\u007Bbuild.id}/src"</tpl>],
@@ -79,17 +77,8 @@
 		}
 	],
 <tpl if="universal == true">
-	"classic": {
-		"js": [
-			//{path": "$\u007Bframework.dir}/build/ext-all-rtl-debug.js"}
-		]
-	},
-
-	"modern": {
-		"js": [
-			//{"path": "$\u007Bframework.dir}/build/ext-modern-all-debug.js"}
-		]
-	},
+	"classic": {"js": []},
+	"modern": {"js": []},
 </tpl>
 	"css": [
 		{
