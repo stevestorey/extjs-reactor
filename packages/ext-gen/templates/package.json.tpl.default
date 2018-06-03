@@ -30,7 +30,7 @@
     "url": "{gitRepositoryURL}"
   },
   "keywords": [{keywords}],
-  "author": "{author}",
+  "author": "{authorName}",
   "license": "{license}",
   "bugs": {
     "url": "{bugsURL}"
