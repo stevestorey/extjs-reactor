@@ -5,6 +5,7 @@ const fs = require('fs-extra');
 const { kebabCase } = require('lodash')
 const util = require('./util.js')
 require('./XTemplate/js')
+const commandLineArgs = require('command-line-args')
 var List = require('prompt-list')
 var Input = require('prompt-input')
 var Confirm = require('prompt-confirm')
@@ -31,35 +32,30 @@ function getPrefix () {
   return prefix
 }
 
-//var prefix = getPrefix()
 var app =(`${boldGreen(getPrefix())} ext-gen:`)
 
 var answers = {
-'seeDefaults': null,
-'useDefaults': null,
-'appName': null,
-'classic': null,
-'modern': null,
-'classicTheme': null,
-'modernTheme': null,
-'templateType': null,
-'template': null,
-'templateFolderName': null,
-'packageName': null,
-'version': null,
-'description': null,
-'repositoryURL': null,
-'keywords': null,
-'authorName': null,
-'license': null,
-'bugsURL': null,
-'homepageURL': null,
-'createNow': null,
+  'seeDefaults': null,
+  'useDefaults': null,
+  'appName': null,
+  'classic': null,
+  'modern': null,
+  'classicTheme': null,
+  'modernTheme': null,
+  'templateType': null,
+  'template': null,
+  'templateFolderName': null,
+  'packageName': null,
+  'version': null,
+  'description': null,
+  'repositoryURL': null,
+  'keywords': null,
+  'authorName': null,
+  'license': null,
+  'bugsURL': null,
+  'homepageURL': null,
+  'createNow': null,
 }
-var version
-var config = {}
-const commandLineArgs = require('command-line-args')
-var cmdLine
 
 const optionDefinitions = [
   { name: 'help', alias: 'h', type: Boolean },
@@ -71,6 +67,9 @@ const optionDefinitions = [
   { name: 'classictheme', alias: 'c', type: String },
 ]
 
+var version = ''
+var config = {}
+var cmdLine = {}
 stepStart()
 
 function stepStart() {
@@ -80,7 +79,7 @@ function stepStart() {
   var data = fs.readFileSync(nodeDir + '/config.json')
   config = JSON.parse(data)
   cmdLine = commandLineArgs(optionDefinitions)
-  console.log(boldGreen(`\nSencha ExtGen v${version} (The Ext JS Project Generator for npm)`))
+  console.log(boldGreen(`\nSencha ExtGen v${version} - The Ext JS project generator for npm`))
   console.log('')
   step00()
 }
@@ -91,71 +90,23 @@ function step00() {
     stepHelp()
   }
   else if (process.argv.length == 2 || cmdLine.help == true) {
-    step00b()
+    step00a()
   }
   else if (cmdLine.defaults == true || cmdLine.auto == true) {
     step99()
   }
   else {
-    step00b()
+    step00a()
   }
 }
 
-function setDefaults() {
-  if (cmdLine.name != undefined) {
-    answers['appName'] = cmdLine.name
-    answers['packageName'] = kebabCase(answers['appName'])
-    answers['description'] = `${answers['packageName']} description for Ext JS app ${answers['appName']}`
-  }
-  else {
-    answers['appName'] = config.appName
-    answers['packageName'] = config.packageName
-    answers['description'] = config.description
-  }
-  if (cmdLine.template != undefined) {
-    answers['template'] = cmdLine.template
-    answers['templateType'] = "make a selection from a list"
-  }
-  else {
-    answers['template'] = config.template
-    answers['templateType'] = config.templateType
-  }
-  if (cmdLine.classictheme != undefined) {
-    answers['classicTheme'] = cmdLine.classictheme
-  }
-  else {
-    answers['classicTheme'] = config.classicTheme
-  }
-  if (cmdLine.moderntheme != undefined) {
-    answers['modernTheme'] = cmdLine.moderntheme
-  }
-  else {
-    answers['modernTheme'] = config.modernTheme
-  }
-
-  answers['classic'] = config.classic
-  answers['modern'] = config.modern
-
-  answers['version'] = config.version
-  answers['repositoryURL'] = config.repositoryURL
-  answers['keywords'] = config.keywords
-  answers['authorName'] = config.authorName
-  answers['license'] = config.license
-  answers['bugsURL'] = config.bugsURL
-  answers['homepageURL'] = config.homepageURL
-}
-
-function step00b() {
+function step00a() {
   new Confirm({
     message: 
     `would you like to see the defaults in config.json?`,
     default: config.seeDefaults
   }).run().then(answer => {
     answers['seeDefaults'] = answer
-    if (answer == 'h') {
-      stepHelp()
-      return
-    }
     if(answers['seeDefaults'] == true) {
       displayDefaults()
       step01()
@@ -192,7 +143,6 @@ function step02() {
     step03()
   })
 }
-
 
 function step03() {
   new List({
@@ -354,39 +304,6 @@ function step14() {
   })
 }
 
-function displayDefaults() {
-  // console.log('')
-  // console.log(`For controlling ext-gen:`)
-  // console.log(`seeDefaults:\t${config.seeDefaults}`)
-  // console.log(`useDefaults:\t${config.useDefaults}`)
-  // console.log(`createNow:\t${config.createNow}`)
-  //console.log('')
-  //console.log('')
-  //console.log(`For template selection:`)
-  //console.log(`templateType:\t${config.templateType}`)
-  //console.log(`templateFolderName:\t${config.templateFolderName}`)
-
-  console.log(boldGreen(`Defaults for Ext JS app:`))
-  console.log(`appName:\t${answers['appName']}`)
-  console.log(`template:\t${answers['template']}`)
-  console.log(`classic:\t${answers['classic']}`)
-  console.log(`modern:\t\t${answers['modern']}`)
-  console.log(`classicTheme:\t${answers['classicTheme']}`)
-  console.log(`modernTheme:\t${answers['modernTheme']}`)
-  console.log('')
-  console.log(boldGreen(`Defaults for package.json:`))
-  console.log(`packageName:\t${answers['packageName']}`)
-  console.log(`version:\t${answers['version']}`)
-  console.log(`description:\t${answers['description']}`)
-  console.log(`repositoryURL:\t${answers['repositoryURL']}`)
-  console.log(`keywords:\t${answers['keywords']}`)
-  console.log(`authorName:\t${answers['authorName']}`)
-  console.log(`license:\t${answers['license']}`)
-  console.log(`bugsURL:\t${answers['bugsURL']}`)
-  console.log(`homepageURL:\t${answers['homepageURL']}`)
-  console.log('')
-}
-
 function step99() {
 
   displayDefaults()
@@ -498,7 +415,6 @@ async function stepCreate() {
   var cmdPkg = require(cmdPath);
   var cmdVersion = cmdPkg.version_full
   var frameworkVersion = frameworkPkg.sencha.version
-  //console.log(`${app} Get Ext JS and Sencha Cmd versions completed`)
 
   var generateApp = require('@extjs/ext-build-generate-app/generateApp.js')
   var options = { 
@@ -513,15 +429,86 @@ async function stepCreate() {
     force: false
   }
   new generateApp(options)
-  //console.log(`${app} Generate App completed`)
   console.log(`${app} Your Ext JS npm project is ready`)
   console.log(boldGreen(`\ntype "cd ${answers['packageName']}" then "npm start" to run the development build and open your new application in a web browser\n`))
  }
 
+ function setDefaults() {
+  if (cmdLine.name != undefined) {
+    answers['appName'] = cmdLine.name
+    answers['packageName'] = kebabCase(answers['appName'])
+    answers['description'] = `${answers['packageName']} description for Ext JS app ${answers['appName']}`
+  }
+  else {
+    answers['appName'] = config.appName
+    answers['packageName'] = config.packageName
+    answers['description'] = config.description
+  }
+  if (cmdLine.template != undefined) {
+    answers['template'] = cmdLine.template
+    answers['templateType'] = "make a selection from a list"
+  }
+  else {
+    answers['template'] = config.template
+    answers['templateType'] = config.templateType
+  }
+  if (cmdLine.classictheme != undefined) {
+    answers['classicTheme'] = cmdLine.classictheme
+  }
+  else {
+    answers['classicTheme'] = config.classicTheme
+  }
+  if (cmdLine.moderntheme != undefined) {
+    answers['modernTheme'] = cmdLine.moderntheme
+  }
+  else {
+    answers['modernTheme'] = config.modernTheme
+  }
+  answers['classic'] = config.classic
+  answers['modern'] = config.modern
+  answers['version'] = config.version
+  answers['repositoryURL'] = config.repositoryURL
+  answers['keywords'] = config.keywords
+  answers['authorName'] = config.authorName
+  answers['license'] = config.license
+  answers['bugsURL'] = config.bugsURL
+  answers['homepageURL'] = config.homepageURL
+}
+
+function displayDefaults() {
+  //console.log('')
+  //console.log(`For controlling ext-gen:`)
+  //console.log(`seeDefaults:\t${config.seeDefaults}`)
+  //console.log(`useDefaults:\t${config.useDefaults}`)
+  //console.log(`createNow:\t${config.createNow}`)
+  //console.log('')
+  //console.log('')
+  //console.log(`For template selection:`)
+  //console.log(`templateType:\t${config.templateType}`)
+  //console.log(`templateFolderName:\t${config.templateFolderName}`)
+
+  console.log(boldGreen(`Defaults for Ext JS app:`))
+  console.log(`appName:\t${answers['appName']}`)
+  console.log(`template:\t${answers['template']}`)
+  console.log(`classic:\t${answers['classic']}`)
+  console.log(`modern:\t\t${answers['modern']}`)
+  console.log(`classicTheme:\t${answers['classicTheme']}`)
+  console.log(`modernTheme:\t${answers['modernTheme']}`)
+  console.log('')
+  console.log(boldGreen(`Defaults for package.json:`))
+  console.log(`packageName:\t${answers['packageName']}`)
+  console.log(`version:\t${answers['version']}`)
+  console.log(`description:\t${answers['description']}`)
+  console.log(`repositoryURL:\t${answers['repositoryURL']}`)
+  console.log(`keywords:\t${answers['keywords']}`)
+  console.log(`authorName:\t${answers['authorName']}`)
+  console.log(`license:\t${answers['license']}`)
+  console.log(`bugsURL:\t${answers['bugsURL']}`)
+  console.log(`homepageURL:\t${answers['homepageURL']}`)
+  console.log('')
+}
+
 function stepHelp() {
-
-  //readme: https://github.com/sencha/extjs-reactor/tree/2.0.x-dev/packages/ext-gen
-
   var message = `ext-gen (-h) (-a) (-d) (-n 'name') (-t 'template') (-m 'moderntheme') (-c 'classictheme')
  
 -h --help          show help
@@ -557,8 +544,7 @@ This template contains 2 profiles, 1 for desktop (using the classic toolkit), an
    
 ${boldGreen('universalmodern')}
 This template contains 2 profiles, 1 for desktop and 1 for mobile. Both profiles use the modern toolkit.
-   
-  `
+`
   console.log(message)
 }
 
@@ -583,20 +569,3 @@ This template contains 2 profiles, 1 for desktop and 1 for mobile. Both profiles
 // "{npmScope}/ext-d3": "^6.6.0",
 // "{npmScope}/ext-pivot-d3": "^6.6.0",
 // "{npmScope}/ext-pivot-locale": "^6.6.0"
-
-
-
-
-// function step00a() {
-//   var prompt = new  Confirm({
-//     message: 'Would you like to see help?',
-//     default: false
-//   }).run().then(answer => {
-//     if (answer === true) {
-//       stepHelp()
-//     }
-//     else {
-//       step00b()
-//     }
-//   })
-// }
