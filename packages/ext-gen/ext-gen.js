@@ -464,8 +464,16 @@ async function stepCreate() {
   else {
     answers['modernTheme'] = config.modernTheme
   }
-  answers['classic'] = config.classic
-  answers['modern'] = config.modern
+
+  answers['classic'] = false
+  answers['modern'] = false
+  if (answers['template'].includes("classic")) {
+    answers['classic'] = true
+  }
+  if (answers['template'].includes("modern")) {
+    answers['modern'] = true
+  }
+
   answers['version'] = config.version
   answers['repositoryURL'] = config.repositoryURL
   answers['keywords'] = config.keywords
@@ -516,8 +524,10 @@ function stepHelp() {
 -d --defaults      show defaults for package.json
 -n --name          name for Ext JS generated app
 -t --template      name for Ext JS template used for generate
--m --moderntheme   theme name for Ext JS modern toolkit
 -c --classictheme  theme name for Ext JS classic toolkit
+-m --moderntheme   theme name for Ext JS modern toolkit
+
+${boldGreen('Example:')} ext-gen --auto --name CoolApp --template universalclassicmodern --classictheme theme-triton --moderntheme theme-material
 
 Defaults: ${path.join(__dirname , 'config.json')}
 Getting started: http://docs.sencha.com/ExtGen/1.0.0/guides/getting_started.html
@@ -544,6 +554,11 @@ This template contains 2 profiles, 1 for desktop (using the classic toolkit), an
    
 ${boldGreen('universalmodern')}
 This template contains 2 profiles, 1 for desktop and 1 for mobile. Both profiles use the modern toolkit.
+
+${boldGreen('Theme Names:')}
+
+classic: classic, neptune, neptune-touch, crisp, crisp-touch, triton
+modern: material, ios, neptune, triton
 `
   console.log(message)
 }
