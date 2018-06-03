@@ -1,4 +1,21 @@
 {
+  "name": "@extjs/react-classic-boilerplate",
+  "private": true,
+  "version": "2.0.0",
+  "description": "A boilerplate project showing how to integrate React and Ext JS using the classic toolkit.",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf build",
+    "start": "webpack-dev-server --progress --colors",
+    "build": "npm run clean && cross-env NODE_ENV=production webpack --env.prod=true --progress --colors",
+    "prod": "cd build && static-server --port 8080"
+  },
+  "author": "Sencha, Inc.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sencha/extjs-reactor.git"
+  },
 	"dependencies": {
 		"@extjs/reactor": "^1.1.2",
 		"@extjs/reactor-babel-plugin": "^1.1.2",

@@ -21,7 +21,8 @@ Ext.define("{appName}.view.main.nav.NavView", {
 	xtype: "navview",
 	controller: "navviewcontroller",
 	viewModel: { type: "navviewmodel"},
-	cls: "navview",
+  cls: "navview",
+  id: 'navview',
 	layout: "fit",
 
 	// This is like a normal config -- where the values are applied as the object is created --
@@ -44,9 +45,9 @@ Ext.define("{appName}.view.main.nav.NavView", {
 	updateMicro: function(micro) {
 			this.getController().updateMicro(micro);
 	},
-	updateName: function(name) {
-			this.getController().updateName(name);
-	},
+	// updateName: function(name) {
+	// 		this.getController().updateName(name);
+	// },
 	updateSelection: function(selection) {
 			this.getController().updateSelection(selection);
 	},
@@ -55,7 +56,7 @@ Ext.define("{appName}.view.main.nav.NavView", {
 			xtype: "topview",
 			reference: "topview",
 			dock: "top",
-			height: 50
+//			height: 50
 	},
 	items: [
 			{
