@@ -6,8 +6,6 @@
   "templateType":"make a selection from a list",
   "templateType2":"type a folder name",
   "template":"classicdesktop",
-  "classic": true,
-  "modern": false,
   "classicTheme": "theme-triton",
   "modernTheme": "theme-material",
   "templateFolderName":"~/extjs-templates/Application/moderndesktop",
