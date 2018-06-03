@@ -1,4 +1,4 @@
-$panel-navigation-background-color: $base-color;
+$panel-navigation-background-color: darken($base-color, 20%);
 $nav-base-color: lighten($panel-navigation-background-color, 20%);
 $nav-text-color: white;
 

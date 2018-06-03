@@ -1,14 +1,28 @@
 Ext.define('{appName}.view.main.header.HeaderView', {
-	extend: 'Ext.panel.Panel',
+  extend: 'Ext.toolbar.Toolbar',
+  height: 50,
   xtype: 'headerview',
   cls: 'headerview',
-  bind: {title: '{heading}'},
-  titlePosition: 0,
-  tools: [
+  items: [
     {
-      type: 'prev',
-      reference: 'detailtoggle',
-      handler: 'onHeaderViewDetailToggle'
+      xtype: 'button',
+      ui: 'headerviewbutton-toolbar',
+      reference: 'navtoggle',
+      handler: 'onHeaderViewNavToggle',
+      iconCls: 'x-fa fa-navicon'
+    },
+    {
+      xtype: 'component',
+      bind: {title: '\u007Bheading}'},
+    },
+    '->',
+    {
+      iconCls:'x-fa fa-search',
+      ui: 'headerviewbutton-toolbar',
+    },
+    {
+      xtype: 'component',
+      bind: {title: '\u007Bheading}'},
     }
   ]
 });
