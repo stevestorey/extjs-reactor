@@ -38,6 +38,8 @@ var answers = {
 'seeDefaults': null,
 'useDefaults': null,
 'appName': null,
+'classic': null,
+'modern': null,
 'classicTheme': null,
 'modernTheme': null,
 'templateType': null,
@@ -130,6 +132,10 @@ function setDefaults() {
   else {
     answers['modernTheme'] = config.modernTheme
   }
+
+  answers['classic'] = config.classic
+  answers['modern'] = config.modern
+
   answers['version'] = config.version
   answers['repositoryURL'] = config.repositoryURL
   answers['keywords'] = config.keywords
@@ -225,6 +231,12 @@ function step04() {
     choices: ['classicdesktop', 'moderndesktop', 'universalclassicmodern', 'universalmodern'],
     default: 'classicdesktop'
   }).run().then(answer => {
+    if (answer.includes("classic")) {
+      answers['classic'] = true
+    }
+    if (answer.includes("modern")) {
+      answers['modern'] = true
+    }
     answers['template'] = answer
     if(answers['useDefaults'] == true) {
       step99()
@@ -430,6 +442,8 @@ async function stepCreate() {
   console.log(`${app} ${destDir} created`)
   var values = {
     npmScope: npmScope,
+    classic: answers['classic'],
+    modern: answers['modern'],
     appName: answers['appName'],
     packageName: answers['packageName'],
     version: answers['version'],
@@ -539,16 +553,30 @@ This template contains 2 profiles, 1 for desktop and 1 for mobile. Both profiles
    
   `
   console.log(message)
-
-  //Type Enter or Y to continue
-
-  // new Confirm({
-  //   message: message
-  // }).run().then(answer => {
-  //   //step00b()
-  //   return
-  // })
 }
+
+
+// "{npmScope}/ext-modern-theme-material": "^6.6.0",
+// "{npmScope}/ext-modern-theme-ios": "^6.6.0",
+// "{npmScope}/ext-modern-theme-neptune": "^6.6.0",
+// "{npmScope}/ext-modern-theme-triton": "^6.6.0",
+
+// "{npmScope}/ext-classic-theme-classic": "^6.6.0",
+// "{npmScope}/ext-classic-theme-neptune": "^6.6.0",
+// "{npmScope}/ext-classic-theme-neptune-touch": "^6.6.0",
+// "{npmScope}/ext-classic-theme-crisp": "^6.6.0",
+// "{npmScope}/ext-classic-theme-crisp-touch": "^6.6.0",
+// "{npmScope}/ext-classic-theme-triton": "^6.6.0",
+
+// "{npmScope}/ext-calendar": "^6.6.0",
+// "{npmScope}/ext-charts": "^6.6.0",
+// "{npmScope}/ext-exporter": "^6.6.0",
+// "{npmScope}/ext-pivot": "^6.6.0",
+// "{npmScope}/ext-d3": "^6.6.0",
+// "{npmScope}/ext-pivot-d3": "^6.6.0",
+// "{npmScope}/ext-pivot-locale": "^6.6.0"
+
+
 
 
 // function step00a() {
