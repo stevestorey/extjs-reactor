@@ -7,6 +7,10 @@
     "buildtest": "ext-build app build testing",
     "buildprod": "ext-build app build production"
   },
+  "config": {
+    "buildprofile": "desktop", 
+    "buildenvironment": "development"
+  },
   "dependencies": {
 <tpl if="modern == true">
     "{npmScope}/ext-modern": "^6.6.0",
