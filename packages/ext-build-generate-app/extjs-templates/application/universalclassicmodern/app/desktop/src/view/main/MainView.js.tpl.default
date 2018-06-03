@@ -5,16 +5,14 @@ Ext.define('{appName}.view.main.MainView', {
 	viewModel: {
 		type: 'mainviewmodel'
 	},	
-	//layout: 'fit',
 	layout: 'border',
 	items: [
-		//{ xtype: 'navview',    reference: 'navview',    region: 'west',  docked: 'left',   bind: {width:  '\u007Bnavview_width}'}, weight: -1 },
-
 		{
 				xtype: "navview",
 				reference: "navview",
 				region: "west",
-				listeners: {
+        weight: -1,
+        listeners: {
 						select: "onMenuViewSelectionChange"
 				},
 				bind: {

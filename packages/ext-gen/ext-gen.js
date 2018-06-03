@@ -517,7 +517,19 @@ function displayDefaults() {
 }
 
 function stepHelp() {
-  var message = `ext-gen (-h) (-a) (-d) (-n 'name') (-t 'template') (-m 'moderntheme') (-c 'classictheme')
+
+//Defaults: ${path.join(__dirname , 'config.json')}
+//Getting started: http://docs.sencha.com/ExtGen/1.0.0/guides/getting_started.html
+// ${boldGreen('Sencha ExtGen')} is a tool create a Sencha Ext JS application with open source tooling:
+// - npm
+// - webpack and webpack-dev-server
+// - Sencha ExtBuild
+// - Ext JS framework as npm packages from Sencha npm repository
+ 
+// You can create the package.json file for your app using defaults
+
+
+var message = `ext-gen (-h) (-a) (-d) (-n 'name') (-t 'template') (-m 'moderntheme') (-c 'classictheme')
  
 -h --help          show help
 -a --auto          automatically run (no question prompts)
@@ -529,20 +541,9 @@ function stepHelp() {
 
 ${boldGreen('Example:')} ext-gen --auto --name CoolApp --template universalclassicmodern --classictheme theme-triton --moderntheme theme-material
 
-Defaults: ${path.join(__dirname , 'config.json')}
-Getting started: http://docs.sencha.com/ExtGen/1.0.0/guides/getting_started.html
- 
-${boldGreen('Sencha ExtGen')} is a tool create a Sencha Ext JS application with open source tooling:
-- npm
-- webpack and webpack-dev-server
-- Sencha ExtBuild
-- Ext JS framework as npm packages from Sencha npm repository
- 
-You can create the package.json file for your app using defaults
-from the config.json file mentioned above.  You can edit the config.json
-   
+${boldGreen('Templates:')}
 You can select from 4 Ext JS templates provided by Sencha ExtGen
- 
+  
 ${boldGreen('classicdesktop (default)')}
 This template is the default template in ext-gen. It contains 1 profile, configured to use the classic toolkit of Ext JS for a desktop application
  
@@ -556,9 +557,8 @@ ${boldGreen('universalmodern')}
 This template contains 2 profiles, 1 for desktop and 1 for mobile. Both profiles use the modern toolkit.
 
 ${boldGreen('Theme Names:')}
-
-classic: classic, neptune, neptune-touch, crisp, crisp-touch, triton
-modern: material, ios, neptune, triton
+${boldGreen('classic themes:')} theme-classic, theme-neptune, theme-neptune-touch, theme-crisp, theme-crisp-touch  theme-triton, theme-graphite
+${boldGreen('modern themes:')}  theme-material, theme-ios, theme-neptune, theme-triton
 `
   console.log(message)
 }
