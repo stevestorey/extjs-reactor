@@ -231,6 +231,8 @@ function step04() {
     choices: ['classicdesktop', 'moderndesktop', 'universalclassicmodern', 'universalmodern'],
     default: 'classicdesktop'
   }).run().then(answer => {
+    answers['classic'] = false
+    answers['modern'] = false
     if (answer.includes("classic")) {
       answers['classic'] = true
     }
@@ -253,14 +255,12 @@ function step05() {
     default:  config.templateFolderName
   }).run().then(answer => { 
     answers['templateFolderName'] = answer
-
     if(answers['useDefaults'] == true) {
       step99()
     }
     else {
       step06()
     }
-
   })
 }
 
@@ -369,6 +369,8 @@ function displayDefaults() {
   console.log(boldGreen(`Defaults for Ext JS app:`))
   console.log(`appName:\t${answers['appName']}`)
   console.log(`template:\t${answers['template']}`)
+  console.log(`classic:\t${answers['classic']}`)
+  console.log(`modern:\t\t${answers['modern']}`)
   console.log(`classicTheme:\t${answers['classicTheme']}`)
   console.log(`modernTheme:\t${answers['modernTheme']}`)
   console.log('')
@@ -386,6 +388,9 @@ function displayDefaults() {
 }
 
 function step99() {
+
+  displayDefaults()
+
   if (answers['template'] == null) {
     if (!fs.existsSync(answers['templateFolderName'])) {
       answers['template'] = 'folder'
