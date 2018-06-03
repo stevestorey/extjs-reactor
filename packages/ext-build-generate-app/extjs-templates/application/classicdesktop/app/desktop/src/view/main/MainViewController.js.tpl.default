@@ -79,10 +79,10 @@ Ext.define('{appName}.view.main.MainViewController', {
     //var topPic = this.lookup('topPic');
     var topPic = Ext.getCmp('topPic');
     if (vm.get('navCollapsed') == true) {
-      topPic.setData({ src:'resources/5.jpg', caption:'John Smith', imgStyle: 'imgSmall', height: '80px' });
+      topPic.setData({ src:'resources/desktop/5.jpg', caption:'John Smith', imgStyle: 'imgSmall', height: '80px' });
     }
     else {
-      topPic.setData({ src:'resources/5.jpg', caption:'John Smith', imgStyle: 'imgBig', height: '130px' });
+      topPic.setData({ src:'resources/desktop/5.jpg', caption:'John Smith', imgStyle: 'imgBig', height: '130px' });
     }
 
 	},
