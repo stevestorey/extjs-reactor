@@ -53,7 +53,7 @@ export default class ExtWebpackPlugin {
   //   dirs: ['./app'],
   // };
 
-  constructor(options = { profile: 'desktop', environment: 'development'} ) {
+  constructor(options = {profile: 'desktop', environment: 'development'} ) {
     validateOptions(require('../options.json'), options, 'ExtraWatchWebpackPlugin'); // eslint-disable-line
     //this.options = { ...ExtWebpackPlugin.defaults, ...options };
 

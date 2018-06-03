@@ -4,6 +4,8 @@ const ExtWebpackPlugin = require('{npmScope}/ext-webpack-plugin');
 const portfinder = require('portfinder');
 
 module.exports = async function (env) {
+  var buildprofile = process.env.npm_package_config_buildprofile || 'desktop'
+  var buildenvironment = process.env.npm_package_config_buildenvironment || 'development'
   portfinder.basePort = 1962;
   var port = await portfinder.getPortPromise();
   const nodeEnv = env && env.prod ? 'production' : 'development';
@@ -11,7 +13,7 @@ module.exports = async function (env) {
 
   return {
     plugins: [
-      new ExtWebpackPlugin(),
+      new ExtWebpackPlugin({profile: buildprofile, environment: buildenvironment}),
       new webpack.HotModuleReplacementPlugin()
     ],
     module: {
