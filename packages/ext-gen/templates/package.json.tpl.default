@@ -9,29 +9,15 @@
   },
   "dependencies": {
     "{npmScope}/ext": "^6.6.0",
-    "{npmScope}/ext-core": "^6.6.0",
+<tpl if="modern == true">
     "{npmScope}/ext-modern": "^6.6.0",
-
-    "{npmScope}/ext-modern-theme-material": "^6.6.0",
-    "{npmScope}/ext-modern-theme-ios": "^6.6.0",
-    "{npmScope}/ext-modern-theme-neptune": "^6.6.0",
-    "{npmScope}/ext-modern-theme-triton": "^6.6.0",
-
+    "{npmScope}/ext-modern-theme-{modernTheme}": "^6.6.0",
+</tpl>
+<tpl if="classic == true">
     "{npmScope}/ext-classic": "^6.6.0",
-    "{npmScope}/ext-classic-theme-classic": "^6.6.0",
-    "{npmScope}/ext-classic-theme-neptune": "^6.6.0",
-    "{npmScope}/ext-classic-theme-neptune-touch": "^6.6.0",
-    "{npmScope}/ext-classic-theme-crisp": "^6.6.0",
-    "{npmScope}/ext-classic-theme-crisp-touch": "^6.6.0",
-    "{npmScope}/ext-classic-theme-triton": "^6.6.0",
-
-    "{npmScope}/ext-calendar": "^6.6.0",
-    "{npmScope}/ext-charts": "^6.6.0",
-    "{npmScope}/ext-exporter": "^6.6.0",
-    "{npmScope}/ext-pivot": "^6.6.0",
-    "{npmScope}/ext-d3": "^6.6.0",
-    "{npmScope}/ext-pivot-d3": "^6.6.0",
-    "{npmScope}/ext-pivot-locale": "^6.6.0"
+    "{npmScope}/ext-classic-theme-{classicTheme}": "^6.6.0",
+</tpl>
+    "{npmScope}/ext-core": "^6.6.0"
   },
   "devDependencies": {
     "{npmScope}/ext-webpack-plugin": "~0.0.1",
