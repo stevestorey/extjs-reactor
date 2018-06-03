@@ -1,6 +1,12 @@
 {
   "type": "object",
   "properties": {
+    "profile": {
+      "type": [ "string" ]
+    },
+    "environment": {
+      "type": [ "string" ]
+    },
     "files": {
       "type": [ "string", "array" ]
     },

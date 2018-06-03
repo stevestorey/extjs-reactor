@@ -53,7 +53,7 @@ export default class ExtWebpackPlugin {
   //   dirs: ['./app'],
   // };
 
-  constructor(options = {}) {
+  constructor(options = { profile: 'desktop', environment: 'development'} ) {
     validateOptions(require('../options.json'), options, 'ExtraWatchWebpackPlugin'); // eslint-disable-line
     //this.options = { ...ExtWebpackPlugin.defaults, ...options };
 
@@ -161,8 +161,8 @@ export default class ExtWebpackPlugin {
         if (currentNumFiles != me.lastNumFiles || doBuild) {
           me.lastNumFiles = currentNumFiles
           var buildAsync = require('@extjs/ext-build/app/buildAsync.js')
-          var options = {parms: ['app','build','development']}
-          new buildAsync(options).executeAsync().then(function() {
+          var buildOptions = {parms: ['app','build',me.options.profile, me.options.environment]}
+          new buildAsync(buildOptions).executeAsync().then(function() {
             cb()
           })
         }
