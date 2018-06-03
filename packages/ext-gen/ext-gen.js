@@ -58,6 +58,7 @@ var answers = {
 }
 
 const optionDefinitions = [
+  { name: 'interactive', alias: 'i', type: Boolean },
   { name: 'help', alias: 'h', type: Boolean },
   { name: 'defaults', alias: 'd', type: Boolean },
   { name: 'auto', alias: 'a', type: Boolean },
@@ -78,7 +79,13 @@ function stepStart() {
   version = pkg.version
   var data = fs.readFileSync(nodeDir + '/config.json')
   config = JSON.parse(data)
-  cmdLine = commandLineArgs(optionDefinitions)
+  try{
+    cmdLine = commandLineArgs(optionDefinitions)
+  }
+  catch (e) {
+    console.log(`${app} ${e}`)
+    return
+  }
   console.log(boldGreen(`\nSencha ExtGen v${version} - The Ext JS project generator for npm`))
   console.log('')
   step00()
@@ -86,24 +93,24 @@ function stepStart() {
 
 function step00() {
   setDefaults()
-  if (cmdLine.help == true) {
+  if (process.argv.length == 2 || cmdLine.help == true) {
     stepHelp()
   }
-  else if (process.argv.length == 2 || cmdLine.help == true) {
+  else if (cmdLine.interactive == true) {
     step00a()
   }
   else if (cmdLine.defaults == true || cmdLine.auto == true) {
     step99()
   }
   else {
-    step00a()
+    stepHelp()
   }
 }
 
 function step00a() {
   new Confirm({
     message: 
-    `would you like to see the defaults in config.json?`,
+    `would you like to see the defaults for package.json?`,
     default: config.seeDefaults
   }).run().then(answer => {
     answers['seeDefaults'] = answer
@@ -119,7 +126,7 @@ function step00a() {
 
 function step01() {
   new Confirm({
-    message: 'Would you like to create a package.json file with defaults from config.json?',
+    message: 'Would you like to create a package.json file with defaults?',
     default: config.useDefaults
   }).run().then(answer => {
     answers['useDefaults'] = answer
@@ -529,10 +536,11 @@ function stepHelp() {
 // You can create the package.json file for your app using defaults
 
 
-var message = `ext-gen (-h) (-a) (-d) (-n 'name') (-t 'template') (-m 'moderntheme') (-c 'classictheme')
- 
--h --help          show help
--a --auto          automatically run (no question prompts)
+var message = `ext-gen (-h) (-i) (-a) (-d) (-n 'name') (-t 'template') (-m 'moderntheme') (-c 'classictheme')
+
+-h --help          show help (no parameters also shows help)
+-i --interactive   run in interactive mode (question prompts)
+-a --auto          run in automatic mode (NO question prompts)
 -d --defaults      show defaults for package.json
 -n --name          name for Ext JS generated app
 -t --template      name for Ext JS template used for generate
