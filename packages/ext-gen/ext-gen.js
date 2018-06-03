@@ -99,7 +99,10 @@ function step00() {
   else if (cmdLine.interactive == true) {
     step00a()
   }
-  else if (cmdLine.defaults == true || cmdLine.auto == true) {
+  else if (cmdLine.defaults == true) {
+    displayDefaults()
+  }
+  else if (cmdLine.auto == true) {
     step99()
   }
   else {
@@ -540,7 +543,7 @@ var message = `ext-gen (-h) (-i) (-a) (-d) (-n 'name') (-t 'template') (-m 'mode
 
 -h --help          show help (no parameters also shows help)
 -i --interactive   run in interactive mode (question prompts)
--a --auto          run in automatic mode (NO question prompts)
+-a --auto          run in automatic mode (NO question prompts - uses defaults or command line options)
 -d --defaults      show defaults for package.json
 -n --name          name for Ext JS generated app
 -t --template      name for Ext JS template used for generate

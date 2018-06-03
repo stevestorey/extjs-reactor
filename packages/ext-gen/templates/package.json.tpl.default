@@ -7,7 +7,7 @@
     "buildtest": "ext-build app build testing",
     "buildprod": "ext-build app build production"
   },
-  "config": {
+  "extbuild": {
     "buildprofile": "desktop", 
     "buildenvironment": "development"
   },
