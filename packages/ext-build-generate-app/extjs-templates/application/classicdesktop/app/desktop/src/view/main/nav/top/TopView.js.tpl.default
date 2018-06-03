@@ -22,7 +22,7 @@ Ext.define('{appName}.view.main.nav.top.TopView', {
    
 		{
       xtype: 'component', 
-//      data: { src:'resources/5.jpg', caption:'John Smith', imgStyle: 'imgBig', height: '130px' },
+      data: { src:'resources/desktop/5.jpg', caption:'John Smith', imgStyle: 'imgBig', height: '130px' },
       reference: 'topPic',
       id: 'topPic',
       tpl: new Ext.XTemplate(`

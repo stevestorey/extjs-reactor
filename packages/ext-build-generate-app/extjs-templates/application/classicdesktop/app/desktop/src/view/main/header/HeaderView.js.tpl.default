@@ -13,7 +13,7 @@ Ext.define('{appName}.view.main.header.HeaderView', {
     },
     {
       xtype: 'component',
-      bind: {title: '\u007Bheading}'},
+//      bind: {title: '\u007Bheading}'},
     },
     '->',
     {
@@ -22,7 +22,7 @@ Ext.define('{appName}.view.main.header.HeaderView', {
     },
     {
       xtype: 'component',
-      bind: {title: '\u007Bheading}'},
+//      bind: {title: '\u007Bheading}'},
     }
   ]
 });
