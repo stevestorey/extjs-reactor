@@ -444,6 +444,8 @@ async function stepCreate() {
     npmScope: npmScope,
     classic: answers['classic'],
     modern: answers['modern'],
+    classicTheme: answers['classicTheme'],
+    modernTheme: answers['modernTheme'],
     appName: answers['appName'],
     packageName: answers['packageName'],
     version: answers['version'],
@@ -568,6 +570,7 @@ This template contains 2 profiles, 1 for desktop and 1 for mobile. Both profiles
 // "{npmScope}/ext-classic-theme-crisp-touch": "^6.6.0",
 // "{npmScope}/ext-classic-theme-triton": "^6.6.0",
 
+//** "calendar","charts","d3","pivot","pivot-d3","ux","font-awesome" **//
 // "{npmScope}/ext-calendar": "^6.6.0",
 // "{npmScope}/ext-charts": "^6.6.0",
 // "{npmScope}/ext-exporter": "^6.6.0",
