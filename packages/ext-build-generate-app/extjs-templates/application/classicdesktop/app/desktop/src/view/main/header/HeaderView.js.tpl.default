@@ -13,7 +13,7 @@ Ext.define('{appName}.view.main.header.HeaderView', {
     },
     {
       xtype: 'component',
-//      bind: {title: '\u007Bheading}'},
+      bind: {html: '\u007Bheading}'},
     },
     '->',
     {
@@ -21,8 +21,10 @@ Ext.define('{appName}.view.main.header.HeaderView', {
       ui: 'headerviewbutton-toolbar',
     },
     {
-      xtype: 'component',
-//      bind: {title: '\u007Bheading}'},
+      reference: 'detailtoggle',
+      iconCls:'x-fa fa-arrow-left',
+      ui: 'headerviewbutton-toolbar',
+      handler: 'onHeaderViewDetailToggle'
     }
   ]
 });
