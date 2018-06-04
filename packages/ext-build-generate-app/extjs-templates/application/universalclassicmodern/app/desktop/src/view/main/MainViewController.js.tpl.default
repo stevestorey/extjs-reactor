@@ -13,7 +13,7 @@ Ext.define('{appName}.view.main.MainViewController', {
 
 			// menuItem can change either because the user selected an item in the NavView, or
 			// because the record is named in the URL routing information.
-			vm.bind("\u007BmenuItem}", me.setCenterViewXtype, me);
+			vm.bind("{menuItem}", me.setCenterViewXtype, me);
 	},
 
 	updateCenterViewXtype: function(menuItem) {
@@ -73,23 +73,37 @@ Ext.define('{appName}.view.main.MainViewController', {
 		}
 	},
 
-	onTopViewNavToggle: function () {
+	onHeaderViewNavToggle: function () {
 		var vm = this.getViewModel();
-		vm.set('navCollapsed', !vm.get('navCollapsed'));
+    vm.set('navCollapsed', !vm.get('navCollapsed'));
+    //var topPic = this.lookup('topPic');
+    var topPic = Ext.getCmp('topPic');
+    if (vm.get('navCollapsed') == true) {
+      topPic.setData({ src:'resources/desktop/5.jpg', caption:'John Smith', imgStyle: 'imgSmall', height: '80px' });
+    }
+    else {
+      topPic.setData({ src:'resources/desktop/5.jpg', caption:'John Smith', imgStyle: 'imgBig', height: '130px' });
+    }
+
 	},
 
-	onHeaderViewDetailToggle: function (button) {
-		var vm = this.getViewModel();
-		vm.set('detailCollapsed', !vm.get('detailCollapsed'));
-		if(vm.get('detailCollapsed')===true) {
-			button.setIconCls('x-fa fa-arrow-left');
-		}
-		else {
-			button.setIconCls('x-fa fa-arrow-right');
-		}
-	},
+  onHeaderViewDetailToggle: function () {
+//    Ext.get('navview').enableShadow({offset:5, mode: 'drop', animate: true})
+//    var navfill = this.lookup('navfill');
+//    navfill.setHidden(vm.get('detailCollapsed'))
+    var vm = this.getViewModel();
+    vm.set('detailCollapsed', !vm.get('detailCollapsed'));
+    var detailtoggle = this.lookup('detailtoggle');
+    if(vm.get('detailCollapsed') === true) {
+      //detailtoggle.setType('prev')
+      detailtoggle.setIconCls('x-fa fa-arrow-left')
+    }
+    else {
+      //detailtoggle.setType('next')
+      detailtoggle.setIconCls('x-fa fa-arrow-right')
+    }
+  },
 
-	
 	onBottomViewLogout: function () {
 		alert('logout')
 //		localStorage.setItem("LoggedIn", false);

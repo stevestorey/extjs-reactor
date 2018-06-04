@@ -1,12 +1,15 @@
-.headerview {
-	color: $color;
-	background-color: $base-color;
+.headerview { 
+  font-size: 28px;
+  border-bottom: 1px solid darken($base-color, 10%);
+  color: white;
+  background-color:$base-color;
+  box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.4);
 }
 
 @include extjs-button-toolbar-small-ui(
-  $ui: 'headerbutton',
+  $ui: 'headerviewbutton',
+  $font-size: 32px,
 	$background-color: transparent,
-	$color: $color,
-	$glyph-color: $color,
+	$glyph-color: white,
   $border-color: transparent
-)
+);

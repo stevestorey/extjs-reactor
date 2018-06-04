@@ -4,5 +4,11 @@ Ext.define('{appName}.view.main.nav.bottom.BottomView', {
 	cls: 'bottomview',
 
 	items: [
+		{
+			xtype: 'container', 
+			cls: 'bottomviewtext',
+			reference: 'bottomviewtext',
+      html: 'bottom'
+		}
 	]
 });
