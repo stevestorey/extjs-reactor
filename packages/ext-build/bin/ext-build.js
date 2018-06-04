@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const npmScope = '@extjs'
 const { spawn } = require('child_process');
 const chalk = require('chalk');
 const fs = require('fs-extra')
@@ -44,7 +45,7 @@ const optionDefinitions = [
   var CurrWorkingDir = process.cwd()
   var SenchaCmdDir = util.getSenchaCmdPath()
   var NodeAppBinDir = path.resolve(__dirname)
-  var TemplatesDir = '/extjs-templates' 
+  var TemplatesDir = '/ext-templates' 
   var NodeAppTemplatesDir = path.join(NodeAppBinDir + '/..' + TemplatesDir) 
 
   const cmdLine = commandLineArgs(optionDefinitions)
@@ -115,12 +116,40 @@ const optionDefinitions = [
           break;
         case 'application': case 'app':  case 'a':
 
-          cmdLine.cmdVersion = '6.6.0.11' // cmdVersion,
-          cmdLine.frameworkVersion = '6.6.0.195' //frameworkVersion,
+          //cmdLine.cmdVersion = '6.6.0.11' // cmdVersion,
+          //cmdLine.frameworkVersion = '6.6.0.195' //frameworkVersion,
+
           
-          //require('../generate/application.js').init(CurrWorkingDir, SenchaCmdDir, cmdLine, NodeAppTemplatesDir)
-          var generateApp = require('../generate/app.js')
-          new generateApp(cmdLine)
+
+          var answers = {
+            'appName': 'MyApp',
+            'classicTheme': 'theme-triton',
+            'modernTheme': 'theme-material',
+            'template': 'classicdesktop',
+            'templateFolderName': './'
+          }
+
+
+          var options = { 
+            parms: [ 'generate', 'app', answers['appName'], './' + answers['appName'] ],
+            sdk: `node_modules/${npmScope}/ext`,
+            template: answers['template'],
+            classicTheme: answers['classicTheme'],
+            modernTheme: answers['modernTheme'],
+            templateFull: answers['templateFolderName'],
+//            cmdVersion: cmdVersion,
+//            frameworkVersion: frameworkVersion,
+            force: false
+          }
+          var generateApp = require(`${npmScope}/ext-build-generate-app/generateApp.js`)
+          new generateApp(options)
+
+
+
+
+
+          //var generateApp = require('../generate/app.js')
+          //new generateApp(cmdLine)
 
           console.log(chalk.green('\nYour new Ext JS project is ready!\n'))
           console.log(chalk.bold(`cd ${cmdLine.parms[2]} then "ext-build app watch" to run the development build.\n`))
