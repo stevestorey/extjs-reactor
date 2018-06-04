@@ -550,7 +550,9 @@ var message = `ext-gen (-h) (-d) (-i) (-a) (-n 'name') (-t 'template') (-m 'mode
 -c --classictheme  theme name for Ext JS classic toolkit
 -m --moderntheme   theme name for Ext JS modern toolkit
 
-${boldGreen('Example:')} ext-gen --auto --name CoolApp --template universalclassicmodern --classictheme theme-triton --moderntheme theme-material
+${boldGreen('Examples:')} 
+ext-gen --auto --name CoolUniversalApp --template universalclassicmodern --classictheme theme-triton --moderntheme theme-material
+ext-gen --auto --name CoolDesktopApp --template classicdesktop --classictheme theme-triton
 
 ${boldGreen('Templates:')}
 You can select from 4 Ext JS templates provided by Sencha ExtGen

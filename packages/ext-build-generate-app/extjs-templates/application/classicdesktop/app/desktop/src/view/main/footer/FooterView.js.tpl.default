@@ -2,5 +2,5 @@ Ext.define('{appName}.view.main.footer.FooterView', {
 	extend: 'Ext.panel.Panel',
 	xtype: 'footerview',
 	cls: 'footerview',
-  title: 'footer'
+  title: 'Ext JS version: ' + Ext.versions.extjs.version
 });
