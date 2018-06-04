@@ -12,7 +12,13 @@
 	"builds": {
 		"desktop": {
 			"toolkit": "modern",
-			"theme": "{modernTheme}"
+			"theme": "{modernTheme}",
+      "sass": {
+        "generated": {
+          "var": "modern/sass/save.scss",
+          "src": "modern/sass/save"
+        }
+      }
 		}
 	},
 </tpl>
@@ -26,6 +32,10 @@
 			"var": "app/shared/sass/save.scss",
 			"src": "app/shared/sass/save"
 		},</tpl>
+    "etc": [
+      //"node_modules/@extjs/ext/sass/etc/all.scss"
+      "sass/etc/all.scss"
+    ],
 		"var": [
 			"app/shared/sass/var.scss",
 			"app/$\u007Bbuild.id}/sass/var.scss"
