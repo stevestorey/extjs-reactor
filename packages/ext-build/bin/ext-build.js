@@ -44,10 +44,11 @@ const optionDefinitions = [
   var CurrWorkingDir = process.cwd()
   var SenchaCmdDir = util.getSenchaCmdPath()
   var NodeAppBinDir = path.resolve(__dirname)
-  var TemplatesDir = '/SenchaNodeTemplates' 
+  var TemplatesDir = '/extjs-templates' 
   var NodeAppTemplatesDir = path.join(NodeAppBinDir + '/..' + TemplatesDir) 
 
   const cmdLine = commandLineArgs(optionDefinitions)
+  console.log(cmdLine)
   if(cmdLine.debug) { debug = true } else { debug = false }
 
   //var SenchaCmdTemplatesDir = '/plugins/ext/current'
@@ -55,12 +56,16 @@ const optionDefinitions = [
   var NodeDir = process.argv[0]
   var AppExe = process.argv[1]
 
+  console.log(NodeDir)
+  console.log(AppExe)
+
+
   var Category = ''
-  try { Category = options.parms[0] }
+  try { Category = cmdLine.parms[0] }
   catch(e) { Category = 'info' }
 
   var Command = ''
-  try { Command = options.parms[1] }
+  try { Command = cmdLine.parms[1] }
   catch(e) { Command = '' }
 
   util.dbgLog('NodeDir: ' + NodeDir);
@@ -73,21 +78,25 @@ const optionDefinitions = [
   util.dbgLog('TemplatesDir: ' + TemplatesDir);
   util.dbgLog('NodeAppTemplatesDir: ' + NodeAppTemplatesDir);
 
+  console.log(Category)
+  console.log(Command)
+
+
   switch(Category) {
     case 'app': case 'a':
       switch(Command) {
         case 'watch': case 'w':
           var watch = require('../app/watch.js')
-          new watch(options)
+          new watch(cmdLine)
           break;
         case 'build': case 'b':
           var build = require('../app/buildAsync.js')
-          //new build(options)
-          new build(options).executeAsync().then(function() {})
+          //new build(cmdLine)
+          new build(cmdLine).executeAsync().then(function() {})
           break;
         case 'refresh': case 'r':
           var refresh = require('../app/refresh.js')
-          new refresh(options)
+          new refresh(cmdLine)
           break;
         default:
           throw util.err('Unknown command: "' + command + '" for category "' + category + '"')
@@ -99,22 +108,22 @@ const optionDefinitions = [
     case 'generate': case 'gen': case 'g':
       switch(Command) {
         case 'storepackage': case 'sp':
-          require('../generate/storepackage.js').init(CurrWorkingDir, SenchaCmdDir, options, NodeAppTemplatesDir)
+          require('../generate/storepackage.js').init(CurrWorkingDir, SenchaCmdDir, cmdLine, NodeAppTemplatesDir)
           break;
         case 'viewpackage': case 'vp':
-          require('../generate/viewpackage.js').init(CurrWorkingDir, SenchaCmdDir, options, NodeAppTemplatesDir)
+          require('../generate/viewpackage.js').init(CurrWorkingDir, SenchaCmdDir, cmdLine, NodeAppTemplatesDir)
           break;
         case 'application': case 'app':  case 'a':
 
-          options.cmdVersion = '6.6.0.11' // cmdVersion,
-          options.frameworkVersion = '6.6.0.195' //frameworkVersion,
+          cmdLine.cmdVersion = '6.6.0.11' // cmdVersion,
+          cmdLine.frameworkVersion = '6.6.0.195' //frameworkVersion,
           
-          //require('../generate/application.js').init(CurrWorkingDir, SenchaCmdDir, options, NodeAppTemplatesDir)
+          //require('../generate/application.js').init(CurrWorkingDir, SenchaCmdDir, cmdLine, NodeAppTemplatesDir)
           var generateApp = require('../generate/app.js')
-          new generateApp(options)
+          new generateApp(cmdLine)
 
           console.log(chalk.green('\nYour new Ext JS project is ready!\n'))
-          console.log(chalk.bold(`cd ${options.parms[2]} then "ext-build app watch" to run the development build.\n`))
+          console.log(chalk.bold(`cd ${cmdLine.parms[2]} then "ext-build app watch" to run the development build.\n`))
         
 
           break;
@@ -123,7 +132,7 @@ const optionDefinitions = [
       }
       break;
     default:
-      util.senchaCmd([...options.parms]);
+      util.senchaCmd([...cmdLine.parms]);
       //throw util.err('Unknown Category: "' + Category + '"')
   }
 // }

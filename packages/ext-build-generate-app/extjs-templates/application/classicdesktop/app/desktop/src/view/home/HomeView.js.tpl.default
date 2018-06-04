@@ -1,0 +1,9 @@
+Ext.define('{appName}.view.home.HomeView',{
+	xtype: 'homeview',
+	cls: 'homeview',
+	controller: {type: 'homeviewcontroller'},
+	viewModel: {type: 'homeviewmodel'},
+	requires: [],
+	extend: 'Ext.panel.Panel',
+	html: 'Welcome to the Ext JS 6.6 Classic Desktop Template Application!'
+});
