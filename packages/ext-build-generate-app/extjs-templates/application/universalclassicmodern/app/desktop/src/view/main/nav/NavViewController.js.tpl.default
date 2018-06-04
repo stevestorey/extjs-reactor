@@ -22,13 +22,13 @@ Ext.define("{appName}.view.main.nav.NavViewController", {
 	updateMicro: function(micro) {
 			console.log("updateMicro");
 			this.lookup("menuview").setMicro(micro);
-			this.lookup("topviewtext").setHidden(micro);
+//			this.lookup("topviewtext").setHidden(micro);
 			this.getView().setWidth(micro ? 44 : 300);
 			this.lookup("bottomview").setHidden(micro);
 	},
-	updateName: function(name) {
-			this.lookup("topviewtext").setHtml(name);
-	},
+	// updateName: function(name) {
+	// 		this.lookup("topviewtext").setHtml(name);
+	// },
 	onTopViewNavToggle: function(button) {
 			this.getView().setMicro(!this.getView().getMicro());
 	}

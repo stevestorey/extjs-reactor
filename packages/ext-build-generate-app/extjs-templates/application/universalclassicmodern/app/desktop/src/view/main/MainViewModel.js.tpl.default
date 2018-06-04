@@ -8,8 +8,6 @@ Ext.define('{appName}.view.main.MainViewModel', {
 		navview_min_width:     44,
 		topview_height:       75,
 		bottomview_height:     50,
-		headerview_height:     50,
-		footerview_height:     50,
 		detailCollapsed:     true,
 		detailview_width:      10,
 		detailview_max_width: 300,
@@ -29,6 +27,7 @@ Ext.define('{appName}.view.main.MainViewModel', {
 			type: "tree",
 			root: {
 				children: [
+          { "text": "Home", "iconCls": "x-fa fa-home", "xtype": "homeview", "leaf": true },
 					{ "text": "Personnel", "iconCls": "x-fa fa-table", "xtype": "personnelview", "leaf": true },
 				]
 			}
