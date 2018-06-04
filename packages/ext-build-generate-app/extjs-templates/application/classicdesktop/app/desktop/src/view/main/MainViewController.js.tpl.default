@@ -87,35 +87,20 @@ Ext.define('{appName}.view.main.MainViewController', {
 
 	},
 
-//	onHeaderViewDetailToggle: function (button) {
-//		var vm = this.getViewModel();
-//		vm.set('detailCollapsed', !vm.get('detailCollapsed'));
-//		if(vm.get('detailCollapsed')===true) {
-//			button.setIconCls('x-fa fa-arrow-left');
-//		}
-//		else {
-//			button.setIconCls('x-fa fa-arrow-right');
-//		}
-//	},
-
-
   onHeaderViewDetailToggle: function () {
-
-    Ext.get('navview').enableShadow({offset:5, mode: 'drop', animate: true})
-    console.log(Ext.get('navview'))
-
+//    Ext.get('navview').enableShadow({offset:5, mode: 'drop', animate: true})
+//    var navfill = this.lookup('navfill');
+//    navfill.setHidden(vm.get('detailCollapsed'))
     var vm = this.getViewModel();
     vm.set('detailCollapsed', !vm.get('detailCollapsed'));
     var detailtoggle = this.lookup('detailtoggle');
-//    var navfill = this.lookup('navfill');
-    
-//    navfill.setHidden(vm.get('detailCollapsed'))
-
     if(vm.get('detailCollapsed') === true) {
-      detailtoggle.setType('prev')
+      //detailtoggle.setType('prev')
+      detailtoggle.setIconCls('x-fa fa-arrow-left')
     }
     else {
-      detailtoggle.setType('next')
+      //detailtoggle.setType('next')
+      detailtoggle.setIconCls('x-fa fa-arrow-right')
     }
   },
 
