@@ -37,7 +37,7 @@ class generateApp {
     var CurrJSFilePath = __dirname
     var CurrWorkingDir = process.cwd()
     var NodeAppBinDir = path.resolve(__dirname)
-    var TemplatesDir = '/extjs-templates'
+    var TemplatesDir = '/ext-templates'
     var NodeAppTemplatesDir = path.join(NodeAppBinDir + '/..' + TemplatesDir)
     var parms = options.parms
 		if(parms[5] != undefined) {throw err('Only 3 parameters are allowed')}
