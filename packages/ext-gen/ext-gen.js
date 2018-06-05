@@ -559,7 +559,8 @@ ${boldGreen('Examples:')}
 ext-gen --auto --name CoolUniversalApp --template universalclassicmodern --classictheme theme-triton --moderntheme theme-material
 ext-gen --auto --name CoolDesktopApp --template classicdesktop --classictheme theme-triton
 ext-gen --interactive
-ext-gen -a -n MyClassicApp
+ext-gen -a -n ClassicApp
+ext-gen -a -n ModernApp -t moderndesktop
 
 ${boldGreen('Templates:')}
 You can select from 4 Ext JS templates provided by Sencha ExtGen
