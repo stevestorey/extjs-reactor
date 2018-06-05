@@ -31,7 +31,7 @@ select the personnel menu item to see an example of a page with an Ext JS grid
 <br><br><br><br>
 To build a new ViewPackage, run:
 <br><br><br>
-npx ext-build generate viewpackage desktop employee
+ npm run createview employee
 <br><br><br>
 follow the instructions to add a menu item for this employeeview
 <br><br><br>
