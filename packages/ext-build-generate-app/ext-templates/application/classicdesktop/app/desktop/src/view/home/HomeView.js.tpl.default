@@ -39,6 +39,8 @@ Simple Theming:
 <br><br>
 go to 'app/desktop/sass/var.scss', uncomment one of the $base-color variables
 <br><br>
+be patient and give it a few seconds to rebuild... :)
+<br><br>
 more adventurous? go to 'app/shared/sass/var.scss', uncomment all lines
 
 

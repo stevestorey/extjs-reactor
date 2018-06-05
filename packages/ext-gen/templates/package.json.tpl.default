@@ -4,8 +4,8 @@
   "description": "{description}",
   "scripts": {
     "start": "webpack-dev-server -w --progress --open",
-    "buildtest": "ext-build app build testing",
-    "buildprod": "ext-build app build production"
+    "buildtest": "npx ext-build app build desktop testing",
+    "buildprod": "npx ext-build app build desktop production"
   },
   "extbuild": {
     "buildprofile": "desktop", 

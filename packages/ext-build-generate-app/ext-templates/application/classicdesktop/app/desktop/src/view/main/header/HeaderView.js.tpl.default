@@ -17,6 +17,14 @@ Ext.define('{appName}.view.main.header.HeaderView', {
     },
     '->',
     {
+      iconCls:'x-fa fa-calendar',
+      ui: 'headerviewbutton-toolbar',
+    },
+    {
+      iconCls:'x-fa fa-bolt',
+      ui: 'headerviewbutton-toolbar',
+    },
+    {
       iconCls:'x-fa fa-search',
       ui: 'headerviewbutton-toolbar',
     },

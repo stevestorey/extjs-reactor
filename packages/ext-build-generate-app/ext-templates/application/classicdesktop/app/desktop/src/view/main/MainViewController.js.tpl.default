@@ -79,10 +79,10 @@ Ext.define('{appName}.view.main.MainViewController', {
     //var topPic = this.lookup('topPic');
     var topPic = Ext.getCmp('topPic');
     if (vm.get('navCollapsed') == true) {
-      topPic.setData({ src:'resources/desktop/5.jpg', caption:'John Smith', imgStyle: 'imgSmall', height: '80px' });
+      topPic.setData({ src:'resources/desktop/5.jpg', caption:'John Smith', imgStyle: 'imgSmall', height: '100px' });
     }
     else {
-      topPic.setData({ src:'resources/desktop/5.jpg', caption:'John Smith', imgStyle: 'imgBig', height: '130px' });
+      topPic.setData({ src:'resources/desktop/5.jpg', caption:'John Smith', imgStyle: 'imgBig', height: '150px' });
     }
 
 	},
@@ -102,22 +102,6 @@ Ext.define('{appName}.view.main.MainViewController', {
       //detailtoggle.setType('next')
       detailtoggle.setIconCls('x-fa fa-arrow-right')
     }
-  },
-
-	onBottomViewLogout: function () {
-		alert('logout')
-//		localStorage.setItem("LoggedIn", false);
-//		this.getView().destroy();
-//		Ext.Viewport.add([{ xtype: 'loginview'}]);
-	},
-
-//	onActionsViewLogoutTap: function( ) {
-//		var vm = this.getViewModel();
-//		vm.set('firstname', '');
-//		vm.set('lastname', '');
-//
-//		Session.logout(this.getView());
-//		this.redirectTo(AppCamp.getApplication().getDefaultToken().toString(), true);
-//	}
+  }
 
 });
