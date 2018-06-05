@@ -543,24 +543,24 @@ function stepHelp() {
 // You can create the package.json file for your app using defaults
 
 
-var message = `ext-gen (-h) (-d) (-i) (-a) (-n 'name') (-t 'template') (-m 'moderntheme') (-c 'classictheme')
+var message = `ext-gen (-h) (-d) (-i) (-a) (-t 'template') (-m 'moderntheme') (-c 'classictheme') (-n 'name') (-f 'folder')
 
 -h --help          show help (no parameters also shows help)
 -d --defaults      show defaults for package.json
 -i --interactive   run in interactive mode (question prompts will display)
 -a --auto          run in automatic mode (NO question prompts will display - uses defaults or command line options)
--n --name          name for Ext JS generated app
 -t --template      name for Ext JS template used for generate
 -c --classictheme  theme name for Ext JS classic toolkit
 -m --moderntheme   theme name for Ext JS modern toolkit
+-n --name          name for Ext JS generated app
 -f --folder        folder name for Ext JS application (not implemented yet)
 
 ${boldGreen('Examples:')} 
-ext-gen --auto --name CoolUniversalApp --template universalclassicmodern --classictheme theme-triton --moderntheme theme-material
-ext-gen --auto --name CoolDesktopApp --template classicdesktop --classictheme theme-triton
+ext-gen --auto --template universalclassicmodern --classictheme theme-triton --moderntheme theme-material --name CoolUniversalApp
+ext-gen --auto --template classicdesktop --classictheme theme-triton --name CoolDesktopApp 
 ext-gen --interactive
-ext-gen -a -n ClassicApp
-ext-gen -a -n ModernApp -t moderndesktop
+ext-gen -a --classictheme theme-graphite -n ClassicApp
+ext-gen -a -t moderndesktop -n ModernApp
 
 ${boldGreen('Templates:')}
 You can select from 4 Ext JS templates provided by Sencha ExtGen

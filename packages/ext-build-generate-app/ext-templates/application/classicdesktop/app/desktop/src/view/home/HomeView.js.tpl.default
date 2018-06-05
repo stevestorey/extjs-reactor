@@ -5,6 +5,7 @@ Ext.define('{appName}.view.home.HomeView',{
 	viewModel: {type: 'homeviewmodel'},
 	requires: [],
 	extend: 'Ext.Container',
+  scrollable: true,
   html: `Welcome to the Ext JS 6.6 Classic Desktop Template Application!
 <br><br><br><br> 
 This template has the standard architecture for a desktop application
