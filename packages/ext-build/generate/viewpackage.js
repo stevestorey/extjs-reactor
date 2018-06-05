@@ -20,21 +20,51 @@ try {
 	};
 	
 	exports.init = function init(CurrWorkingDir, pathSenchaCmd, options, NodeAppTemplatesDir) { 
-		var parms = options.parms
-		if(parms[3] != undefined) {throw util.err('Only 1 parameter is allowed')}
-		var ViewName = parms[2];util.dbgLog('ViewName: ' + ViewName)
+    var parms = options.parms
+
+    console.log(parms[3])
+		if(parms[3] == undefined) {
+      util.errLog('3 parameters needed')
+      //throw util.err('Only 1 parameter is allowed')
+    }
+    var profile = parms[2];
+    var ViewName = parms[3];
+//    console.log(ViewName)
+//    util.infLog('ViewName: ' + ViewName)
 		if(ViewName == undefined) {throw util.err('View Name parameter is empty')}
-		var NodeAppViewPackageTemplatesDir = path.join(NodeAppTemplatesDir + '/ViewPackage');util.dbgLog('NodeAppViewPackageTemplatesDir: ' + NodeAppViewPackageTemplatesDir)
-		var appName = util.getAppName(CurrWorkingDir);util.dbgLog('appName: ' + appName)
-		var toFolder = getFolder(CurrWorkingDir);util.dbgLog('toFolder: ' + toFolder)
-		if (toFolder != 'view') {throw 'Must be run from a view folder'}
-		var dir = CurrWorkingDir + '/' + ViewName;util.dbgLog('dir: ' + dir)
+    var NodeAppViewPackageTemplatesDir = path.join(NodeAppTemplatesDir + '/ViewPackage');
+//    util.infLog('NodeAppViewPackageTemplatesDir: ' + NodeAppViewPackageTemplatesDir)
+    var appName = util.getAppName(CurrWorkingDir);
+//    util.infLog('appName: ' + appName)
+    var toFolder = getFolder(CurrWorkingDir);
+    //util.infLog('toFolder: ' + toFolder)
+		if (toFolder != 'view') {
+      var ff, ff_desktop, ff_view;
+      ff = require('node-find-folder');
+      //console.log(process.cwd())
+      process.chdir(`app/${profile}`)
+      //console.log(process.cwd())
+      ff_view = new ff('view');
+      //util.infLog('ff_view: ' + ff_view)
+      process.chdir(ff_view.toString())
+      var viewFolder = process.cwd()
+      //console.log(d)
+      CurrWorkingDir = viewFolder
+      //util.infLog('Must be run from a view folder')
+    }
+    var dir = CurrWorkingDir + '/' + ViewName;
+    //util.infLog('folder: ' + dir)
 		if (fs.existsSync(dir)){throw dir + ' folder exists.  Delete the folder to re-create.'}
-		var iSmall = ViewName.toLowerCase();util.dbgLog('iSmall: ' + iSmall)
-		var iCaps = iSmall[0].toUpperCase() + iSmall.substring(1);util.dbgLog('iCaps: ' + iCaps)
-		var viewFileName = iCaps + 'View';util.dbgLog('viewFileName: ' + viewFileName)
-		var viewNameSmall = iSmall + 'view';util.dbgLog('viewNameSmall: ' + viewNameSmall)
-		var menuPath = `resources/shared/data/`;util.dbgLog('menuPath: ' + menuPath)
+    var iSmall = ViewName.toLowerCase();
+    //util.infLog('iSmall: ' + iSmall)
+    var iCaps = iSmall[0].toUpperCase() + iSmall.substring(1);
+    //util.infLog('iCaps: ' + iCaps)
+    var viewFileName = iCaps + 'View';
+    //util.infLog('viewFileName: ' + viewFileName)
+    var viewNameSmall = iSmall + 'view';
+    //util.infLog('viewNameSmall: ' + viewNameSmall)
+    var menuPath = `resources/shared/data/`;
+    //util.infLog('menuPath: ' + menuPath)
 		var values = {
 			appName: appName,
 			viewFileName : viewFileName,
@@ -43,8 +73,8 @@ try {
 			viewBaseClass: "Ext.panel.Panel",
 			viewNameSmall: viewNameSmall
 		}
-
-		fs.mkdirSync(dir);util.infLog(dir + ' created')
+		fs.mkdirSync(dir);
+    //util.infLog(dir + ' created')
 		fs.readdir(NodeAppViewPackageTemplatesDir, function(err, filenames) {
 			filenames.forEach(function(filename) {
 				var content = fs.readFileSync(NodeAppViewPackageTemplatesDir + '/' + filename).toString()

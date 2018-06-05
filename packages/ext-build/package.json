@@ -1,6 +1,6 @@
 {
   "name": "@extjs/ext-build",
-  "version": "0.0.140",
+  "version": "0.0.141",
   "description": "ext-build - CLI tool for Sencha Ext JS",
   "bin": {
     "ext-build": "bin/ext-build.js"
@@ -12,6 +12,7 @@
   "dependencies": {
     "@extjs/ext-build-generate-app": "~0.0.1",
     "@extjs/sencha-cmd": "~6.6.0",
+    "node-find-folder": "^0.1.32",
     "chalk": "^2.4.1",
     "child-process-promise": "^2.2.1",
     "command-line-args": "^5.0.2",

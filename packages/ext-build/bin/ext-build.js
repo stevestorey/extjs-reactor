@@ -39,8 +39,8 @@ const optionDefinitions = [
 // //    }
 //   });
 
-  debug = false
-  console.log(chalk.green('Sencha ext-build v' + PackageJson.version))
+  //debug = false
+  console.log(chalk.green('Sencha ExtBuild v' + PackageJson.version))
 
   var CurrWorkingDir = process.cwd()
   var SenchaCmdDir = util.getSenchaCmdPath()
@@ -49,16 +49,16 @@ const optionDefinitions = [
   var NodeAppTemplatesDir = path.join(NodeAppBinDir + '/..' + TemplatesDir) 
 
   const cmdLine = commandLineArgs(optionDefinitions)
-  console.log(cmdLine)
-  if(cmdLine.debug) { debug = true } else { debug = false }
+  //console.log(cmdLine)
+  //if(cmdLine.debug) { debug = true } else { debug = false }
 
   //var SenchaCmdTemplatesDir = '/plugins/ext/current'
   //var ApplicationTemplatesDir = TemplatesDir + '/Application'
   var NodeDir = process.argv[0]
   var AppExe = process.argv[1]
 
-  console.log(NodeDir)
-  console.log(AppExe)
+  //console.log(NodeDir)
+  //console.log(AppExe)
 
 
   var Category = ''
@@ -69,19 +69,18 @@ const optionDefinitions = [
   try { Command = cmdLine.parms[1] }
   catch(e) { Command = '' }
 
-  util.dbgLog('NodeDir: ' + NodeDir);
-  util.dbgLog('AppExe: ' + AppExe);
-  util.dbgLog('Category: ' + Category);
-  util.dbgLog('Command: ' + Command);
-  util.dbgLog('CurrWorkingDir: ' + CurrWorkingDir);
-  util.dbgLog('NodeAppBinDir: ' + NodeAppBinDir);
-  util.dbgLog('SenchaCmdDir: ' + SenchaCmdDir);
-  util.dbgLog('TemplatesDir: ' + TemplatesDir);
-  util.dbgLog('NodeAppTemplatesDir: ' + NodeAppTemplatesDir);
+  // util.dbgLog('NodeDir: ' + NodeDir);
+  // util.dbgLog('AppExe: ' + AppExe);
+  // util.dbgLog('Category: ' + Category);
+  // util.dbgLog('Command: ' + Command);
+  // util.dbgLog('CurrWorkingDir: ' + CurrWorkingDir);
+  // util.dbgLog('NodeAppBinDir: ' + NodeAppBinDir);
+  // util.dbgLog('SenchaCmdDir: ' + SenchaCmdDir);
+  // util.dbgLog('TemplatesDir: ' + TemplatesDir);
+  // util.dbgLog('NodeAppTemplatesDir: ' + NodeAppTemplatesDir);
 
-  console.log(Category)
-  console.log(Command)
-
+//  console.log(Category)
+//  console.log(Command)
 
   switch(Category) {
     case 'app': case 'a':
