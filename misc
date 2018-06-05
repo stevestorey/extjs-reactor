@@ -2,8 +2,15 @@
     "@extjs/ext-classic-theme-graphite": "^6.6.0",
 
 npm login --registry=http://test.npm.sencha.com --scope=@extjs
-
 npm login --registry=http://test.npm.sencha.com --scope=@sencha
+
+
+npm login --registry=http://test.npm.sencha.com --scope=@extjs
+npm whoami --registry http://test.npm.sencha.com
+npm install -g @extjs/ext-gen@latest
+
+
+
 
 
 npm install -g @extjs/ext-gen
