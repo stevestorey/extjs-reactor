@@ -1,7 +1,7 @@
 .topview { 
   color: white; 
   font-size: $font-size;
-  background-color: darken($base-color, 20%);
+  background-color: darken($base-color, 30%);
 }
 
 .imgAll {

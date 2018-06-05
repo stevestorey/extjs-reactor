@@ -1,6 +1,10 @@
     "@extjs/ext-modern-treegrid": "^6.6.0",
     "@extjs/ext-classic-theme-graphite": "^6.6.0",
 
+npm login --registry=http://test.npm.sencha.com --scope=@extjs
+
+npm login --registry=http://test.npm.sencha.com --scope=@sencha
+
 
 npm install -g @extjs/ext-gen
 

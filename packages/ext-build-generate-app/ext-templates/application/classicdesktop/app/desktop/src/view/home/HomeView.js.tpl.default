@@ -7,25 +7,40 @@ Ext.define('{appName}.view.home.HomeView',{
 	extend: 'Ext.Container',
   html: `Welcome to the Ext JS 6.6 Classic Desktop Template Application!
 <br><br><br><br> 
-This page will explain the template
+This template has the standard architecture for a desktop application
 <br><br>
-It will go through the overall architecture of the template
+- header and footer with custom buttons and text
 <br><br>
-And review any view packages that have been created...
+- left-side collapsable menu with custom area on top of menu
+<br><br>
+- right-side (optional) detail view
+<br><br>
+- Single Page Application (spa) routing (note # in URL)
+<br><br>
+- Each View (menu) isolated into its own folder (under the 'view' folder) with
+<br><br>
+These files: View, View scss file, ViewController, ViewModel (called a ViewPackage)
 <br><br><br><br>
-For Example...
+Notice that the menu allows you to select from several views, 
 <br><br>
-Notice that the menu allows you to select from 2 views, 
+- Home (the view you are currently on)
 <br><br>
-Home (the view you are currently on), and Personnel
+- Personnel
 <br><br>
 select the personnel menu item to see an example of a page with an Ext JS grid
 <br><br><br><br>
-To build a new view package, navigate to 'app/desktop/src/view' in this project
-<br><br>
-run: npx ext-build generate viewpackage employee
-<br><br>
+To build a new ViewPackage, run:
+<br><br><br>
+npx ext-build generate viewpackage desktop employee
+<br><br><br>
 follow the instructions to add a menu item for this employeeview
+<br><br><br>
+Simple Theming:
+<br><br>
+go to 'app/desktop/sass/var.scss', uncomment one of the $base-color variables
+<br><br>
+more adventurous? go to 'app/shared/sass/var.scss', uncomment all lines
+
 
 `
 });

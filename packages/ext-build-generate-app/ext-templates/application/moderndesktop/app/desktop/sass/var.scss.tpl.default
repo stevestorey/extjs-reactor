@@ -1,17 +1,4 @@
-
-//$nav-background-color: #094158;
-//$base-color: lighten($nav-background-color,25%);
-
-//$base-color:red;
-
-$nav-background-color: darken($base-color,25%);
-$nav-color: white;
-
-$header-background-color: $base-color;
-$header-color: white;
-
-$footer-background-color: $base-color;
-$footer-color: white;
-
-//$footer-background-color: green;
-//$footer-color: yellow;
+//$base-color:#025B80; //Themer Blue
+//$base-color:#EF5350; //red-ish
+//$base-color:#8D6E63; //brown-ish
+//$base-color:#26A69A; //green-ish
