@@ -508,10 +508,14 @@ function displayDefaults() {
   console.log(boldGreen(`Defaults for Ext JS app:`))
   console.log(`appName:\t${answers['appName']}`)
   console.log(`template:\t${answers['template']}`)
-  console.log(`classic:\t${answers['classic']}`)
-  console.log(`modern:\t\t${answers['modern']}`)
-  console.log(`classicTheme:\t${answers['classicTheme']}`)
-  console.log(`modernTheme:\t${answers['modernTheme']}`)
+  //console.log(`classic:\t${answers['classic']}`)
+  //console.log(`modern:\t\t${answers['modern']}`)
+  if(answers['classic'] == true) {
+    console.log(`classicTheme:\t${answers['classicTheme']}`)
+  }
+  if(answers['modern'] == true) {
+    console.log(`modernTheme:\t${answers['modernTheme']}`)
+  }
   console.log('')
   console.log(boldGreen(`Defaults for package.json:`))
   console.log(`packageName:\t${answers['packageName']}`)
@@ -549,6 +553,7 @@ var message = `ext-gen (-h) (-d) (-i) (-a) (-n 'name') (-t 'template') (-m 'mode
 -t --template      name for Ext JS template used for generate
 -c --classictheme  theme name for Ext JS classic toolkit
 -m --moderntheme   theme name for Ext JS modern toolkit
+-f --folder        folder name for Ext JS application (not implemented yet)
 
 ${boldGreen('Examples:')} 
 ext-gen --auto --name CoolUniversalApp --template universalclassicmodern --classictheme theme-triton --moderntheme theme-material

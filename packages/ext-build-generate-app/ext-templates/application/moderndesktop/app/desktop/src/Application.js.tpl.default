@@ -2,7 +2,7 @@ Ext.define('{appName}.Application', {
 	extend: 'Ext.app.Application',
 	name: '{appName}',
 	requires: ['{appName}.*'],
-	defaultToken: 'personnelview',
+	defaultToken: 'homeview',
 
 	removeSplash: function () {
 		Ext.getBody().removeCls('launching')
