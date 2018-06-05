@@ -68,7 +68,7 @@
 <tpl if="universal == false">		"generated": {
 			"var": "app/shared/sass/save.scss",
 			"src": "app/shared/sass/save"
-		},</tpl
+		},</tpl>
     "etc": [
       //"node_modules/@extjs/ext/sass/etc/all.scss"
       "sass/etc/all.scss"
