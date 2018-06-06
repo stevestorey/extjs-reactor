@@ -1,6 +1,6 @@
 {
   "name": "@sencha/ext-gen",
-  "version": "0.0.156",
+  "version": "0.0.157",
   "description": "An Ext JS code generator",
   "bin": {
     "ext": "ext-gen.js",
@@ -24,7 +24,7 @@
     "cross-spawn": "^6.0.5",
     "fs-extra": "^6.0.1",
     "lodash": "^4.17.10",
-    "prompt-confirm": "^2.0.0",
+    "prompt-confirm": "^2.0.4",
     "prompt-input": "^3.0.0",
     "prompt-list": "^3.2.0"
   },

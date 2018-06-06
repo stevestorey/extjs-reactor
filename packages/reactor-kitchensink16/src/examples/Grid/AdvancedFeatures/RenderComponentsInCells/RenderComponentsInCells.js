@@ -22,17 +22,24 @@ export default class RendererCellExample extends Component {
                 <Column text="% Change" dataIndex="priceChangePct" renderer={this.renderNumberCell.bind(this, '0.00%')}/>
                 <Column text="Actions" flex={1} minWidth={210}>
                     <WidgetCell>
-                     <SegmentedButton maxWidth={300} items = {[{
+                     <SegmentedButton 
+                      maxWidth={300}
+                      allowDepress = {true} 
+                      items = {[
+                        {
                           text: 'Buy',
                           handler : this.buyHandler
-                        }, {
+                        }, 
+                        {
                           text: 'Sell',
                           handler : this.sellHandler
-                        }, {
+                        }, 
+                        {
                           text: 'Watch',
                           handler : this.watchHandler
-                          }]
-                     }  allowToggle = {false}
+                          }
+                        ]
+                      }
                      />
                     </WidgetCell>
                 </Column>

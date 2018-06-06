@@ -11,10 +11,9 @@ var nodeDir = path.resolve(__dirname)
 var pkg = (fs.existsSync(nodeDir + '/package.json') && JSON.parse(fs.readFileSync(nodeDir + '/package.json', 'utf-8')) || {});
 version = pkg.version
 
-console.log (`
-Welcome to ${boldGreen('Sencha ExtGen')} v${version} - The Ext JS code generator
+console.log (`Welcome to ${boldGreen('Sencha ExtGen')} v${version} - The Ext JS code generator
 
-${boldGreen('quick start:')} 
+${boldGreen('Quick Start:')} 
 ext-gen app MyAppName
 ext-gen app -i
  
