@@ -91,7 +91,7 @@ function stepStart() {
     console.log(`${app} ${cmdLine.interactive}`)
     return
   }
-  console.log(boldGreen(`\nSencha ExtGen v${version} - The Ext JS generator for npm`))
+  console.log(boldGreen(`\nSencha ExtGen v${version} - The Ext JS code generator`))
   console.log('')
   step00()
 }
@@ -99,30 +99,43 @@ function stepStart() {
 function step00() {
   setDefaults()
   if (cmdLine.command == undefined) {
-    console.log(`${app} no command specified`)
-    return
+    console.log('a')
+    stepShortHelp()
+//    return
   }
   else if (cmdLine.command != 'app') {
-    console.log(`${app} command is not 'app'`)
-    return
+    console.log('b')
+    console.log(`${app} unknown command '${cmdLine.command}'`)
+//    return
   }
   else if (process.argv.length == 2) {
+    console.log('c')
     stepShortHelp()
   }
   else if (cmdLine.help == true) {
-    stepHelp()
+    console.log('d')
+    stepHelpGeneral() 
   }
   else if (cmdLine.interactive == true) {
+    console.log('e')
     step00a()
   }
   else if (cmdLine.defaults == true) {
+    console.log('f')
     displayDefaults()
   }
   else if (cmdLine.auto == true) {
+    console.log('g')
+    step99()
+  }
+  else if (cmdLine.name != undefined) {
+    console.log('h')
+    cmdLine.auto = true
     step99()
   }
   else {
-    stepHelp()
+    console.log('i')
+    stepHelpGeneral()
   }
 }
 
@@ -342,6 +355,11 @@ function step99() {
     }
   }
 
+  if (cmdLine.auto == true) {
+    stepCreate()
+    return
+  }
+
   var message
   if (cmdLine.defaults == true) {
     message = 'Generate the Ext JS npm project?'
@@ -351,10 +369,7 @@ function step99() {
     message = 'Would you like to generate the Ext JS npm project with above config now?'
   }
 
-  if (cmdLine.auto == true) {
-    stepCreate()
-    return
-  }
+
 
   new Confirm({
     message: message,
@@ -546,7 +561,11 @@ function displayDefaults() {
   console.log('')
 }
 
-function stepHelp() {
+function stepHelpGeneral() {
+  stepHelpApp()
+}
+
+function stepHelpApp() {
 
 //Defaults: ${path.join(__dirname , 'config.json')}
 //Getting started: http://docs.sencha.com/ExtGen/1.0.0/guides/getting_started.html
@@ -561,7 +580,7 @@ function stepHelp() {
 
 var message = `${boldGreen('quick start:')} ext-gen -a
 
-ext-gen (-h) (-d) (-i) (-a) (-t 'template') (-m 'moderntheme') (-c 'classictheme') (-n 'name') (-f 'folder')
+ext-gen app (-h) (-d) (-i) (-a) (-t 'template') (-m 'moderntheme') (-c 'classictheme') (-n 'name') (-f 'folder')
 
 -h --help          show help (no parameters also shows help)
 -d --defaults      show defaults for package.json
@@ -574,11 +593,11 @@ ext-gen (-h) (-d) (-i) (-a) (-t 'template') (-m 'moderntheme') (-c 'classictheme
 -f --folder        folder name for Ext JS application (not implemented yet)
 
 ${boldGreen('Examples:')} 
-ext-gen --auto --template universalclassicmodern --classictheme theme-triton --moderntheme theme-material --name CoolUniversalApp
-ext-gen --auto --template classicdesktop --classictheme theme-triton --name CoolDesktopApp 
-ext-gen --interactive
-ext-gen -a --classictheme theme-graphite -n ClassicApp
-ext-gen -a -t moderndesktop -n ModernApp
+ext-gen app --auto --template universalclassicmodern --classictheme theme-triton --moderntheme theme-material --name CoolUniversalApp
+ext-gen app --auto --template classicdesktop --classictheme theme-triton --name CoolDesktopApp 
+ext-gen app --interactive
+ext-gen app -a --classictheme theme-graphite -n ClassicApp
+ext-gen app -a -t moderndesktop -n ModernApp
 
 ${boldGreen('Templates:')}
 You can select from 4 Ext JS templates provided by Sencha ExtGen
@@ -605,7 +624,7 @@ ${boldGreen('modern themes:')}  theme-material, theme-ios, theme-neptune, theme-
 
 function stepShortHelp() {
   var message = `${boldGreen('quick start:')} ext-gen app -a
-${boldGreen('quick start:')} ext-gen app -i
+             ext-gen app -i
  
   ${boldGreen('Examples:')} 
   ext-gen app --auto --template universalclassicmodern --classictheme theme-triton --moderntheme theme-material --name CoolUniversalApp
