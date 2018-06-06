@@ -1,6 +1,6 @@
 {
-  "name": "@extjs/ext-webpack-plugin",
-  "version": "0.0.147",
+  "name": "@sencha/ext-webpack-plugin",
+  "version": "0.0.148",
   "description": "A webpack plugin for new Ext JS applications",
   "main": "./lib/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "bundleDependencies": [],
   "dependencies": {
-    "@extjs/ext-build": "~0.0.1",
+    "@sencha/ext-build": "~0.0.1",
     "react": "^16.4.0",
     "react-hot-loader": "^4.2.0",
     "lodash.uniq": "^4.5.0",
