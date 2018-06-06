@@ -98,43 +98,42 @@ function stepStart() {
 
 function step00() {
   setDefaults()
-  if (cmdLine.command == undefined) {
-    console.log('a')
-    stepShortHelp()
-//    return
-  }
-  else if (cmdLine.command != 'app') {
-    console.log('b')
-    console.log(`${app} unknown command '${cmdLine.command}'`)
-//    return
-  }
-  else if (process.argv.length == 2) {
-    console.log('c')
-    stepShortHelp()
-  }
-  else if (cmdLine.help == true) {
-    console.log('d')
+  if (cmdLine.help == true) {
+    //console.log('d')
     stepHelpGeneral() 
   }
+  else if (cmdLine.command == undefined) {
+    //console.log('a')
+    stepShortHelp()
+  }
+  else if (cmdLine.command != 'app') {
+    //console.log('b')
+    console.log(`${app} unknown command '${cmdLine.command}'`)
+  }
+  else if (process.argv.length == 2) {
+    //console.log('c')
+    stepShortHelp()
+  }
+
   else if (cmdLine.interactive == true) {
-    console.log('e')
+    //console.log('e')
     step00a()
   }
   else if (cmdLine.defaults == true) {
-    console.log('f')
+    //console.log('f')
     displayDefaults()
   }
   else if (cmdLine.auto == true) {
-    console.log('g')
+    //console.log('g')
     step99()
   }
   else if (cmdLine.name != undefined) {
-    console.log('h')
+    //console.log('h')
     cmdLine.auto = true
     step99()
   }
   else {
-    console.log('i')
+    //console.log('i')
     stepHelpGeneral()
   }
 }
@@ -623,18 +622,21 @@ ${boldGreen('modern themes:')}  theme-material, theme-ios, theme-neptune, theme-
 
 
 function stepShortHelp() {
-  var message = `${boldGreen('quick start:')} ext-gen app -a
-             ext-gen app -i
+  var message = `${boldGreen('quick start:')} 
+ext-gen app -n MyApp
+ext-gen app -i
  
-  ${boldGreen('Examples:')} 
-  ext-gen app --auto --template universalclassicmodern --classictheme theme-triton --moderntheme theme-material --name CoolUniversalApp
-  ext-gen app --auto --template classicdesktop --classictheme theme-triton --name CoolDesktopApp 
-  ext-gen app --interactive
-  ext-gen app -a --classictheme theme-graphite -n ClassicApp
-  ext-gen app -a -t moderndesktop -n ModernApp
-   `
-    console.log(message)
-  }
+${boldGreen('Examples:')} 
+ext-gen app --auto --template universalclassicmodern --classictheme theme-triton --moderntheme theme-material --name CoolUniversalApp
+ext-gen app --auto --template classicdesktop --classictheme theme-triton --name CoolDesktopApp 
+ext-gen app --interactive
+ext-gen app -a --classictheme theme-graphite -n ClassicApp
+ext-gen app -a -t moderndesktop -n ModernApp
+
+Run ext-gen --help to see all options
+`
+  console.log(message)
+}
   
 
 
