@@ -4,9 +4,9 @@
   "description": "{description}",
   "scripts": {
     "start": "webpack-dev-server -w --progress --open",
-    "createview": "npx ext-build generate viewpackage $npm_package_extbuild_buildprofile $VIEW",
-    "buildtest": "npx ext-build app build $npm_package_extbuild_buildprofile testing",
-    "buildprod": "npx ext-build app build $npm_package_extbuild_buildprofile production"
+    "buildtest": "ext-build app build $npm_package_extbuild_buildprofile testing",
+    "buildprod": "ext-build app build $npm_package_extbuild_buildprofile production",
+    "createview": "ext-build generate viewpackage $npm_package_extbuild_buildprofile $VIEW"
   },
   "extbuild": {
     "buildprofile": "desktop", 

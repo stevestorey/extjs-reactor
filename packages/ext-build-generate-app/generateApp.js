@@ -83,7 +83,7 @@ class generateApp {
 
     var SdkVal
     var Packages
-    var n = Sdk.indexOf(`${npmScope`);
+    var n = Sdk.indexOf(`${npmScope}`);
     if (n == -1) {
       SdkVal = 'ext'
       Packages = '$\u007Bworkspace.dir}/packages'
