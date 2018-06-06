@@ -80,49 +80,52 @@ function stepStart() {
   version = pkg.version
   var data = fs.readFileSync(nodeDir + '/config.json')
   config = JSON.parse(data)
+
+  console.log(boldGreen(`\nSencha ExtGen v${version} - The Ext JS code generator`))
+  console.log('')
   
   let mainDefinitions = [{ name: 'command', defaultOption: true }]
   const mainCommandArgs = commandLineArgs(mainDefinitions, { stopAtFirstUnknown: true })
-  console.log('')
-  console.log(`mainCommandArgs: ${JSON.stringify(mainCommandArgs)}`)
+//  console.log('')
+//  console.log(`mainCommandArgs: ${JSON.stringify(mainCommandArgs)}`)
   var mainCommand = mainCommandArgs.command
-  console.log(`mainCommand: ${JSON.stringify(mainCommand)}`)
+//  console.log(`mainCommand: ${JSON.stringify(mainCommand)}`)
   switch(mainCommand) {
     case undefined:
       let argv = mainCommandArgs._unknown || []
       if (argv.length == 0 ){
-        console.log(`cmdLine: ${JSON.stringify(cmdLine)}`)
-        console.log(`\n\nShortHelp`)
+//        console.log(`cmdLine: ${JSON.stringify(cmdLine)}`)
+//        console.log(`\n\nShortHelp`)
         stepShortHelp()
         break;
       }
       if (argv.length > 1) {
-        console.log(`too many switches: ${argv.toString()}`)
+        console.log(`${app} ${boldRed('[ERR]')} too many switches: ${argv.toString()}`)
       }
       else {
         cmdLine = commandLineArgs(optionDefinitions, { argv: argv, stopAtFirstUnknown: true })
-        console.log(`cmdLine: ${JSON.stringify(cmdLine)}`)
-        console.log(`\n\nstep00`)
+//        console.log(`cmdLine: ${JSON.stringify(cmdLine)}`)
+//        console.log(`\n\nstep00`)
         step00()
       }
       break;
     case 'app':
       cmdLine.command = mainCommand
       let appArgs = mainCommandArgs._unknown || []
-      console.log(`appArgs: ${JSON.stringify(appArgs)}`)
+//      console.log(`appArgs: ${JSON.stringify(appArgs)}`)
       let appDefinitions = [{ name: 'appName', defaultOption: true }]
       const appCommandArgs = commandLineArgs(appDefinitions, { argv: appArgs, stopAtFirstUnknown: true })
-      console.log(`appCommandArgs: ${JSON.stringify(appCommandArgs)}`)
+//      console.log(`appCommandArgs: ${JSON.stringify(appCommandArgs)}`)
       var appName = appCommandArgs.appName
-      console.log(`appName: ${JSON.stringify(appName)}`)
+//      console.log(`appName: ${JSON.stringify(appName)}`)
       if (appName != undefined) {
         cmdLine.name = appName
       }
       let appSubArgs = appCommandArgs._unknown || []
-      console.log(`appSubArgs: ${JSON.stringify(appSubArgs)}`)
+//      console.log(`appSubArgs: ${JSON.stringify(appSubArgs)}`)
       if (appSubArgs.length == 0) {
-        console.log(`cmdLine: ${JSON.stringify(cmdLine)}`)
-        console.log(`\n\nstep00`)
+//        console.log(`cmdLine: ${JSON.stringify(cmdLine)}`)
+//        console.log(`\n\nstep00`)
         step00()
       }
       else {
@@ -135,81 +138,60 @@ function stepStart() {
           cmdLine = commandLineArgs(optionDefinitions, { argv: appSubArgs, stopAtFirstUnknown: false })
         }
         catch (e) {
-          console.log(`${app} ${e}`)
+          console.log(`${app} ${boldRed('[ERR]')} ${JSON.stringify(e)}`)
           return
         }
         cmdLine.command = command
         if (name != '') {
           cmdLine.name = name
         }
-        console.log(`cmdLine: ${JSON.stringify(cmdLine)}`)
-        console.log(`\n\nstep00`)
+//        console.log(`cmdLine: ${JSON.stringify(cmdLine)}`)
+//        console.log(`\n\nstep00`)
         step00()
       }
       break;
     default:
-        console.log('????')
+      console.log(`${app} ${boldRed('[ERR]')} command not available: '${mainCommand}'`)
   }
-
-  // console.log('here?')
-  
-
-
-  // //return
-  
-  
-  
-  
-  // try{
-  //   cmdLine = commandLineArgs(optionDefinitions)
-  // }
-  // catch (e) {
-  //   console.log(`${app} ${e}`)
-  //   console.log(`${app} ${cmdLine.interactive}`)
-  //   return
-  // }
-  // console.log(boldGreen(`\nSencha ExtGen v${version} - The Ext JS code generator`))
-  // console.log('')
-  // step00()
 }
 
 function step00() {
   setDefaults()
   if (cmdLine.help == true) {
-    console.log('d')
+//    console.log('d')
     stepHelpGeneral() 
   }
 
   else if (cmdLine.command == undefined) {
-    console.log(boldRed(`[ERR] - no command specified (app, view)`))
+    console.log(`${app} ${boldRed('[ERR]')} no command specified (app, view)`)
     
-    console.log('a')
-    stepShortHelp()
+    //console.log('a')
+    //stepShortHelp()
   }
   else if (cmdLine.defaults == true) {
-    console.log('f')
+//    console.log('f')
     displayDefaults()
   }
   else if (cmdLine.command != 'app') {
-    console.log('b')
-    console.log(`${app} unknown command '${cmdLine.command}'`)
+//    console.log('b')
+    console.log(`${app} ${boldRed('[ERR]')} unknown command '${cmdLine.command}'`)
   }
   else if (process.argv.length == 2) {
-    console.log('c')
+//    console.log('c')
     stepShortHelp()
   }
 
   else if (cmdLine.interactive == true && cmdLine.command != 'app') {
-    console.log('e')
+//    console.log('e')
     step00a()
   }
 
   else if (cmdLine.auto == true) {
-    console.log('g')
+//    console.log('g')
     step99()
   }
   else if (cmdLine.name != undefined) {
-    console.log('h')
+//    console.log('h')
     cmdLine.auto = true
     step99()
   }
