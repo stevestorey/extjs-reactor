@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const npmScope = '@extjs'
+const npmScope = '@sencha'
 const { spawn } = require('child_process');
 const chalk = require('chalk');
 const fs = require('fs-extra')

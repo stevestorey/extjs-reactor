@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-const npmScope = '@extjs'
+const npmScope = '@sencha'
 const path = require('path');
 const fs = require('fs-extra');
 const { kebabCase } = require('lodash')
@@ -58,6 +58,8 @@ var answers = {
 }
 
 const optionDefinitions = [
+  { name: 'command', defaultOption: true },
+
   { name: 'interactive', alias: 'i', type: Boolean },
   { name: 'help', alias: 'h', type: Boolean },
   { name: 'defaults', alias: 'd', type: Boolean },
@@ -74,6 +76,8 @@ var cmdLine = {}
 stepStart()
 
 function stepStart() {
+//  var command = process.argv[2]
+//  console.log(command)
   var nodeDir = path.resolve(__dirname)
   var pkg = (fs.existsSync(nodeDir + '/package.json') && JSON.parse(fs.readFileSync(nodeDir + '/package.json', 'utf-8')) || {});
   version = pkg.version
@@ -84,16 +88,28 @@ function stepStart() {
   }
   catch (e) {
     console.log(`${app} ${e}`)
+    console.log(`${app} ${cmdLine.interactive}`)
     return
   }
-  console.log(boldGreen(`\nSencha ExtGen v${version} - The Ext JS project generator for npm`))
+  console.log(boldGreen(`\nSencha ExtGen v${version} - The Ext JS generator for npm`))
   console.log('')
   step00()
 }
 
 function step00() {
   setDefaults()
-  if (process.argv.length == 2 || cmdLine.help == true) {
+  if (cmdLine.command == undefined) {
+    console.log(`${app} no command specified`)
+    return
+  }
+  else if (cmdLine.command != 'app') {
+    console.log(`${app} command is not 'app'`)
+    return
+  }
+  else if (process.argv.length == 2) {
+    stepShortHelp()
+  }
+  else if (cmdLine.help == true) {
     stepHelp()
   }
   else if (cmdLine.interactive == true) {
@@ -419,17 +435,17 @@ async function stepCreate() {
     console.log(boldRed('Error in npm install: ' + err));
   }
 
-  var frameworkPath = path.join(destDir, 'node_modules', '@extjs', 'ext', 'package.json');
-  var cmdPath = path.join(destDir, 'node_modules', '@extjs', 'sencha-cmd', 'package.json');
+  var frameworkPath = path.join(destDir, 'node_modules', npmScope, 'ext', 'package.json');
+  var cmdPath = path.join(destDir, 'node_modules', npmScope, 'sencha-cmd', 'package.json');
   var frameworkPkg = require(frameworkPath);
   var cmdPkg = require(cmdPath);
   var cmdVersion = cmdPkg.version_full
   var frameworkVersion = frameworkPkg.sencha.version
 
-  var generateApp = require('@extjs/ext-build-generate-app/generateApp.js')
+  var generateApp = require(`${npmScope}/ext-build-generate-app/generateApp.js`)
   var options = { 
     parms: [ 'generate', 'app', answers['appName'], './' ],
-    sdk: 'node_modules/@extjs/ext',
+    sdk: `node_modules/${npmScope}/ext`,
     template: answers['template'],
     classicTheme: answers['classicTheme'],
     modernTheme: answers['modernTheme'],
@@ -543,7 +559,9 @@ function stepHelp() {
 // You can create the package.json file for your app using defaults
 
 
-var message = `ext-gen (-h) (-d) (-i) (-a) (-t 'template') (-m 'moderntheme') (-c 'classictheme') (-n 'name') (-f 'folder')
+var message = `${boldGreen('quick start:')} ext-gen -a
+
+ext-gen (-h) (-d) (-i) (-a) (-t 'template') (-m 'moderntheme') (-c 'classictheme') (-n 'name') (-f 'folder')
 
 -h --help          show help (no parameters also shows help)
 -d --defaults      show defaults for package.json
@@ -583,6 +601,22 @@ ${boldGreen('modern themes:')}  theme-material, theme-ios, theme-neptune, theme-
 `
   console.log(message)
 }
+
+
+function stepShortHelp() {
+  var message = `${boldGreen('quick start:')} ext-gen app -a
+${boldGreen('quick start:')} ext-gen app -i
+ 
+  ${boldGreen('Examples:')} 
+  ext-gen app --auto --template universalclassicmodern --classictheme theme-triton --moderntheme theme-material --name CoolUniversalApp
+  ext-gen app --auto --template classicdesktop --classictheme theme-triton --name CoolDesktopApp 
+  ext-gen app --interactive
+  ext-gen app -a --classictheme theme-graphite -n ClassicApp
+  ext-gen app -a -t moderndesktop -n ModernApp
+   `
+    console.log(message)
+  }
+  
 
 
 // "{npmScope}/ext-modern-theme-material": "^6.6.0",
