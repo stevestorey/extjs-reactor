@@ -158,45 +158,32 @@ function stepStart() {
 function step00() {
   setDefaults()
   if (cmdLine.help == true) {
-//    console.log('d')
     stepHelpGeneral() 
   }
 
   else if (cmdLine.command == undefined) {
     console.log(`${app} ${boldRed('[ERR]')} no command specified (app, view)`)
-    
-    //console.log('a')
-    //stepShortHelp()
   }
   else if (cmdLine.defaults == true) {
-//    console.log('f')
     displayDefaults()
   }
   else if (cmdLine.command != 'app') {
-//    console.log('b')
     console.log(`${app} ${boldRed('[ERR]')} unknown command '${cmdLine.command}'`)
   }
   else if (process.argv.length == 2) {
-//    console.log('c')
     stepShortHelp()
   }
-
   else if (cmdLine.interactive == true && cmdLine.command != 'app') {
-//    console.log('e')
     step00a()
   }
-
   else if (cmdLine.auto == true) {
-//    console.log('g')
     step99()
   }
   else if (cmdLine.name != undefined) {
-//    console.log('h')
     cmdLine.auto = true
     step99()
   }
   else {
-    //console.log('i')
     stepHelpGeneral()
   }
 }
@@ -262,21 +249,6 @@ function step03() {
 }
 
 function step04() {
-
-  // choices: {
-  //   desktopclassic: `Desktop build using classic toolkit`
-  //   desktopmodern: `Desktop build using modern toolkit`
-  //   universalclassicmodern: `Universal App: desktop build using classic toolkit, phone build using modern toolkit`
-  //   universalmodern: `Universal App: desktop build using classic toolkit, phone build using modern toolkit`
-  // }
-
-  // choices: [
-  //   `Desktop application: desktop profile using classic toolkit`, //'classicdesktop',
-  //   `Desktop application: desktop profile using modern toolkit`, //'classicdesktop',
-  //   `Universal Application: desktop profile using classic toolkit, phone profile using modern toolkit`,
-  //   `Universal Application: desktop profile using classic toolkit, phone profile using modern toolkit`
-  // ],
-
   new List({
     message: 'What Ext JS template would you like to use?',
     choices: ['classicdesktop', 'moderndesktop', 'universalclassicmodern', 'universalmodern'],
@@ -431,8 +403,6 @@ function step99() {
     message = 'Would you like to generate the Ext JS npm project with above config now?'
   }
 
-
-
   new Confirm({
     message: message,
     default: config.createNow
@@ -449,10 +419,6 @@ function step99() {
 }
 
 async function stepCreate() {
-  // for (var key in answers) { console.log(`${key} - ${answers[key]}`) }
-  // var spawnPromise = require('./utils.js');
-  //const app = `${chalk.green('ℹ ｢ext｣:')} ext-gen:`;
-
   var nodeDir = path.resolve(__dirname)
   var currDir = process.cwd()
   var destDir = currDir + '/' + answers['packageName']
@@ -532,7 +498,7 @@ async function stepCreate() {
     force: false
   }
   new generateApp(options)
-  console.log(`${app} Your Ext JS npm project is ready`)
+  console.log(`${app} Your Ext JS project is ready`)
   console.log(boldGreen(`\ntype "cd ${answers['packageName']}" then "npm start" to run the development build and open your new application in a web browser\n`))
  }
 
@@ -587,22 +553,19 @@ async function stepCreate() {
 }
 
 function displayDefaults() {
-  //console.log('')
   //console.log(`For controlling ext-gen:`)
   //console.log(`seeDefaults:\t${config.seeDefaults}`)
   //console.log(`useDefaults:\t${config.useDefaults}`)
   //console.log(`createNow:\t${config.createNow}`)
-  //console.log('')
-  //console.log('')
   //console.log(`For template selection:`)
   //console.log(`templateType:\t${config.templateType}`)
   //console.log(`templateFolderName:\t${config.templateFolderName}`)
+  //console.log(`classic:\t${answers['classic']}`)
+  //console.log(`modern:\t\t${answers['modern']}`)
 
   console.log(boldGreen(`Defaults for Ext JS app:`))
   console.log(`appName:\t${answers['appName']}`)
   console.log(`template:\t${answers['template']}`)
-  //console.log(`classic:\t${answers['classic']}`)
-  //console.log(`modern:\t\t${answers['modern']}`)
   if(answers['classic'] == true) {
     console.log(`classicTheme:\t${answers['classicTheme']}`)
   }
@@ -629,18 +592,7 @@ function stepHelpGeneral() {
 
 function stepHelpApp() {
 
-//Defaults: ${path.join(__dirname , 'config.json')}
-//Getting started: http://docs.sencha.com/ExtGen/1.0.0/guides/getting_started.html
-// ${boldGreen('Sencha ExtGen')} is a tool create a Sencha Ext JS application with open source tooling:
-// - npm
-// - webpack and webpack-dev-server
-// - Sencha ExtBuild
-// - Ext JS framework as npm packages from Sencha npm repository
- 
-// You can create the package.json file for your app using defaults
-
-
-var message = `${boldGreen('quick start:')} ext-gen -a
+  var message = `${boldGreen('Quick Start:')} ext-gen -a
 
 ext-gen app (-h) (-d) (-i) (-a) (-t 'template') (-m 'moderntheme') (-c 'classictheme') (-n 'name') (-f 'folder')
 
@@ -683,9 +635,8 @@ ${boldGreen('modern themes:')}  theme-material, theme-ios, theme-neptune, theme-
   console.log(message)
 }
 
-
 function stepShortHelp() {
-  var message = `${boldGreen('quick start:')} 
+  var message = `${boldGreen('Quick Start:')} 
 ext-gen app MyAppName
 ext-gen app -i
  
@@ -700,26 +651,3 @@ Run ${boldGreen('ext-gen --help')} to see all options
 `
   console.log(message)
 }
-  
-
-
-// "{npmScope}/ext-modern-theme-material": "^6.6.0",
-// "{npmScope}/ext-modern-theme-ios": "^6.6.0",
-// "{npmScope}/ext-modern-theme-neptune": "^6.6.0",
-// "{npmScope}/ext-modern-theme-triton": "^6.6.0",
-
-// "{npmScope}/ext-classic-theme-classic": "^6.6.0",
-// "{npmScope}/ext-classic-theme-neptune": "^6.6.0",
-// "{npmScope}/ext-classic-theme-neptune-touch": "^6.6.0",
-// "{npmScope}/ext-classic-theme-crisp": "^6.6.0",
-// "{npmScope}/ext-classic-theme-crisp-touch": "^6.6.0",
-// "{npmScope}/ext-classic-theme-triton": "^6.6.0",
-
-//** "calendar","charts","d3","pivot","pivot-d3","ux","font-awesome" **//
-// "{npmScope}/ext-calendar": "^6.6.0",
-// "{npmScope}/ext-charts": "^6.6.0",
-// "{npmScope}/ext-exporter": "^6.6.0",
-// "{npmScope}/ext-pivot": "^6.6.0",
-// "{npmScope}/ext-d3": "^6.6.0",
-// "{npmScope}/ext-pivot-d3": "^6.6.0",
-// "{npmScope}/ext-pivot-locale": "^6.6.0"
