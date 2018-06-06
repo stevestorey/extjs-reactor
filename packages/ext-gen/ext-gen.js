@@ -451,7 +451,7 @@ async function stepCreate() {
   }
 
   var frameworkPath = path.join(destDir, 'node_modules', npmScope, 'ext', 'package.json');
-  var cmdPath = path.join(destDir, 'node_modules', npmScope, 'sencha-cmd', 'package.json');
+  var cmdPath = path.join(destDir, 'node_modules', npmScope, 'cmd', 'package.json');
   var frameworkPkg = require(frameworkPath);
   var cmdPkg = require(cmdPath);
   var cmdVersion = cmdPkg.version_full
