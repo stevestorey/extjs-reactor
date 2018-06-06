@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, ActionSheet, Container, Button, SparkLineLine, RendererCell, Column, TextColumn, CheckColumn, NumberColumn, DateColumn, Rating, GridSummaryRow } from '@extjs/reactor/modern';
+import { Grid, ActionSheet, Container, Button, SparkLineLine, RendererCell, Column, TextColumn, CheckColumn, NumberColumn, DateColumn, Rating, GridSummaryRow, WidgetCell } from '@extjs/reactor/modern';
 import model from './GridModel';
 import './data';
 import './style.css';
@@ -44,7 +44,7 @@ export default class BigDataGridExample extends Component {
               <Button handler={this.onCancelExport} text="Cancel"/>
           </ActionSheet>
         <Grid
-          title="Big Data Grid"
+          title="Big Data Grid"        
           store={this.store}
           shadow
           grouped
@@ -61,6 +61,10 @@ export default class BigDataGridExample extends Component {
             xtype: 'gridsummaryrow'
           }}
           itemConfig={{
+          // ViewModel is required to use bind property 
+          viewModel: {
+            
+          },
             body: {
               tpl: this.rowBodyTpl
             }
@@ -153,6 +157,7 @@ export default class BigDataGridExample extends Component {
                   text: 'Avg',
                   xtype: 'numbercolumn',
                   dataIndex: 'averageRating',
+                  renderer : this.renderRating,
                   summary: 'average',
                   width: 75,
                   cell: {
@@ -173,7 +178,8 @@ export default class BigDataGridExample extends Component {
                   xtype: 'widgetcell',
                   forceWidth: true,
                   widget: {
-                    xtype: 'sparklineline'
+                    xtype: 'sparklineline',
+                    tipTpl:'Price: {y:number("0.00")}'
                   }
                 }
               }
@@ -233,15 +239,25 @@ export default class BigDataGridExample extends Component {
               text=""
               width="100"
               ignoreExport
-              dataIndex="verified"
               align="center"
-              cell={{
-                  renderer:this.renderVerify,
-                  summaryRenderer:this.renderVerifyAll,
-                  encodeHtml: false,
-                  bodyStyle:{ padding: 0 }
+              // Summary rows do not create widgetcells unless set as
+              // the summaryCell
+              summaryCell =  {{
+                  xtype: 'widgetcell',
+                  widget: {
+                    xtype: 'button',
+                    ui: 'action',
+                    text: 'All',
+                    handler: this.onVerifyAll
+                  }
               }}
-              />
+            >
+              <WidgetCell>
+                <Button ui ="action" handler = {this.onVerify} 
+                        bind = {{tooltip : 'Verify {record.fullName}'}} text = "VERIFY"/>
+              </WidgetCell>
+          </Column>
+              
 {/*
           <Column
               text=""
@@ -445,13 +461,16 @@ export default class BigDataGridExample extends Component {
     });
   }
 
-  onVerify = (record) => {
+  onVerify = (button) => {
+    let cell = button.up('widgetcell'),
+        record = cell.getRecord();
     record.set('verified', !record.get('verified'));
   }
 
   onVerifyAll = (cell) => {
     let row = cell.up('gridrow'),
         group = row.getGroup(),
+        grid = cell.up('grid'),
         store = this.store,
         count;
 
@@ -475,7 +494,7 @@ export default class BigDataGridExample extends Component {
             store.resumeEvent('update');
 
             // Now update all the things
-            this.grid.refresh();
+            grid.refresh();
         }
       }
     );
