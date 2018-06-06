@@ -1,6 +1,6 @@
 {
-  "name": "@extjs/ext-build-generate-app",
-  "version": "0.0.147",
+  "name": "@sencha/ext-build-generate-app",
+  "version": "0.0.148",
   "description": "ext-build-generate-app - app generator for ext-gen and ext-build",
   "main": "generateApp.js",
   "dependencies": {
@@ -16,5 +16,5 @@
   },
   "author": "Sencha, Inc.",
   "license": "MIT",
-  "homepage": "https://github.com/sencha/extjs-reactor/tree/master/packages/ext-build"
+  "homepage": "https://github.com/sencha/extjs-reactor/tree/master/packages/ext-build-generate-app"
 }
