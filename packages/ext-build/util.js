@@ -1,7 +1,8 @@
+const npmScope = '@sencha'
 var chalk = require('chalk');
 var fs = require('fs-extra')
 var json = require('comment-json');
-const sencha = require('@extjs/sencha-cmd')
+const sencha = require(`${npmScope}/cmd`)
 const spawnSync = require('child_process').spawnSync
 const spawn = require('child_process').spawn
 const crossSpawn = require('cross-spawn')
@@ -13,7 +14,7 @@ if (require('os').platform() == 'darwin') {
 else {
   prefix = `i [ext]:`
 }
-const app = `${chalk.green(prefix)} ext-build:`
+const app = `${chalk.green(prefix)} ext-build-util:`
 const DEFAULT_SUBSTRS = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
 
 exports.senchaCmd = (parms) => {
