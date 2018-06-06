@@ -1,3 +1,4 @@
+const npmScope = '@sencha'
 const chalk = require('chalk')
 const path = require('path')
 const fs = require('fs')
@@ -160,7 +161,7 @@ export default class ExtWebpackPlugin {
 
         if (currentNumFiles != me.lastNumFiles || doBuild) {
           me.lastNumFiles = currentNumFiles
-          var buildAsync = require('@extjs/ext-build/app/buildAsync.js')
+          var buildAsync = require(`${npmScope}/ext-build/app/buildAsync.js`)
           var buildOptions = {parms: ['app','build',me.options.profile, me.options.environment]}
           new buildAsync(buildOptions).executeAsync().then(function() {
             cb()
@@ -197,9 +198,9 @@ export default class ExtWebpackPlugin {
       //   }
 
       //   if (currentNumFiles != this.lastNumFiles || doBuild) {
-      //     var build = require('@extjs/ext-build/app/build.js')
+      //     var build = require(`${npmScope}/ext-build/app/build.js`)
       //     new build({})
-      //     //var refresh = require('@extjs/sencha-build/app/refresh.js')
+      //     //var refresh = require(`${npmScope}/sencha-build/app/refresh.js`)
       //     //new refresh({})
       //   }
       //   else {
@@ -217,11 +218,11 @@ export default class ExtWebpackPlugin {
           source: function() {return filelist},
           size: function() {return filelist.length}
         }
-        var refresh = require('@extjs/ext-build/app/refresh.js')
+        var refresh = require(`${npmScope}/ext-build/app/refresh.js`)
         new refresh({})
 
         // console.log('THIS IS IT')
-        // var buildAsync = require('@extjs/ext-build/app/buildAsync.js')
+        // var buildAsync = require(`${npmScope}/ext-build/app/buildAsync.js`)
         // console.log(buildAsync)
         // new buildAsync().executeAsync().then(function() {
         //   console.log('then call');
