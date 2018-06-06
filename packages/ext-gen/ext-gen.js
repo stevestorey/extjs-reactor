@@ -59,7 +59,6 @@ var answers = {
 
 const optionDefinitions = [
   { name: 'command', defaultOption: true },
-
   { name: 'interactive', alias: 'i', type: Boolean },
   { name: 'help', alias: 'h', type: Boolean },
   { name: 'defaults', alias: 'd', type: Boolean },
@@ -76,59 +75,141 @@ var cmdLine = {}
 stepStart()
 
 function stepStart() {
-//  var command = process.argv[2]
-//  console.log(command)
   var nodeDir = path.resolve(__dirname)
   var pkg = (fs.existsSync(nodeDir + '/package.json') && JSON.parse(fs.readFileSync(nodeDir + '/package.json', 'utf-8')) || {});
   version = pkg.version
   var data = fs.readFileSync(nodeDir + '/config.json')
   config = JSON.parse(data)
-  try{
-    cmdLine = commandLineArgs(optionDefinitions)
-  }
-  catch (e) {
-    console.log(`${app} ${e}`)
-    console.log(`${app} ${cmdLine.interactive}`)
-    return
-  }
-  console.log(boldGreen(`\nSencha ExtGen v${version} - The Ext JS code generator`))
+  
+  let mainDefinitions = [{ name: 'command', defaultOption: true }]
+  const mainCommandArgs = commandLineArgs(mainDefinitions, { stopAtFirstUnknown: true })
   console.log('')
-  step00()
+  console.log(`mainCommandArgs: ${JSON.stringify(mainCommandArgs)}`)
+  var mainCommand = mainCommandArgs.command
+  console.log(`mainCommand: ${JSON.stringify(mainCommand)}`)
+  switch(mainCommand) {
+    case undefined:
+      let argv = mainCommandArgs._unknown || []
+      if (argv.length == 0 ){
+        console.log(`cmdLine: ${JSON.stringify(cmdLine)}`)
+        console.log(`\n\nShortHelp`)
+        stepShortHelp()
+        break;
+      }
+      if (argv.length > 1) {
+        console.log(`too many switches: ${argv.toString()}`)
+      }
+      else {
+        cmdLine = commandLineArgs(optionDefinitions, { argv: argv, stopAtFirstUnknown: true })
+        console.log(`cmdLine: ${JSON.stringify(cmdLine)}`)
+        console.log(`\n\nstep00`)
+        step00()
+      }
+      break;
+    case 'app':
+      cmdLine.command = mainCommand
+      let appArgs = mainCommandArgs._unknown || []
+      console.log(`appArgs: ${JSON.stringify(appArgs)}`)
+      let appDefinitions = [{ name: 'appName', defaultOption: true }]
+      const appCommandArgs = commandLineArgs(appDefinitions, { argv: appArgs, stopAtFirstUnknown: true })
+      console.log(`appCommandArgs: ${JSON.stringify(appCommandArgs)}`)
+      var appName = appCommandArgs.appName
+      console.log(`appName: ${JSON.stringify(appName)}`)
+      if (appName != undefined) {
+        cmdLine.name = appName
+      }
+      let appSubArgs = appCommandArgs._unknown || []
+      console.log(`appSubArgs: ${JSON.stringify(appSubArgs)}`)
+      if (appSubArgs.length == 0) {
+        console.log(`cmdLine: ${JSON.stringify(cmdLine)}`)
+        console.log(`\n\nstep00`)
+        step00()
+      }
+      else {
+        var command = cmdLine.command
+        var name = ''
+        if (cmdLine.name != undefined) {
+          name = cmdLine.name
+        }
+        try{
+          cmdLine = commandLineArgs(optionDefinitions, { argv: appSubArgs, stopAtFirstUnknown: false })
+        }
+        catch (e) {
+          console.log(`${app} ${e}`)
+          return
+        }
+        cmdLine.command = command
+        if (name != '') {
+          cmdLine.name = name
+        }
+        console.log(`cmdLine: ${JSON.stringify(cmdLine)}`)
+        console.log(`\n\nstep00`)
+        step00()
+      }
+      break;
+    default:
+        console.log('????')
+  }
+
+  // console.log('here?')
+  
+
+
+  // //return
+  
+  
+  
+  
+  // try{
+  //   cmdLine = commandLineArgs(optionDefinitions)
+  // }
+  // catch (e) {
+  //   console.log(`${app} ${e}`)
+  //   console.log(`${app} ${cmdLine.interactive}`)
+  //   return
+  // }
+  // console.log(boldGreen(`\nSencha ExtGen v${version} - The Ext JS code generator`))
+  // console.log('')
+  // step00()
 }
 
 function step00() {
   setDefaults()
   if (cmdLine.help == true) {
-    //console.log('d')
+    console.log('d')
     stepHelpGeneral() 
   }
+
   else if (cmdLine.command == undefined) {
-    //console.log('a')
+    console.log(boldRed(`[ERR] - no command specified (app, view)`))
+    
+    console.log('a')
     stepShortHelp()
   }
+  else if (cmdLine.defaults == true) {
+    console.log('f')
+    displayDefaults()
+  }
   else if (cmdLine.command != 'app') {
-    //console.log('b')
+    console.log('b')
     console.log(`${app} unknown command '${cmdLine.command}'`)
   }
   else if (process.argv.length == 2) {
-    //console.log('c')
+    console.log('c')
     stepShortHelp()
   }
 
-  else if (cmdLine.interactive == true) {
-    //console.log('e')
+  else if (cmdLine.interactive == true && cmdLine.command != 'app') {
+    console.log('e')
     step00a()
   }
-  else if (cmdLine.defaults == true) {
-    //console.log('f')
-    displayDefaults()
-  }
+
   else if (cmdLine.auto == true) {
-    //console.log('g')
+    console.log('g')
     step99()
   }
   else if (cmdLine.name != undefined) {
-    //console.log('h')
+    console.log('h')
     cmdLine.auto = true
     step99()
   }
@@ -623,7 +704,7 @@ ${boldGreen('modern themes:')}  theme-material, theme-ios, theme-neptune, theme-
 
 function stepShortHelp() {
   var message = `${boldGreen('quick start:')} 
-ext-gen app -n MyApp
+ext-gen app MyAppName
 ext-gen app -i
  
 ${boldGreen('Examples:')} 
@@ -633,7 +714,7 @@ ext-gen app --interactive
 ext-gen app -a --classictheme theme-graphite -n ClassicApp
 ext-gen app -a -t moderndesktop -n ModernApp
 
-Run ext-gen --help to see all options
+Run ${boldGreen('ext-gen --help')} to see all options
 `
   console.log(message)
 }
