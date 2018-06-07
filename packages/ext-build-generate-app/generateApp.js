@@ -90,9 +90,9 @@ class generateApp {
     }
     else {
       SdkVal = Sdk
-      Packages = '$\u007Bworkspace.dir}/packages,node_modules/' + npmScope
+      //Packages = '$\u007Bworkspace.dir}/packages,node_modules/' + npmScope
       //fix for SCSS issue 
-      //Packages = '$\u007Bworkspace.dir}/packages'
+      Packages = '$\u007Bworkspace.dir}/packages'
 		}
 
 		walkSync(TemplateDir, TemplateDir.length+1, ApplicationDir, ApplicationName, Template, modernTheme, classicTheme, SdkVal, Packages)
