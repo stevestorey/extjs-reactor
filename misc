@@ -123,3 +123,31 @@ https://www.youtube.com/watch?v=FGIokhmOGUU
 
 
 
+      "packager": "cordova",
+      "cordova" : {
+        "config": {
+          "platforms": "android",
+          "verbose": false,
+          "id": "com.foo.{name}",
+          "name": "{name}"
+        },
+        "js": [
+          {
+            "path": "cordova.js",
+            "remote": true,
+            "priority": 1000
+          }
+        ],
+        "microloader": "$\u007Bapp.config.dir}/Microloader.js",
+        "output": {
+          "base": "$\u007Bapp.cordova.config.path}/www",
+          "page": "index.html",
+          "manifest": "generatedFiles/$\u007Bbuild.id}.json",
+          "appCache": {
+            "enable": false
+          }
+        },
+        "cache": {
+          "enable": false
+        }
+      }
