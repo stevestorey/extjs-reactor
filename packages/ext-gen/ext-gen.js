@@ -156,13 +156,19 @@ function stepStart() {
 }
 
 function step00() {
+//  console.log('step00')
+//  console.log(`cmdLine: ${JSON.stringify(cmdLine)}, length: ${Object.keys(cmdLine).length}`)
+
   setDefaults()
   if (cmdLine.help == true) {
     stepHelpGeneral() 
   }
-
   else if (cmdLine.command == undefined) {
     console.log(`${app} ${boldRed('[ERR]')} no command specified (app, view)`)
+  }
+  else if (cmdLine.command == 'app' && Object.keys(cmdLine).length == 1) {
+    console.log(`${app} ${boldRed('[ERR]')} at least 1 parameter is needed`)
+    return
   }
   else if (cmdLine.defaults == true) {
     displayDefaults()
@@ -170,12 +176,13 @@ function step00() {
   else if (cmdLine.command != 'app') {
     console.log(`${app} ${boldRed('[ERR]')} unknown command '${cmdLine.command}'`)
   }
+  else if (cmdLine.interactive == true && cmdLine.command == 'app') {
+    step00a()
+  }
   else if (process.argv.length == 2) {
     stepShortHelp()
   }
-  else if (cmdLine.interactive == true && cmdLine.command != 'app') {
-    step00a()
-  }
+
   else if (cmdLine.auto == true) {
     step99()
   }
