@@ -34,6 +34,8 @@ try {
 		if(ViewName == undefined) {throw util.err('View Name parameter is empty')}
     var NodeAppViewPackageTemplatesDir = path.join(NodeAppTemplatesDir + '/ViewPackage');
 //    util.infLog('NodeAppViewPackageTemplatesDir: ' + NodeAppViewPackageTemplatesDir)
+
+    var CurrWorkingDirRoot = CurrWorkingDir
     var appName = util.getAppName(CurrWorkingDir);
 //    util.infLog('appName: ' + appName)
     var toFolder = getFolder(CurrWorkingDir);
@@ -87,11 +89,17 @@ try {
 					delete tpl
 					fs.writeFileSync(dir + '/' + f, t);
 					util.infLog('Generated file ' + dir + '/' + f)
-			});
-			var item = chalk.yellow(`{ "text": "${iCaps}", "iconCls": "x-fa fa-cog", "xtype": "${viewNameSmall}", "leaf": true },`)
+      });
+      newMenu = `{ "text": "${iCaps}", "iconCls": "x-fa fa-cog", "xtype": "${viewNameSmall}", "leaf": true }`
+			var item = chalk.yellow(newMenu + ',')
 			var itemphone = chalk.yellow(`{ "text": "${iCaps}", "tag": "${viewNameSmall}" },`)
 
-			console.log(help.menuText(menuPath, item, itemphone))
+      var menuFile = `${CurrWorkingDirRoot}/resources/desktop/menu.json`
+      var menuJson = (fs.existsSync(menuFile) && JSON.parse(fs.readFileSync(menuFile, 'utf-8')) || {})
+      menuJson.children.push(JSON.parse(newMenu))
+      fs.writeFileSync(menuFile, JSON.stringify(menuJson), 'utf8')
+
+			console.log(help.menuText(menuFile, item, itemphone))
 		});
 	}
 
