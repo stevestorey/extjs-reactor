@@ -1,96 +1,93 @@
 Ext.define('{appName}.view.main.MainViewController', {
-	extend: 'Ext.app.ViewController',
-	alias: 'controller.mainviewcontroller',
+  extend: 'Ext.app.ViewController',
+  alias: 'controller.mainviewcontroller',
 
-	// Simply run setCenterViewXtype, passing the record that describes the center view,
-	// and updateCenterViewXtype takes care of the rest.
-	config: {
-			centerViewXtype: null
-	},
+  // Simply run setCenterViewXtype, passing the record that describes the center view,
+  // and updateCenterViewXtype takes care of the rest.
+  config: {
+    centerViewXtype: null
+  },
 
-	initViewModel: function(vm) {
-			var me = this;
+  initViewModel: function(vm) {
+    var me = this;
 
-			// menuItem can change either because the user selected an item in the NavView, or
-			// because the record is named in the URL routing information.
-			vm.bind("{menuItem}", me.setCenterViewXtype, me);
-	},
+    // menuItem can change either because the user selected an item in the NavView, or
+    // because the record is named in the URL routing information.
+    vm.bind("{menuItem}", me.setCenterViewXtype, me);
+  },
 
-	updateCenterViewXtype: function(menuItem) {
-			if (!menuItem) return;
-			var data = menuItem.data;
-			if (!Ext.ClassManager.getByAlias("widget." + data.xtype)) {
-					console.log(xtype + " does not exist");
-					return;
-			}
+  updateCenterViewXtype: function(menuItem) {
+    if (!menuItem) return;
+    var data = menuItem.data;
+    if (!Ext.ClassManager.getByAlias("widget." + data.xtype)) {
+      console.log(xtype + " does not exist");
+      return;
+    }
 
-			var centerview = this.lookup("centerview");
+    var centerview = this.lookup("centerview");
 
-			// Lazily add the view to the center container.
-			var child = centerview.getComponent(data.xtype) || centerview.add({ xtype: data.xtype, itemId: data.xtype, heading: data.text });
+    // Lazily add the view to the center container.
+    var child = centerview.getComponent(data.xtype) || centerview.add({ xtype: data.xtype, itemId: data.xtype, heading: data.text });
 
-			centerview.setActiveItem(child);
+    centerview.setActiveItem(child);
 
-			this.redirectTo(data.xtype);
+    this.redirectTo(data.xtype);
 
-			this.getViewModel().set("menuItem", menuItem);
-			this.getViewModel().set("heading", data.text);
-	},
+    this.getViewModel().set("menuItem", menuItem);
+    this.getViewModel().set("heading", data.text);
+  },
 
-	routes: { 
-		':xtype': {action: 'mainRoute'}
-	},
+  routes: { 
+  ':xtype': {action: 'mainRoute'}
+  },
 
-	mainRoute:function(xtype) {
-		//var menuview = this.lookup('menuview');
-		var navview = this.lookup('navview');
-		var menuview = navview.items.items[0]
-		var centerview = this.lookup('centerview');
-		var exists = Ext.ClassManager.getByAlias('widget.' + xtype);
-		if (exists === undefined) {
-			console.log(xtype + ' does not exist');
-			return;
-		}
-		var node = menuview.getStore().findNode('xtype', xtype);
-		if (node == null) {
-			console.log('unmatchedRoute: ' + xtype);
-			return;
-		}
-		if (!centerview.getComponent(xtype)) {
-			centerview.add({ xtype: xtype,  itemId: xtype, heading: node.get('text') });
-		}
-		centerview.setActiveItem(xtype);
-		menuview.setSelection(node);
-		var vm = this.getViewModel(); 
-		vm.set('heading', node.get('text'));
-	},
+  mainRoute:function(xtype) {
+    //var menuview = this.lookup('menuview');
+    var navview = this.lookup('navview');
+    var menuview = navview.items.items[0]
+    var centerview = this.lookup('centerview');
+    var exists = Ext.ClassManager.getByAlias('widget.' + xtype);
+    if (exists === undefined) {
+      console.log(xtype + ' does not exist');
+      return;
+    }
+    var node = menuview.getStore().findNode('xtype', xtype);
+    if (node == null) {
+      console.log('unmatchedRoute: ' + xtype);
+      return;
+    }
+    if (!centerview.getComponent(xtype)) {
+      centerview.add({ xtype: xtype,  itemId: xtype, heading: node.get('text') });
+    }
+    centerview.setActiveItem(xtype);
+    menuview.setSelection(node);
+    var vm = this.getViewModel(); 
+    vm.set('heading', node.get('text'));
+  },
 
-	onMenuViewSelectionChange: function (tree, node) {
-		if (node == null) { return }
-		var vm = this.getViewModel();
-		if (node.get('xtype') != undefined) {
-			this.redirectTo( node.get('xtype') );
-		}
-	},
+  onMenuViewSelectionChange: function (tree, node) {
+    if (node == null) { return }
+    var vm = this.getViewModel();
+    if (node.get('xtype') != undefined) {
+      this.redirectTo( node.get('xtype') );
+    }
+  },
 
-	onHeaderViewNavToggle: function () {
-		var vm = this.getViewModel();
+  onHeaderViewNavToggle: function () {
+    var vm = this.getViewModel();
     vm.set('navCollapsed', !vm.get('navCollapsed'));
     //var topPic = this.lookup('topPic');
     var topPic = Ext.getCmp('topPic');
     if (vm.get('navCollapsed') == true) {
-      topPic.setData({ src:'resources/desktop/5.jpg', caption:'John Smith', imgStyle: 'imgSmall', height: '80px' });
+      topPic.setData({ src:'resources/desktop/5.jpg', caption:'John Smith', imgStyle: 'imgSmall', height: '100px' });
     }
     else {
-      topPic.setData({ src:'resources/desktop/5.jpg', caption:'John Smith', imgStyle: 'imgBig', height: '130px' });
+      topPic.setData({ src:'resources/desktop/5.jpg', caption:'John Smith', imgStyle: 'imgBig', height: '150px' });
     }
 
-	},
+  },
 
   onHeaderViewDetailToggle: function () {
-//    Ext.get('navview').enableShadow({offset:5, mode: 'drop', animate: true})
-//    var navfill = this.lookup('navfill');
-//    navfill.setHidden(vm.get('detailCollapsed'))
     var vm = this.getViewModel();
     vm.set('detailCollapsed', !vm.get('detailCollapsed'));
     var detailtoggle = this.lookup('detailtoggle');
@@ -102,22 +99,23 @@ Ext.define('{appName}.view.main.MainViewController', {
       //detailtoggle.setType('next')
       detailtoggle.setIconCls('x-fa fa-arrow-right')
     }
-  },
+  }
 
-	onBottomViewLogout: function () {
-		alert('logout')
-//		localStorage.setItem("LoggedIn", false);
-//		this.getView().destroy();
-//		Ext.Viewport.add([{ xtype: 'loginview'}]);
-	},
-
-//	onActionsViewLogoutTap: function( ) {
-//		var vm = this.getViewModel();
-//		vm.set('firstname', '');
-//		vm.set('lastname', '');
-//
-//		Session.logout(this.getView());
-//		this.redirectTo(AppCamp.getApplication().getDefaultToken().toString(), true);
-//	}
+  onToolButtonClicked: function (button) {
+    Ext.Msg.show({
+      title:'Tool Button',
+      closable: false,
+      message: `${button.name} tool button was clicked`,
+      buttons: Ext.Msg.OK,
+      icon: Ext.Msg.INFO,
+      fn: function(btn) {
+        if (btn === 'ok') {
+          console.log('ok pressed');
+        } else {
+          console.log('??? pressed');
+        }
+      }
+    })
+  }
 
 });
