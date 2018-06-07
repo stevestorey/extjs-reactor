@@ -28,7 +28,7 @@ Ext.define("{appName}.view.main.nav.NavViewController", {
 
   onTopViewNavToggle: function(button) {
     this.getView().setMicro(!this.getView().getMicro());
-  }
+  },
 
   onToolButtonClicked: function (button) {
     Ext.Msg.show({
