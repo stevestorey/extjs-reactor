@@ -111,44 +111,11 @@ export default class BigDataGridExample extends Component {
               sorterFn:this.nameSorter
             }}
           />
-          <TextColumn
-            text="verified"
-            dataIndex="verified"
-          />
-
-
           <CheckColumn
               text="Verified"
               dataIndex="verified"
               headerCheckbox
           />
-
-{/* this... */}
-
-          <NumberColumn
-            text="Avg"
-            dataIndex="averageRating"
-            width="75"
-            summary="average"
-            renderer={this.renderRating}
-            cell={{
-                cls:'big-data-ratings-cell'
-            }}
-          />
-          <Column
-            text="All"
-            dataIndex="rating"
-            ignoreExport
-            cell={{
-              xtype: 'widgetcell',
-              forceWidth: true,
-              widget: {
-                  xtype: 'sparklineline'
-              }
-            }}
-          />
-
-{/* or... */}
 
           <Column text="Ratings"
             columns= {
@@ -185,36 +152,7 @@ export default class BigDataGridExample extends Component {
               }
             ]
           }
-        />
-
-{/* not... */}
-
-         {/*  
-          <Column text="Ratings">
-              <NumberColumn
-                  text="Avg"
-                  dataIndex="averageRating"
-                  width="75"
-                  summary="average"
-                  renderer={this.renderRating}
-                  cell={{
-                      cls:'big-data-ratings-cell'
-                  }}
-              />
-              <Column
-                  text="All"
-                  dataIndex="rating"
-                  ignoreExport
-              >
-                  <RendererCell 
-                      forceWidth 
-                      bodyStyle={{ padding: 0 }}
-                      renderer={this.renderSparkline}
-                  />
-              </Column>
-          </Column>
-*/} 
-
+          /> 
           <DateColumn
               text="Date of Birth"
               dataIndex="dob"
@@ -253,26 +191,9 @@ export default class BigDataGridExample extends Component {
               }}
             >
               <WidgetCell>
-                <Button ui ="action" handler = {this.onVerify} 
-                        bind = {{tooltip : 'Verify {record.fullName}'}} text = "VERIFY"/>
+                <Button ui ="action" handler = {this.onVerify} bind = {{tooltip : 'Verify {record.fullName}'}} text = "VERIFY"/>
               </WidgetCell>
           </Column>
-              
-{/*
-          <Column
-              text=""
-              width="100"
-              ignoreExport
-              dataIndex="verified"
-              align="center"
-          >
-              <RendererCell
-                  renderer={this.renderVerify}
-                  summaryRenderer={this.renderVerifyAll}
-                  bodyStyle={{ padding: 0 }}
-              />
-          </Column>
-*/}
 
           <DateColumn
               text="Join Date"
@@ -300,34 +221,11 @@ export default class BigDataGridExample extends Component {
                   xtype:'emailfield'
               }}
           />
- 
-          <TextColumn
-            text="Illness"
-            dataIndex="sickDays"
-            align='center'
-            summary='sum'
-          />
-          <TextColumn
-            text="Holidays"
-            dataIndex="holidayDays"
-            align='center'
-            summary='sum'
-          />
-          <TextColumn
-            text="Holiday Allowance"
-            dataIndex="holidayAllowance"
-            align='center'
-            summary='sum'
-            summaryFormatter='number("0.00")'
-            formatter='number("0.00")'
-          />
-          {/* 
           <Column text='Absences'>
-              <TextColumn
-                  text="Illness"
-                  dataIndex="sickDays"
-                  align='center'
-                  summary='sum'
+              <TextColumn  text="Illness"
+                            dataIndex="sickDays"
+                            align='center'
+                            summary='sum'
               />
               <TextColumn
                   text="Holidays"
@@ -344,39 +242,40 @@ export default class BigDataGridExample extends Component {
                   formatter='number("0.00")'
               />
           </Column>
-      */}
-
           <Column 
-            text="Rating<br/>This Year" 
-            dataIndex="ratingThisYear"
-            groupable={false}
-            formatter='round(1)'
-            summary='average'
-            cell={
-              {
-                xtype: 'widgetcell',
-                widget: {
+              text="Rating<br/>This Year" 
+              dataIndex="ratingThisYear"
+              groupable={false}
+              formatter='round(1)'
+              summary='average'
+              cell={
+                {
+                  xtype: 'widgetcell',
+                  widget: {
                   xtype: 'rating',
                   tip: 'Set to {tracking:plural("Star")}'
+                  }
                 }
               }
-            }
-            exportStyle= {{
+              exportStyle= {{
                 alignment: {
                     horizontal: 'Right'
                 }
-            }}
+             }}
             //renderer={this.renderRatingThisYear}
           />
+          
+
+
           <TextColumn
-            text='Salary'
-            dataIndex='salary'
-            renderer={Ext.util.Format.usMoney}
-            width='150'
-            editable
-            summary='sum'
-            summaryRenderer={this.salarySummaryRenderer}
-            exportStyle={{
+              text='Salary'
+              dataIndex='salary'
+              renderer={Ext.util.Format.usMoney}
+              width='150'
+              editable
+              summary='sum'
+              summaryRenderer={this.salarySummaryRenderer}
+              exportStyle={{
                 format: 'Currency',
                 alignment: {
                     horizontal: 'Right'

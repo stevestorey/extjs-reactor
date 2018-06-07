@@ -30,14 +30,14 @@ export default class ScrollingTabsExample extends Component {
                     }
                 }}
             >
-                <Panel title="Home" layout="center">
+                <Panel title="Home" layout="center" tab={{minWidth:130}}>
                     <Container html="You can set <code>{`layout: { overflow: 'scroller' }`}</code> on the <code>tabBar</code> prop in combination with a <code>minWidth</code> on each tab to make the tab bar scroll when it runs out of room."></Container>
                 </Panel>
-                <Panel title="Politics" layout="center"><Container>Politics</Container></Panel>
-                <Panel title="Entertainment" layout="center"><Container>Entertainment</Container></Panel>
-                <Panel title="World" layout="center"><Container>World</Container></Panel>
-                <Panel title="Markets" layout="center"><Container>Markets</Container></Panel>
-                <Panel title="Sports" layout="center"><Container>Sports</Container></Panel>
+                <Panel title="Politics" layout="center" tab={{minWidth:130}}><Container>Politics</Container></Panel>
+                <Panel title="Entertainment" layout="center" tab={{minWidth:130}}><Container>Entertainment</Container></Panel>
+                <Panel title="World" layout="center" tab={{minWidth:130}}><Container>World</Container></Panel>
+                <Panel title="Markets" layout="center" tab={{minWidth:130}}><Container>Markets</Container></Panel>
+                <Panel title="Sports" layout="center" tab={{minWidth:130}}><Container>Sports</Container></Panel>
             </TabPanel>
         )
     }

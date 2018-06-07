@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Toolbar, Label, SliderField, CheckBoxField, Column, RendererCell, SparkLineLine, Container } from '@extjs/ext-react';
+import { Grid, Toolbar, Label, SliderField, CheckBoxField, Column, WidgetCell, SparkLine , Container, SPark } from '@extjs/ext-react';
 import model from '../../CompanyModel';
 import './Ticker.css';
 
@@ -85,16 +85,34 @@ export default class StockTickerGridExample extends Component {
             <Grid 
                 title='Ticker Grid'
                 store={this.store}
+                itemConfig = {{
+                    viewModel : {
+                    },
+                    body: {
+                        tpl: this.rowBodyTpl
+                    }
+                }}
                 onInitialize={this.init}
                 shadow
             >
                 <Column text="Company" dataIndex="name" width="150" sortable/>
                 <Column align="right" text="Price" width="85" dataIndex="price" formatter='usMoney' sortable/>
-                <Column text="Trend" width="200" dataIndex="trend" sortable={false}>
-                    <RendererCell forceWidth renderer={this.renderSparkline} bodyStyle={{padding: 0}}/>
+                <Column text="Trend" width="200" dataIndex="trend" sortable={false} 
+                        cell= {{
+                            bind: '{record.trend}',
+                            xtype: 'widgetcell',
+                            forceWidth: true,
+                            widget: {
+                                xtype: 'sparklineline',
+                                tipTpl: 'Price: {y:number("0.00")}'
+                            }
+                         }}
+                 >
                 </Column>
-                <Column align="right" text="Change" width="90" dataIndex="change" renderer={this.renderSign.bind(this, '0.00')} cell={{ bodyStyle: { padding: 0 } }} sortable/>
-                <Column align="right" text="% Change" dataIndex="pctChange" renderer={this.renderSign.bind(this, '0.00%')} cell={{ bodyStyle: { padding: 0 } }} sortable/>
+                <Column align="right" text="Change" width="90" dataIndex="change" renderer={this.renderSign.bind(this, '0.00')} 
+                        cell={{ bodyStyle: { padding: 0 } }} sortable/>
+                <Column align="right" text="% Change" dataIndex="pctChange" renderer={this.renderSign.bind(this, '0.00%')} 
+                        cell={{ bodyStyle: { padding: 0 } }} sortable/>
                 <Toolbar docked="bottom" defaults={{ margin: '0 20 0 0' }}>
                     <Label html="Tick Delay"/>
                     <SliderField

@@ -41,20 +41,23 @@ export default class RowExpanderGridExample extends Component {
       >
         <Column text="Company" dataIndex="name" width="150"/>
         <Column text="Price" dataIndex="price" width="75" formatter="usMoney"/>
-        <Column text="Change" width="100" dataIndex="priceChange" tpl={this.signTpl.bind(this, 'priceChange', '0.00')} cell={{ encodeHtml: false }}/>
-        <Column text="% Change" dataIndex="priceChangePct" tpl={this.signTpl.bind(this, 'priceChangePct', '0.00%')} cell={{ encodeHtml: false }}/>
+        <Column text="Change" width="100" dataIndex="priceChange" renderer={this.renderSign.bind(this, '0.00')}/>
+        <Column text="% Change" dataIndex="priceChangePct" renderer={this.renderSign.bind(this, '0.00')}/>
         <Column text="Last Updated" dataIndex="priceLastChange" width="125" formatter="date('m/d/Y')" />
       </Grid>
     )
   }
 
-  signTpl = (field, format, data) => {
-    const value = data[field];
-    return (
+  createSignTpl = format => new Template(value => (
       <span style={{ color: value > 0 ? 'green' : value < 0 ? 'red' : ''}}>
-        {Ext.util.Format.number(value, format)}
+            {Ext.util.Format.number(value, format)}
       </span>
+    ));
+
+  renderSign = (format, value) => (
+        <span style={{ color: value > 0 ? 'green' : value < 0 ? 'red' : ''}}>
+            {Ext.util.Format.number(value, format)}
+        </span>
     )
-  }
 
 }
