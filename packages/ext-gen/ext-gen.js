@@ -614,8 +614,8 @@ ext-gen app (-h) (-d) (-i) (-a) (-t 'template') (-m 'moderntheme') (-c 'classict
 -f --folder        folder name for Ext JS application (not implemented yet)
 
 ${boldGreen('Examples:')} 
-ext-gen app --auto --template universalclassicmodern --classictheme theme-triton --moderntheme theme-material --name CoolUniversalApp
-ext-gen app --auto --template classicdesktop --classictheme theme-triton --name CoolDesktopApp 
+ext-gen app --auto --template universalclassicmodern --classictheme theme-graphite --moderntheme theme-material --name CoolUniversalApp
+ext-gen app --auto --template classicdesktop --classictheme theme-graphite --name CoolDesktopApp 
 ext-gen app --interactive
 ext-gen app -a --classictheme theme-graphite -n ClassicApp
 ext-gen app -a -t moderndesktop -n ModernApp
@@ -648,8 +648,8 @@ ext-gen app MyAppName
 ext-gen app -i
  
 ${boldGreen('Examples:')} 
-ext-gen app --auto --template universalclassicmodern --classictheme theme-triton --moderntheme theme-material --name CoolUniversalApp
-ext-gen app --auto --template classicdesktop --classictheme theme-triton --name CoolDesktopApp 
+ext-gen app --auto --template universalclassicmodern --classictheme theme-graphite --moderntheme theme-material --name CoolUniversalApp
+ext-gen app --auto --template classicdesktop --classictheme theme-graphite --name CoolDesktopApp 
 ext-gen app --interactive
 ext-gen app -a --classictheme theme-graphite -n ClassicApp
 ext-gen app -a -t moderndesktop -n ModernApp
