@@ -1,0 +1,8 @@
+.detailview { 
+	color: $color;
+  background-color: white;
+  padding: 15px;
+  margin: 15px 15px 15px 0px;
+  border: 1px solid lightgray;
+  box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.4);
+}

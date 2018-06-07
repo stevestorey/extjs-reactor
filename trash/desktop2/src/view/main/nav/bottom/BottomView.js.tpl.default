@@ -1,0 +1,14 @@
+Ext.define('{appName}.view.main.nav.bottom.BottomView', {
+	extend: 'Ext.Toolbar',
+	xtype: 'bottomview',
+	cls: 'bottomview',
+
+	items: [
+		{
+			xtype: 'container', 
+			cls: 'bottomviewtext',
+			reference: 'bottomviewtext',
+      html: 'bottom'
+		}
+	]
+});
