@@ -99,7 +99,7 @@ Ext.define('{appName}.view.main.MainViewController', {
       //detailtoggle.setType('next')
       detailtoggle.setIconCls('x-fa fa-arrow-right')
     }
-  }
+  },
 
   onToolButtonClicked: function (button) {
     Ext.Msg.show({
