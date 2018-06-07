@@ -1,6 +1,6 @@
 {
   "name": "@sencha/ext-build-generate-app",
-  "version": "0.0.160",
+  "version": "0.0.161",
   "description": "ext-build-generate-app - app generator for ext-gen and ext-build",
   "main": "generateApp.js",
   "dependencies": {
