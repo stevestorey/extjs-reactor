@@ -23,27 +23,22 @@ export default class BasicGridExample extends Component {
           text="Change" 
           width="100" 
           dataIndex="priceChange" 
-          tpl={this.signTpl.bind(this, 'priceChange', '0.00')} 
-          cell={{ encodeHtml: false }}
+          renderer={this.renderSign.bind(this, '0.00')}
         />
         <Column 
           text="% Change" 
           dataIndex="priceChangePct" 
-          tpl={this.signTpl.bind(this, 'priceChangePct', '0.00%')} 
-          cell={{ encodeHtml: false }}
+          renderer={this.renderSign.bind(this, '0.00')}
         />
         <Column text="Last Updated" width="125" dataIndex="lastChange" formatter='date("m/d/Y")'/>
     </Grid>
     )
   }
 
-  signTpl = (field, format, data) => {
-    const value = data[field];
-    return (
+ renderSign = (format, value) => (
       <span style={{ color: value > 0 ? 'green' : value < 0 ? 'red' : ''}}>
-        {Ext.util.Format.number(value, format)}
+          {Ext.util.Format.number(value, format)}
       </span>
-    )
-  }
+  ) 
 
 }

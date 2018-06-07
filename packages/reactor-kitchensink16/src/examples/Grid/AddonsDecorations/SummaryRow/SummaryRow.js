@@ -47,16 +47,14 @@ export default class RowBodyGridExample extends Component {
           text="Change" 
           width="90" 
           dataIndex="priceChange" 
-          tpl={this.signTpl.bind(this, 'priceChange', '0.00')} 
-          cell={{ encodeHtml: false }}
+          renderer={this.renderSign.bind(this, '0.00')}
           summary="max" 
         />
         <Column 
           text="% Change" 
           width="100"
           dataIndex="priceChangePct" 
-          tpl={this.signTpl.bind(this, 'priceChangePct', '0.00%')} 
-          cell={{ encodeHtml: false }}
+          renderer={this.renderSign.bind(this, '0.00')}
           summary="average" 
         />
         <Column 
@@ -70,14 +68,6 @@ export default class RowBodyGridExample extends Component {
     )
   }
   
-  signTpl = (field, format, data) => {
-    const value = data[field];
-    return (
-      <span style={{ color: value > 0 ? 'green' : value < 0 ? 'red' : ''}}>
-        {Ext.util.Format.number(value, format)}
-      </span>
-    )
-  }
 
   renderSign = (format, value) => (
       <span style={{ color: value > 0 ? 'green' : value < 0 ? 'red' : ''}}>

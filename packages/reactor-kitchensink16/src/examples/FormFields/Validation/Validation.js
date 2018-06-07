@@ -104,18 +104,17 @@ export default function ValidationExample() {
                 <FormPanel
                     padding={10}
                     shadow
-                    defaults={{
-                        errorTarget: 'under'
-                    }}
                     title="Assigning Error Messages Directly"
                 >
                     <div style={styles.hint}>Here we assign error messages directly using the <code>errorMessage</code> and <code>error</code> props.</div>
                     <TextField
                         label="Single Error"
                         errorMessage="The value you entered is invalid."
+                        errorTarget= 'under'
                     />
                     <TextField
                         label="Multiple Errors"
+                        errorTarget= 'under'
                         error={[
                             "Error 1",
                             "Error 2",
