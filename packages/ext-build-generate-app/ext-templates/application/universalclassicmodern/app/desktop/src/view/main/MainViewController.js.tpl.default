@@ -105,7 +105,7 @@ Ext.define('{appName}.view.main.MainViewController', {
     Ext.Msg.show({
       title:'Tool Button',
       closable: false,
-      message: `${button.name} tool button was clicked`,
+      message: 'button.name tool button was clicked',
       buttons: Ext.Msg.OK,
       icon: Ext.Msg.INFO,
       fn: function(btn) {
