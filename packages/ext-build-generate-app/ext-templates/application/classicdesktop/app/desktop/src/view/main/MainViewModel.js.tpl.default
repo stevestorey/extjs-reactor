@@ -1,15 +1,15 @@
-Ext.define('{appName}.view.main.MainViewModel', {
+Ext.define('MyAppName.view.main.MainViewModel', {
 	extend: 'Ext.app.ViewModel',
 	alias: 'viewmodel.mainviewmodel',
 	data: {
-		name: '{appName}',
+		name: 'MyAppName',
 		navCollapsed:       false,
 		navview_max_width:    300,
 		navview_min_width:     44,
 		topview_height:       75,
 		bottomview_height:     50,
 		detailCollapsed:     true,
-		detailview_width:      10,
+		detailview_width:       0,
 		detailview_max_width: 300,
 		detailview_min_width:   0,
 
@@ -23,20 +23,15 @@ Ext.define('{appName}.view.main.MainViewModel', {
 		}
 	},
 	stores: {
-		menu: {
-			type: "tree",
-			root: {
-				children: [
-          { "text": "Home", "iconCls": "x-fa fa-home", "xtype": "homeview", "leaf": true },
-					{ "text": "Personnel", "iconCls": "x-fa fa-table", "xtype": "personnelview", "leaf": true },
-				]
-			}
-			// proxy: {
-			//     type: "ajax",
-			//     url: "resources/shared/data/menu.json"
-			// },
-			// autoLoad: true
-		}
+    menu: {
+      type: "tree",
+      proxy: {
+        type: 'ajax',
+        reader: 'json',
+        url: 'resources/desktop/menu.json'
+    },
+    autoLoad: true
+    }
 	}
 
 });
