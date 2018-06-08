@@ -53,7 +53,7 @@ npm version patch
 npm publish --access public
 
 
-ln -s /Sencha/ext-6.5.3 ext
+ln -s /Users/marcgusmano/aaExt/ext-6.6.0.216 ext
 
 mklink /J ext c:\sencha\ext-6.5.3
 

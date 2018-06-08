@@ -1,5 +1,6 @@
 {
   "name": "@extjs/reactor-boilerplate16",
+  "product": "ext-react",
   "private": true,
   "version": "2.0.0",
   "description": "A foundation for React 16 apps built with ExtReact components.",

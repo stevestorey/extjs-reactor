@@ -1,13 +1,13 @@
 {
-	"name": "{name}",
-	"namespace": "{name}",
-	"version": "1.0.0.0",
-	"framework": "{frameworkKey}",
-	"template": "{template}",
-	"indexHtmlPath": "index.html",
-	"requires": [
-		"font-awesome"
-	],
+  "name": "{name}",
+  "namespace": "{name}",
+  "version": "1.0.0.0",
+  "framework": "{frameworkKey}",
+  "template": "{template}",
+  "indexHtmlPath": "index.html",
+  "requires": [
+    "font-awesome"
+  ],
 <tpl if="universal == true">
 	"builds": {
 		"desktop": {

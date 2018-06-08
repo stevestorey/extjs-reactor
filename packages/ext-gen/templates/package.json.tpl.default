@@ -1,5 +1,6 @@
 {
   "name": "{packageName}",
+  "product": "ext",
   "version": "{version}",
   "description": "{description}",
   "scripts": {
