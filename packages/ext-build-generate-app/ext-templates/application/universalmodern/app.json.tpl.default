@@ -1,64 +1,36 @@
 {
-	"name": "{name}",
-	"namespace": "{name}",
-	"version": "1.0.0.0",
-	"framework": "{frameworkKey}",
-	"template": "{template}",
-	"indexHtmlPath": "index.html",
-	"requires": [ 
-		"font-awesome"
-	],
+  "name": "{name}",
+  "namespace": "{name}",
+  "version": "1.0.0.0",
+  "framework": "{frameworkKey}",
+  "template": "{template}",
+  "indexHtmlPath": "index.html",
+  "requires": [ 
+    "font-awesome"
+  ],
 <tpl if="universal == true">
-	"builds": {
-		"desktop": {
-			"toolkit": "modern",
-			"theme": "{modernTheme}",
+  "builds": {
+    "desktop": {
+      "toolkit": "modern",
+      "theme": "{modernTheme}",
       "sass": {
         "generated": {
           "var": "modern/sass/save.scss",
           "src": "modern/sass/save"
         }
       }
-		},
-		"phone": {
-			"toolkit": "modern",
-			"theme": "{modernTheme}",
+    },
+    "phone": {
+      "toolkit": "modern",
+      "theme": "{modernTheme}",
       "sass": {
         "generated": {
           "var": "modern/sass/save.scss",
           "src": "modern/sass/save"
         }
-      },
-			"packager": "cordova",
-			"cordova" : {
-				"config": {
-					"platforms": "android", //** "ios", "android", "target": "iPhone (Retina 4-inch)", **//
-					"verbose": false,
-					"id": "com.foo.{name}",
-					"name": "{name}"
-				},
-				"js": [
-					{
-						"path": "cordova.js",
-						"remote": true,
-						"priority": 1000
-					}
-				],
-				"microloader": "$\u007Bapp.config.dir}/Microloader.js",
-				"output": {
-					"base": "$\u007Bapp.cordova.config.path}/www",
-					"page": "index.html",
-					"manifest": "generatedFiles/$\u007Bbuild.id}.json",
-					"appCache": {
-						"enable": false
-					}
-				},
-				"cache": {
-					"enable": false
-				}
-			}
-		}
-	},
+      }
+    }
+  },
 </tpl>
 	"classpath": ["<tpl if="universal == true">app/shared/</tpl>src"<tpl if="universal == true">,"app/$\u007Bbuild.id}/src"</tpl>],
 	"overrides": ["<tpl if="universal == true">app/shared/</tpl>overrides"<tpl if="universal == true">,"app/$\u007Bbuild.id}/overrides"</tpl>],

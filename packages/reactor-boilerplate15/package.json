@@ -1,5 +1,6 @@
 {
   "name": "@extjs/reactor-boilerplate15",
+  "product": "ext-react",
   "private": true,
   "version": "2.0.0",
   "description": "A foundation for React 15 apps built with ExtReact components.",
