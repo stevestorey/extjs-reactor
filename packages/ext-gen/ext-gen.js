@@ -622,6 +622,7 @@ ext-gen app (-h) (-d) (-i) (-a) (-t 'template') (-m 'moderntheme') (-c 'classict
 -m --moderntheme   theme name for Ext JS modern toolkit
 -n --name          name for Ext JS generated app
 -f --folder        folder name for Ext JS application (not implemented yet)
+-v --verbose       verbose npm messages (for problems only)
 
 ${boldGreen('Examples:')} 
 ext-gen app --auto --template universalclassicmodern --classictheme theme-graphite --moderntheme theme-material --name CoolUniversalApp
