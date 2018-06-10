@@ -5,10 +5,12 @@
   "description": "{description}",
   "scripts": {
     "start": "npm run desktop",
-    "desktop": "webpack-dev-server -profile=desktop --environment=development -w --progress --open",
+    "desktop": "webpack-dev-server --profile=desktop --environment=development -w --progress --open",
     "phone": "webpack-dev-server --profile=phone --environment=development -w --progress --open",
-    "buildtest": "ext-build app build $npm_package_extbuild_buildprofile testing",
-    "buildprod": "ext-build app build $npm_package_extbuild_buildprofile production",
+    "build-desktop-testing": "ext-build app build desktop testing",
+    "build-desktop-production": "ext-build app build desktop production",
+    "build-phone-testing": "ext-build app build phone testing",
+    "build-phone-production": "ext-build app build phone production",
     "createview": "ext-build generate viewpackage $npm_package_extbuild_buildprofile $VIEW"
   },
   "extbuild": {
