@@ -14,7 +14,7 @@ if (require('os').platform() == 'darwin') {
 else {
   prefix = `i [ext]:`
 }
-const app = `${chalk.green(prefix)} ext-build-util:`
+const app = `${chalk.green(prefix)} ext-build-utilx:`
 const DEFAULT_SUBSTRS = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
 
 exports.senchaCmd = (parms) => {
@@ -28,8 +28,10 @@ exports.senchaCmdAsync = async (parms, substrings = DEFAULT_SUBSTRS) => {
 }
 
 var spawnPromise = (command, args, options, substrings) => {
-  let child;
+  var noErrors = true
+  let child
   let promise = new Promise((resolve, reject) => {
+
     child = crossSpawn(
       command, 
       args, 
@@ -37,24 +39,48 @@ var spawnPromise = (command, args, options, substrings) => {
     )
     child.on('close', (code, signal) => {
       //resolve({code, signal})
+      console.log('code')
+      console.log(code)
+
       if(code === 0) {
-        resolve({code, signal}) 
+        if (noErrors) {
+          console.log('noErrors true')
+          resolve({code, signal})
+        }
+        else {
+          console.log('noErrors false')
+          reject('Sencha Cmd errors...')
+        }
+
       }
       else {
-        reject('Senca Cmd failed...')
+        reject('Sencha Cmd failed...')
       }
     })
     child.on('error', (error) => {
       reject(error)
     })
     if (child.stdout) {
+      console.log('here')
       child.stdout.on('data', (data) => {
         if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
           var str = data.toString()
           var s = str.replace(/\r?\n|\r/g, " ")
           var s2 = s.replace("[INF]", "")
-          var s3 = s2.replace(process.cwd(), '');
-          console.log(`${app}${s3}`) 
+          var s3 = s2.replace(process.cwd(), '')
+
+          var s4 = ''
+          if (s3.includes("[ERR]")) {
+            const err = `${chalk.red("[ERR]")}`
+            s4 = s.replace("[ERR]", err)
+            noErrors = false
+            console.log(noErrors)
+          }
+          else {
+            s4 = s3
+          }
+
+          console.log(`${app}${s4}`) 
         }
       })
     }
