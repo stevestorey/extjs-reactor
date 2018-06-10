@@ -166,8 +166,10 @@ export default class ExtWebpackPlugin {
           new buildAsync(buildOptions).executeAsync().then(function() {
             cb()
           }, function(reason){
-            console.log('reject')
-            compilation.errors.push( new Error( 'explain why the build failed' ) )
+            var prefixErr = '✖ [ext]:';
+            var err = chalk.red(prefixErr) + ' ext-webpack-plugin: '
+            var errorString = `${err} ${chalk.red(reason.error)}`
+            compilation.errors.push(new Error(errorString))
             cb()
           })
         }
