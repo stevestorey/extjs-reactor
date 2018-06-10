@@ -59,6 +59,7 @@ var answers = {
 
 const optionDefinitions = [
   { name: 'command', defaultOption: true },
+  { name: 'verbose', alias: 'v', type: Boolean },
   { name: 'interactive', alias: 'i', type: Boolean },
   { name: 'help', alias: 'h', type: Boolean },
   { name: 'defaults', alias: 'd', type: Boolean },
@@ -157,9 +158,15 @@ function stepStart() {
 
 function step00() {
 //  console.log('step00')
-//  console.log(`cmdLine: ${JSON.stringify(cmdLine)}, length: ${Object.keys(cmdLine).length}`)
+  console.log(`cmdLine: ${JSON.stringify(cmdLine)}, length: ${Object.keys(cmdLine).length}, process.argv.length: ${process.argv.length}`)
 
   setDefaults()
+  if (cmdLine.verbose == true) {
+    process.env.EXTGEN_VERBOSE = 'true'
+  }
+  else {
+    process.env.EXTGEN_VERBOSE = 'false'
+  }
   if (cmdLine.help == true) {
     stepHelpGeneral() 
   }
@@ -470,13 +477,16 @@ async function stepCreate() {
   tpl = null
   fs.writeFileSync(destDir + '/webpack.config.js', t);
   console.log(`${app} webpack.config.js created for ${answers['packageName']}`)
-
   try {
     const substrings = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
     var command = `npm${/^win/.test(require('os').platform()) ? ".cmd" : ""}`
-    let args = [
-      'install'
-    ]
+    var args = []
+    if (process.env.EXTGEN_VERBOSE == 'true') {
+      args = ['install']
+    }
+    else {
+      args = ['install','-s']
+    }
     let options = {stdio: 'inherit', encoding: 'utf-8'}
     console.log(`${app} npm ${args.toString().replace(',',' ')} started for ${answers['packageName']}`)
     await util.spawnPromise(command, args, options, substrings);
