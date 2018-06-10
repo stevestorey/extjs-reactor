@@ -158,7 +158,7 @@ function stepStart() {
 
 function step00() {
 //  console.log('step00')
-  console.log(`cmdLine: ${JSON.stringify(cmdLine)}, length: ${Object.keys(cmdLine).length}, process.argv.length: ${process.argv.length}`)
+//  console.log(`cmdLine: ${JSON.stringify(cmdLine)}, length: ${Object.keys(cmdLine).length}, process.argv.length: ${process.argv.length}`)
 
   setDefaults()
   if (cmdLine.verbose == true) {
@@ -611,12 +611,11 @@ function stepHelpApp() {
 
   var message = `${boldGreen('Quick Start:')} ext-gen -a
 
-ext-gen app (-h) (-d) (-i) (-a) (-t 'template') (-m 'moderntheme') (-c 'classictheme') (-n 'name') (-f 'folder')
+ext-gen app (-h) (-d) (-i) (-t 'template') (-m 'moderntheme') (-c 'classictheme') (-n 'name') (-f 'folder')
 
 -h --help          show help (no parameters also shows help)
 -d --defaults      show defaults for package.json
 -i --interactive   run in interactive mode (question prompts will display)
--a --auto          run in automatic mode (NO question prompts will display - uses defaults or command line options)
 -t --template      name for Ext JS template used for generate
 -c --classictheme  theme name for Ext JS classic toolkit
 -m --moderntheme   theme name for Ext JS modern toolkit
@@ -625,8 +624,8 @@ ext-gen app (-h) (-d) (-i) (-a) (-t 'template') (-m 'moderntheme') (-c 'classict
 -v --verbose       verbose npm messages (for problems only)
 
 ${boldGreen('Examples:')} 
-ext-gen app --auto --template universalclassicmodern --classictheme theme-graphite --moderntheme theme-material --name CoolUniversalApp
-ext-gen app --auto --template classicdesktop --classictheme theme-graphite --name CoolDesktopApp 
+ext-gen app --template universalclassicmodern --classictheme theme-graphite --moderntheme theme-material --name CoolUniversalApp
+ext-gen app--template classicdesktop --classictheme theme-graphite --name CoolDesktopApp 
 ext-gen app --interactive
 ext-gen app -a --classictheme theme-graphite -n ClassicApp
 ext-gen app -a -t moderndesktop -n ModernApp
