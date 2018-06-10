@@ -5,8 +5,8 @@
   "description": "{description}",
   "scripts": {
     "start": "npm run desktop",
-    "desktop": "webpack-dev-server -p desktop -e development -w --progress --open",
-    "phone": "webpack-dev-server -p phone -e development -w --progress --open",
+    "desktop": "webpack-dev-server -profile=desktop --environment=development -w --progress --open",
+    "phone": "webpack-dev-server --profile=phone --environment=development -w --progress --open",
     "buildtest": "ext-build app build $npm_package_extbuild_buildprofile testing",
     "buildprod": "ext-build app build $npm_package_extbuild_buildprofile production",
     "createview": "ext-build generate viewpackage $npm_package_extbuild_buildprofile $VIEW"
