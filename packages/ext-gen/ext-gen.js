@@ -516,7 +516,7 @@ async function stepCreate() {
   }
   new generateApp(options)
   console.log(`${app} Your Ext JS project is ready`)
-  console.log(boldGreen(`\ntype "cd ${answers['packageName']}" then "npm start" to run the development build and open your new application in a web browser\n`))
+  console.log(boldGreen(`\ntype "cd ${answers['packageName']}" then "npm start" or "npm run desktop" or "npm run phone" to run the development build and open your new application in a web browser\n`))
  }
 
  function setDefaults() {
