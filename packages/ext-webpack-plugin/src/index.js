@@ -165,6 +165,10 @@ export default class ExtWebpackPlugin {
           var buildOptions = {parms: ['app','build',me.options.profile, me.options.environment]}
           new buildAsync(buildOptions).executeAsync().then(function() {
             cb()
+          }, function(reason){
+            console.log('reject')
+            compilation.errors.push( new Error( 'explain why the build failed' ) )
+            cb()
           })
         }
         else {
