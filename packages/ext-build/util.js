@@ -35,12 +35,14 @@ var spawnPromise = (command, args, options, substrings) => {
       args, 
       options
     )
-    // child.on('exit', (code, signal) => {
-    //   console.log('child process exited with ' +
-    //   `code ${code} and signal ${signal}`)
-    // })
     child.on('close', (code, signal) => {
-      resolve({code, signal})
+      //resolve({code, signal})
+      if(code === 0) {
+        resolve({code, signal}) 
+      }
+      else {
+        reject('Senca Cmd failed...')
+      }
     })
     child.on('error', (error) => {
       reject(error)
