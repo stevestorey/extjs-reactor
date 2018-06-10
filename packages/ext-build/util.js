@@ -14,7 +14,7 @@ if (require('os').platform() == 'darwin') {
 else {
   prefix = `i [ext]:`
 }
-const app = `${chalk.green(prefix)} ext-build-utilx:`
+const app = `${chalk.green(prefix)} ext-build-util:`
 const DEFAULT_SUBSTRS = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
 
 exports.senchaCmd = (parms) => {
@@ -39,48 +39,42 @@ var spawnPromise = (command, args, options, substrings) => {
     )
     child.on('close', (code, signal) => {
       //resolve({code, signal})
-      console.log('code')
-      console.log(code)
+      //console.log('code')
+      //console.log(code)
 
       if(code === 0) {
         if (noErrors) {
-          console.log('noErrors true')
+          //console.log('noErrors true')
           resolve({code, signal})
         }
         else {
-          console.log('noErrors false')
-          reject('Sencha Cmd errors...')
+          //console.log('noErrors false')
+          reject('ext-build errors')
         }
 
       }
       else {
-        reject('Sencha Cmd failed...')
+        reject('ext-build errors...')
       }
     })
     child.on('error', (error) => {
       reject(error)
     })
     if (child.stdout) {
-      console.log('here')
+//      console.log('here')
       child.stdout.on('data', (data) => {
         if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
           var str = data.toString()
-          var s = str.replace(/\r?\n|\r/g, " ")
-          var s2 = s.replace("[INF]", "")
-          var s3 = s2.replace(process.cwd(), '')
-
-          var s4 = ''
-          if (s3.includes("[ERR]")) {
+          str = str.replace(/\r?\n|\r/g, " ")
+          str = str.replace("[INF]", "")
+          str = str.replace(process.cwd(), '')
+          if (str.includes("[ERR]")) {
             const err = `${chalk.red("[ERR]")}`
-            s4 = s.replace("[ERR]", err)
+            str = str.replace("[ERR]", err)
             noErrors = false
-            console.log(noErrors)
-          }
-          else {
-            s4 = s3
           }
 
-          console.log(`${app}${s4}`) 
+          console.log(`${app}${str}`) 
         }
       })
     }
