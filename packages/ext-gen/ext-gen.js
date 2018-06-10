@@ -40,6 +40,7 @@ var answers = {
   'appName': null,
   'classic': null,
   'modern': null,
+  'universal': null,
   'classicTheme': null,
   'modernTheme': null,
   'templateType': null,
@@ -270,11 +271,15 @@ function step04() {
   }).run().then(answer => {
     answers['classic'] = false
     answers['modern'] = false
+    answers['universal'] = false
     if (answer.includes("classic")) {
       answers['classic'] = true
     }
     if (answer.includes("modern")) {
       answers['modern'] = true
+    }
+    if (answer.includes("universal")) {
+      answers['universal'] = true
     }
     answers['template'] = answer
     if(answers['useDefaults'] == true) {
@@ -449,6 +454,7 @@ async function stepCreate() {
     npmScope: npmScope,
     classic: answers['classic'],
     modern: answers['modern'],
+    universal: answers['universal'],
     classicTheme: answers['classicTheme'],
     modernTheme: answers['modernTheme'],
     appName: answers['appName'],
@@ -516,7 +522,11 @@ async function stepCreate() {
   }
   new generateApp(options)
   console.log(`${app} Your Ext JS project is ready`)
-  console.log(boldGreen(`\ntype "cd ${answers['packageName']}" then "npm start" or "npm run desktop" or "npm run phone" to run the development build and open your new application in a web browser\n`))
+  var runPhone = ''
+  if (answers['universal'] == true) {
+    runPhone = `or "npm run phone"`
+  }
+  console.log(boldGreen(`\ntype "cd ${answers['packageName']}" then "npm start" or "npm run desktop" ${runPhone}\nto run the development build and open your new application in a web browser\n`))
  }
 
  function setDefaults() {
