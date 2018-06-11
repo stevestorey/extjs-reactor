@@ -95,7 +95,9 @@ export default class ExtWebpackPlugin {
 
     if (compiler.hooks) {
       compiler.hooks.afterCompile.tap('ext-after-compile', (compilation) => {
-        process.stdout.cursorTo(0);console.log(app + 'ext-after-compile')
+        if (me.options.verbose == 'yes') {
+          process.stdout.cursorTo(0);console.log(app + 'ext-after-compile')
+        }
         const {
           fileDependencies,
           contextDependencies,
@@ -132,8 +134,9 @@ export default class ExtWebpackPlugin {
     if (compiler.hooks) {
       var me = this
       compiler.hooks.emit.tapAsync('ext-emit-async', function (compilation, cb) {
-        process.stdout.cursorTo(0);console.log(app + 'ext-emit-async')
-
+        if (me.options.verbose == 'yes') {
+          process.stdout.cursorTo(0);console.log(app + 'ext-emit-async')
+        }
         var watchedFiles=[]
         try {watchedFiles = recursiveReadSync('./app')} 
         catch(err) {if(err.errno === 34){console.log('Path does not exist');} else {throw err;}}
