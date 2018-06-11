@@ -22,7 +22,9 @@ class buildAsync {
     var me = this
     return new Promise(async function(resolve, reject) {
       var parms = ['app','build', me.profile, me.environment]
-      console.log(`${app} passing to 'sencha app build ${me.profile} ${me.environment}'`);
+      if (me.verbose == 'yes') {
+        console.log(`${app} passing to 'sencha app build ${me.profile} ${me.environment}'`)
+      }
       try {
         await util.senchaCmdAsync(parms, me.verbose)
         resolve(0);
