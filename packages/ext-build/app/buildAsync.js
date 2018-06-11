@@ -15,6 +15,7 @@ class buildAsync {
   constructor(options) {
     this.profile = options.parms[2]
     this.environment = options.parms[3]
+    this.verbose = options.parms[4]
   }
 
   executeAsync() {
@@ -23,7 +24,7 @@ class buildAsync {
       var parms = ['app','build', me.profile, me.environment]
       console.log(`${app} passing to 'sencha app build ${me.profile} ${me.environment}'`);
       try {
-        await util.senchaCmdAsync(parms)
+        await util.senchaCmdAsync(parms, me.verbose)
 //        console.log('after await')
 //        console.log(ret)
         resolve(0);

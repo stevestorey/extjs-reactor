@@ -23,11 +23,11 @@ exports.senchaCmd = (parms) => {
   process.stdout.cursorTo(0);console.log(app + 'completed - sencha ' + parms.toString().replace(/,/g , " "))
 }
 
-exports.senchaCmdAsync = async (parms, substrings = DEFAULT_SUBSTRS) => {
-  return spawnPromise(sencha, parms, { stdio: 'pipe', encoding: 'utf-8'}, substrings);
+exports.senchaCmdAsync = async (parms, verbose, substrings = DEFAULT_SUBSTRS) => {
+  return spawnPromise(sencha, parms, { stdio: 'pipe', encoding: 'utf-8'}, verbose, substrings);
 }
 
-var spawnPromise = (command, args, options, substrings) => {
+var spawnPromise = (command, args, options, verbose, substrings) => {
   var noErrors = true
   let child
   let promise = new Promise((resolve, reject) => {
@@ -38,20 +38,13 @@ var spawnPromise = (command, args, options, substrings) => {
       options
     )
     child.on('close', (code, signal) => {
-      //resolve({code, signal})
-      //console.log('code')
-      //console.log(code)
-
       if(code === 0) {
         if (noErrors) {
-          //console.log('noErrors true')
           resolve({code, signal})
         }
         else {
-          //console.log('noErrors false')
           reject('ext-build errors')
         }
-
       }
       else {
         reject('ext-build errors...')
@@ -61,20 +54,26 @@ var spawnPromise = (command, args, options, substrings) => {
       reject(error)
     })
     if (child.stdout) {
-//      console.log('here')
       child.stdout.on('data', (data) => {
-        if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
-          var str = data.toString()
-          str = str.replace(/\r?\n|\r/g, " ")
-          str = str.replace("[INF]", "")
-          str = str.replace(process.cwd(), '')
-          if (str.includes("[ERR]")) {
-            const err = `${chalk.red("[ERR]")}`
-            str = str.replace("[ERR]", err)
-            noErrors = false
-          }
-
+        var str = data.toString()
+        if(verbose == true) {
           console.log(`${app}${str}`) 
+        }
+        else {
+          if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
+            str = str.replace(/\r?\n|\r/g, " ")
+            str = str.replace("[INF]", "")
+            str = str.replace(process.cwd(), '')
+            if (str.includes("[ERR]")) {
+              const err = `${chalk.red("[ERR]")}`
+              str = str.replace("[ERR]", err)
+              noErrors = false
+            }
+            console.log(`${app}${str}`) 
+          }
+          else {
+            console.log(`${app}${str}`) 
+          }
         }
       })
     }
