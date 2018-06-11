@@ -5,8 +5,10 @@
   "description": "{description}",
   "scripts": {
     "start": "npm run desktop",
-    "desktop": "webpack-dev-server --profile=desktop --environment=development --verbose=false -w --progress --open",
-    "phone": "webpack-dev-server --profile=phone --environment=development --verbose=false -w --progress --open",
+    "desktop": "webpack-dev-server --profile=desktop --environment=development --verbose=no -w --progress --open",
+    "desktop-v": "webpack-dev-server --profile=desktop --environment=development --verbose=no -w --progress --open",
+    "phone": "webpack-dev-server --profile=phone --environment=development --verbose=no -w --progress --open",
+    "phone-v": "webpack-dev-server --profile=phone --environment=development --verbose=no -w --progress --open",
     "build-desktop-testing": "ext-build app build desktop testing",
     "build-desktop-production": "ext-build app build desktop production",
     "build-phone-testing": "ext-build app build phone testing",
@@ -16,7 +18,7 @@
   "extbuild": {
     "defaultprofile": "desktop",
     "defaultenvironment": "development",
-    "defaultverbose": false
+    "defaultverbose": "no"
   },
   "dependencies": {<tpl if="modern == true">
     "{npmScope}/ext-modern": "^6.6.0",

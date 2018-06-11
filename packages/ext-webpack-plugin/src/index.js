@@ -54,7 +54,7 @@ export default class ExtWebpackPlugin {
   //   dirs: ['./app'],
   // };
 
-  constructor(options = {profile: 'desktop', environment: 'development', verbose: false} ) {
+  constructor(options = {profile: 'desktop', environment: 'development', verbose: 'no'} ) {
     validateOptions(require('../options.json'), options, 'ExtraWatchWebpackPlugin'); // eslint-disable-line
     //this.options = { ...ExtWebpackPlugin.defaults, ...options };
 
@@ -78,7 +78,7 @@ export default class ExtWebpackPlugin {
       var extPkg = (fs.existsSync(extPath+'/package.json') && JSON.parse(fs.readFileSync(extPath+'/package.json', 'utf-8')) || {});
       var extVersion = extPkg.sencha.version
 
-      var cmdPath = path.resolve(pluginPath,'../sencha-cmd')
+      var cmdPath = path.resolve(pluginPath,'../cmd')
       var cmdPkg = (fs.existsSync(cmdPath+'/package.json') && JSON.parse(fs.readFileSync(cmdPath+'/package.json', 'utf-8')) || {});
       var cmdVersion = cmdPkg.version_full
 
@@ -179,42 +179,6 @@ export default class ExtWebpackPlugin {
           cb()
         }
       })
-
-
-//      compiler.hooks.emit.tap('ext-emit', (compilation) => {
-//        process.stdout.cursorTo(0);console.log(app + 'ext-emit')
-
-      //   var watchedFiles=[]
-      //   try {watchedFiles = recursiveReadSync('./app')} 
-      //   catch(err) {if(err.errno === 34){console.log('Path does not exist');} else {throw err;}}
-
-      //   var doBuild = false
-      //   for (var file in watchedFiles) {
-      //     if (this.lastMilliseconds < fs.statSync(watchedFiles[file]).mtimeMs) {
-      //       if (watchedFiles[file].indexOf("scss") != -1) {doBuild=true;break;}
-      //     }
-      //   }
-      //   this.lastMilliseconds = (new Date).getTime()
-
-      //   var currentNumFiles = watchedFiles.length
-      //   var filesource = 'this file enables client reload'
-      //   compilation.assets[currentNumFiles + 'FilesUnderAppFolder.md'] = {
-      //     source: function() {return filesource},
-      //     size: function() {return filesource.length}
-      //   }
-
-      //   if (currentNumFiles != this.lastNumFiles || doBuild) {
-      //     var build = require(`${npmScope}/ext-build/app/build.js`)
-      //     new build({})
-      //     //var refresh = require(`${npmScope}/sencha-build/app/refresh.js`)
-      //     //new refresh({})
-      //   }
-      //   else {
-      //     console.log(app + 'Call to Sencha Build not needed, no new files')
-      //   }
-      //   this.lastNumFiles = currentNumFiles
-
-//      })
     }
     else {
       compiler.plugin('emit', (compilation, cb) => {

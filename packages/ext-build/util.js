@@ -56,12 +56,12 @@ var spawnPromise = (command, args, options, verbose, substrings) => {
     if (child.stdout) {
       child.stdout.on('data', (data) => {
         var str = data.toString()
-        if(verbose == true) {
+        str = str.replace(/\r?\n|\r/g, " ")
+        if(verbose == 'yes') {
           console.log(`${app}${str}`) 
         }
         else {
           if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
-            str = str.replace(/\r?\n|\r/g, " ")
             str = str.replace("[INF]", "")
             str = str.replace(process.cwd(), '')
             if (str.includes("[ERR]")) {
@@ -71,9 +71,7 @@ var spawnPromise = (command, args, options, verbose, substrings) => {
             }
             console.log(`${app}${str}`) 
           }
-          else {
-            console.log(`${app}${str}`) 
-          }
+          // else {//nothing}
         }
       })
     }
