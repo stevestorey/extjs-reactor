@@ -8,7 +8,7 @@
       "type": [ "string" ]
     },
     "verbose": {
-      "type": [ "boolean" ]
+      "type": [ "string" ]
     },
     "files": {
       "type": [ "string", "array" ]

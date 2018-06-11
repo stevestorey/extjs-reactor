@@ -25,11 +25,8 @@ class buildAsync {
       console.log(`${app} passing to 'sencha app build ${me.profile} ${me.environment}'`);
       try {
         await util.senchaCmdAsync(parms, me.verbose)
-//        console.log('after await')
-//        console.log(ret)
         resolve(0);
       } catch(err) {
-//        console.log(`${app} ${chalk.red(" x[ERR]")}${err}`)
         reject({error: err})
       }
     })

@@ -6,7 +6,7 @@ const commandLineArgs = require('command-line-args')
 const webpackDefinitions = [
   { name: 'profile', alias: 'p', type: String },
   { name: 'environment', alias: 'e', type: String },
-  { name: 'verbose', alias: 'v', type: Boolean },
+  { name: 'verbose', alias: 'v', type: String },
 ]
 
 module.exports = async function (env) {
