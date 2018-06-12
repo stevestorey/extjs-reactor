@@ -61,7 +61,7 @@ export default class ExtWebpackPlugin {
     var defaults = {
       cwd: process.cwd(),
       files: ['./app.json'],
-      dirs: ['./app'],
+      dirs: ['./app','./packages'],
     }
 
     this.options = { ...defaults, ...options };
@@ -138,7 +138,8 @@ export default class ExtWebpackPlugin {
           process.stdout.cursorTo(0);console.log(app + 'ext-emit-async')
         }
         var watchedFiles=[]
-        try {watchedFiles = recursiveReadSync('./app')} 
+        //try {watchedFiles = recursiveReadSync('./app')} 
+        try {watchedFiles = recursiveReadSync('./app').concat(recursiveReadSync('./packages'))}
         catch(err) {if(err.errno === 34){console.log('Path does not exist');} else {throw err;}}
 
         var doBuild = false

@@ -4,7 +4,7 @@
   "version": "{version}",
   "description": "{description}",
   "scripts": {
-    "start": "npm run desktop",
+    "start": "npm run $npm_package_extbuild_defaultprofile",
     "desktop": "webpack-dev-server --profile=desktop --environment=development --verbose=no -w --open",
     "desktop-v": "webpack-dev-server --profile=desktop --environment=development --verbose=yes -w --progress --open",
     "phone": "webpack-dev-server --profile=phone --environment=development --verbose=no -w --progress --open",
@@ -13,7 +13,7 @@
     "build-desktop-production": "ext-build app build desktop production",
     "build-phone-testing": "ext-build app build phone testing",
     "build-phone-production": "ext-build app build phone production",
-    "createview": "ext-build generate viewpackage $npm_package_extbuild_buildprofile $VIEW"
+    "createview": "ext-build generate viewpackage $npm_package_extbuild_defaultprofile $VIEW"
   },
   "extbuild": {
     "defaultprofile": "desktop",
