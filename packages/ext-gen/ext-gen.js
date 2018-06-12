@@ -495,7 +495,8 @@ async function stepCreate() {
         args = ['install','-s','>','NUL']
       }
       else {
-        args = ['install','-s','>','/dev/null']
+        //args = ['install','-s','>','/dev/null']
+        args = ['install','-s']
       }
     }
     let options = {stdio: 'inherit', encoding: 'utf-8'}
