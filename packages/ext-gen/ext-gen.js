@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const { kebabCase } = require('lodash')
 const util = require('./util.js')
+const appUpgrade = require('./appUpgrade.js')
 require('./XTemplate/js')
 const commandLineArgs = require('command-line-args')
 var List = require('prompt-list')
@@ -152,9 +153,19 @@ function stepStart() {
         step00()
       }
       break;
+    case 'upgrade':
+        upgrade();
+        break;
     default:
       console.log(`${app} ${boldRed('[ERR]')} command not available: '${mainCommand}'`)
   }
+}
+
+async function upgrade()
+{
+ console.log('Upgrade started'); 
+  await appUpgrade.upgradeApp();
+  console.log('Upgrade done . Please run npm install and then npm run all');
 }
 
 function step00() {
