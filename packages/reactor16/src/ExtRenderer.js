@@ -180,10 +180,10 @@ const ExtRenderer = ReactFiberReconciler({
       l(`ExtRenderer: finalizeInitialChildren, type: ${type}, xtype: ${xtype}, (ExtJSComponent.rawConfigs, ExtJSComponent.cmp)`, ExtJSComponent.rawConfig, ExtJSComponent.cmp)
     }
     else {
-      //SK : HTML Rendering - STEP 2  : Create Widget and Render HTML in its DOM
-      var widget = Ext.create({xtype:'widget'})
-      ReactDOM.render(React.createElement(type, props, props.children),widget.el.dom)
-      ExtJSComponent.cmp = widget
+      //SK : HTML Rendering - STEP 2  : Create component and render HTML in its DOM
+      var cmp = Ext.create({xtype:'component', cls: 'x-react-element'})
+      ReactDOM.render(React.createElement(type, props, props.children),cmp.el.dom)
+      ExtJSComponent.cmp = cmp
       l(`ExtRenderer: finalizeInitialChildren, type: ${type}, xtype: ${xtype}, ExtJSComponent == html`,ExtJSComponent)
     }
 
