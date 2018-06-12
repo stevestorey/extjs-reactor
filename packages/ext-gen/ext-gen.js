@@ -499,9 +499,9 @@ async function stepCreate() {
       }
     }
     let options = {stdio: 'inherit', encoding: 'utf-8'}
-    console.log(`${app} npm ${args.toString().replace(',',' ')} started for ${answers['packageName']}`)
+    console.log(`${app} npm ${args.toString().replace(/,/g, " ")} started for ${answers['packageName']}`)
     await util.spawnPromise(command, args, options, substrings);
-    console.log(`${app} npm ${args.toString().replace(',',' ')} completed for ${answers['packageName']}`)
+    console.log(`${app} npm ${args.toString().replace(/,/g, " ")} completed for ${answers['packageName']}`)
   } catch(err) {
     console.log(boldRed('Error in npm install: ' + err));
   }
