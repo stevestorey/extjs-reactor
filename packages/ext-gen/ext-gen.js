@@ -492,7 +492,8 @@ async function stepCreate() {
     }
     else {
       if (require('os').platform() == 'win32') {
-        args = ['install','-s','>','NUL']
+        //args = ['install','-s','>','NUL']
+        args = ['install','-s']
       }
       else {
         //args = ['install','-s','>','/dev/null']
