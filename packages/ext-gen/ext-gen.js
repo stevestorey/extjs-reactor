@@ -491,7 +491,7 @@ async function stepCreate() {
       args = ['install']
     }
     else {
-      args = ['install','-s']
+      args = ['install','-s','>','/dev/null']
     }
     let options = {stdio: 'inherit', encoding: 'utf-8'}
     console.log(`${app} npm ${args.toString().replace(',',' ')} started for ${answers['packageName']}`)
