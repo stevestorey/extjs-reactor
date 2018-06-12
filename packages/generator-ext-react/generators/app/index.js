@@ -15,11 +15,18 @@ const CODE = {
 const LANGUAGE = {
     TYPESCRIPT: 'TypeScript',
     JAVASCRIPT: 'JavaScript'
-}
+};
+
+const REACTVERSION = {
+    REACT15: 15,
+    REACT16: 16
+};
 
 const BOILERPLATE = {
-    [LANGUAGE.JAVASCRIPT]: path.dirname(require.resolve('@extjs/reactor-boilerplate')),
-    [LANGUAGE.TYPESCRIPT]: path.dirname(require.resolve('@extjs/reactor-typescript-boilerplate'))
+    [LANGUAGE.JAVASCRIPT + REACTVERSION.REACT15]: path.dirname(require.resolve('@extjs/reactor-boilerplate' + REACTVERSION.REACT15)),
+    [LANGUAGE.JAVASCRIPT + REACTVERSION.REACT16]: path.dirname(require.resolve('@extjs/reactor-boilerplate' + REACTVERSION.REACT16)),
+    [LANGUAGE.TYPESCRIPT + REACTVERSION.REACT15]: path.dirname(require.resolve('@extjs/reactor-typescript-boilerplate' + REACTVERSION.REACT15)),
+    [LANGUAGE.TYPESCRIPT + REACTVERSION.REACT16]: path.dirname(require.resolve('@extjs/reactor-typescript-boilerplate' + REACTVERSION.REACT16))
 };
 
 module.exports = class extends Generator {
@@ -56,6 +63,11 @@ module.exports = class extends Generator {
             name: 'code',
             message: 'Do you want to include example code (layout, navigation, routing, etc...), or just generate an empty app?',
             choices: [CODE.BARE_BONES, CODE.EXAMPLE]
+        }, {
+            type: 'list',
+            message: 'Which react version you use?',
+            name: 'reactVersion',
+            choices: [REACTVERSION.REACT15, REACTVERSION.REACT16]
         }, {
             type: 'list',
             message: 'Which language would you like to use?',
@@ -102,7 +114,7 @@ module.exports = class extends Generator {
             this.destinationRoot(this.packageName);
         }
 
-        const boilerplate = BOILERPLATE[this.language];
+        const boilerplate = BOILERPLATE[this.language + this.reactVersion];
 
         // copy in files from boilerplate
         glob.sync('**/*', { cwd: boilerplate, ignore: ['build/**', 'node_modules/**', 'index.js'], dot: true })
