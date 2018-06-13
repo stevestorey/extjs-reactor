@@ -4,7 +4,7 @@
   "version": "{version}",
   "description": "{description}",
   "scripts": {
-    "start": "npm run $npm_package_extbuild_defaultprofile",
+    "start": "cross-env-shell npm run $npm_package_extbuild_defaultprofile",
     "desktop": "webpack-dev-server --profile=desktop --environment=development --verbose=no -w --open",
     "desktop-v": "webpack-dev-server --profile=desktop --environment=development --verbose=yes -w --progress --open",
     "phone": "webpack-dev-server --profile=phone --environment=development --verbose=no -w --progress --open",
@@ -15,7 +15,7 @@
     "build-desktop-production": "ext-build app build desktop production",
     "build-phone-testing": "ext-build app build phone testing",
     "build-phone-production": "ext-build app build phone production",
-    "createview": "ext-build generate viewpackage $npm_package_extbuild_defaultprofile $VIEW"
+    "createview": "cross-env-shell ext-build generate viewpackage $npm_package_extbuild_defaultprofile $VIEW"
   },
   "extbuild": {
     "defaultprofile": "desktop",
@@ -31,6 +31,7 @@
   "devDependencies": {
     "{npmScope}/ext-webpack-plugin": "~0.0.1",
     "command-line-args": "^5.0.2",
+	"cross-env": "^5.2.0",
     "portfinder": "^1.0.13",
     "webpack": "^4.12.0",
     "webpack-cli": "^3.0.3",
