@@ -14,6 +14,11 @@ module.exports = async function (env) {
   var buildprofile = webpackCommandArgs.profile || process.env.npm_package_extbuild_defaultprofile
   var buildenvironment = webpackCommandArgs.environment || process.env.npm_package_extbuild_defaultenvironment
   var buildverbose = webpackCommandArgs.verbose || process.env.npm_package_extbuild_buildverbose
+
+  if (buildprofile == 'all') {
+    buildprofile = ''
+  }
+
   portfinder.basePort = 1962
   var port = await portfinder.getPortPromise()
   const nodeEnv = env && env.prod ? 'production' : 'development'
