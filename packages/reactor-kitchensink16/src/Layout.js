@@ -28,7 +28,7 @@ class Layout extends Component {
          * the application without user interaction
          * (changing hash manually or first visiting via bookmark).
          */   
-        const nav = this.phoneNav;
+        const nav = this.phoneNav.cmp;
         const anim = nav.getLayout().getAnimation();
         anim.disable();
         
@@ -41,7 +41,7 @@ class Layout extends Component {
         anim.enable();
       }
 
-      this.phoneNav.down('titlebar').add({
+      this.phoneNav.cmp.down('titlebar').add({
         align: 'right',
         xtype: 'component',
         html: '<div class="app-premium">Premium</div>'
@@ -52,7 +52,7 @@ class Layout extends Component {
   componentDidUpdate(previousProps) {
     if(Ext.os.is.Phone) {
       const node = this.props.selectedNavNode;
-      const nav = this.phoneNav;
+      const nav = this.phoneNav.cmp;
 
       if (node && previousProps.selectedNavNode !== node) {
         if (node.isLeaf()) {
