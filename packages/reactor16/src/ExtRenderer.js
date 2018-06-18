@@ -97,6 +97,12 @@ const ExtRenderer = ReactFiberReconciler({
         if(parentInstance.rawtooltip == undefined) 
         parentInstance.rawtooltip = childInstance.cmp
       }
+      else if (childInstance.cmp.config && childInstance.cmp.config.rel) {
+        let name = childInstance.cmp.config['rel']
+        if(typeof name == 'string') {
+          parentInstance.rawConfigs[name] = childInstance.cmp
+        }
+      }
       else {
         if(parentInstance.rawitems == undefined) { parentInstance.rawitems = [] }
         parentInstance.rawitems.push(childInstance.cmp)
