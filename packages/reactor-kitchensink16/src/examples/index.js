@@ -22,6 +22,8 @@ import ResizableHandle from './Panels/ResizableHandle/ResizableHandle';
 import CollapsiblePanel from './Panels/CollapsiblePanel/CollapsiblePanel';
 import BasicDatePanel from './Panels/BasicDatePanel/BasicDatePanel';
 import AdvancedDatePanel from './Panels/AdvancedDatePanel/AdvancedDatePanel';
+// To be uncommented for 2.0 release
+//import TimePanel from './Panels/TimePanel/TimePanel';
 
 // Tabs
 
@@ -89,7 +91,6 @@ import SliderField from './FormFields/SliderField/SliderField';
 import ToggleField from './FormFields/ToggleField/ToggleField';
 import TextAreaField from './FormFields/TextAreaField/TextAreaField';
 import RadioField from './FormFields/RadioField/RadioField';
-import Gauge from './FormFields/Gauge/Gauge';
 import FormPanel from './FormFields/FormPanel/FormPanel';
 import SearchField from './FormFields/SearchField/SearchField';
 import FileField from './FormFields/FileField/FileField';
@@ -160,7 +161,7 @@ import Stacked from './Charts/Column/Stacked/Stacked';
 import Candlestick from './Charts/Financial/Candlestick/Candlestick';
 import OHLC from './Charts/Financial/OHLC/OHLC';
 
-// Gauge
+// Gauge inside charts
 
 import BasicGauge from './Charts/Gauge/BasicGauge/BasicGauge';
 import BasicGaugeChart from './Charts/Gauge/BasicGaugeChart/BasicGaugeChart';
@@ -245,6 +246,11 @@ import Transition from './Transition/Transition';
 
 import Wizard from './Wizard/Wizard';
 
+//Gauge inside components
+// To be uncommented for 2.0 release
+//import DefaultGauge from './Gauge/DefaultGauge/DefaultGauge';
+//import NeedleGauge from './Gauge/NeedleGauge/NeedleGauge';
+
 const root = {
     id: '/',
     text: 'All',
@@ -275,7 +281,6 @@ const root = {
                 { text: 'FieldSet', component: FieldSet, layout: 'center', navIcon: 'icon-Forms-FieldSet'  },
                 { text: 'FileField', component: FileField, layout: 'center', navIcon: 'icon-Forms-FileField'  },
                 { text: 'FormPanel', component: FormPanel, navIcon: 'icon-form-panel' },
-                { text: 'Gauge', component: Gauge, layout: 'center', navIcon: 'icon-Forms-Gauge' },
                 { text: 'NumberField', component: NumberField, layout: 'center', navIcon: 'icon-Forms-NumberField' },
                 { text: 'PasswordField', component: PasswordField, layout: 'center', navIcon: 'icon-Forms-PasswordField' },
                 { text: 'RadioField', component: RadioField, layout: 'center', navIcon: 'icon-Forms-RadioField' },
@@ -290,6 +295,11 @@ const root = {
                 { text: 'URLField', component: URLField, layout: 'center', navIcon: 'icon-Forms-URLField' },
                 { text: 'Validation', component: Validation, layout: 'auto', navIcon: 'icon-form-validation'}
             ] },
+           // To be uncommented for 2.0 release
+           /* { text: 'Gauges', navIcon: 'icon-gauge-charts', children: [
+                { text: 'Default Gauge', component: DefaultGauge, layout: 'center', navIcon: 'icon-gauge-charts' },
+                { text: 'Needle Gauge', component: NeedleGauge, layout: 'center', navIcon: 'icon-gauge-charts' }
+            ]},*/
             { text: 'Layouts', navIcon: 'icon-layouts', children: [
                 { text: 'card', component: CardLayout, navIcon: 'icon-layout-card' },
                 { text: 'center', component: CenterLayout, navIcon: 'icon-layout-center' },
@@ -321,6 +331,8 @@ const root = {
                 { text: 'Collapsible Panel', component: CollapsiblePanel, layout: Ext.os.is.Phone ? 'fit': 'center', navIcon: 'icon-panel-collapsible' },
                 { text: 'Basic Date Panel', component: BasicDatePanel, layout: 'center', navIcon: 'icon-panel-date' },
                 { text: 'Advanced Date Panel', component: AdvancedDatePanel, layout: 'center', navIcon: 'icon-panel-date-adv', hidden: Ext.os.is.Phone },
+                // To be uncommented for 2.0 release 
+             // { text: 'Time Panel', component: TimePanel, layout: 'center', navIcon: 'icon-panel-time', hidden: Ext.os.is.Phone },
             ]},
             { text: 'Popups', navIcon: 'icon-windows', children: [
                 { text: 'Dialog', component: Dialog, layout: 'center', navIcon: 'icon-basic-dialog' },
