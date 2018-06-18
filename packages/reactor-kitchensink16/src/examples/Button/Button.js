@@ -19,6 +19,7 @@ export default class ButtonExample extends Component {
         const text = type.indexOf('text') !== -1;
 
         let menu, ui;
+
         if (style === 'menu') {
             menu = (
                 <Menu indented={false}>
@@ -63,38 +64,38 @@ export default class ButtonExample extends Component {
                 </Container>
 
                 <Panel { ...layoutProps }>
-                  <Container layout='hbox'>
-                    <Container><div {...groupLabelProps}>Default</div></Container>
-                    <Container className="button-group" {...buttonGroupProps}>
-                      <Button text={ text && "Normal" } ui={ui} iconCls={iconCls} arrowAlign="bottom">{menu}</Button>
-                      <Button text={ text && "Badge" } ui={ui} iconCls={iconCls} badgeText="2">{menu}</Button>
-                      <Button text={ text && "Disabled" } ui={ui} iconCls={iconCls} disabled>{menu}</Button>
+                    <Container>
+                        <div {...groupLabelProps}>Default</div>
+                        <Container className="button-group" {...buttonGroupProps}>
+                            <Button text={ text && "Normal" } ui={ui} iconCls={iconCls} arrowAlign="bottom">{menu}</Button>
+                            <Button text={ text && "Badge" } ui={ui} iconCls={iconCls} badgeText="2">{menu}</Button>
+                            <Button text={ text && "Disabled" } ui={ui} iconCls={iconCls} disabled>{menu}</Button>
+                        </Container>
                     </Container>
-                  </Container>
-                  <Container layout='hbox'>
-                    <Container><div {...groupLabelProps}>Alt</div></Container>
-                    <Container className="button-group button-group-alt" {...buttonGroupProps}>
-                      <Button text={ text && "Normal" } ui={ui + ' alt'} iconCls={iconCls}>{menu}</Button>
-                      <Button text={ text && "Badge" } ui={ui + ' alt'} iconCls={iconCls} badgeText="2">{menu}</Button>
-                      <Button text={ text && "Disabled" } ui={ui + ' alt'} iconCls={iconCls} disabled>{menu}</Button>
+                    <Container>
+                        <div {...groupLabelProps}>Alt</div>
+                        <Container className="button-group button-group-alt" {...buttonGroupProps}>
+                            <Button text={ text && "Normal" } ui={ui + ' alt'} iconCls={iconCls}>{menu}</Button>
+                            <Button text={ text && "Badge" } ui={ui + ' alt'} iconCls={iconCls} badgeText="2">{menu}</Button>
+                            <Button text={ text && "Disabled" } ui={ui + ' alt'} iconCls={iconCls} disabled>{menu}</Button>
+                        </Container>
                     </Container>
-                  </Container>
-                  <Container layout='hbox'>
-                  <Container><div {...groupLabelProps}>Raised</div></Container>
-                    <Container className="button-group" {...buttonGroupProps}>
-                      <Button text={ text && "Normal" } ui={ui + ' raised'} iconCls={iconCls}>{menu}</Button>
-                      <Button text={ text && "Badge" } ui={ui + ' raised'} iconCls={iconCls} badgeText="2">{menu}</Button>
-                      <Button text={ text && "Disabled" } ui={ui + ' raised'} iconCls={iconCls} disabled>{menu}</Button>
+                    <Container>
+                        <div {...groupLabelProps}>Raised</div>
+                        <Container className="button-group" {...buttonGroupProps}>
+                            <Button text={ text && "Normal" } ui={ui + ' raised'} iconCls={iconCls}>{menu}</Button>
+                            <Button text={ text && "Badge" } ui={ui + ' raised'} iconCls={iconCls} badgeText="2">{menu}</Button>
+                            <Button text={ text && "Disabled" } ui={ui + ' raised'} iconCls={iconCls} disabled>{menu}</Button>
+                        </Container>
                     </Container>
-                  </Container>
-                  <Container layout='hbox'>
-                    <Container><div {...groupLabelProps}>Alt Raised</div></Container>
-                    <Container className="button-group button-group-alt" {...buttonGroupProps}>
-                      <Button text={ text && "Normal" } ui={ui + ' alt raised'} iconCls={iconCls}>{menu}</Button>
-                      <Button text={ text && "Badge" } ui={ui + ' alt raised'} iconCls={iconCls} badgeText="2">{menu}</Button>
-                      <Button text={ text && "Disabled" } ui={ui + ' alt raised'} iconCls={iconCls} disabled>{menu}</Button>
+                    <Container>
+                        <div {...groupLabelProps}>Alt Raised</div>
+                        <Container className="button-group button-group-alt" {...buttonGroupProps}>
+                            <Button text={ text && "Normal" } ui={ui + ' alt raised'} iconCls={iconCls}>{menu}</Button>
+                            <Button text={ text && "Badge" } ui={ui + ' alt raised'} iconCls={iconCls} badgeText="2">{menu}</Button>
+                            <Button text={ text && "Disabled" } ui={ui + ' alt raised'} iconCls={iconCls} disabled>{menu}</Button>
+                        </Container>
                     </Container>
-                  </Container>
                 </Panel>
             </Container>
         )
