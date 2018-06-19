@@ -286,7 +286,11 @@ const ExtRenderer = ReactFiberReconciler({
         }
         else {
           console.log('appendChildToContainer This is ExtReactRoot, call add method on parent')
-          parentCmp.add(childCmp)
+          if(childCmp) {
+            parentCmp.add(childCmp)
+          } else {
+            console.log("appendChildToContainer This is ExtReactRoot but with string/non ExtJS child")
+          }          
         }
       }
       else {
@@ -349,7 +353,11 @@ const ExtRenderer = ReactFiberReconciler({
       l(`removeChildFromContainer (parentInstance, child)`, parentInstance, child)
 
       if (parentInstance != null && child != null) {
-        parentInstance.remove(child.cmp, true)
+        if(child.cmp) {
+          parentInstance.remove(child.cmp, true)
+        } else {
+          console.log("removeChildFromContainer - child.cmp is undefined")
+        }        
       }
     },
 
