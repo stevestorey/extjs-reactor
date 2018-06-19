@@ -62,20 +62,18 @@ export default class EditableGrid extends Component {
         <Column 
           text="Change" 
           width="90" 
-          dataIndex="change" 
-          tpl={this.signTpl.bind(this, 'change','0.00')}
-          cell={{ encodeHtml: false }}
+          dataIndex="change"
+          renderer={this.renderSign.bind(this, '0.00')}
         />
         <Column 
           text="% Change" 
           width="100" 
           dataIndex="pctChange" 
-          tpl={this.signTpl.bind(this, 'pctChange', '0.00%')}
-          cell={{ encodeHtml: false }}
+          renderer={this.renderSign.bind(this, '0.00')}
         />
         <Column 
           text="Last Updated" 
-          width="125" 
+          width="125"
           dataIndex="lastChange" 
           formatter="date('m/d/Y')" 
         />
@@ -91,5 +89,17 @@ export default class EditableGrid extends Component {
       </span>
     )
   }
+
+  createSignTpl = format => new Template(value => (
+        <span style={{ color: value > 0 ? 'green' : value < 0 ? 'red' : ''}}>
+            {Ext.util.Format.number(value, format)}
+        </span>
+    ));
+
+    renderSign = (format, value) => (
+        <span style={{ color: value > 0 ? 'green' : value < 0 ? 'red' : ''}}>
+            {Ext.util.Format.number(value, format)}
+        </span>
+    )
 
 }

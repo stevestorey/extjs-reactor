@@ -1,9 +1,10 @@
 #! /usr/bin/env node
-const npmScope = '@extjs'
+const npmScope = '@sencha'
 const path = require('path');
 const fs = require('fs-extra');
 const { kebabCase } = require('lodash')
 const util = require('./util.js')
+const appUpgrade = require('./appUpgrade.js')
 require('./XTemplate/js')
 const commandLineArgs = require('command-line-args')
 var List = require('prompt-list')
@@ -40,6 +41,7 @@ var answers = {
   'appName': null,
   'classic': null,
   'modern': null,
+  'universal': null,
   'classicTheme': null,
   'modernTheme': null,
   'templateType': null,
@@ -58,6 +60,8 @@ var answers = {
 }
 
 const optionDefinitions = [
+  { name: 'command', defaultOption: true },
+  { name: 'verbose', alias: 'v', type: Boolean },
   { name: 'interactive', alias: 'i', type: Boolean },
   { name: 'help', alias: 'h', type: Boolean },
   { name: 'defaults', alias: 'd', type: Boolean },
@@ -79,34 +83,134 @@ function stepStart() {
   version = pkg.version
   var data = fs.readFileSync(nodeDir + '/config.json')
   config = JSON.parse(data)
-  try{
-    cmdLine = commandLineArgs(optionDefinitions)
-  }
-  catch (e) {
-    console.log(`${app} ${e}`)
-    return
-  }
-  console.log(boldGreen(`\nSencha ExtGen v${version} - The Ext JS project generator for npm`))
+
+  console.log(boldGreen(`\nSencha ExtGen v${version} - The Ext JS code generator`))
   console.log('')
-  step00()
+  
+  let mainDefinitions = [{ name: 'command', defaultOption: true }]
+  const mainCommandArgs = commandLineArgs(mainDefinitions, { stopAtFirstUnknown: true })
+//  console.log('')
+//  console.log(`mainCommandArgs: ${JSON.stringify(mainCommandArgs)}`)
+  var mainCommand = mainCommandArgs.command
+//  console.log(`mainCommand: ${JSON.stringify(mainCommand)}`)
+  switch(mainCommand) {
+    case undefined:
+      let argv = mainCommandArgs._unknown || []
+      if (argv.length == 0 ){
+//        console.log(`cmdLine: ${JSON.stringify(cmdLine)}`)
+//        console.log(`\n\nShortHelp`)
+        stepShortHelp()
+        break;
+      }
+      if (argv.length > 1) {
+        console.log(`${app} ${boldRed('[ERR]')} too many switches: ${argv.toString()}`)
+      }
+      else {
+        cmdLine = commandLineArgs(optionDefinitions, { argv: argv, stopAtFirstUnknown: true })
+//        console.log(`cmdLine: ${JSON.stringify(cmdLine)}`)
+//        console.log(`\n\nstep00`)
+        step00()
+      }
+      break;
+    case 'app':
+      cmdLine.command = mainCommand
+      let appArgs = mainCommandArgs._unknown || []
+//      console.log(`appArgs: ${JSON.stringify(appArgs)}`)
+      let appDefinitions = [{ name: 'appName', defaultOption: true }]
+      const appCommandArgs = commandLineArgs(appDefinitions, { argv: appArgs, stopAtFirstUnknown: true })
+//      console.log(`appCommandArgs: ${JSON.stringify(appCommandArgs)}`)
+      var appName = appCommandArgs.appName
+//      console.log(`appName: ${JSON.stringify(appName)}`)
+      if (appName != undefined) {
+        cmdLine.name = appName
+      }
+      let appSubArgs = appCommandArgs._unknown || []
+//      console.log(`appSubArgs: ${JSON.stringify(appSubArgs)}`)
+      if (appSubArgs.length == 0) {
+//        console.log(`cmdLine: ${JSON.stringify(cmdLine)}`)
+//        console.log(`\n\nstep00`)
+        step00()
+      }
+      else {
+        var command = cmdLine.command
+        var name = ''
+        if (cmdLine.name != undefined) {
+          name = cmdLine.name
+        }
+        try{
+          cmdLine = commandLineArgs(optionDefinitions, { argv: appSubArgs, stopAtFirstUnknown: false })
+        }
+        catch (e) {
+          console.log(`${app} ${boldRed('[ERR]')} ${JSON.stringify(e)}`)
+          return
+        }
+        cmdLine.command = command
+        if (name != '') {
+          cmdLine.name = name
+        }
+//        console.log(`cmdLine: ${JSON.stringify(cmdLine)}`)
+//        console.log(`\n\nstep00`)
+        step00()
+      }
+      break;
+    case 'upgrade':
+        upgrade();
+        break;
+    default:
+      console.log(`${app} ${boldRed('[ERR]')} command not available: '${mainCommand}'`)
+  }
+}
+
+async function upgrade()
+{
+ console.log('Upgrade started'); 
+  await appUpgrade.upgradeApp();
+  console.log('Upgrade done . Please run npm install and then npm run all');
 }
 
 function step00() {
+//  console.log('step00')
+//  console.log(`cmdLine: ${JSON.stringify(cmdLine)}, length: ${Object.keys(cmdLine).length}, process.argv.length: ${process.argv.length}`)
+
   setDefaults()
-  if (process.argv.length == 2 || cmdLine.help == true) {
-    stepHelp()
+  if (cmdLine.verbose == true) {
+    process.env.EXTGEN_VERBOSE = 'true'
   }
-  else if (cmdLine.interactive == true) {
-    step00a()
+  else {
+    process.env.EXTGEN_VERBOSE = 'false'
+  }
+  if (cmdLine.help == true) {
+    stepHelpGeneral() 
+  }
+  else if (cmdLine.command == undefined) {
+    console.log(`${app} ${boldRed('[ERR]')} no command specified (app, view)`)
+  }
+  else if (cmdLine.command == 'app' && Object.keys(cmdLine).length == 1) {
+    console.log(`${app} ${boldRed('[ERR]')} at least 1 parameter is needed`)
+    return
   }
   else if (cmdLine.defaults == true) {
     displayDefaults()
   }
+  else if (cmdLine.command != 'app') {
+    console.log(`${app} ${boldRed('[ERR]')} unknown command '${cmdLine.command}'`)
+  }
+  else if (cmdLine.interactive == true && cmdLine.command == 'app') {
+    step00a()
+  }
+  else if (process.argv.length == 2) {
+    stepShortHelp()
+  }
+
   else if (cmdLine.auto == true) {
     step99()
   }
+  else if (cmdLine.name != undefined) {
+    cmdLine.auto = true
+    step99()
+  }
   else {
-    stepHelp()
+    stepHelpGeneral()
   }
 }
 
@@ -171,21 +275,6 @@ function step03() {
 }
 
 function step04() {
-
-  // choices: {
-  //   desktopclassic: `Desktop build using classic toolkit`
-  //   desktopmodern: `Desktop build using modern toolkit`
-  //   universalclassicmodern: `Universal App: desktop build using classic toolkit, phone build using modern toolkit`
-  //   universalmodern: `Universal App: desktop build using classic toolkit, phone build using modern toolkit`
-  // }
-
-  // choices: [
-  //   `Desktop application: desktop profile using classic toolkit`, //'classicdesktop',
-  //   `Desktop application: desktop profile using modern toolkit`, //'classicdesktop',
-  //   `Universal Application: desktop profile using classic toolkit, phone profile using modern toolkit`,
-  //   `Universal Application: desktop profile using classic toolkit, phone profile using modern toolkit`
-  // ],
-
   new List({
     message: 'What Ext JS template would you like to use?',
     choices: ['classicdesktop', 'moderndesktop', 'universalclassicmodern', 'universalmodern'],
@@ -193,11 +282,15 @@ function step04() {
   }).run().then(answer => {
     answers['classic'] = false
     answers['modern'] = false
+    answers['universal'] = false
     if (answer.includes("classic")) {
       answers['classic'] = true
     }
     if (answer.includes("modern")) {
       answers['modern'] = true
+    }
+    if (answer.includes("universal")) {
+      answers['universal'] = true
     }
     answers['template'] = answer
     if(answers['useDefaults'] == true) {
@@ -326,6 +419,11 @@ function step99() {
     }
   }
 
+  if (cmdLine.auto == true) {
+    stepCreate()
+    return
+  }
+
   var message
   if (cmdLine.defaults == true) {
     message = 'Generate the Ext JS npm project?'
@@ -333,11 +431,6 @@ function step99() {
   }
   else {
     message = 'Would you like to generate the Ext JS npm project with above config now?'
-  }
-
-  if (cmdLine.auto == true) {
-    stepCreate()
-    return
   }
 
   new Confirm({
@@ -356,10 +449,6 @@ function step99() {
 }
 
 async function stepCreate() {
-  // for (var key in answers) { console.log(`${key} - ${answers[key]}`) }
-  // var spawnPromise = require('./utils.js');
-  //const app = `${chalk.green('ℹ ｢ext｣:')} ext-gen:`;
-
   var nodeDir = path.resolve(__dirname)
   var currDir = process.cwd()
   var destDir = currDir + '/' + answers['packageName']
@@ -376,6 +465,7 @@ async function stepCreate() {
     npmScope: npmScope,
     classic: answers['classic'],
     modern: answers['modern'],
+    universal: answers['universal'],
     classicTheme: answers['classicTheme'],
     modernTheme: answers['modernTheme'],
     appName: answers['appName'],
@@ -404,32 +494,42 @@ async function stepCreate() {
   tpl = null
   fs.writeFileSync(destDir + '/webpack.config.js', t);
   console.log(`${app} webpack.config.js created for ${answers['packageName']}`)
-
   try {
     const substrings = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
     var command = `npm${/^win/.test(require('os').platform()) ? ".cmd" : ""}`
-    let args = [
-      'install'
-    ]
+    var args = []
+    if (process.env.EXTGEN_VERBOSE == 'true') {
+      args = ['install']
+    }
+    else {
+      if (require('os').platform() == 'win32') {
+        //args = ['install','-s','>','NUL']
+        args = ['install','-s']
+      }
+      else {
+        //args = ['install','-s','>','/dev/null']
+        args = ['install','-s']
+      }
+    }
     let options = {stdio: 'inherit', encoding: 'utf-8'}
-    console.log(`${app} npm ${args.toString().replace(',',' ')} started for ${answers['packageName']}`)
+    console.log(`${app} npm ${args.toString().replace(/,/g, " ")} started for ${answers['packageName']}`)
     await util.spawnPromise(command, args, options, substrings);
-    console.log(`${app} npm ${args.toString().replace(',',' ')} completed for ${answers['packageName']}`)
+    console.log(`${app} npm ${args.toString().replace(/,/g, " ")} completed for ${answers['packageName']}`)
   } catch(err) {
     console.log(boldRed('Error in npm install: ' + err));
   }
 
-  var frameworkPath = path.join(destDir, 'node_modules', '@extjs', 'ext', 'package.json');
-  var cmdPath = path.join(destDir, 'node_modules', '@extjs', 'sencha-cmd', 'package.json');
+  var frameworkPath = path.join(destDir, 'node_modules', npmScope, 'ext', 'package.json');
+  var cmdPath = path.join(destDir, 'node_modules', npmScope, 'cmd', 'package.json');
   var frameworkPkg = require(frameworkPath);
   var cmdPkg = require(cmdPath);
   var cmdVersion = cmdPkg.version_full
   var frameworkVersion = frameworkPkg.sencha.version
 
-  var generateApp = require('@extjs/ext-build-generate-app/generateApp.js')
+  var generateApp = require(`${npmScope}/ext-build-generate-app/generateApp.js`)
   var options = { 
     parms: [ 'generate', 'app', answers['appName'], './' ],
-    sdk: 'node_modules/@extjs/ext',
+    sdk: `node_modules/${npmScope}/ext`,
     template: answers['template'],
     classicTheme: answers['classicTheme'],
     modernTheme: answers['modernTheme'],
@@ -439,8 +539,12 @@ async function stepCreate() {
     force: false
   }
   new generateApp(options)
-  console.log(`${app} Your Ext JS npm project is ready`)
-  console.log(boldGreen(`\ntype "cd ${answers['packageName']}" then "npm start" to run the development build and open your new application in a web browser\n`))
+  console.log(`${app} Your Ext JS project is ready`)
+  var runPhone = ''
+  if (answers['universal'] == true) {
+    runPhone = `or "npm run phone"`
+  }
+  console.log(boldGreen(`\ntype "cd ${answers['packageName']}" then "npm start" or "npm run desktop" ${runPhone}\nto run the development build and open your new application in a web browser\n`))
  }
 
  function setDefaults() {
@@ -494,22 +598,19 @@ async function stepCreate() {
 }
 
 function displayDefaults() {
-  //console.log('')
   //console.log(`For controlling ext-gen:`)
   //console.log(`seeDefaults:\t${config.seeDefaults}`)
   //console.log(`useDefaults:\t${config.useDefaults}`)
   //console.log(`createNow:\t${config.createNow}`)
-  //console.log('')
-  //console.log('')
   //console.log(`For template selection:`)
   //console.log(`templateType:\t${config.templateType}`)
   //console.log(`templateFolderName:\t${config.templateFolderName}`)
+  //console.log(`classic:\t${answers['classic']}`)
+  //console.log(`modern:\t\t${answers['modern']}`)
 
   console.log(boldGreen(`Defaults for Ext JS app:`))
   console.log(`appName:\t${answers['appName']}`)
   console.log(`template:\t${answers['template']}`)
-  //console.log(`classic:\t${answers['classic']}`)
-  //console.log(`modern:\t\t${answers['modern']}`)
   if(answers['classic'] == true) {
     console.log(`classicTheme:\t${answers['classicTheme']}`)
   }
@@ -530,37 +631,32 @@ function displayDefaults() {
   console.log('')
 }
 
-function stepHelp() {
+function stepHelpGeneral() {
+  stepHelpApp()
+}
 
-//Defaults: ${path.join(__dirname , 'config.json')}
-//Getting started: http://docs.sencha.com/ExtGen/1.0.0/guides/getting_started.html
-// ${boldGreen('Sencha ExtGen')} is a tool create a Sencha Ext JS application with open source tooling:
-// - npm
-// - webpack and webpack-dev-server
-// - Sencha ExtBuild
-// - Ext JS framework as npm packages from Sencha npm repository
- 
-// You can create the package.json file for your app using defaults
+function stepHelpApp() {
 
+  var message = `${boldGreen('Quick Start:')} ext-gen -a
 
-var message = `ext-gen (-h) (-d) (-i) (-a) (-n 'name') (-t 'template') (-m 'moderntheme') (-c 'classictheme')
+ext-gen app (-h) (-d) (-i) (-t 'template') (-m 'moderntheme') (-c 'classictheme') (-n 'name') (-f 'folder')
 
 -h --help          show help (no parameters also shows help)
 -d --defaults      show defaults for package.json
 -i --interactive   run in interactive mode (question prompts will display)
--a --auto          run in automatic mode (NO question prompts will display - uses defaults or command line options)
--n --name          name for Ext JS generated app
 -t --template      name for Ext JS template used for generate
 -c --classictheme  theme name for Ext JS classic toolkit
 -m --moderntheme   theme name for Ext JS modern toolkit
+-n --name          name for Ext JS generated app
 -f --folder        folder name for Ext JS application (not implemented yet)
+-v --verbose       verbose npm messages (for problems only)
 
 ${boldGreen('Examples:')} 
-ext-gen --auto --name CoolUniversalApp --template universalclassicmodern --classictheme theme-triton --moderntheme theme-material
-ext-gen --auto --name CoolDesktopApp --template classicdesktop --classictheme theme-triton
-ext-gen --interactive
-ext-gen -a -n ClassicApp
-ext-gen -a -n ModernApp -t moderndesktop
+ext-gen app --template universalclassicmodern --classictheme theme-graphite --moderntheme theme-material --name CoolUniversalApp
+ext-gen app--template classicdesktop --classictheme theme-graphite --name CoolDesktopApp 
+ext-gen app --interactive
+ext-gen app -a --classictheme theme-graphite -n ClassicApp
+ext-gen app -a -t moderndesktop -n ModernApp
 
 ${boldGreen('Templates:')}
 You can select from 4 Ext JS templates provided by Sencha ExtGen
@@ -584,24 +680,19 @@ ${boldGreen('modern themes:')}  theme-material, theme-ios, theme-neptune, theme-
   console.log(message)
 }
 
+function stepShortHelp() {
+  var message = `${boldGreen('Quick Start:')} 
+ext-gen app MyAppName
+ext-gen app -i
+ 
+${boldGreen('Examples:')} 
+ext-gen app --template universalclassicmodern --classictheme theme-graphite --moderntheme theme-material --name CoolUniversalApp
+ext-gen app --template classicdesktop --classictheme theme-graphite --name CoolDesktopApp 
+ext-gen app --interactive
+ext-gen app --classictheme theme-graphite -n ClassicApp
+ext-gen app-t moderndesktop -n ModernApp
 
-// "{npmScope}/ext-modern-theme-material": "^6.6.0",
-// "{npmScope}/ext-modern-theme-ios": "^6.6.0",
-// "{npmScope}/ext-modern-theme-neptune": "^6.6.0",
-// "{npmScope}/ext-modern-theme-triton": "^6.6.0",
-
-// "{npmScope}/ext-classic-theme-classic": "^6.6.0",
-// "{npmScope}/ext-classic-theme-neptune": "^6.6.0",
-// "{npmScope}/ext-classic-theme-neptune-touch": "^6.6.0",
-// "{npmScope}/ext-classic-theme-crisp": "^6.6.0",
-// "{npmScope}/ext-classic-theme-crisp-touch": "^6.6.0",
-// "{npmScope}/ext-classic-theme-triton": "^6.6.0",
-
-//** "calendar","charts","d3","pivot","pivot-d3","ux","font-awesome" **//
-// "{npmScope}/ext-calendar": "^6.6.0",
-// "{npmScope}/ext-charts": "^6.6.0",
-// "{npmScope}/ext-exporter": "^6.6.0",
-// "{npmScope}/ext-pivot": "^6.6.0",
-// "{npmScope}/ext-d3": "^6.6.0",
-// "{npmScope}/ext-pivot-d3": "^6.6.0",
-// "{npmScope}/ext-pivot-locale": "^6.6.0"
+Run ${boldGreen('ext-gen --help')} to see all options
+`
+  console.log(message)
+}

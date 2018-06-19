@@ -97,6 +97,12 @@ const ExtRenderer = ReactFiberReconciler({
         if(parentInstance.rawtooltip == undefined) 
         parentInstance.rawtooltip = childInstance.cmp
       }
+      else if (childInstance.cmp.config && childInstance.cmp.config.rel) {
+        let name = childInstance.cmp.config['rel']
+        if(typeof name == 'string') {
+          parentInstance.rawConfigs[name] = childInstance.cmp
+        }
+      }
       else {
         if(parentInstance.rawitems == undefined) { parentInstance.rawitems = [] }
         parentInstance.rawitems.push(childInstance.cmp)
@@ -150,11 +156,21 @@ const ExtRenderer = ReactFiberReconciler({
         ExtJSComponent.rawConfigs.tooltip = ExtJSComponent.rawtooltip
       }
 
-      if(ExtJSComponent.rawConfigs.renderer != undefined && ExtJSComponent.rawConfigs.xtype == "column") {
+      if(ExtJSComponent.rawConfigs.renderer != undefined && CLASS_CACHE.Column && isAssignableFrom(ExtJSComponent.rawConfigs,CLASS_CACHE.Column)) {
         
         l(`renderer`,ExtJSComponent.rawConfigs.xtype,ExtJSComponent.rawConfigs.renderer)
         ExtJSComponent.rawConfigs.cell= ExtJSComponent.rawConfigs.cell || {}
         ExtJSComponent.rawConfigs.cell.xtype = 'renderercell'
+      }
+
+      if(ExtJSComponent.rawConfigs.columns!= undefined && CLASS_CACHE.Column && isAssignableFrom(ExtJSComponent.rawConfigs,CLASS_CACHE.Column)) {
+        l(`renderer`,ExtJSComponent.rawConfigs.xtype,ExtJSComponent.rawConfigs.renderer)
+        ExtJSComponent.rawConfigs.columns.forEach(function(column){
+          if(column.renderer != undefined) {
+            column.cell= column.cell || {}
+            column.cell.xtype = 'renderercell'
+          }
+        })
       }
 
       if (typeof(props.children) == 'string' || typeof(props.children) == 'number') {
@@ -170,10 +186,10 @@ const ExtRenderer = ReactFiberReconciler({
       l(`ExtRenderer: finalizeInitialChildren, type: ${type}, xtype: ${xtype}, (ExtJSComponent.rawConfigs, ExtJSComponent.cmp)`, ExtJSComponent.rawConfig, ExtJSComponent.cmp)
     }
     else {
-      //SK : HTML Rendering - STEP 2  : Create Widget and Render HTML in its DOM
-      var widget = Ext.create({xtype:'widget'})
-      ReactDOM.render(React.createElement(type, props, props.children),widget.el.dom)
-      ExtJSComponent.cmp = widget
+      //SK : HTML Rendering - STEP 2  : Create component and render HTML in its DOM
+      var cmp = Ext.create({xtype:'component', cls: 'x-react-element'})
+      ReactDOM.render(React.createElement(type, props, props.children),cmp.el.dom)
+      ExtJSComponent.cmp = cmp
       l(`ExtRenderer: finalizeInitialChildren, type: ${type}, xtype: ${xtype}, ExtJSComponent == html`,ExtJSComponent)
     }
 
@@ -409,6 +425,9 @@ function wrapDOMElement(node) {
  */
 function isAssignableFrom(subClass, parentClass) {
   if (!subClass || !parentClass) return false;
+  if (parentClass.xtype == 'gridcolumn' && subClass.xtype != undefined) {
+    subClass = Ext.ClassManager.getByAlias('widget.' + subClass.xtype)
+  }
   return subClass === parentClass || subClass.prototype instanceof parentClass;
 }
 

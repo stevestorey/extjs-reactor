@@ -37,7 +37,7 @@ class Speaker extends Component {
         return (
             <Container {...props} layout="vbox" scrollable padding={20}>
                 { speaker && (
-                    <div>
+                    <Container>
                         <div className="app-speaker-ct">
                             <img className="app-speaker-image" src={data.avatar_url}/>
                             <div className="app-speaker-text">
@@ -56,7 +56,7 @@ class Speaker extends Component {
                                 eagerLoad
                             />
                         </Container>
-                    </div>
+                    </Container>
                 )}
             </Container>
         )

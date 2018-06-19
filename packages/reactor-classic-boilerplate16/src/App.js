@@ -37,7 +37,7 @@ export default class App extends Component {
         const { person } = this.state;
         
         return (
-            <Panel layout="fit" title={this.title}>
+            <Panel title={this.title}>
               { person && (
                   <Person
                       person={person}

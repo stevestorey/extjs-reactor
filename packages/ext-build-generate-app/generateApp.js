@@ -1,3 +1,4 @@
+const npmScope = '@sencha'
 var fs = require('fs-extra')
 function boldGreen (s) {
   var boldgreencolor = `\x1b[32m\x1b[1m`
@@ -82,14 +83,16 @@ class generateApp {
 
     var SdkVal
     var Packages
-    var n = Sdk.indexOf("@extjs");
+    var n = Sdk.indexOf(`${npmScope}`);
     if (n == -1) {
       SdkVal = 'ext'
       Packages = '$\u007Bworkspace.dir}/packages'
     }
     else {
       SdkVal = Sdk
-      Packages = '$\u007Bworkspace.dir}/packages,node_modules/@extjs'
+      //Packages = '$\u007Bworkspace.dir}/packages,node_modules/' + npmScope
+      //fix for SCSS issue 
+      Packages = '$\u007Bworkspace.dir}/packages'
 		}
 
 		walkSync(TemplateDir, TemplateDir.length+1, ApplicationDir, ApplicationName, Template, modernTheme, classicTheme, SdkVal, Packages)

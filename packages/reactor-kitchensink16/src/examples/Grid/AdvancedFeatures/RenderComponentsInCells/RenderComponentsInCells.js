@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Column, RendererCell } from '@extjs/ext-react';
+import { Grid, Column, RendererCell, SegmentedButton, WidgetCell } from '@extjs/ext-react';
 import ActionsCell from './ActionsCell';
 
 export default class RendererCellExample extends Component {
@@ -21,7 +21,27 @@ export default class RendererCellExample extends Component {
                 <Column text="Change" width="100" dataIndex="priceChange" renderer={this.renderNumberCell.bind(this, '0.00')}/>
                 <Column text="% Change" dataIndex="priceChangePct" renderer={this.renderNumberCell.bind(this, '0.00%')}/>
                 <Column text="Actions" flex={1} minWidth={210}>
-                    <RendererCell renderer={this.renderActionsCell} bodyStyle={{ padding: '0 10px'}}/>
+                    <WidgetCell>
+                     <SegmentedButton 
+                      maxWidth={300}
+                      allowDepress = {true} 
+                      items = {[
+                        {
+                          text: 'Buy',
+                          handler : this.buyHandler
+                        }, 
+                        {
+                          text: 'Sell',
+                          handler : this.sellHandler
+                        }, 
+                        {
+                          text: 'Watch',
+                          handler : this.watchHandler
+                          }
+                        ]
+                      }
+                     />
+                    </WidgetCell>
                 </Column>
             </Grid>
         )
@@ -45,9 +65,21 @@ export default class RendererCellExample extends Component {
         )
     }
 
-    buyHandler = (record) => Ext.toast(`Buy ${record.get('name')}`)
-    sellHandler = (record) => Ext.toast(`Sell ${record.get('name')}`)
-    watchHandler = (record) => Ext.toast(`Watch ${record.get('name')}`)
+    buyHandler = (button) => {
+        let gridrow = button.up('gridrow'),
+            record = gridrow.getRecord();
+        Ext.toast(`Buy ${record.get('name')}`)
+    }
+    sellHandler = (button) => {
+        let gridrow = button.up('gridrow'),
+            record = gridrow.getRecord();
+        Ext.toast(`Sell ${record.get('name')}`)
+    }
+    watchHandler = (button) => {
+        let gridrow = button.up('gridrow'),
+            record = gridrow.getRecord();
+        Ext.toast(`Watch ${record.get('name')}`)
+    }
 
 }
 

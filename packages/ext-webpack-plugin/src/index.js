@@ -1,3 +1,4 @@
+const npmScope = '@sencha'
 const chalk = require('chalk')
 const path = require('path')
 const fs = require('fs')
@@ -53,14 +54,14 @@ export default class ExtWebpackPlugin {
   //   dirs: ['./app'],
   // };
 
-  constructor(options = {profile: 'desktop', environment: 'development'} ) {
+  constructor(options = {profile: 'desktop', environment: 'development', verbose: 'no'} ) {
     validateOptions(require('../options.json'), options, 'ExtraWatchWebpackPlugin'); // eslint-disable-line
     //this.options = { ...ExtWebpackPlugin.defaults, ...options };
 
     var defaults = {
       cwd: process.cwd(),
       files: ['./app.json'],
-      dirs: ['./app'],
+      dirs: ['./app','./packages'],
     }
 
     this.options = { ...defaults, ...options };
@@ -77,7 +78,7 @@ export default class ExtWebpackPlugin {
       var extPkg = (fs.existsSync(extPath+'/package.json') && JSON.parse(fs.readFileSync(extPath+'/package.json', 'utf-8')) || {});
       var extVersion = extPkg.sencha.version
 
-      var cmdPath = path.resolve(pluginPath,'../sencha-cmd')
+      var cmdPath = path.resolve(pluginPath,'../cmd')
       var cmdPkg = (fs.existsSync(cmdPath+'/package.json') && JSON.parse(fs.readFileSync(cmdPath+'/package.json', 'utf-8')) || {});
       var cmdVersion = cmdPkg.version_full
 
@@ -94,7 +95,9 @@ export default class ExtWebpackPlugin {
 
     if (compiler.hooks) {
       compiler.hooks.afterCompile.tap('ext-after-compile', (compilation) => {
-        process.stdout.cursorTo(0);console.log(app + 'ext-after-compile')
+        if (me.options.verbose == 'yes') {
+          process.stdout.cursorTo(0);console.log(app + 'ext-after-compile')
+        }
         const {
           fileDependencies,
           contextDependencies,
@@ -131,10 +134,12 @@ export default class ExtWebpackPlugin {
     if (compiler.hooks) {
       var me = this
       compiler.hooks.emit.tapAsync('ext-emit-async', function (compilation, cb) {
-        process.stdout.cursorTo(0);console.log(app + 'ext-emit-async')
-
+        if (me.options.verbose == 'yes') {
+          process.stdout.cursorTo(0);console.log(app + 'ext-emit-async')
+        }
         var watchedFiles=[]
-        try {watchedFiles = recursiveReadSync('./app')} 
+        //try {watchedFiles = recursiveReadSync('./app')} 
+        try {watchedFiles = recursiveReadSync('./app').concat(recursiveReadSync('./packages'))}
         catch(err) {if(err.errno === 34){console.log('Path does not exist');} else {throw err;}}
 
         var doBuild = false
@@ -160,9 +165,15 @@ export default class ExtWebpackPlugin {
 
         if (currentNumFiles != me.lastNumFiles || doBuild) {
           me.lastNumFiles = currentNumFiles
-          var buildAsync = require('@extjs/ext-build/app/buildAsync.js')
-          var buildOptions = {parms: ['app','build',me.options.profile, me.options.environment]}
+          var buildAsync = require(`${npmScope}/ext-build/app/buildAsync.js`)
+          var buildOptions = {parms: ['app','build',me.options.profile, me.options.environment, me.options.verbose]}
           new buildAsync(buildOptions).executeAsync().then(function() {
+            cb()
+          }, function(reason){
+            var prefixErr = '✖ [ext]:';
+            var err = chalk.red(prefixErr) + ' ext-webpack-plugin: '
+            var errorString = `${err} ${chalk.red(reason.error)}`
+            compilation.errors.push(new Error(errorString))
             cb()
           })
         }
@@ -172,42 +183,6 @@ export default class ExtWebpackPlugin {
           cb()
         }
       })
-
-
-//      compiler.hooks.emit.tap('ext-emit', (compilation) => {
-//        process.stdout.cursorTo(0);console.log(app + 'ext-emit')
-
-      //   var watchedFiles=[]
-      //   try {watchedFiles = recursiveReadSync('./app')} 
-      //   catch(err) {if(err.errno === 34){console.log('Path does not exist');} else {throw err;}}
-
-      //   var doBuild = false
-      //   for (var file in watchedFiles) {
-      //     if (this.lastMilliseconds < fs.statSync(watchedFiles[file]).mtimeMs) {
-      //       if (watchedFiles[file].indexOf("scss") != -1) {doBuild=true;break;}
-      //     }
-      //   }
-      //   this.lastMilliseconds = (new Date).getTime()
-
-      //   var currentNumFiles = watchedFiles.length
-      //   var filesource = 'this file enables client reload'
-      //   compilation.assets[currentNumFiles + 'FilesUnderAppFolder.md'] = {
-      //     source: function() {return filesource},
-      //     size: function() {return filesource.length}
-      //   }
-
-      //   if (currentNumFiles != this.lastNumFiles || doBuild) {
-      //     var build = require('@extjs/ext-build/app/build.js')
-      //     new build({})
-      //     //var refresh = require('@extjs/sencha-build/app/refresh.js')
-      //     //new refresh({})
-      //   }
-      //   else {
-      //     console.log(app + 'Call to Sencha Build not needed, no new files')
-      //   }
-      //   this.lastNumFiles = currentNumFiles
-
-//      })
     }
     else {
       compiler.plugin('emit', (compilation, cb) => {
@@ -217,11 +192,11 @@ export default class ExtWebpackPlugin {
           source: function() {return filelist},
           size: function() {return filelist.length}
         }
-        var refresh = require('@extjs/ext-build/app/refresh.js')
+        var refresh = require(`${npmScope}/ext-build/app/refresh.js`)
         new refresh({})
 
         // console.log('THIS IS IT')
-        // var buildAsync = require('@extjs/ext-build/app/buildAsync.js')
+        // var buildAsync = require(`${npmScope}/ext-build/app/buildAsync.js`)
         // console.log(buildAsync)
         // new buildAsync().executeAsync().then(function() {
         //   console.log('then call');

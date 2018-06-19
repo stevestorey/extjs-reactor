@@ -1,12 +1,9 @@
-    "@extjs/ext-modern-treegrid": "^6.6.0",
-    "@extjs/ext-classic-theme-graphite": "^6.6.0",
-
-npm login --registry=http://test.npm.sencha.com --scope=@extjs
+"@extjs/ext-modern-treegrid": "^6.6.0",
+"@extjs/ext-classic-theme-graphite": "^6.6.0",
 
 npm login --registry=http://test.npm.sencha.com --scope=@sencha
-
-
-npm install -g @extjs/ext-gen
+npm whoami --registry http://test.npm.sencha.com
+npm install -g @sencha/ext-gen@latest
 
 git fetch upstream
 git merge upstream/2.0.x-dev
@@ -33,14 +30,19 @@ git merge upstream/2.0.x-dev
 
 //** "ios", "android", "target": "iPhone (Retina 4-inch)", **//
 
+npm login --registry=http://test.npm.sencha.com --scope=@extjs
 
 
+npm logout --registry=https://test.npm.sencha.com --scope=@extjs
 
-app.framework.version=6.5.3.57
-app.cmd.version=6.5.3.6
+npm config set scope @extjs
+npm deprecate ext-gen@"< 0.0.148" "name changed to @sencha/ext-gen"
+
+npm deprecate @extjs/ext-gen@"< 0.0.147" "name changed to @sencha/ext-gen"
+npm deprecate @extjs/ext-gen@"*" "name changed to @sencha/ext-gen"
+npm deprecate ext-gen@"*" "name changed to @sencha/ext-gen"
 
 
-npm deprecate @extjs/sencha-build@"< 0.0.5" "name changed to @extjs/ext-build"
     "fix": "cp -R ../fashion/node_modules node_modules/@extjs/sencha-cmd/dist/js/node_modules/fashion"
 
 extjs-webpack-plugin
@@ -51,9 +53,37 @@ npm version patch
 npm publish --access public
 
 
-ln -s /Sencha/ext-6.5.3 ext
+ln -s /Users/marcgusmano/aaExt/ext-6.6.0.216 ext
 
 mklink /J ext c:\sencha\ext-6.5.3
+
+
+  
+
+
+// "{npmScope}/ext-modern-theme-material": "^6.6.0",
+// "{npmScope}/ext-modern-theme-ios": "^6.6.0",
+// "{npmScope}/ext-modern-theme-neptune": "^6.6.0",
+// "{npmScope}/ext-modern-theme-triton": "^6.6.0",
+
+// "{npmScope}/ext-classic-theme-classic": "^6.6.0",
+// "{npmScope}/ext-classic-theme-neptune": "^6.6.0",
+// "{npmScope}/ext-classic-theme-neptune-touch": "^6.6.0",
+// "{npmScope}/ext-classic-theme-crisp": "^6.6.0",
+// "{npmScope}/ext-classic-theme-crisp-touch": "^6.6.0",
+// "{npmScope}/ext-classic-theme-triton": "^6.6.0",
+
+//** "calendar","charts","d3","pivot","pivot-d3","ux","font-awesome" **//
+// "{npmScope}/ext-calendar": "^6.6.0",
+// "{npmScope}/ext-charts": "^6.6.0",
+// "{npmScope}/ext-exporter": "^6.6.0",
+// "{npmScope}/ext-pivot": "^6.6.0",
+// "{npmScope}/ext-d3": "^6.6.0",
+// "{npmScope}/ext-pivot-d3": "^6.6.0",
+// "{npmScope}/ext-pivot-locale": "^6.6.0"
+
+
+
 
 
 https://www.worldtimebuddy.com/
@@ -93,3 +123,31 @@ https://www.youtube.com/watch?v=FGIokhmOGUU
 
 
 
+      "packager": "cordova",
+      "cordova" : {
+        "config": {
+          "platforms": "android",
+          "verbose": false,
+          "id": "com.foo.{name}",
+          "name": "{name}"
+        },
+        "js": [
+          {
+            "path": "cordova.js",
+            "remote": true,
+            "priority": 1000
+          }
+        ],
+        "microloader": "$\u007Bapp.config.dir}/Microloader.js",
+        "output": {
+          "base": "$\u007Bapp.cordova.config.path}/www",
+          "page": "index.html",
+          "manifest": "generatedFiles/$\u007Bbuild.id}.json",
+          "appCache": {
+            "enable": false
+          }
+        },
+        "cache": {
+          "enable": false
+        }
+      }

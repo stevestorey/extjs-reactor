@@ -3,10 +3,14 @@ Ext.define('{appName}.view.main.header.HeaderView', {
   height: 50,
   xtype: 'headerview',
   cls: 'headerview',
+  defaults: {
+    ui:'toolbutton-toolbar', 
+    handler:'onToolButtonClicked'
+  },
   items: [
     {
       xtype: 'button',
-      ui: 'headerviewbutton-toolbar',
+      ui: 'toolbutton-toolbar',
       reference: 'navtoggle',
       handler: 'onHeaderViewNavToggle',
       iconCls: 'x-fa fa-navicon'
@@ -16,21 +20,14 @@ Ext.define('{appName}.view.main.header.HeaderView', {
       bind: {html: '\u007Bheading}'},
     },
     '->',
-    {
-      iconCls:'x-fa fa-calendar',
-      ui: 'headerviewbutton-toolbar',
-    },
-    {
-      iconCls:'x-fa fa-bolt',
-      ui: 'headerviewbutton-toolbar',
-    },
-    {
-      iconCls:'x-fa fa-search',
-      ui: 'headerviewbutton-toolbar',
-    },
+    '->',
+    {name:'calendar', iconCls:'x-fa fa-calendar', tooltip:'calendar'},
+    {name:'bolt',     iconCls:'x-fa fa-bolt',     tooltip:'bolt'},
+    {name:'search',   iconCls:'x-fa fa-search',   tooltip:'search'},
     {
       reference: 'detailtoggle',
       iconCls:'x-fa fa-arrow-left',
+      tooltip: 'show and hide detail view',
       ui: 'headerviewbutton-toolbar',
       handler: 'onHeaderViewDetailToggle'
     }

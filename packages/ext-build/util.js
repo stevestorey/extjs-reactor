@@ -1,7 +1,8 @@
+const npmScope = '@sencha'
 var chalk = require('chalk');
 var fs = require('fs-extra')
 var json = require('comment-json');
-const sencha = require('@extjs/sencha-cmd')
+const sencha = require(`${npmScope}/cmd`)
 const spawnSync = require('child_process').spawnSync
 const spawn = require('child_process').spawn
 const crossSpawn = require('cross-spawn')
@@ -13,7 +14,7 @@ if (require('os').platform() == 'darwin') {
 else {
   prefix = `i [ext]:`
 }
-const app = `${chalk.green(prefix)} ext-build:`
+const app = `${chalk.green(prefix)} ext-build-util:`
 const DEFAULT_SUBSTRS = ['[ERR]', '[WRN]', '[INF] Processing', "[INF] Server", "[INF] Writing content", "[INF] Loading Build", "[INF] Waiting", "[LOG] Fashion waiting"];
 
 exports.senchaCmd = (parms) => {
@@ -22,36 +23,55 @@ exports.senchaCmd = (parms) => {
   process.stdout.cursorTo(0);console.log(app + 'completed - sencha ' + parms.toString().replace(/,/g , " "))
 }
 
-exports.senchaCmdAsync = async (parms, substrings = DEFAULT_SUBSTRS) => {
-  return spawnPromise(sencha, parms, { stdio: 'pipe', encoding: 'utf-8'}, substrings);
+exports.senchaCmdAsync = async (parms, verbose, substrings = DEFAULT_SUBSTRS) => {
+  return spawnPromise(sencha, parms, { stdio: 'pipe', encoding: 'utf-8'}, verbose, substrings);
 }
 
-var spawnPromise = (command, args, options, substrings) => {
-  let child;
+var spawnPromise = (command, args, options, verbose, substrings) => {
+  var noErrors = true
+  let child
   let promise = new Promise((resolve, reject) => {
+
     child = crossSpawn(
       command, 
       args, 
       options
     )
-    // child.on('exit', (code, signal) => {
-    //   console.log('child process exited with ' +
-    //   `code ${code} and signal ${signal}`)
-    // })
     child.on('close', (code, signal) => {
-      resolve({code, signal})
+      if(code === 0) {
+        if (noErrors) {
+          resolve({code, signal})
+        }
+        else {
+          reject('ext-build errors')
+        }
+      }
+      else {
+        reject('ext-build errors...')
+      }
     })
     child.on('error', (error) => {
       reject(error)
     })
     if (child.stdout) {
       child.stdout.on('data', (data) => {
-        if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
-          var str = data.toString()
-          var s = str.replace(/\r?\n|\r/g, " ")
-          var s2 = s.replace("[INF]", "")
-          var s3 = s2.replace(process.cwd(), '');
-          console.log(`${app}${s3}`) 
+        var str = data.toString()
+        str = str.replace(/\r?\n|\r/g, " ")
+        if(verbose == 'yes') {
+          console.log(`${app}${str}`) 
+        }
+        else {
+          if (substrings.some(function(v) { return data.indexOf(v) >= 0; })) { 
+            str = str.replace("[INF]", "")
+            str = str.replace(process.cwd(), '')
+            if (str.includes("[ERR]")) {
+              const err = `${chalk.red("[ERR]")}`
+              str = str.replace("[ERR]", err)
+              noErrors = false
+            }
+            console.log(`${app}${str}`) 
+          }
+          // else {//nothing}
         }
       })
     }

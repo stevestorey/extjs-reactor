@@ -38,42 +38,50 @@ export default class CalendarWeekViewExample extends Component {
 
   render() {
       return (
-        <Container
-          layout="vbox"
-          padding={10}
+        <Panel
+            shadow
+            title={Ext.Date.format(new Date(), 'F Y')}
+            layout="hbox"
+            header={{
+              layout: 'hbox',
+              items: [{
+                xtype: 'component',
+                flex: 1
+                }, {
+                xtype: 'segmentedbutton',
+                items: [{
+                  text: Ext.os.is.Phone ? null : 'Full Week',
+                  iconCls: Ext.os.is.Phone ? 'x-fa fa-calendar-check-o' : null,
+                  value: 'fullweek',
+                  handler: () => this.setState({visibleDays:7, firstDayOfWeek: 0})
+                  }, {
+                  text: Ext.os.is.Phone ? null : 'Work Week',
+                  iconCls: Ext.os.is.Phone ? 'x-fa fa-briefcase' : null,
+                  value: 'workweek',
+                  handler: () => this.setState({visibleDays: 5, firstDayOfWeek: 1})
+                }]
+              }]
+            }}
         >
-          <Container layout="hbox" margin="0 0 10 0">
-            <Container flex={1} padding="10 0 0 10" style={{fontSize:'20px'}} html={Ext.Date.format(new Date(),'F Y')}/>
-            <SegmentedButton value={this.state.calendarview} onChange={this.changeCalendarView} defaultUI="toolbar-default">
-                <Button text="Full Week" value="fullweek"/>
-                <Button text="Work Week" value="workweek"/>
-            </SegmentedButton>
-          </Container>
-          <Container
-              flex={1}
-              shadow
-              layout="hbox"
-          >
-            <Panel
-              title={'Calendars'}
-              ui={'light'}
-              width={150}
-              bodyPadding={5}
-              hidden={Ext.os.is.Phone}
-            >
-              <Calendar_List store={this.store}/>
+                <Panel
+                    title={'Calendars'}
+                    ui={'light'}
+                    width={150}
+                    bodyPadding={5}
+                    hidden={Ext.os.is.Phone}
+                >
+                    <Calendar_List store={this.store}/>
+                </Panel>
+                <Calendar_Week
+                    store={this.store}
+                    flex={1}
+                    timezoneOffset={0}
+                    gestureNavigation={false}
+                    value={new Date()}
+                    firstDayOfWeek={this.state.firstDayOfWeek}
+                    visibleDays={this.state.visibleDays}
+                />
             </Panel>
-            <Calendar_Week
-              store={this.store}
-              flex={1}
-              timezoneOffset={0}
-              gestureNavigation={false}
-              value={new Date()}
-              firstDayOfWeek={this.state.firstDayOfWeek}
-              visibleDays={this.state.visibleDays}
-            />
-          </Container>
-        </Container>
       )
   }
 }

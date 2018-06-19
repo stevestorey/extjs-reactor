@@ -34,7 +34,7 @@ export default class PagingListExample extends Component {
         const { bufferZone } = this.state;
 
         if (prevState.bufferZone !== bufferZone) {
-            const plugin = this.list.findPlugin('listpaging');
+            const plugin = this.list.cmp.findPlugin('listpaging');
             console.log('got here');
             plugin.setAutoPaging(bufferZone !== false);
             plugin.setBufferZone(bufferZone);
