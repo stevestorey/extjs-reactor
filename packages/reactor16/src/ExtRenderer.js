@@ -173,6 +173,10 @@ const ExtRenderer = ReactFiberReconciler({
         })
       }
 
+      if(ExtJSComponent.rawConfigs.config != undefined ) {
+        Object.assign(ExtJSComponent.rawConfigs, ExtJSComponent.rawConfigs.config);   
+      }
+
       if (typeof(props.children) == 'string' || typeof(props.children) == 'number') {
         if(ExtJSComponent.rawhtml === undefined) {
           ExtJSComponent.rawConfigs.html = props.children

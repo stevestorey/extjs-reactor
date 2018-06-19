@@ -77,14 +77,14 @@ export default class TransitionExample extends Component {
                         </Menu>
                     </Button>
                     <SliderField value={duration} maxWidth={200} flex={1} minValue={100} maxValue={1000} step={100} onChange={this.setDuration}/>
-                    <Container style={{lineHeight: '32px', fontSize: '16px'}} html={`${duration.toString()}ms`}></Container>
+                    <Container style={{lineHeight: '32px', fontSize: '16px'}}><div>{duration.toString()}ms</div></Container>
                 </Container>
 
                 <Panel flex={1} layout="fit" shadow>
                     <Transition direction={direction} type={type.toLowerCase()} easing={easing} duration={duration}>
-                      <Container key={`card${index}`} layout="center" style={styles[Math.abs(index) % 3]}>
-                        <div>View {index}</div>
-                      </Container>
+                        <Container key={`card${index}`} layout="center" style={styles[Math.abs(index) % 3]}>
+                            <div>View {index}</div>
+                        </Container>
                     </Transition>
                 </Panel>
             </Container>
@@ -92,14 +92,3 @@ export default class TransitionExample extends Component {
     }
 
 }
-
-//<Container key={`card${index}`} layout="center" style={styles[Math.abs(index) % 3]} html={`View ${index}`}/>
-
-
-// <Container key={`card${index}`} layout="center" style={styles[Math.abs(index) % 3]}>
-// <Container html={`View ${index}`}></Container>
-// </Container>
-
-// <Container key={`card${index}`} layout="center" style={styles[Math.abs(index) % 3]}>
-// <div>View {index}</div>
-// </Container>
