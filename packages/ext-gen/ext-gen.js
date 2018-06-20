@@ -690,7 +690,7 @@ ext-gen app --template universalclassicmodern --classictheme theme-graphite --mo
 ext-gen app --template classicdesktop --classictheme theme-graphite --name CoolDesktopApp 
 ext-gen app --interactive
 ext-gen app --classictheme theme-graphite -n ClassicApp
-ext-gen app-t moderndesktop -n ModernApp
+ext-gen app -t moderndesktop -n ModernApp
 
 Run ${boldGreen('ext-gen --help')} to see all options
 `
