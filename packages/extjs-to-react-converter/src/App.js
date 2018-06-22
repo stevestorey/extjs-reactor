@@ -61,7 +61,7 @@ export default class App extends Component {
     }
 
     componentDidMount() {
-        Ext.fly(this.sourceField).focus();
+        //Ext.fly(this.sourceField).focus();
         this.onSourceChange(this.state.input);
         new Clipboard('.copy-btn', { target: () => this.outputField })
     }

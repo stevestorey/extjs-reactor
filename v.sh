@@ -1,15 +1,15 @@
 cd packages
 cd ext-build
-npm version patch
+npm version prerelease
 
 cd ..
 cd ext-build-generate-app
-npm version patch
+npm version prerelease
 
 cd ..
 cd ext-gen
-npm version patch
+npm version prerelease
 
 cd ..
 cd ext-webpack-plugin
-npm version patch
+npm version prerelease
