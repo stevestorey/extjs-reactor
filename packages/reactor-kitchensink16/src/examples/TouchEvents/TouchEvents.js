@@ -47,7 +47,7 @@ export default class TouchEventsExample extends Component {
     )
 
     const eventLog = (
-      <Panel title="Event Log" height="300" scrollable bodyPadding="10" shadow
+      <Panel title="Event Log" height="250" scrollable bodyPadding="10" shadow
         header={{
           items: [{
             xtype: 'button',
@@ -58,9 +58,12 @@ export default class TouchEventsExample extends Component {
           }]
         }}
       >
-        <Container html={events.map((e, i) =>`<div key=${i}>${e}</div>`)}></Container>
+      <Container>{ events.map((e, i) => <div key={i}>{e}</div>) }</Container>
       </Panel>
+      
     )
+
+
 
     if (Ext.os.is.Phone) {
       return (
@@ -73,7 +76,7 @@ export default class TouchEventsExample extends Component {
       return (
         <Container layout="hbox">
           <Container flex={1} layout="vbox" padding={10} margin="0 20 0 0">
-            <Panel shadow margin="0 0 20 0" bodyPadding="10">
+            <Panel shadow margin="0 0 20 0" bodyPadding="10" maxHeight="220" scrollable>
               <div>
                 <div>Ext JS comes with a multitude of touch events available on components. Included touch events that can be used are:</div>
                 <ul>

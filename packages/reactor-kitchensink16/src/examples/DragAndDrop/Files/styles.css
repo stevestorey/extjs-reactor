@@ -11,6 +11,7 @@
 .drag-file-label {
     font-size: 18px;
     padding-top: 30px;
+    margin-bottom: 40px;
     text-align: center;
     pointer-events: none;
 }
@@ -19,8 +20,9 @@
     font-family: FontAwesome;
     display: block;
     font-size: 64px;
-    margin-top: 50px;
+    padding-top: 19px;
     display: none;
+    min-height: 56px;
     text-align: center;
     pointer-events: none;
 }

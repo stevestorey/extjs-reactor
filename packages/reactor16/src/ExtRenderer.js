@@ -173,6 +173,10 @@ const ExtRenderer = ReactFiberReconciler({
         })
       }
 
+      if(ExtJSComponent.rawConfigs.config != undefined ) {
+        Object.assign(ExtJSComponent.rawConfigs, ExtJSComponent.rawConfigs.config);   
+      }
+
       if (typeof(props.children) == 'string' || typeof(props.children) == 'number') {
         if(ExtJSComponent.rawhtml === undefined) {
           ExtJSComponent.rawConfigs.html = props.children
@@ -182,6 +186,7 @@ const ExtRenderer = ReactFiberReconciler({
 
       console.log('right before new')
       console.log(ExtJSComponent)
+      ExtJSComponent.rawConfigs = ExtJSComponent._cloneProps(ExtJSComponent.rawConfigs)
       ExtJSComponent.cmp = new ExtJSComponent.extJSClass(ExtJSComponent.rawConfigs)
       l(`ExtRenderer: finalizeInitialChildren, type: ${type}, xtype: ${xtype}, (ExtJSComponent.rawConfigs, ExtJSComponent.cmp)`, ExtJSComponent.rawConfig, ExtJSComponent.cmp)
     }
