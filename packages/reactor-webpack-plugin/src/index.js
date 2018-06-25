@@ -142,16 +142,17 @@ module.exports = class ReactExtJSWebpackPlugin {
   }
 
   emit(compiler, compilation, callback) {
-    const isWebpack4 = compilation.hooks;
+    var isWebpack4 = compilation.hooks;
     var modules = []
     if (isWebpack4) {
+      isWebpack4 = true
       modules = compilation.chunks.reduce((a, b) => a.concat(b._modules), []);
     }
     else {
+      isWebpack4 = false
       modules = compilation.chunks.reduce((a, b) => a.concat(b.modules), []);
     }
     //const modules = compilation.chunks.reduce((a, b) => a.concat(b.modules), []);
-
     const build = this.builds[Object.keys(this.builds)[0]];
     let outputPath = path.join(compiler.outputPath, this.output);
     //console.log('\n*****outputPath: ' + outputPath)
@@ -178,8 +179,9 @@ module.exports = class ReactExtJSWebpackPlugin {
 //    console.log(outputPath)
 //    console.log(build)
 
-    this._buildExtBundle('ext', modules, outputPath, build)
+  this._buildExtBundle(isWebpack4, 'ext', modules, outputPath, build)
       .then(() => {
+        console.log('in then')
         // const cssVarPath = path.join(this.output, 'css-vars.js');
 
         // if (fs.existsSync(path.join(outputPath, 'css-vars.js'))) {
@@ -422,10 +424,11 @@ module.exports = class ReactExtJSWebpackPlugin {
     * @param {String} sdk The full path to the ExtReact SDK
     * @private
     */
-  _buildExtBundle(name, modules, output, { toolkit='modern', theme, packages=[], packageDirs=[], sdk, overrides }) {
-//     console.log('*****')
+  _buildExtBundle(isWebpack4, name, modules, output, { toolkit='modern', theme, packages=[], packageDirs=[], sdk, overrides}) {
 //     console.log(modules)
-//     console.log('*****')
+     console.log('*****')
+     console.log(isWebpack4)
+     console.log('*****')
 
     let sencha = this._getSenchCmdPath();
     theme = theme || (toolkit === 'classic' ? 'theme-triton' : 'theme-material');
@@ -494,26 +497,41 @@ module.exports = class ReactExtJSWebpackPlugin {
         process.stdout.cursorTo(0);console.log(app + `building ExtReact bundle: ${name} => ${output}`)
       }
 
-      if (this.watch) {
-        if (!watching) {
-          watching = gatherErrors(fork(sencha, ['ant', 'watch'], { cwd: output, silent: true }));
-          watching.stderr.pipe(process.stderr);
-          watching.stdout.pipe(process.stdout);
-          watching.stdout.on('data', data => {
-            if (data && data.toString().match(/Waiting for changes\.\.\./)) {
-              onBuildDone()
-            }
-          })
-          watching.on('exit', onBuildDone)
-        }
-        if (!cmdRebuildNeeded) onBuildDone();
-      } 
-      else {
-        const build = gatherErrors(fork(sencha, ['ant', 'build'], { stdio: 'inherit', encoding: 'utf-8', cwd: output, silent: false }));
-        build.stdout.pipe(process.stdout);
-        build.stderr.pipe(process.stderr);
-        build.on('exit', onBuildDone);
+
+      if (isWebpack4) {
+        //execSync(sencha, ['ant', 'watch'], { cwd: output, silent: false })
+        const spawnSync = require('child_process').spawnSync
+        spawnSync(sencha, ['ant', 'build'], { cwd: output, stdio: 'inherit', encoding: 'utf-8'})
+        console.log('after spawnSync')
+        onBuildDone()
       }
+
+      if (!isWebpack4) {
+        if (this.watch) {
+          if (!watching) {
+            watching = gatherErrors(fork(sencha, ['ant', 'watch'], { cwd: output, silent: true }));
+            console.log('after fork')
+            watching.stderr.pipe(process.stderr);
+            watching.stdout.pipe(process.stdout);
+            watching.stdout.on('data', data => {
+              if (data && data.toString().match(/Waiting for changes\.\.\./)) {
+                onBuildDone()
+              }
+            })
+            watching.on('exit', onBuildDone)
+          }
+          if (!cmdRebuildNeeded) onBuildDone();
+        } 
+        else {
+          const build = gatherErrors(fork(sencha, ['ant', 'build'], { stdio: 'inherit', encoding: 'utf-8', cwd: output, silent: false }));
+          console.log('after fork')
+          build.stdout.pipe(process.stdout);
+          build.stderr.pipe(process.stderr);
+          build.on('exit', onBuildDone);
+        }
+      }
+
+
     });
   }
 };

@@ -17,7 +17,7 @@ module.exports = function (env) {
 
         const plugins = [
             new ExtReactWebpackPlugin({
-              sdk: 'ext', // you need to copy the Ext JS SDK to the root of this package, or you can specify a full path to some other location
+              //sdk: 'ext', // you need to copy the Ext JS SDK to the root of this package, or you can specify a full path to some other location
               //                theme: 'custom-ext-react-theme',
                 overrides: ['ext-react/overrides'],
                 production: isProd
@@ -64,6 +64,7 @@ module.exports = function (env) {
         }));
 
         return {
+            mode: 'development',
             devtool: isProd ? 'source-map' : 'cheap-module-source-map',
             context: sourcePath,
 
