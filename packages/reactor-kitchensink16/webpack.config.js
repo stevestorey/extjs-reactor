@@ -1,3 +1,6 @@
+//https://medium.com/@hpux/webpack-4-in-production-how-make-your-life-easier-4d03e2e5b081
+//https://stackoverflow.com/questions/49017682/webpack-4-migration-commonschunkplugin
+
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -15,7 +18,7 @@ module.exports = function (env) {
 
     const plugins = [
         new ExtJSReactorWebpackPlugin({
-            sdk: local ? 'ext' : undefined,
+            //sdk: local ? 'ext' : undefined,
             packages: local ? [
                 'font-ext', 
                 'ux', 
