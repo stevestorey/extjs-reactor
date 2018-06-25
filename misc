@@ -12,6 +12,8 @@ npm install -g @sencha/ext-gen@latest
 git fetch upstream
 git merge upstream/2.0.x-dev
 
+git merge upstream/ext-6.6.x
+
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
