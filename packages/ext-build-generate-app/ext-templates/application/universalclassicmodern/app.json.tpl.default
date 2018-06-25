@@ -57,8 +57,8 @@
 </tpl>
   "resources": [
     { "path": "resources", "output": "shared" }
-<tpl if="universal == true">		,{ "path": "resources/$\u007Bbuild.id}" }
-</tpl>	],
+<tpl if="universal == true">    ,{ "path": "resources/$\u007Bbuild.id}" }
+</tpl>  ],
 <tpl if="universal == true">
   "output": {
     "base": "$\u007Bworkspace.build.dir}/$\u007Bbuild.environment}/$\u007bapp.name}",

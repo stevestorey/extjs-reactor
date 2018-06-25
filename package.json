@@ -9,6 +9,6 @@
     "boilerplate": "cd packages/reactor-boilerplate && npm start"
   },
   "devDependencies": {
-    "lerna": "2.0.0"
+    "lerna": "2.11.0"
   }
 }
