@@ -28,12 +28,14 @@ export default class Grouped extends Component {
 
     render() {
         return (
-            <Container padding={!Ext.os.is.Phone && 10} layout="fit">
+            <Container padding={!Ext.os.is.Phone && 10} layout="vbox">
+                <ChartToolbar maxHeight={50} downloadChartRef={this.refs.chart}/>
                 <Cartesian
                     shadow
-                    ref="chart"
+                    flex={2}
                     store={this.store}
                     theme="Muted"
+                    ref="chart" 
                     insetPadding="70 40 0 10"
                     interactions="itemhighlight"
                     animation={{ duration: 200 }}
