@@ -36,9 +36,10 @@ export default class NegativeValues extends Component {
 
     render() {
         return (
-            <Container padding={!Ext.os.is.Phone && 10} layout="fit">
+            <Container padding={!Ext.os.is.Phone && 10} layout="vbox">
                 <Cartesian
                     shadow
+                    flex={2}
                     ref="chart"
                     theme="muted"
                     store={this.store}
@@ -80,6 +81,7 @@ export default class NegativeValues extends Component {
                         renderer: this.onSeriesRender
                     }]}
                 />
+                <ChartToolbar maxHeight={50} downloadChartRef={this.refs.chart}/>
             </Container>
         )
     }

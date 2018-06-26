@@ -4,7 +4,7 @@ import { FormPanel, Panel, Button, Sheet, Container, SegmentedButton, Label, Tit
 export default class MenuExample extends Component {
 
     state = {
-        side: 'left',
+        direct: 'left',
         modal: true,
         reveal: false,
         displayed: false
@@ -17,20 +17,20 @@ export default class MenuExample extends Component {
     } 
 
     render() {
-        const { displayed, side, modal, reveal } = this.state;
+        const { displayed, direct, modal, reveal } = this.state;
 
         const formFieldDefaults = {
             margin: '0 0 10 0'
         };  
 
         const menuItemDefaults = {
-            width: side === 'left' || side === 'right' ? 250 : undefined
+            width: direct === 'left' || direct === 'right' ? 250 : undefined
         };
         
         return (
             <Container padding={10} maxWidth="500">
                 <Sheet 
-                    side={side} 
+                    direct={direct} 
                     modal={modal} 
                     reveal={reveal} 
                     displayed={displayed} onHide={() => this.setState({ displayed: false })}
@@ -43,7 +43,7 @@ export default class MenuExample extends Component {
                 </Sheet>
                 
                 <Panel shadow ui="instructions">
-                    <Container html='<b>Sheet</b> is a component which allows you to easily display sliding menus from any side of the screen. You can show the menu by clicking the "Show Menu" button below or by swiping from the edge of the screen.'></Container>
+                    <div><b>Sheet</b> is a component which allows you to easily display sliding menus from any side of the screen. You can show the menu by clicking the "Show Menu" button below or by swiping from the edge of the screen.</div>
                 </Panel>
 
                 <Panel layout={{type: 'vbox', align: 'left'}} shadow margin="20 0 0 0" padding="15" shadow>
@@ -56,21 +56,21 @@ export default class MenuExample extends Component {
                         {...formFieldDefaults}
                     />
 
-                    <Container>side</Container>
+                    <div>side</div>
                     <SegmentedButton {...formFieldDefaults}>
-                        <Button text="left" handler={() => this.setState({ side: 'left' })} pressed={this.state.side === 'left'}/>
-                        <Button text="right" handler={() => this.setState({ side: 'right' })} pressed={this.state.side === 'right'}/>
-                        <Button text="top" handler={() => this.setState({ side: 'top' })} pressed={this.state.side === 'top'}/>
-                        <Button text="bottom" handler={() => this.setState({ side: 'bottom' })} pressed={this.state.side === 'bottom'}/>
+                        <Button text="left" handler={() => this.setState({ direct: 'left' })} pressed={this.state.direct === 'left'}/>
+                        <Button text="right" handler={() => this.setState({ direct: 'right' })} pressed={this.state.direct === 'right'}/>
+                        <Button text="top" handler={() => this.setState({ direct: 'top' })} pressed={this.state.direct === 'top'}/>
+                        <Button text="bottom" handler={() => this.setState({ direct: 'bottom' })} pressed={this.state.direct === 'bottom'}/>
                     </SegmentedButton>
 
-                    <Container>reveal</Container>
+                    <div>reveal</div>
                     <SegmentedButton {...formFieldDefaults}>
                         <Button text="true" pressed={this.state.reveal} handler={() => this.setState({ reveal: true })}/>
                         <Button text="false" pressed={!this.state.reveal} handler={() => this.setState({ reveal: false })}/>
                     </SegmentedButton>
 
-                    <Container>modal</Container>
+                    <div>modal</div>
                     <SegmentedButton disabled={reveal}>
                         <Button text="true" pressed={this.state.modal} handler={() => this.setState({ modal: true })}/>
                         <Button text="false" pressed={!this.state.modal} handler={() => this.setState({ modal: false })}/>
