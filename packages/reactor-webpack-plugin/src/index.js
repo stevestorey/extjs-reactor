@@ -528,8 +528,8 @@ module.exports = class ReactExtJSWebpackPlugin {
         else {
           const build = gatherErrors(fork(sencha, ['ant', 'build'], { stdio: 'inherit', encoding: 'utf-8', cwd: output, silent: false }));
           console.log('after fork')
-          build.stdout.pipe(process.stdout);
-          build.stderr.pipe(process.stderr);
+          if(build.stdout) { build.stdout.pipe(process.stdout) }
+          if(build.stderr) { build.stderr.pipe(process.stderr) }
           build.on('exit', onBuildDone);
         }
       }
