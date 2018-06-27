@@ -14,6 +14,7 @@ import { sync as resolve } from 'resolve';
 let watching = false;
 let cmdErrors;
 const app = `${chalk.green('ℹ ｢ext｣:')} reactor-webpack-plugin: `;
+import * as readline from 'readline'
 
 /**
  * Scrapes Sencha Cmd output, adding error messages to cmdErrors;
@@ -222,7 +223,7 @@ module.exports = class ReactExtJSWebpackPlugin {
       const isWebpack4 = compiler.hooks;
       if (isWebpack4) {this.webpackVersion = 'IS webpack 4'}
       else {this.webpackVersion = 'NOT webpack 4'}
-      process.stdout.cursorTo(0);console.log(app + 'reactVersion: ' + this.reactVersion + ', ' + this.webpackVersion)
+      readline.cursorTo(process.stdout, 0);console.log(app + 'reactVersion: ' + this.reactVersion + ', ' + this.webpackVersion)
     }
 
     const me = this;
@@ -246,21 +247,21 @@ module.exports = class ReactExtJSWebpackPlugin {
     if (compiler.hooks) {
       if (this.asynchronous) {
         compiler.hooks.watchRun.tapAsync('extreact-watch-run (async)', (watching, cb) => {
-          process.stdout.cursorTo(0);console.log(app + 'extreact-watch-run (async)')
+          readline.cursorTo(process.stdout, 0);console.log(app + 'extreact-watch-run (async)')
           this.watchRun()
           cb()
         })
       }
       else {
         compiler.hooks.watchRun.tap('extreact-watch-run', (watching) => {
-          process.stdout.cursorTo(0);console.log(app + 'extreact-watch-run')
+          readline.cursorTo(process.stdout, 0);console.log(app + 'extreact-watch-run')
           this.watchRun()
         })
       }
     }
     else {
       compiler.plugin('watch-run', (watching, cb) => {
-        process.stdout.cursorTo(0);console.log(app + 'watch-run')
+        readline.cursorTo(process.stdout, 0);console.log(app + 'watch-run')
         this.watchRun()
         cb()
       });
@@ -269,7 +270,7 @@ module.exports = class ReactExtJSWebpackPlugin {
     // extract xtypes from JSX tags
     if (compiler.hooks) {
       compiler.hooks.compilation.tap('extreact-compilation', (compilation) => {
-        process.stdout.cursorTo(0);console.log(app + 'extreact-compilation')
+        readline.cursorTo(process.stdout, 0);console.log(app + 'extreact-compilation')
         compilation.hooks.succeedModule.tap('extreact-succeed-module', (module) => {
           this.succeedModule(compilation, module)
         })
@@ -287,7 +288,7 @@ module.exports = class ReactExtJSWebpackPlugin {
     }
     else {
       compiler.plugin('compilation', (compilation, data) => {
-        process.stdout.cursorTo(0);console.log(app + 'compilation')
+        readline.cursorTo(process.stdout, 0);console.log(app + 'compilation')
         compilation.plugin('succeed-module', (module) => {
           this.succeedModule(compilation, module)
         })
@@ -308,20 +309,20 @@ module.exports = class ReactExtJSWebpackPlugin {
     if (compiler.hooks) {
       if (this.asynchronous) {
         compiler.hooks.emit.tapAsync('extreact-emit (async)', (compilation, cb) => {
-          process.stdout.cursorTo(0);console.log(app + 'extreact-emit')
+          readline.cursorTo(process.stdout, 0);console.log(app + 'extreact-emit')
           this.emit(compiler, compilation, cb)
         })
       }
       else {
         compiler.hooks.emit.tap('extreact-emit', (compilation) => {
-          process.stdout.cursorTo(0);console.log(app + 'extreact-emit')
+          readline.cursorTo(process.stdout, 0);console.log(app + 'extreact-emit')
           this.emit(compiler, compilation, null)
         })
       }
     }
     else {
       compiler.plugin('emit', (compilation, callback) => {
-        process.stdout.cursorTo(0);console.log(app + 'emit')
+        readline.cursorTo(process.stdout, 0);console.log(app + 'emit')
         this.emit(compiler, compilation, callback)
       })
     }
@@ -494,7 +495,7 @@ module.exports = class ReactExtJSWebpackPlugin {
         this.manifest = js;
         fs.writeFileSync(manifest, js, 'utf8');
         cmdRebuildNeeded = true;
-        process.stdout.cursorTo(0);console.log(app + `building ExtReact bundle: ${name} => ${output}`)
+        readline.cursorTo(process.stdout, 0);console.log(app + `building ExtReact bundle: ${name} => ${output}`)
       }
 
 
