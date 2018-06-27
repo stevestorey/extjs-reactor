@@ -22,6 +22,8 @@
   "homepage": "https://github.com/sencha/extjs-reactor#readme",
   "dependencies": {
     "@extjs/ext-react": "~6.6.0",
+    "@extjs/ext-react-modern": "~6.6.0",
+    "@extjs/ext-react-theme-material": "~6.6.0",
     "@extjs/ext-react-calendar": "~6.6.0",
     "@extjs/ext-react-d3": "~6.6.0",
     "@extjs/sencha-cmd": "~6.6.0",
