@@ -22,12 +22,14 @@ import * as readline from 'readline'
  */
 const gatherErrors = (cmd) => {
 
-  cmd.stdout.on('data', data => {
-    const message = data.toString();
-    if (message.match(/^\[ERR\]/)) {
-      cmdErrors.push(message.replace(/^\[ERR\] /gi, ''));
-    }
-  })
+  if (cmd.stdout) {
+    cmd.stdout.on('data', data => {
+      const message = data.toString();
+      if (message.match(/^\[ERR\]/)) {
+        cmdErrors.push(message.replace(/^\[ERR\] /gi, ''));
+      }
+    })
+  }
 
   // cmd.stderr.on('data', (data) => {
   //   console.error(`E:${data}`);
