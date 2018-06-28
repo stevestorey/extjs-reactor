@@ -30,7 +30,7 @@ export default class MenuExample extends Component {
         return (
             <Container padding={10} maxWidth="500">
                 <Sheet 
-                    direct={direct} 
+                    side={direct} 
                     modal={modal} 
                     reveal={reveal} 
                     displayed={displayed} onHide={() => this.setState({ displayed: false })}

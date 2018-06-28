@@ -22,9 +22,7 @@ import ResizableHandle from './Panels/ResizableHandle/ResizableHandle';
 import CollapsiblePanel from './Panels/CollapsiblePanel/CollapsiblePanel';
 import BasicDatePanel from './Panels/BasicDatePanel/BasicDatePanel';
 import AdvancedDatePanel from './Panels/AdvancedDatePanel/AdvancedDatePanel';
-// To be uncommented for 2.0 release
-//import TimePanel from './Panels/TimePanel/TimePanel';
-
+import TimePanel from './Panels/TimePanel/TimePanel';
 // Tabs
 
 import BasicTabs from './Tabs/BasicTabs/BasicTabs';
@@ -37,7 +35,7 @@ import TabBar from './Tabs/TabBar/TabBar';
 
 import Toolbar from './Toolbar/Toolbar';
 import Button from './Button/Button';
-//import SplitButton from './SplitButton/SplitButton';
+import SplitButton from './SplitButton/SplitButton';
 import SegmentedButton from './SegmentedButton/SegmentedButton';
 import Carousel from './Carousel/Carousel';
 
@@ -247,9 +245,8 @@ import Transition from './Transition/Transition';
 import Wizard from './Wizard/Wizard';
 
 //Gauge inside components
-// To be uncommented for 2.0 release
-//import DefaultGauge from './Gauge/DefaultGauge/DefaultGauge';
-//import NeedleGauge from './Gauge/NeedleGauge/NeedleGauge';
+import DefaultGauge from './Gauge/DefaultGauge/DefaultGauge';
+import NeedleGauge from './Gauge/NeedleGauge/NeedleGauge';
 
 const root = {
     id: '/',
@@ -259,7 +256,7 @@ const root = {
             { text: 'Buttons', navIcon: 'icon-buttons', children: [
                 { text: 'Button', component: Button, layout: 'center', navIcon: 'icon-buttons' },
                 { text: 'SegmentedButton', component: SegmentedButton, layout: 'center', navIcon: 'icon-segmented-buttons' },
-//                { text: 'SplitButton', component: SplitButton, layout: 'center', navIcon: 'icon-buttons' },
+                { text: 'SplitButton', component: SplitButton, layout: 'center', navIcon: 'icon-buttons' },
             ]},
             { text: 'Carousel', component: Carousel, navIcon: 'icon-carousel' },
             { text: 'Drag & Drop', navIcon: 'icon-drag-drop', children: [
@@ -295,11 +292,11 @@ const root = {
                 { text: 'URLField', component: URLField, layout: 'center', navIcon: 'icon-Forms-URLField' },
                 { text: 'Validation', component: Validation, layout: 'auto', navIcon: 'icon-form-validation'}
             ] },
-           // To be uncommented for 2.0 release
-           /* { text: 'Gauges', navIcon: 'icon-gauge-charts', children: [
+           
+           { text: 'Gauges', navIcon: 'icon-gauge-charts', children: [
                 { text: 'Default Gauge', component: DefaultGauge, layout: 'center', navIcon: 'icon-gauge-charts' },
                 { text: 'Needle Gauge', component: NeedleGauge, layout: 'center', navIcon: 'icon-gauge-charts' }
-            ]},*/
+            ]},
             { text: 'Layouts', navIcon: 'icon-layouts', children: [
                 { text: 'card', component: CardLayout, navIcon: 'icon-layout-card' },
                 { text: 'center', component: CenterLayout, navIcon: 'icon-layout-center' },
@@ -331,8 +328,7 @@ const root = {
                 { text: 'Collapsible Panel', component: CollapsiblePanel, layout: Ext.os.is.Phone ? 'fit': 'center', navIcon: 'icon-panel-collapsible' },
                 { text: 'Basic Date Panel', component: BasicDatePanel, layout: 'center', navIcon: 'icon-panel-date' },
                 { text: 'Advanced Date Panel', component: AdvancedDatePanel, layout: 'center', navIcon: 'icon-panel-date-adv', hidden: Ext.os.is.Phone },
-                // To be uncommented for 2.0 release 
-             // { text: 'Time Panel', component: TimePanel, layout: 'center', navIcon: 'icon-panel-time', hidden: Ext.os.is.Phone },
+                { text: 'Time Panel', component: TimePanel, layout: 'center', navIcon: 'icon-panel-time', hidden: Ext.os.is.Phone },
             ]},
             { text: 'Popups', navIcon: 'icon-windows', children: [
                 { text: 'Dialog', component: Dialog, layout: 'center', navIcon: 'icon-basic-dialog' },

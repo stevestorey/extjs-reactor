@@ -64,33 +64,33 @@ export default class ButtonExample extends Component {
                 </Container>
 
                 <Panel { ...layoutProps }>
-                    <Container>
-                        <div {...groupLabelProps}>Default</div>
-                        <Container className="button-group" {...buttonGroupProps}>
+                    <Container layout="hbox">
+                        <div flex={1} {...groupLabelProps}>Default</div>
+                        <Container flex={3} className="button-group" {...buttonGroupProps}>
                             <Button text={ text && "Normal" } ui={ui} iconCls={iconCls} arrowAlign="bottom">{menu}</Button>
                             <Button text={ text && "Badge" } ui={ui} iconCls={iconCls} badgeText="2">{menu}</Button>
                             <Button text={ text && "Disabled" } ui={ui} iconCls={iconCls} disabled>{menu}</Button>
                         </Container>
                     </Container>
-                    <Container>
-                        <div {...groupLabelProps}>Alt</div>
-                        <Container className="button-group button-group-alt" {...buttonGroupProps}>
+                    <Container layout="hbox">
+                        <div flex={1} {...groupLabelProps}>Alt</div>
+                        <Container flex={3} className="button-group button-group-alt" {...buttonGroupProps}>
                             <Button text={ text && "Normal" } ui={ui + ' alt'} iconCls={iconCls}>{menu}</Button>
                             <Button text={ text && "Badge" } ui={ui + ' alt'} iconCls={iconCls} badgeText="2">{menu}</Button>
                             <Button text={ text && "Disabled" } ui={ui + ' alt'} iconCls={iconCls} disabled>{menu}</Button>
                         </Container>
                     </Container>
-                    <Container>
-                        <div {...groupLabelProps}>Raised</div>
-                        <Container className="button-group" {...buttonGroupProps}>
+                    <Container layout="hbox">
+                        <div flex={1} {...groupLabelProps}>Raised</div>
+                        <Container flex={3} className="button-group" {...buttonGroupProps}>
                             <Button text={ text && "Normal" } ui={ui + ' raised'} iconCls={iconCls}>{menu}</Button>
                             <Button text={ text && "Badge" } ui={ui + ' raised'} iconCls={iconCls} badgeText="2">{menu}</Button>
                             <Button text={ text && "Disabled" } ui={ui + ' raised'} iconCls={iconCls} disabled>{menu}</Button>
                         </Container>
                     </Container>
-                    <Container>
-                        <div {...groupLabelProps}>Alt Raised</div>
-                        <Container className="button-group button-group-alt" {...buttonGroupProps}>
+                    <Container layout="hbox">
+                        <div flex={1} {...groupLabelProps}>Alt Raised</div>
+                        <Container flex={3} className="button-group button-group-alt" {...buttonGroupProps}>
                             <Button text={ text && "Normal" } ui={ui + ' alt raised'} iconCls={iconCls}>{menu}</Button>
                             <Button text={ text && "Badge" } ui={ui + ' alt raised'} iconCls={iconCls} badgeText="2">{menu}</Button>
                             <Button text={ text && "Disabled" } ui={ui + ' alt raised'} iconCls={iconCls} disabled>{menu}</Button>
