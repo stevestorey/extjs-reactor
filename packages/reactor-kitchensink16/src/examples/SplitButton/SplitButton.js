@@ -63,30 +63,30 @@ export default class SplitButtonExample extends Component {
                 </Container>
 
                 <Panel { ...layoutProps }>
-                    <Container>
-                        <div {...groupLabelProps}>Default</div>
-                        <Container className="button-group" {...buttonGroupProps}>
+                    <Container layout="hbox">
+                        <div flex={1} {...groupLabelProps}>Default</div>
+                        <Container flex={3} className="button-group" {...buttonGroupProps}>
                             <SplitButton text={ text && "Normal" } ui={ui} iconCls={iconCls} {...menuProps} arrowAlign={'bottom'}></SplitButton>
                             <SplitButton text={ text && "Disabled" } ui={ui} iconCls={iconCls} disabled {...menuProps}></SplitButton>
                         </Container>
                     </Container>
-                    <Container>
-                        <div {...groupLabelProps}>Alt</div>
-                        <Container className="button-group button-group-alt" {...buttonGroupProps}>
+                    <Container layout="hbox">
+                        <div flex={1} {...groupLabelProps}>Alt</div>
+                        <Container flex={3} className="button-group button-group-alt" {...buttonGroupProps}>
                             <SplitButton text={ text && "Normal" } ui={ui + ' alt'} iconCls={iconCls} {...menuProps}></SplitButton>
                             <SplitButton text={ text && "Disabled" } ui={ui + ' alt'} iconCls={iconCls} disabled {...menuProps}></SplitButton>
                         </Container>
                     </Container>
-                    <Container>
-                        <div {...groupLabelProps}>Raised </div>
-                        <Container className="button-group" {...buttonGroupProps}>
+                    <Container layout="hbox">
+                        <div flex={1} {...groupLabelProps}>Raised </div>
+                        <Container flex={3} className="button-group" {...buttonGroupProps}>
                             <SplitButton text={ text && "Normal" } ui={ui + ' raised'} iconCls={iconCls} {...menuProps}></SplitButton>
                             <SplitButton text={ text && "Disabled" } ui={ui + ' raised'} iconCls={iconCls} disabled {...menuProps}></SplitButton>
                         </Container>
                     </Container>
-                    <Container>
-                        <div {...groupLabelProps}>Alt Raised</div>
-                        <Container className="button-group button-group-alt" {...buttonGroupProps}>
+                    <Container layout="hbox">
+                        <div flex={1} {...groupLabelProps}>Alt Raised</div>
+                        <Container flex={3} className="button-group button-group-alt" {...buttonGroupProps}>
                             <SplitButton text={ text && "Normal" } ui={ui + ' alt raised'} iconCls={iconCls} {...menuProps}></SplitButton>
                             <SplitButton text={ text && "Disabled" } ui={ui + ' alt raised'} iconCls={iconCls} disabled {...menuProps} ></SplitButton>
                         </Container>
