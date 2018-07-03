@@ -96,7 +96,12 @@ var ExtRenderer = ReactFiberReconciler({
         if (parentInstance.rawitems == undefined) {
           parentInstance.rawitems = [];
         }
-        parentInstance.rawitems.push(childInstance.cmp);
+        if (childXtype == 'cartesian') {
+          parentInstance.rawitems.push(childInstance.cmp.initialConfig);
+        } else {
+          parentInstance.rawitems.push(childInstance.cmp);
+        }
+
         //used to do this doAdd(childInstance.xtype, parentInstance.cmp, childInstance.cmp, childInstance.reactChildren)
       }
     }
