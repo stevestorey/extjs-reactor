@@ -18,8 +18,8 @@ const LANGUAGE = {
 };
 
 const REACTVERSION = {
-    REACT15: 15,
-    REACT16: 16
+    REACT15: '15',
+    REACT16: '16'
 };
 
 const BOILERPLATE = {
