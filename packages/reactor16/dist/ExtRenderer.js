@@ -48,8 +48,8 @@ var ExtRenderer = ReactFiberReconciler({
     if (childInstance == null || typeof childInstance === "string" && childInstance.trim().length === 0) {
       return;
     }
-    console.log(parentInstance);
-    console.log(childInstance);
+    //    console.log(parentInstance)
+    //    console.log(childInstance)
 
     if (parentInstance != null && childInstance != null) {
       //SK : Do not uncomment below console statement. It will cause error in case of div
@@ -107,7 +107,7 @@ var ExtRenderer = ReactFiberReconciler({
     }
   },
   finalizeInitialChildren: function finalizeInitialChildren(ExtJSComponent, type, props) {
-    console.log('setting collection configs and creating EXT component here');
+    //    console.log('setting collection configs and creating EXT component here')
     var xtype = type.toLowerCase().replace(/_/g, '-');
     if (ExtJSComponent.extJSClass != null) {
       l('ExtRenderer: finalizeInitialChildren, type: ' + type + ', xtype: ' + xtype + ', (ExtJSComponent, props)', ExtJSComponent, props);
@@ -178,8 +178,8 @@ var ExtRenderer = ReactFiberReconciler({
         }
       }
 
-      console.log('right before new');
-      console.log(ExtJSComponent);
+      //      console.log('right before new')
+      //      console.log(ExtJSComponent)
       ExtJSComponent.rawConfigs = ExtJSComponent._cloneProps(ExtJSComponent.rawConfigs);
       ExtJSComponent.cmp = new ExtJSComponent.extJSClass(ExtJSComponent.rawConfigs);
       l('ExtRenderer: finalizeInitialChildren, type: ' + type + ', xtype: ' + xtype + ', (ExtJSComponent.rawConfigs, ExtJSComponent.cmp)', ExtJSComponent.rawConfig, ExtJSComponent.cmp);
@@ -191,7 +191,7 @@ var ExtRenderer = ReactFiberReconciler({
       l('ExtRenderer: finalizeInitialChildren, type: ' + type + ', xtype: ' + xtype + ', ExtJSComponent == html', ExtJSComponent);
     }
 
-    console.log('');
+    //    console.log('')
     return true;
     //  }
   },
@@ -259,7 +259,7 @@ var ExtRenderer = ReactFiberReconciler({
     appendChild: function appendChild(parentInstance, childInstance) {
       if (childInstance.cmp === undefined) {
         // plain text instance
-        console.log("plain text");
+        //        console.log("plain text")
         return false;
       }
       if (parentInstance != null && childInstance != null) {
@@ -280,11 +280,11 @@ var ExtRenderer = ReactFiberReconciler({
           console.log('appendChildToContainer ERROR ExtReactRoot is the only one to be in do Add');
           throw error;
         } else {
-          console.log('appendChildToContainer This is ExtReactRoot, call add method on parent');
+          //          console.log('appendChildToContainer This is ExtReactRoot, call add method on parent')
           if (childCmp) {
             parentCmp.add(childCmp);
           } else {
-            console.log("appendChildToContainer This is ExtReactRoot but with string/non ExtJS child");
+            //            console.log("appendChildToContainer This is ExtReactRoot but with string/non ExtJS child")
           }
         }
       } else {
@@ -313,7 +313,7 @@ var ExtRenderer = ReactFiberReconciler({
 
         if (parentInstance.xtype == 'html') return; //correct??
         if (child.cmp != undefined) {
-          console.log("CHECK BEFORE REMOVE");
+          //          console.log("CHECK BEFORE REMOVE")
           if (parentInstance.cmp.xtype == 'grid' && child.cmp.xtype == 'column') {
             parentInstance.cmp.removeColumn(child.cmp);
           } else if (parentInstance.cmp.xtype === "button") {
@@ -413,7 +413,7 @@ function isAssignableFrom(subClass, parentClass) {
 //this needs to be refactored
 function doAdd(childXtype, parentCmp, childCmp, childPropsChildren) {
   l('ExtRenderer.js: doAdd, parentxtype: ' + parentCmp.xtype + ', childxtype: ' + childXtype + ', (parentCmp, childCmp, childPropsChildern)', parentCmp, childCmp, childPropsChildren);
-  console.warn('why in doAdd??');
+  //console.warn('why in doAdd??')
 
   //  parentCmp.add(childCmp)
   //  return

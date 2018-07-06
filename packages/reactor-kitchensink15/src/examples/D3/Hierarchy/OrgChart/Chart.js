@@ -6,7 +6,7 @@ import { reactify } from '@extjs/reactor';
  */
 const OrgChart = Ext.define(null, {
     extend: 'Ext.d3.hierarchy.tree.HorizontalTree',
-
+    xtype: 'orgchart',
     config: {
         imageField: 'url',
 

@@ -557,16 +557,16 @@ module.exports = class ReactExtJSWebpackPlugin {
 
       let cmdRebuildNeeded = false;
 
-      if (this.manifest === null || js !== this.manifest) {
+      //if (this.manifest === null || js !== this.manifest) {
         // Only write manifest if it differs from the last run.  This prevents unnecessary cmd rebuilds.
         this.manifest = js;
-        // console.log('\n\njs:')
-        // console.log(js)
+         console.log('\njs:')
+         console.log(js)
         // console.log('\n\n')
         fs.writeFileSync(manifest, js, 'utf8');
         cmdRebuildNeeded = true;
         readline.cursorTo(process.stdout, 0);console.log(app + `building ExtReact bundle: ${name} => ${output}`)
-      }
+      //}
 
 
       if (isWebpack4) {
