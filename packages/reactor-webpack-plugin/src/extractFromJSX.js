@@ -62,6 +62,11 @@ module.exports = function extractFromJSX(js, compilation, module, reactVersion) 
 
     traverse(ast, {
         pre: function(node) {
+          //if (node.type == 'ExpressionStatement') {
+          // if(isFile) {
+          //   console.log(node.type)
+          //   console.log(JSON.stringify(node))
+          // }
           if (node.type == 'ImportDeclaration') {
             //console.log(node.type)
             //console.log('node: ' + node.source.value)
@@ -140,6 +145,10 @@ module.exports = function extractFromJSX(js, compilation, module, reactVersion) 
     for (let key in types) {
       statements.push(`Ext.create(${JSON.stringify(types[key])})`)
     }
+
+//console.log('\n\nstatements:')
+//console.log(statements)
+//console.log('\n\n')
 
     return statements;
 };

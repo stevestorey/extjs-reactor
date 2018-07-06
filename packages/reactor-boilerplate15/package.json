@@ -35,7 +35,6 @@
     "@extjs/reactor-babel-plugin": "^2.0.0",
     "@extjs/reactor-webpack-plugin": "^2.0.0",
     "cross-env": "^5.1.5",
-
     "babel-core": "^6.17.0",
     "babel-jest": "^20.0.3",
     "babel-loader": "^7.0.0",

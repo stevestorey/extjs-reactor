@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Grid, Toolbar, Button, Column, SearchField } from '@extjs/ext-react';
+import { Panel } from '@extjs/ext-react';
+import { TextArea } from '@extjs/ext-react';
+
 import data from './data';
 import { small, medium } from '../responsiveFormulas'
 

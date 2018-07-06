@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { List } from '@extjs/ext-react';
 import { toggleFavorite } from './actions';
 import { connect } from 'react-redux';
-import days from '../util/days';
-import { push } from 'react-router';
+//import days from '../util/days';
+//import { push } from 'react-router';
 import { createTpl } from './EventTpl';
 
 class ScheduleList extends Component {

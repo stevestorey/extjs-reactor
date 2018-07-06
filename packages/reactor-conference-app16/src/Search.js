@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Toolbar, Sheet, SearchField, List, Button } from '@extjs/ext-react';
 import { connect } from 'react-redux';
 import { toggleSearch, search } from './actions';
-import { Template } from '@extjs/reactor';
+//import { Template } from '@extjs/reactor';
 import ScheduleList from './schedule/ScheduleList';
 
 class Search extends Component {

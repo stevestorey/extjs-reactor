@@ -1,3 +1,4 @@
+
 var reactVersion = 0; 
 import chalk from 'chalk';
 import fs from 'fs';
@@ -13,15 +14,21 @@ module.exports = function(babel) {
   var reactEntry = pkg.dependencies.react
   var is16 = reactEntry.includes("16");
   if (is16) { reactVersion = 16 } else { reactVersion = 15 }
-//  console.log('\nreactor-babel-plugin reactVersion: ' + reactVersion)
   readline.cursorTo(process.stdout, 0);console.log('\n' + app + 'reactVersion: ' + reactVersion + '')
 
   const t = babel.types;
 
+  var showIt = true
+  var showItNum = 0
+  var prevFile = ''
   return {
     visitor: {
       ImportDeclaration: function(path) {
-        const { node } = path;
+        const { node } = path
+        // if (showIt) {
+        //   //console.log(path)
+        //   showIt = false
+        // }
 
 //from
 //import { launch } from '@extjs/reactor';
@@ -51,20 +58,24 @@ module.exports = function(babel) {
             );
           }
         }
-        //added mjg
-
 
         if (node.source && node.source.type === 'StringLiteral' 
         && (node.source.value.match(MODULE_PATTERN) 
         || node.source.value.match(OLD_MODULE_PATTERN))) {
-          //console.log('path.hub.file.opts.filename)
+          //console.log('\n')
+          //console.log(path.hub.file.opts.filename)
           //console.log(path.hub.file.code)
           const declarations = [];
           let transform = false;
 
+          //var count = 0
           node.specifiers.forEach(spec => {
             const imported = spec.imported.name;
             const local = spec.local.name;
+
+            //count++
+            //console.log(count + ' ' + imported + ' ' + local)
+
             declarations.push(
               t.variableDeclaration('const', [
                 t.variableDeclarator(
@@ -76,8 +87,8 @@ module.exports = function(babel) {
                 )
               ])
             );
-          });
-
+          })
+ 
 //from
 //import { Grid, Toolbar } from '@extjs/ext-react';
 //to
@@ -85,14 +96,16 @@ module.exports = function(babel) {
 //const { Grid, Toolbar } = reactify('Grid', 'Toolbar');
 
           if (declarations.length) {
-            if (!path.scope.hasBinding('reactify')) {
-              path.insertBefore(
+            if(prevFile != path.hub.file.opts.sourceFileName) {
+            //if (!path.scope.hasBinding('reactify')) {
+               path.insertBefore(
                 t.importDeclaration(
                   [t.importSpecifier(t.identifier('reactify'), t.identifier('reactify'))],
                   t.stringLiteral(`@extjs/reactor${reactVersion}`)
                 )
               )
             }
+            prevFile = path.hub.file.opts.sourceFileName
             path.replaceWithMultiple(declarations);
           }
         }

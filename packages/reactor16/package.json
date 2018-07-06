@@ -56,7 +56,7 @@
     "react-addons-test-utils": "^15.6.2",
     "react-dom": "^16.4.1",
     "react-test-renderer": "^16.4.1",
-		"react-reconciler": "^0.12.0",
+		"react-reconciler": "^0.7.0",
     "typescript": "^2.9.2"
   }
 }

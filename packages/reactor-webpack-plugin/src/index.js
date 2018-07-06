@@ -114,7 +114,7 @@ module.exports = class ReactExtJSWebpackPlugin {
       asynchronous: false,
       production: false,
       manifestExtractor: extractFromJSX,
-      treeShaking: true
+      treeShaking: false
       /* end single build only */
     }
   }
@@ -130,8 +130,8 @@ module.exports = class ReactExtJSWebpackPlugin {
         this.dependencies[this.currentFile] = [
           ...(this.dependencies[this.currentFile] || []),
           ...this.manifestExtractor(module._source._value, compilation, module, reactVersion)
-        ];
-      };
+        ]
+      }
       if (this.debug) {
         doParse();
       } else {
@@ -141,6 +141,10 @@ module.exports = class ReactExtJSWebpackPlugin {
           console.error(e); 
         }
       }
+
+      //console.log('this.dependencies[this.currentFile]')
+      //console.log(this.dependencies[this.currentFile])
+
     }
   }
 
@@ -155,23 +159,64 @@ module.exports = class ReactExtJSWebpackPlugin {
       isWebpack4 = false
       modules = compilation.chunks.reduce((a, b) => a.concat(b.modules), []);
     }
+    //console.log(isWebpack4)
     //const modules = compilation.chunks.reduce((a, b) => a.concat(b.modules), []);
+    //console.log(modules[0])
     const build = this.builds[Object.keys(this.builds)[0]];
     let outputPath = path.join(compiler.outputPath, this.output);
     //console.log('\n*****outputPath: ' + outputPath)
     //console.log('\n*****this.output: ' + this.output)
     // webpack-dev-server overwrites the outputPath to "/", so we need to prepend contentBase
     if (compiler.outputPath === '/' && compiler.options.devServer) {
-        outputPath = path.join(compiler.options.devServer.contentBase, outputPath);
+      outputPath = path.join(compiler.options.devServer.contentBase, outputPath);
     }
     // the following is needed for html-webpack-plugin to include <script> and <link> tags for ExtReact
-    const jsChunk = compilation.addChunk(`${this.output}-js`);
-    jsChunk.hasRuntime = jsChunk.isInitial = () => true;
-    jsChunk.files.push(path.join(this.output, 'ext.js'));
-    jsChunk.files.push(path.join(this.output, 'ext.css'));
-    jsChunk.id = -2; // this forces html-webpack-plugin to include ext.js first
+
+    // console.log('compilation')
+    // console.log('********compilation.chunks[0]')
+    // console.log(compilation.chunks[0].id)
+    // console.log(path.join(this.output, 'ext.js'))
+    // const jsChunk = compilation.addChunk(`${this.output}-js`);
+    // jsChunk.hasRuntime = jsChunk.isInitial = () => true;
+    // jsChunk.files.push(path.join(this.output, 'ext.js'));
+    // jsChunk.files.push(path.join(this.output, 'ext.css'));
+    // jsChunk.id = 'aaaap'; // this forces html-webpack-plugin to include ext.js first
+    // console.log('********compilation.chunks[1]')
+    // console.log(compilation.chunks[1].id)
+
     //if (this.asynchronous) callback();
 //    console.log(callback)
+
+// if (isWebpack4) {
+//   console.log(path.join(this.output, 'ext.js'))
+//   const stats = fs.statSync(path.join(outputPath, 'ext.js'))
+//   const fileSizeInBytes = stats.size
+//   compilation.assets['ext.js'] = {
+//     source: function() {return fs.readFileSync(path.join(outputPath, 'ext.js'))},
+//     size: function() {return fileSizeInBytes}
+//   }
+//   console.log(compilation.entrypoints)
+
+//   var filelist = 'In this build:\n\n';
+
+//   // Loop through all compiled assets,
+//   // adding a new line item for each filename.
+//   for (var filename in compilation.assets) {
+//     filelist += ('- '+ filename +'\n');
+//   }
+
+//   // Insert this list into the webpack build as a new file asset:
+//   compilation.assets['filelist.md'] = {
+//     source() {
+//       return filelist;
+//     },
+//     size() {
+//       return filelist.length;
+//     }
+//   }
+// }
+
+
     if (callback != null) 
       {
         if (this.asynchronous) 
@@ -184,7 +229,7 @@ module.exports = class ReactExtJSWebpackPlugin {
 
   this._buildExtBundle(isWebpack4, 'ext', modules, outputPath, build)
       .then(() => {
-        console.log('in then')
+        //console.log('in then')
         // const cssVarPath = path.join(this.output, 'css-vars.js');
 
         // if (fs.existsSync(path.join(outputPath, 'css-vars.js'))) {
@@ -204,7 +249,7 @@ module.exports = class ReactExtJSWebpackPlugin {
           }
       })
       .catch(e => {
-        console.log(e)
+        //console.log(e)
         compilation.errors.push(new Error('[@extjs/reactor-webpack-plugin]: ' + e.toString()));
         //!this.asynchronous && callback();
 //        console.log(callback)
@@ -271,27 +316,24 @@ module.exports = class ReactExtJSWebpackPlugin {
 
     // extract xtypes from JSX tags
     if (compiler.hooks) {
-      compiler.hooks.compilation.tap('extreact-compilation', (compilation) => {
+      compiler.hooks.compilation.tap('extreact-compilation', (compilation,data) => {
         readline.cursorTo(process.stdout, 0);console.log(app + 'extreact-compilation')
+
+        // //mjg early
+        // this.output = 'ext-react/extjs'
+        // const jsChunk = compilation.addChunk(`${this.output}-js`);
+        // //const jsChunk = compilation.addChunk(`ext`);
+        // jsChunk.hasRuntime = jsChunk.isInitial = () => true;
+        // jsChunk.files.push(path.join(this.output, 'ext.js'));
+        // jsChunk.files.push(path.join(this.output, 'ext.css'));
+        // jsChunk.id = -2; // this forces html-webpack-plugin to include ext.js first
+        // console.log('********compilation.chunks[0]')
+        // console.log(compilation.chunks[0].id)
+
+
+
+
         compilation.hooks.succeedModule.tap('extreact-succeed-module', (module) => {
-          this.succeedModule(compilation, module)
-        })
-
-        // data.normalModuleFactory.plugin("parser", function(parser, options) {
-        //   // extract xtypes and classes from Ext.create calls
-        //   parser.plugin('call Ext.create', addToManifest);
-        //   // copy Ext.require calls to the manifest.  This allows the users to explicitly require a class if the plugin fails to detect it.
-        //   parser.plugin('call Ext.require', addToManifest);
-        //   // copy Ext.define calls to the manifest.  This allows users to write standard ExtReact classes.
-        //   parser.plugin('call Ext.define', addToManifest);
-        // })
-
-      })
-    }
-    else {
-      compiler.plugin('compilation', (compilation, data) => {
-        readline.cursorTo(process.stdout, 0);console.log(app + 'compilation')
-        compilation.plugin('succeed-module', (module) => {
           this.succeedModule(compilation, module)
         })
 
@@ -306,6 +348,28 @@ module.exports = class ReactExtJSWebpackPlugin {
 
       })
     }
+    else {
+      compiler.plugin('compilation', (compilation, data) => {
+        readline.cursorTo(process.stdout, 0);console.log(app + 'compilation')
+        compilation.plugin('succeed-module', (module) => {
+          this.succeedModule(compilation, module)
+        })
+
+        data.normalModuleFactory.plugin("parser", function(parser, options) {
+          // extract xtypes and classes from Ext.create calls
+          parser.plugin('call Ext.create', addToManifest);
+          // copy Ext.require calls to the manifest.  This allows the users to explicitly require a class if the plugin fails to detect it.
+//console.log('parser.plugin')
+          parser.plugin('call Ext.require', addToManifest);
+          // copy Ext.define calls to the manifest.  This allows users to write standard ExtReact classes.
+          parser.plugin('call Ext.define', addToManifest);
+        })
+
+      })
+    }
+
+
+
 
     // once all modules are processed, create the optimized ExtReact build.
     if (compiler.hooks) {
@@ -340,7 +404,7 @@ module.exports = class ReactExtJSWebpackPlugin {
     let { sdk, production } = build;
 
     if (production) {
-      build.treeShaking = true;
+      build.treeShaking = false;
     }
     if (sdk) {
       if (!fs.existsSync(sdk)) {
@@ -429,9 +493,9 @@ module.exports = class ReactExtJSWebpackPlugin {
     */
   _buildExtBundle(isWebpack4, name, modules, output, { toolkit='modern', theme, packages=[], packageDirs=[], sdk, overrides}) {
 //     console.log(modules)
-     console.log('*****')
-     console.log(isWebpack4)
-     console.log('*****')
+    //  console.log('*****')
+    //  console.log(isWebpack4)
+    //  console.log('*****')
 
     let sencha = this._getSenchCmdPath();
     theme = theme || (toolkit === 'classic' ? 'theme-triton' : 'theme-material');
@@ -443,6 +507,7 @@ module.exports = class ReactExtJSWebpackPlugin {
       cmdErrors = [];
       
       const onBuildDone = () => {
+
         if (cmdErrors.length) {
           this.onBuildFail(new Error(cmdErrors.join("")));
         } else {
@@ -495,6 +560,9 @@ module.exports = class ReactExtJSWebpackPlugin {
       if (this.manifest === null || js !== this.manifest) {
         // Only write manifest if it differs from the last run.  This prevents unnecessary cmd rebuilds.
         this.manifest = js;
+        // console.log('\n\njs:')
+        // console.log(js)
+        // console.log('\n\n')
         fs.writeFileSync(manifest, js, 'utf8');
         cmdRebuildNeeded = true;
         readline.cursorTo(process.stdout, 0);console.log(app + `building ExtReact bundle: ${name} => ${output}`)
@@ -505,7 +573,7 @@ module.exports = class ReactExtJSWebpackPlugin {
         //execSync(sencha, ['ant', 'watch'], { cwd: output, silent: false })
         const spawnSync = require('child_process').spawnSync
         spawnSync(sencha, ['ant', 'build'], { cwd: output, stdio: 'inherit', encoding: 'utf-8'})
-        console.log('after spawnSync')
+
         onBuildDone()
       }
 
