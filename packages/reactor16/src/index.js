@@ -8,7 +8,7 @@ import { settings } from './reactify'
 export { reactify }
 
 export function l(name,val,val2,val3,val4){
-//  if (settings.debug) { 
+  if (settings.debug) { 
     console.group(name);
     if (val != undefined) {
       console.log(val)
@@ -23,7 +23,7 @@ export function l(name,val,val2,val3,val4){
       console.log(val4)
     }
     console.groupEnd();
-//  }
+  }
 }
 
 import ReactDOM from 'react-dom';

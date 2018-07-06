@@ -438,19 +438,19 @@ export var ExtJSComponent = function (_Component) {
             if (!isEqual(oldValue, newValue)) {
                 var eventName = this._eventNameForProp(key);
                 if (eventName) {
-                    console.log('*****************************************************************eventName');
-                    console.log(eventName);
+                    //                console.log('*****************************************************************eventName')
+                    //                console.log(eventName)
                     this._replaceEvent(eventName, oldValue, newValue);
                 } else {
                     var setter = this._setterFor(key);
                     if (setter) {
                         var value = this._cloneProps(newValue);
                         if (this.reactorSettings.debug) console.log(setter, newValue);
-                        console.log('*****************************************************************setter');
-                        console.log(this.cmp.xtype + ' - ' + setter);
-                        console.log('*****************************************************************value');
-                        console.log(key);
-                        console.log(value);
+                        // console.log('*****************************************************************setter')
+                        // console.log(this.cmp.xtype + ' - ' + setter) 
+                        // console.log('*****************************************************************value')
+                        // console.log(key)
+                        // console.log(value)
                         this.cmp[setter](value);
                     }
                 }
