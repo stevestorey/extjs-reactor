@@ -24,7 +24,7 @@ var CLASS_CACHE = (_CLASS_CACHE = {
   TabPanel: Ext.ClassManager.getByAlias('widget.tabpanel'),
   RendererCell: Ext.ClassManager.getByAlias('widget.renderercell')
 }, _CLASS_CACHE['Field'] = Ext.ClassManager.getByAlias('widget.field'), _CLASS_CACHE);
-//mjg
+
 var ExtRenderer = ReactFiberReconciler({
   createInstance: function createInstance(type, props, internalInstanceHandle) {
     var instance = null;
@@ -246,7 +246,16 @@ var ExtRenderer = ReactFiberReconciler({
 
   useSyncScheduling: true,
 
+  // commitMount(_instance2, type, props, finishedWork) {
+  //   console.log('commitMount')
+  // },
+
+
   mutation: {
+    commitMount: function commitMount(instance, type, newProps) {
+      l('commitMount**********');
+      // Noop
+    },
     appendChild: function appendChild(parentInstance, childInstance) {
       if (childInstance.cmp === undefined) {
         // plain text instance
@@ -334,10 +343,6 @@ var ExtRenderer = ReactFiberReconciler({
     },
     commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
       l('commitTextUpdate**********');
-      // Noop
-    },
-    commitMount: function commitMount(instance, type, newProps) {
-      l('commitMount**********');
       // Noop
     },
     commitUpdate: function commitUpdate(instance, updatePayload, type, oldProps, newProps) {

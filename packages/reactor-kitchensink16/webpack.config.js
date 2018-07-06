@@ -14,7 +14,7 @@ module.exports = function (env) {
     const nodeEnv = env && env.prod ? 'production' : 'development';
     const isProd = nodeEnv === 'production';
     const local = env && env.local;
-    const disableTreeShaking = env && env.treeShaking === 'false';
+    //const disableTreeShaking = env && env.treeShaking === 'false';
 
     const plugins = [
         new ExtJSReactorWebpackPlugin({
@@ -35,19 +35,19 @@ module.exports = function (env) {
                 path.join('.', 'ext-react', 'overrides')
             ],
             production: isProd,
-            treeShaking: !disableTreeShaking
+            treeShaking: false
         }),
         new webpack.EnvironmentPlugin({
             NODE_ENV: nodeEnv
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: "vendor", 
-            filename: "vendor.bundle.js",
-            minChunks: function (module) {
-                // this assumes your vendor imports exist in the node_modules directory
-                return module.context && module.context.indexOf("node_modules") !== -1;
-            }            
-        }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: "vendor", 
+        //     filename: "vendor.bundle.js",
+        //     minChunks: function (module) {
+        //         // this assumes your vendor imports exist in the node_modules directory
+        //         return module.context && module.context.indexOf("node_modules") !== -1;
+        //     }            
+        // }),
         new CopyWebpackPlugin([{
             from: path.join(__dirname, 'resources'), 
             to: 'resources'
@@ -65,12 +65,12 @@ module.exports = function (env) {
                 minimize: true,
                 debug: false
             }),
-            new webpack.optimize.UglifyJsPlugin({
-                compress: {
-                    warnings: false,
-                    screw_ie8: true
-                }
-            })
+            // new webpack.optimize.UglifyJsPlugin({
+            //     compress: {
+            //         warnings: false,
+            //         screw_ie8: true
+            //     }
+            // })
         );
     } else {
         plugins.push(
@@ -87,14 +87,27 @@ module.exports = function (env) {
     }));
 
     return {
+      mode: 'development',
         cache: true,
         devtool: isProd ? 'source-map' : 'cheap-module-source-map',
         context: sourcePath,
-
         entry: {
-            vendor: ['babel-polyfill', 'react', 'prop-types', 'react-redux', 'react-dom', 'react-router-dom', 'history', 'redux', 'd3', 'highlightjs'],
+            vendor: ['react', 'prop-types', 'react-redux', 'react-dom', 'react-router-dom', 'history', 'redux', 'd3', 'highlightjs'],
             app: './index.js'
         },
+
+
+        // entry: {
+        //     vendor: ['babel-polyfill', 'react', 'prop-types', 'react-redux', 'react-dom', 'react-router-dom', 'history', 'redux', 'd3', 'highlightjs'],
+        //     app: './index.js'
+        // },
+        // entry: {
+        //   'app': [
+        //     'babel-polyfill',
+        //     'react-hot-loader/patch',
+        //     './index.js'
+        //   ]
+        // },
 
         output: {
             path: path.join(__dirname, 'build'),

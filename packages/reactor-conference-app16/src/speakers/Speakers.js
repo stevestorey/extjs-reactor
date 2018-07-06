@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Container, List, Button, TabPanel, Panel } from '@extjs/ext-react';
-import AppBar from '../AppBar';
+//import AppBar from '../AppBar';
 import { Template } from '@extjs/reactor';
 import { loadSpeakers, loadSpeaker } from './actions';
-import { setTitle } from '../actions';
+//import { setTitle } from '../actions';
 import Speaker from './Speaker';
 
 class Speakers extends Component {

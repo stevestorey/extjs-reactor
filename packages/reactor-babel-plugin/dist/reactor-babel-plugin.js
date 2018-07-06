@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("fs"), require("path"), require("os"));
+		module.exports = factory(require("fs"), require("path"), require("readline"), require("os"));
 	else if(typeof define === 'function' && define.amd)
-		define("ReactorBabelPlugin", ["fs", "path", "os"], factory);
+		define("ReactorBabelPlugin", ["fs", "path", "readline", "os"], factory);
 	else if(typeof exports === 'object')
-		exports["ReactorBabelPlugin"] = factory(require("fs"), require("path"), require("os"));
+		exports["ReactorBabelPlugin"] = factory(require("fs"), require("path"), require("readline"), require("os"));
 	else
-		root["ReactorBabelPlugin"] = factory(root["fs"], root["path"], root["os"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_14__) {
+		root["ReactorBabelPlugin"] = factory(root["fs"], root["path"], root["readline"], root["os"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_15__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -81,7 +81,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, exports, __webpack_require__) {
 
 /* MIT license */
-var cssKeywords = __webpack_require__(10);
+var cssKeywords = __webpack_require__(11);
 
 // NOTE: conversions should only return primitive values (i.e. arrays, or
 //       values that give correct `typeof` results).
@@ -956,11 +956,11 @@ convert.rgb.gray = function (rgb) {
 
 "use strict";
 
-const escapeStringRegexp = __webpack_require__(11);
-const ansiStyles = __webpack_require__(5);
-const stdoutColor = __webpack_require__(6).stdout;
+const escapeStringRegexp = __webpack_require__(12);
+const ansiStyles = __webpack_require__(6);
+const stdoutColor = __webpack_require__(7).stdout;
 
-const template = __webpack_require__(7);
+const template = __webpack_require__(8);
 
 const isSimpleWindowsTerm = process.platform === 'win32' && !(process.env.TERM || '').toLowerCase().startsWith('xterm');
 
@@ -1199,6 +1199,12 @@ module.exports = require("path");
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports) {
+
+module.exports = require("readline");
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1216,6 +1222,12 @@ var _path = __webpack_require__(3);
 
 var _path2 = _interopRequireDefault(_path);
 
+var _readline = __webpack_require__(4);
+
+var readline = _interopRequireWildcard(_readline);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var reactVersion = 0;
@@ -1224,6 +1236,7 @@ var MODULE_PATTERN_GENERIC = /^@extjs\/reactor$/;
 var OLD_MODULE_PATTERN = /^@extjs\/reactor\/modern$/;
 var MODULE_PATTERN = /^@extjs\/(ext-react.*|reactor\/classic)$/;
 var app = _chalk2.default.green('ℹ ｢ext｣:') + ' reactor-babel-plugin: ';
+
 
 module.exports = function (babel) {
   var pkg = _fs2.default.existsSync('package.json') && JSON.parse(_fs2.default.readFileSync('package.json', 'utf-8')) || {};
@@ -1234,15 +1247,21 @@ module.exports = function (babel) {
   } else {
     reactVersion = 15;
   }
-  //  console.log('\nreactor-babel-plugin reactVersion: ' + reactVersion)
-  process.stdout.cursorTo(0);console.log('\n' + app + 'reactVersion: ' + reactVersion + '');
+  readline.cursorTo(process.stdout, 0);console.log('\n' + app + 'reactVersion: ' + reactVersion + '');
 
   var t = babel.types;
 
+  var showIt = true;
+  var showItNum = 0;
+  var prevFile = '';
   return {
     visitor: {
       ImportDeclaration: function ImportDeclaration(path) {
         var node = path.node;
+        // if (showIt) {
+        //   //console.log(path)
+        //   showIt = false
+        // }
 
         //from
         //import { launch } from '@extjs/reactor';
@@ -1265,18 +1284,22 @@ module.exports = function (babel) {
             path.replaceWith(t.importDeclaration([t.importSpecifier(t.identifier(local), t.identifier(local))], t.stringLiteral('@extjs/reactor' + reactVersion)));
           }
         }
-        //added mjg
-
 
         if (node.source && node.source.type === 'StringLiteral' && (node.source.value.match(MODULE_PATTERN) || node.source.value.match(OLD_MODULE_PATTERN))) {
-          //console.log('path.hub.file.opts.filename)
+          //console.log('\n')
+          //console.log(path.hub.file.opts.filename)
           //console.log(path.hub.file.code)
           var declarations = [];
           var transform = false;
 
+          //var count = 0
           node.specifiers.forEach(function (spec) {
             var imported = spec.imported.name;
             var local = spec.local.name;
+
+            //count++
+            //console.log(count + ' ' + imported + ' ' + local)
+
             declarations.push(t.variableDeclaration('const', [t.variableDeclarator(t.identifier(local), t.callExpression(t.identifier('reactify'), [t.stringLiteral(imported)]))]));
           });
 
@@ -1287,9 +1310,11 @@ module.exports = function (babel) {
           //const { Grid, Toolbar } = reactify('Grid', 'Toolbar');
 
           if (declarations.length) {
-            if (!path.scope.hasBinding('reactify')) {
+            if (prevFile != path.hub.file.opts.sourceFileName) {
+              //if (!path.scope.hasBinding('reactify')) {
               path.insertBefore(t.importDeclaration([t.importSpecifier(t.identifier('reactify'), t.identifier('reactify'))], t.stringLiteral('@extjs/reactor' + reactVersion)));
             }
+            prevFile = path.hub.file.opts.sourceFileName;
             path.replaceWithMultiple(declarations);
           }
         }
@@ -1301,12 +1326,12 @@ module.exports = function (babel) {
 //https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(module) {
-const colorConvert = __webpack_require__(8);
+const colorConvert = __webpack_require__(9);
 
 const wrapAnsi16 = (fn, offset) => function () {
 	const code = fn.apply(colorConvert, arguments);
@@ -1471,16 +1496,16 @@ Object.defineProperty(module, 'exports', {
 	get: assembleStyles
 });
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)(module)))
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-const os = __webpack_require__(14);
-const hasFlag = __webpack_require__(12);
+const os = __webpack_require__(15);
+const hasFlag = __webpack_require__(13);
 
 const env = process.env;
 
@@ -1612,7 +1637,7 @@ module.exports = {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1747,11 +1772,11 @@ module.exports = (chalk, tmp) => {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var conversions = __webpack_require__(0);
-var route = __webpack_require__(9);
+var route = __webpack_require__(10);
 
 var convert = {};
 
@@ -1831,7 +1856,7 @@ module.exports = convert;
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var conversions = __webpack_require__(0);
@@ -1934,7 +1959,7 @@ module.exports = function (fromModel) {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -2089,7 +2114,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2107,7 +2132,7 @@ module.exports = function (str) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2122,7 +2147,7 @@ module.exports = (flag, argv) => {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -2150,7 +2175,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = require("os");

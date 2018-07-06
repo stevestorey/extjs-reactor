@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ComboBox } from '@extjs/ext-react';
 import { createTpl } from './schedule/EventTpl';
 import { connect } from 'react-redux';
-import { toggleFavorite } from './schedule/actions';
+//import { toggleFavorite } from './schedule/actions';
 
 /**
  * The search field for desktop and tablet views

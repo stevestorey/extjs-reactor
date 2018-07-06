@@ -51,6 +51,7 @@ module.exports = function (env) {
     }));
 
     return {
+      mode: 'development',
         
         devtool: isProd ? 'source-map' : 'cheap-module-source-map',
         context: sourcePath,

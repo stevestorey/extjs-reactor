@@ -21,8 +21,10 @@ const CLASS_CACHE = {
   RendererCell: Ext.ClassManager.getByAlias('widget.renderercell'),
   Field: Ext.ClassManager.getByAlias('widget.field')
 }
-//mjg
+
 const ExtRenderer = ReactFiberReconciler({
+
+
 
   createInstance(type, props, internalInstanceHandle) {
     let instance = null;
@@ -267,7 +269,21 @@ const ExtRenderer = ReactFiberReconciler({
 
   useSyncScheduling: true,
 
+  // commitMount(_instance2, type, props, finishedWork) {
+  //   console.log('commitMount')
+  // },
+
+
   mutation: {
+
+
+    commitMount(instance, type, newProps) {
+      l(`commitMount**********`)
+      // Noop
+    },
+
+
+
     appendChild(parentInstance, childInstance) {
       if(childInstance.cmp === undefined) {
         // plain text instance
@@ -376,10 +392,6 @@ const ExtRenderer = ReactFiberReconciler({
       // Noop
     },
 
-    commitMount(instance, type, newProps) {
-      l(`commitMount**********`)
-      // Noop
-    },
 
     commitUpdate(instance, updatePayload, type, oldProps, newProps) {
       l(`commitUpdate ${type} (instance, updatePayload, oldProps, newProps)`, instance, updatePayload, oldProps, newProps)

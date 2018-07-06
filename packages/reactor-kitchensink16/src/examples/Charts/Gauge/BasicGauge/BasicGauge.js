@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Panel } from '@extjs/ext-react';
-import { Polar } from '@extjs/ext-react-charts';
+import { Panel, Polar } from '@extjs/ext-react';
+//import { Polar } from '@extjs/ext-react-charts';
 import createData from './createData';
 import ChartToolbar from '../../ChartToolbar';
 

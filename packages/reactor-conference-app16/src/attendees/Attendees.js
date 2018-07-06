@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setTitle } from '../actions';
-import { Panel } from '@extjs/ext-react';
 import WorldMap from './WorldMap';
 
 class Attendees extends Component {
