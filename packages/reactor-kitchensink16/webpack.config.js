@@ -1,90 +1,90 @@
-//https://medium.com/@hpux/webpack-4-in-production-how-make-your-life-easier-4d03e2e5b081
-//https://stackoverflow.com/questions/49017682/webpack-4-migration-commonschunkplugin
-
 const webpack = require('webpack');
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtJSReactorWebpackPlugin = require('@extjs/reactor-webpack-plugin');
-const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const ExtJSReactorWebpackPlugin = require('@extjs/reactor-webpack-plugin');
 const WebpackShellPlugin = require('webpack-shell-plugin');
+
 const sourcePath = path.join(__dirname, './src');
+
 
 module.exports = function (env) {
     const nodeEnv = env && env.prod ? 'production' : 'development';
     const isProd = nodeEnv === 'production';
     const local = env && env.local;
     //const disableTreeShaking = env && env.treeShaking === 'false';
+    const port = 8017
 
     const plugins = [
-        new ExtJSReactorWebpackPlugin({
-            //sdk: local ? 'ext' : undefined,
-            packages: local ? [
-                'font-ext', 
-                'ux', 
-                'd3',
-                'pivot-d3',
-                'font-awesome', 
-                'exporter', 
-                'pivot', 
-                'calendar', 
-                'charts'
-            ] : undefined,
-            theme: 'theme-kitchensink',
-            overrides: [
-                path.join('.', 'ext-react', 'overrides')
-            ],
-            production: isProd,
-            treeShaking: false
-        }),
-        new webpack.EnvironmentPlugin({
-            NODE_ENV: nodeEnv
-        }),
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     name: "vendor", 
-        //     filename: "vendor.bundle.js",
-        //     minChunks: function (module) {
-        //         // this assumes your vendor imports exist in the node_modules directory
-        //         return module.context && module.context.indexOf("node_modules") !== -1;
-        //     }            
-        // }),
-        new CopyWebpackPlugin([{
-            from: path.join(__dirname, 'resources'), 
-            to: 'resources'
-        }]),
-        new WebpackShellPlugin({
-            dev: false,
-            onBuildEnd: ['node extract-code.js']
-        }),
-        new webpack.NamedModulesPlugin()
+      //this plugin has to be first
+      new HtmlWebpackPlugin({
+        template: 'index.html',
+        hash: true
+      }), 
+      new ExtJSReactorWebpackPlugin({
+        //sdk: local ? 'ext' : undefined,
+        port: port,
+        packages: local ? [
+          'font-ext', 
+          'ux', 
+          'd3',
+          'pivot-d3',
+          'font-awesome', 
+          'exporter', 
+          'pivot', 
+          'calendar', 
+          'charts'
+        ] : undefined,
+        theme: 'theme-kitchensink',
+        overrides: [
+          path.join('.', 'ext-react', 'overrides')
+        ],
+        production: isProd,
+        treeShaking: false
+      }),
+      new webpack.EnvironmentPlugin({
+          NODE_ENV: nodeEnv
+      }),
+      new CopyWebpackPlugin([{
+        from: path.join(__dirname, 'resources'), 
+        to: 'resources'
+      }]),
+      new WebpackShellPlugin({
+        dev: false,
+        onBuildEnd: ['node extract-code.js']
+      }),
+      new webpack.NamedModulesPlugin()
     ];
 
     if (isProd) {
-        plugins.push(
-            new webpack.LoaderOptionsPlugin({
-                minimize: true,
-                debug: false
-            }),
-            // new webpack.optimize.UglifyJsPlugin({
-            //     compress: {
-            //         warnings: false,
-            //         screw_ie8: true
-            //     }
-            // })
-        );
+      plugins.push(
+
+        // new webpack.LoaderOptionsPlugin({
+        //     minimize: true,
+        //     debug: false
+        // }),
+
+
+
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false,
+        //         screw_ie8: true
+        //     }
+        // })
+      );
     } else {
-        plugins.push(
-            new webpack.HotModuleReplacementPlugin()
-        );
+      plugins.push(
+        new webpack.HotModuleReplacementPlugin()
+      );
     }
 
-    plugins.push(new HtmlWebpackPlugin({
-        template: 'index.html',
-        cache: true,
-        hash: true
-    }), new OpenBrowserPlugin({ 
-        url: 'http://localhost:8016' 
-    }));
+    // plugins.push(
+    //   new OpenBrowserPlugin({ 
+    //     url: 'http://localhost:8016' 
+    //   })
+    // );
 
     return {
       mode: 'development',
@@ -93,27 +93,13 @@ module.exports = function (env) {
         context: sourcePath,
         entry: {
             vendor: ['react', 'prop-types', 'react-redux', 'react-dom', 'react-router-dom', 'history', 'redux', 'd3', 'highlightjs'],
+            reactify: ['@extjs/reactor16'],
             app: './index.js'
         },
-
-
-        // entry: {
-        //     vendor: ['babel-polyfill', 'react', 'prop-types', 'react-redux', 'react-dom', 'react-router-dom', 'history', 'redux', 'd3', 'highlightjs'],
-        //     app: './index.js'
-        // },
-        // entry: {
-        //   'app': [
-        //     'babel-polyfill',
-        //     'react-hot-loader/patch',
-        //     './index.js'
-        //   ]
-        // },
-
         output: {
             path: path.join(__dirname, 'build'),
             filename: '[name].js'
         },
-
         module: {
             rules: [
                 {
@@ -143,18 +129,18 @@ module.exports = function (env) {
 
         plugins,
 
-        stats: {
-            colors: {
-                green: '\u001b[32m',
-            }
-        },
+        // stats: {
+        //     colors: {
+        //         green: '\u001b[32m',
+        //     }
+        // },
 
         devServer: {
             contentBase: './build',
             historyApiFallback: true,
             host: '0.0.0.0',
             disableHostCheck: true,
-            port: 8016,
+            port: port,
             compress: isProd,
             inline: !isProd,
             hot: !isProd,
@@ -175,3 +161,7 @@ module.exports = function (env) {
         }
     };
 };
+
+//https://medium.com/@hpux/webpack-4-in-production-how-make-your-life-easier-4d03e2e5b081
+//https://stackoverflow.com/questions/49017682/webpack-4-migration-commonschunkplugin
+

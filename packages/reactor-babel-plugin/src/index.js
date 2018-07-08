@@ -24,6 +24,7 @@ module.exports = function(babel) {
   return {
     visitor: {
       ImportDeclaration: function(path) {
+//        console.log(path.hub.file.opts.sourceFileName)
         const { node } = path
         // if (showIt) {
         //   //console.log(path)

@@ -16,6 +16,7 @@ module.exports = function (env) {
 
         const plugins = [
             new ExtReactWebpackPlugin({
+              port: port,
 //                theme: 'custom-ext-react-theme',
                 sdk: 'ext',
                 overrides: ['ext-react/overrides'],
