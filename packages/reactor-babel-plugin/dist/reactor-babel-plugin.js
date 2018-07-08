@@ -1257,6 +1257,7 @@ module.exports = function (babel) {
   return {
     visitor: {
       ImportDeclaration: function ImportDeclaration(path) {
+        //        console.log(path.hub.file.opts.sourceFileName)
         var node = path.node;
         // if (showIt) {
         //   //console.log(path)
