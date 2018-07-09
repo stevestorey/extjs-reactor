@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-//const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const ExtJSReactorWebpackPlugin = require('@extjs/reactor-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const sourcePath = path.join(__dirname, './src');
@@ -11,6 +10,10 @@ module.exports = function (env) {
     const isProd = nodeEnv === 'production';
     const port = 8085
     const plugins = [
+      new HtmlWebpackPlugin({
+          template: 'index.html',
+          hash: true
+      }),
         new ExtJSReactorWebpackPlugin({
           port: port,
           theme: 'theme-conference-app',
@@ -24,35 +27,11 @@ module.exports = function (env) {
           to: 'resources'
         }])
     ];
-
-    if (isProd) {
-        plugins.push(
-            // new webpack.LoaderOptionsPlugin({
-            //     minimize: true,
-            //     debug: false
-            // }),
-            // new webpack.optimize.UglifyJsPlugin({
-            //     compress: {
-            //         warnings: false,
-            //         screw_ie8: true
-            //     }
-            // })
-        );
-    } else {
-        plugins.push(
-            new webpack.HotModuleReplacementPlugin()
-        );
-    }
-
-    plugins.push(
-      new HtmlWebpackPlugin({
-        template: 'index.html',
-        hash: true
-    }),
-    //  new OpenBrowserPlugin({ 
-    //     url: 'http://localhost:' + port 
-    // })
-  );
+    if (!isProd) {
+      plugins.push(
+        new webpack.HotModuleReplacementPlugin()
+      )
+    } 
 
     return {
       mode: 'development',
