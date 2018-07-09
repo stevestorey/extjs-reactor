@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+//const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const ExtJSReactorWebpackPlugin = require('@extjs/reactor-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const sourcePath = path.join(__dirname, './src');
@@ -9,33 +9,34 @@ const sourcePath = path.join(__dirname, './src');
 module.exports = function (env) {
     const nodeEnv = env && env.prod ? 'production' : 'development';
     const isProd = nodeEnv === 'production';
-
+    const port = 8085
     const plugins = [
         new ExtJSReactorWebpackPlugin({
-            theme: 'theme-conference-app',
-            production: isProd
+          port: port,
+          theme: 'theme-conference-app',
+          production: isProd
         }),
         new webpack.EnvironmentPlugin({
-            NODE_ENV: nodeEnv
+          NODE_ENV: nodeEnv
         }),
         new CopyWebpackPlugin([{
-            from: path.join(__dirname, 'resources'), 
-            to: 'resources'
+          from: path.join(__dirname, 'resources'), 
+          to: 'resources'
         }])
     ];
 
     if (isProd) {
         plugins.push(
-            new webpack.LoaderOptionsPlugin({
-                minimize: true,
-                debug: false
-            }),
-            new webpack.optimize.UglifyJsPlugin({
-                compress: {
-                    warnings: false,
-                    screw_ie8: true
-                }
-            })
+            // new webpack.LoaderOptionsPlugin({
+            //     minimize: true,
+            //     debug: false
+            // }),
+            // new webpack.optimize.UglifyJsPlugin({
+            //     compress: {
+            //         warnings: false,
+            //         screw_ie8: true
+            //     }
+            // })
         );
     } else {
         plugins.push(
@@ -43,45 +44,45 @@ module.exports = function (env) {
         );
     }
 
-    plugins.push(new HtmlWebpackPlugin({
+    plugins.push(
+      new HtmlWebpackPlugin({
         template: 'index.html',
         hash: true
-    }), new OpenBrowserPlugin({ 
-        url: 'http://localhost:8085' 
-    }));
+    }),
+    //  new OpenBrowserPlugin({ 
+    //     url: 'http://localhost:' + port 
+    // })
+  );
 
     return {
       mode: 'development',
-        
-        devtool: isProd ? 'source-map' : 'cheap-module-source-map',
-        context: sourcePath,
-
-        entry: [
-            './index.js'
-        ],
-
-        output: {
-            path: path.join(__dirname, 'build'),
-            filename: 'bundle.js'
-        },
-
-        module: {
-            rules: [
-                {
-                    test: /\.(js|jsx)$/,
-                    exclude: /node_modules/,
-                    use: [
-                        'babel-loader'
-                    ],
-                },
-                {
-                    test: /\.css$/,
-                    use: [
-                        'style-loader', 
-                        'css-loader'
-                    ]
-                }
-            ]
+      devtool: isProd ? 'source-map' : 'cheap-module-source-map',
+      context: sourcePath,
+      entry: {
+        reactify: ['@extjs/reactor16'],
+        app: './index.js'
+      },
+      output: {
+        path: path.join(__dirname, 'build'),
+        filename: '[name].js'
+      },
+      module: {
+          rules: [
+              {
+                  test: /\.(js|jsx)$/,
+                  exclude: /node_modules/,
+                  use: [
+                      'babel-loader'
+                  ],
+              },
+              {
+                  test: /\.css$/,
+                  use: [
+                      'style-loader', 
+                      'css-loader'
+                  ]
+              }
+          ]
         },
 
         resolve: {
@@ -94,18 +95,18 @@ module.exports = function (env) {
 
         plugins,
 
-        stats: {
-            colors: {
-                green: '\u001b[32m',
-            }
-        },
+        // stats: {
+        //     colors: {
+        //         green: '\u001b[32m',
+        //     }
+        // },
 
         devServer: {
             contentBase: './build',
             historyApiFallback: true,
             host: '0.0.0.0',
             disableHostCheck: true,
-            port: 8085,
+            port: port,
             compress: isProd,
             inline: !isProd,
             hot: !isProd,

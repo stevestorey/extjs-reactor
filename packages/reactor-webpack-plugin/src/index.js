@@ -238,14 +238,17 @@ module.exports = class ReactExtJSWebpackPlugin {
 
     this._buildExtBundle(isWebpack4, 'not', modules, outputPath, build, callback)
       .then(() => {
-        if (this.count == 0) {
-          var url = 'http://localhost:' + this.port
-          readline.cursorTo(process.stdout, 0);console.log(app + 'extreact-emit - open browser at ' + url)
-          this.count++
-          const opn = require('opn')
-          opn(url)
+        if (this.watch) {
+          if (this.count == 0) {
+            var url = 'http://localhost:' + this.port
+            readline.cursorTo(process.stdout, 0);console.log(app + 'extreact-emit - open browser at ' + url)
+            this.count++
+            const opn = require('opn')
+            opn(url)
+          }
         }
         if (callback != null){if (this.asynchronous){callback()}}
+        return
       })
       .catch(e => {
         //console.log(e)
