@@ -16,6 +16,7 @@ module.exports = function (env) {
         const isProd = nodeEnv === 'production';
 
         const plugins = [
+            
             new ExtReactWebpackPlugin({
                 theme: 'custom-ext-react-theme',
                 overrides: ['ext-react/overrides'],
@@ -49,8 +50,6 @@ module.exports = function (env) {
         plugins.push(new HtmlWebpackPlugin({
             template: 'index.html',
             hash: true
-        }), new OpenBrowserPlugin({
-            url: `http://localhost:${port}`
         }));
 
         return {
@@ -112,7 +111,7 @@ module.exports = function (env) {
                 historyApiFallback: true,
                 host: '0.0.0.0',
                 disableHostCheck: true,
-                port,
+                port: port,
                 compress: isProd,
                 inline: !isProd,
                 hot: !isProd,

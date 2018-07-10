@@ -17,7 +17,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@extjs/ext-react": "^6.5.1",
+    "@extjs/ext-react": "~6.6.0",
+    "@extjs/ext-react-modern": "~6.6.0",
+    "@extjs/ext-react-theme-material": "~6.6.0",
     "@extjs/reactor": "^1.1.2",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
