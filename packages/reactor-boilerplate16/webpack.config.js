@@ -17,18 +17,21 @@ module.exports = function (env) {
       }), 
       new ExtReactWebpackPlugin({
         port: port,
-//        sdk: 'ext', // you need to copy the Ext JS SDK to the root of this package, or you can specify a full path to some other location
         //theme: 'custom-ext-react-theme',
         overrides: ['ext-react/overrides'],
         production: isProd
       })
     ]
+    if (!isProd) {
+      plugins.push(
+        new webpack.HotModuleReplacementPlugin()
+      )
+    }
     return {
       mode: 'development',
       devtool: isProd ? 'source-map' : 'cheap-module-source-map',
       context: sourcePath,
       entry: {
-        //vendor: ['react', 'react-dom', 'react-hot-loader/patch', '@extjs/reactor16'],
         reactor16: ['@extjs/reactor16'],
         'app': [
           'babel-polyfill',
