@@ -1,4 +1,5 @@
 'use strict';
+import 'babel-polyfill';
 var reactVersion = 0
 import chalk from 'chalk';
 import fs from 'fs';
@@ -236,6 +237,41 @@ module.exports = class ReactExtJSWebpackPlugin {
     }
     //console.log('\n*****outputPath: ' + outputPath)
 
+    var isNew = false
+    if(isNew == true) {
+      var buildAsync = require(`./buildAsync.js`)
+      var buildOptions = {
+      isWebpack4:isWebpack4, 
+      modules:modules, 
+      outputPath:outputPath, 
+      build:build, 
+      callback:callback, 
+      watching:watching,
+      treeShaking:this.treeShaking,
+      dependencies:this.dependencies
+    }
+      new buildAsync(buildOptions).executeAsync().then(function() {
+        console.log('buildAsync then')
+        if (this.watch) {
+          if (this.count == 0) {
+            var url = 'http://localhost:' + this.port
+            readline.cursorTo(process.stdout, 0);console.log(app + 'extreact-emit - open browser at ' + url)
+            this.count++
+            const opn = require('opn')
+            opn(url)
+          }
+        }
+        if (callback != null){if (this.asynchronous){callback()}}
+      }, function(reason){
+        var prefixErr = '✖ [ext]:';
+        var err = chalk.red(prefixErr) + ' ext-webpack-plugin: '
+        var errorString = `${err} ${chalk.red(reason.error)}`
+        compilation.errors.push(new Error(errorString))
+        if (callback != null){if (this.asynchronous){callback()}}
+      })
+    }
+
+    else {
     this._buildExtBundle(isWebpack4, 'not', modules, outputPath, build, callback)
       .then(() => {
         if (this.watch) {
@@ -248,21 +284,13 @@ module.exports = class ReactExtJSWebpackPlugin {
           }
         }
         if (callback != null){if (this.asynchronous){callback()}}
-        return
       })
       .catch(e => {
-        //console.log(e)
         compilation.errors.push(new Error('[@extjs/reactor-webpack-plugin]: ' + e.toString()));
-        //!this.asynchronous && callback();
-//        console.log(callback)
-        if (callback != null) 
-        {
-          if (!this.asynchronous) 
-          {
-            callback();
-          }
-        }
+        if (callback != null){if (this.asynchronous){callback()}}
       })
+    }
+
   }
 
   /**

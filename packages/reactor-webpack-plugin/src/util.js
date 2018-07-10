@@ -3,6 +3,9 @@ var chalk = require('chalk');
 var fs = require('fs-extra')
 //var json = require('comment-json');
 //const sencha = require(`${npmScope}/cmd`)
+
+const sencha = require(`@extjs/sencha-cmd`)
+
 const spawnSync = require('child_process').spawnSync
 const spawn = require('child_process').spawn
 const crossSpawn = require('cross-spawn')
@@ -23,9 +26,14 @@ exports.senchaCmd = (parms) => {
   process.stdout.cursorTo(0);console.log(app + 'completed - sencha ' + parms.toString().replace(/,/g , " "))
 }
 
-exports.senchaCmdAsync = async (parms, verbose, substrings = DEFAULT_SUBSTRS) => {
-  return spawnPromise(sencha, parms, { stdio: 'pipe', encoding: 'utf-8'}, verbose, substrings);
+exports.senchaCmdAsync = async (parms, output, verbose, substrings = DEFAULT_SUBSTRS) => {
+  console.log('here')
+  spawnPromise(sencha, parms, { stdio: 'pipe', encoding: 'utf-8',cwd: output }, verbose, substrings) .then(() => {
+    console.log('after spawnPromise')
+    return
+  })
 }
+
 
 var spawnPromise = (command, args, options, verbose, substrings) => {
   var noErrors = true
@@ -57,6 +65,13 @@ var spawnPromise = (command, args, options, verbose, substrings) => {
       child.stdout.on('data', (data) => {
         var str = data.toString()
         str = str.replace(/\r?\n|\r/g, " ")
+
+        if (data && data.toString().match(/Waiting for changes\.\.\./)) {
+          resolve({})
+        }
+
+
+
         if(verbose == 'yes') {
           console.log(`${app}${str}`) 
         }

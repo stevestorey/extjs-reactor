@@ -18,7 +18,7 @@ module.exports = function (env) {
             new ExtReactWebpackPlugin({
               port: port,
 //                theme: 'custom-ext-react-theme',
-                sdk: 'ext',
+//                sdk: 'ext',
                 overrides: ['ext-react/overrides'],
                 production: isProd
             }),
@@ -50,9 +50,11 @@ module.exports = function (env) {
         plugins.push(new HtmlWebpackPlugin({
             template: 'index.html',
             hash: true
-        }), new OpenBrowserPlugin({ 
-            url: `http://localhost:${port}`
-        }));
+        }) 
+        // new OpenBrowserPlugin({ 
+        //     url: `http://localhost:${port}`
+        // })
+      );
 
         return {
             devtool: isProd ? 'source-map' : 'cheap-module-source-map',
