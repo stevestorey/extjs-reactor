@@ -10,7 +10,7 @@ var Ext = window.Ext;
  * 
  *  const tpl = new Template(data => (
  *      <div>
- *          <div>{data.firstName} {data.lastName}</div>    
+ *          <div>{data.firstName} {data.lastName}</div>
  *          <div>{data.title}</div>
  *      </div>
  *  ))
