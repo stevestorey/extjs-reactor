@@ -14,10 +14,8 @@
     "yeoman-generator"
   ],
   "dependencies": {
-    "@extjs/reactor-boilerplate": "^1.1.2",
     "@extjs/reactor-boilerplate15": "^2.0.0",
     "@extjs/reactor-boilerplate16": "^2.0.0",
-    "@extjs/reactor-typescript-boilerplate": "^1.1.2",
     "@extjs/reactor-typescript-boilerplate15": "^2.0.0",
     "@extjs/reactor-typescript-boilerplate16": "^2.0.0",
     "react": "^16.4.1",
