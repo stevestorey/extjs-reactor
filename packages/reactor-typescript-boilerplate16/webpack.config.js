@@ -34,8 +34,12 @@ module.exports = function (env) {
         entry: {
           reactor16: ['@extjs/reactor16'],
           'app': [
+            'babel-polyfill',
             './index.tsx'
           ]
+          // 'app': [
+          //   './index.tsx'
+          // ]
         },
         output: {
           path: path.join(__dirname, 'build'),
