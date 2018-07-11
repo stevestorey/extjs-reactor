@@ -67,6 +67,7 @@ module.exports = class extends Generator {
             type: 'list',
             message: 'Which react version you use?',
             name: 'reactVersion',
+            default: REACTVERSION.REACT16,
             choices: [REACTVERSION.REACT15, REACTVERSION.REACT16]
         }, {
             type: 'list',
