@@ -24,6 +24,7 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
 		"react-router-dom": "^4.3.1",
+    "babel-polyfill": "^6.26.0",
     "prop-types": "^15.6.2"
   },
   "devDependencies": {
