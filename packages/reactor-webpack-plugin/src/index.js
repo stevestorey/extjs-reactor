@@ -16,7 +16,6 @@ let watching = false;
 let cmdErrors;
 const app = `${chalk.green('ℹ ｢ext｣:')} reactor-webpack-plugin: `;
 import * as readline from 'readline'
-//const util = require('./util.js')
 
 const gatherErrors = (cmd) => {
   if (cmd.stdout) {
@@ -160,30 +159,18 @@ module.exports = class ReactExtJSWebpackPlugin {
 
 //*emit - once all modules are processed, create the optimized ExtReact build.
     if (compiler.hooks) {
-      if (this.asynchronous) {
+      //if (this.asynchronous) {
+      if (true) {
         compiler.hooks.emit.tapAsync('extreact-emit (async)', (compilation, callback) => {
           readline.cursorTo(process.stdout, 0);console.log(app + 'extreact-emit  (async)')
           this.emit(compiler, compilation, callback)
-          console.log(app + 'after extreact-emit  (async)')
-          if (callback != null) {
-            if (this.asynchronous) {
-              console.log('calling callback')
-              callback()
-            }
-          }
+          //console.log(app + 'after extreact-emit  (async)')
         })
       }
       else {
         compiler.hooks.emit.tap('extreact-emit', (compilation) => {
           readline.cursorTo(process.stdout, 0);console.log(app + 'extreact-emit')
           this.emit(compiler, compilation)
-
-          // if (this.count == 0) {
-          //   this.count++
-          //   const opn = require('opn')
-          //   opn('http://localhost:' + this.port)
-          // }
-
           console.log(app + 'after extreact-emit')
         })
       }
@@ -218,7 +205,7 @@ module.exports = class ReactExtJSWebpackPlugin {
     }
   }
 
-  emit(compiler, compilation, callback) {
+  async emit(compiler, compilation, callback) {
     var isWebpack4 = compilation.hooks;
     var modules = []
     if (isWebpack4) {
@@ -237,60 +224,20 @@ module.exports = class ReactExtJSWebpackPlugin {
     }
     //console.log('\n*****outputPath: ' + outputPath)
 
-    var isNew = false
-    if(isNew == true) {
-      var buildAsync = require(`./buildAsync.js`)
-      var buildOptions = {
-      isWebpack4:isWebpack4, 
-      modules:modules, 
-      outputPath:outputPath, 
-      build:build, 
-      callback:callback, 
-      watching:watching,
-      treeShaking:this.treeShaking,
-      dependencies:this.dependencies
-    }
-      new buildAsync(buildOptions).executeAsync().then(function() {
-        console.log('buildAsync then')
-        if (this.watch) {
-          if (this.count == 0) {
-            var url = 'http://localhost:' + this.port
-            readline.cursorTo(process.stdout, 0);console.log(app + 'extreact-emit - open browser at ' + url)
-            this.count++
-            const opn = require('opn')
-            opn(url)
-          }
-        }
-        if (callback != null){if (this.asynchronous){callback()}}
-      }, function(reason){
-        var prefixErr = '✖ [ext]:';
-        var err = chalk.red(prefixErr) + ' ext-webpack-plugin: '
-        var errorString = `${err} ${chalk.red(reason.error)}`
-        compilation.errors.push(new Error(errorString))
-        if (callback != null){if (this.asynchronous){callback()}}
-      })
-    }
+    let promise = this._buildExtBundle(isWebpack4, 'not', modules, outputPath, build, callback)
+    let result = await promise
 
-    else {
-    this._buildExtBundle(isWebpack4, 'not', modules, outputPath, build, callback)
-      .then(() => {
-        if (this.watch) {
-          if (this.count == 0) {
-            var url = 'http://localhost:' + this.port
-            readline.cursorTo(process.stdout, 0);console.log(app + 'extreact-emit - open browser at ' + url)
-            this.count++
-            const opn = require('opn')
-            opn(url)
-          }
-        }
-        if (callback != null){if (this.asynchronous){callback()}}
-      })
-      .catch(e => {
-        compilation.errors.push(new Error('[@extjs/reactor-webpack-plugin]: ' + e.toString()));
-        if (callback != null){if (this.asynchronous){callback()}}
-      })
+    if (this.watch) {
+      if (this.count == 0) {
+        var url = 'http://localhost:' + this.port
+        readline.cursorTo(process.stdout, 0);console.log(app + 'extreact-emit - open browser at ' + url)
+        this.count++
+        const opn = require('opn')
+        opn(url)
+      }
     }
-
+    //if (callback != null){if (this.asynchronous){callback()}}
+    if (callback != null){if (true){callback()}}
   }
 
   /**
@@ -374,76 +321,35 @@ module.exports = class ReactExtJSWebpackPlugin {
         readline.cursorTo(process.stdout, 0);console.log(app + `building ExtReact bundle at: ${output}`)
       }
 
-
- //     console.log(isWebpack4)
-
-      // if (isWebpack4) {
-      //   if (this.watch) {
-      //     if (!watching) {
-      //       // watching = gatherErrors(fork(sencha, ['ant', 'watch'], { cwd: output, silent: true }));
-      //       // //var parms = ['ant','watch']
-      //       // //await util.senchaCmdAsync(parms, 'yes')
-      //       // //resolve(0);
-            
-      //       // console.log('after fork')
-      //       // watching.stderr.pipe(process.stderr);
-      //       // watching.stdout.pipe(process.stdout);
-      //       // watching.stdout.on('data', data => {
-      //       //   if (data && data.toString().match(/Waiting for changes\.\.\./)) {
-      //       //     onBuildDone()
-      //       //   }
-      //       // })
-      //       // watching.on('exit', onBuildDone)
-      //       const spawnSync = require('child_process').spawnSync
-      //       spawnSync(sencha, ['ant', 'watch'], { cwd: output, stdio: 'inherit', encoding: 'utf-8'})
-      //       onBuildDone()
-      //     }
-      //     if (!cmdRebuildNeeded) onBuildDone();
-      //   }
-      //   else {
-      //     console.log('c')
-      //     const spawnSync = require('child_process').spawnSync
-      //     spawnSync(sencha, ['ant', 'build'], { cwd: output, stdio: 'inherit', encoding: 'utf-8'})
-      //     onBuildDone()
-      //   }
-      // }
-
-      //if (!isWebpack4) {
-        if (this.watch) {
-          if (!watching) {
-            watching = gatherErrors(fork(sencha, ['ant', 'watch'], { cwd: output, silent: true }));
-            readline.cursorTo(process.stdout, 0);console.log(app + 'sencha ant watch')
-            watching.stderr.pipe(process.stderr);
-            watching.stdout.pipe(process.stdout);
-            watching.stdout.on('data', data => {
-              if (data && data.toString().match(/Waiting for changes\.\.\./)) {
-                onBuildDone()
-              }
-            })
-            watching.on('exit', onBuildDone)
-          }
-          if (!cmdRebuildNeeded) {
-            readline.cursorTo(process.stdout, 0);console.log(app + 'Ext rebuild NOT needed')
-            onBuildDone()
-          }
-          else {
-            readline.cursorTo(process.stdout, 0);console.log(app + 'Ext rebuild IS needed')
-          }
-        } 
-        else {
-          const build = gatherErrors(fork(sencha, ['ant', 'build'], { stdio: 'inherit', encoding: 'utf-8', cwd: output, silent: false }));
-          readline.cursorTo(process.stdout, 0);console.log(app + 'sencha ant build')
-          if(build.stdout) { build.stdout.pipe(process.stdout) }
-          if(build.stderr) { build.stderr.pipe(process.stderr) }
-          build.on('exit', onBuildDone);
+      if (this.watch) {
+        if (!watching) {
+          watching = gatherErrors(fork(sencha, ['ant', 'watch'], { cwd: output, silent: true }));
+          watching.stderr.pipe(process.stderr);
+          watching.stdout.pipe(process.stdout);
+          watching.stdout.on('data', data => {
+            if (data && data.toString().match(/Waiting for changes\.\.\./)) {
+              onBuildDone()
+            }
+          })
+          watching.on('exit', onBuildDone)
         }
-      //}
-
-
-    });
+        if (!cmdRebuildNeeded) {
+          readline.cursorTo(process.stdout, 0);console.log(app + 'Ext rebuild NOT needed')
+          onBuildDone()
+        }
+        else {
+          //readline.cursorTo(process.stdout, 0);console.log(app + 'Ext rebuild IS needed')
+        }
+      } 
+      else {
+        const build = gatherErrors(fork(sencha, ['ant', 'build'], { stdio: 'inherit', encoding: 'utf-8', cwd: output, silent: false }));
+        readline.cursorTo(process.stdout, 0);console.log(app + 'sencha ant build')
+        if(build.stdout) { build.stdout.pipe(process.stdout) }
+        if(build.stderr) { build.stderr.pipe(process.stderr) }
+        build.on('exit', onBuildDone);
+      }
+    })
   }
-
-
 
   /**
    * Default config options
@@ -472,8 +378,6 @@ module.exports = class ReactExtJSWebpackPlugin {
     }
   }
 
-
-
   succeedModule(compilation, module) {
     this.currentFile = module.resource;
     if (module.resource && module.resource.match(this.test) && !module.resource.match(/node_modules/) && !module.resource.match(`/reactor${reactVersion}/`)) {
@@ -492,15 +396,8 @@ module.exports = class ReactExtJSWebpackPlugin {
           console.error(e); 
         }
       }
-
-      //console.log('this.dependencies[this.currentFile]')
-//      console.log('\n'+this.currentFile)
-      //console.log(this.dependencies[this.currentFile])
-
     }
   }
-
-
 
   /**
    * Checks each build config for missing/invalid properties
@@ -583,14 +480,6 @@ module.exports = class ReactExtJSWebpackPlugin {
       return 'sencha';
     }
   }
-
-
-
-
-  
-
-
-
 }
 
 
