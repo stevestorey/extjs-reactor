@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Container } from '@extjs/ext-react';
+import { ExtReact, Container } from '@extjs/ext-react';
 
 declare var Ext:any;
 
@@ -12,9 +12,11 @@ Ext.require('Ext.plugin.Responsive');
 export default function App() {
 
     return (
+      <ExtReact>
         <Container fullscreen>
             <%= appName %>
         </Container>
+      </ExtReact>
     )
     
 }
