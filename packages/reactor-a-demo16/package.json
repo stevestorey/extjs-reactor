@@ -7,7 +7,9 @@
     "start": "webpack-dev-server --progress --colors"
   },
   "dependencies": {
-    "@extjs/ext-react": "~6.6.0",
+		"@extjs/ext-react": "~6.6.0",
+		"@extjs/ext-react-modern": "~6.6.0",
+		"@extjs/ext-react-theme-material": "~6.6.0",
     "@extjs/reactor16": "~2.0.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
