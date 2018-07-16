@@ -24,6 +24,9 @@
     "type": "git",
     "url": "git+https://github.com/sencha/extjs-reactor.git"
   },
+  "bin": {
+    "ext-react": "./bin/ext-react.js"
+  },
   "peerDependencies": {
     "react": "^16.4.1",
 		"react-dom": "^16.4.1",
