@@ -18,7 +18,7 @@ module.exports = function (env) {
       new ExtReactWebpackPlugin({
         port: port,
         //theme: 'custom-ext-react-theme',
-        overrides: ['ext-react/overrides'],
+        //overrides: ['ext-react/overrides'],
         production: isProd
       })
     ]
