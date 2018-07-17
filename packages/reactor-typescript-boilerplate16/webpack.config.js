@@ -37,9 +37,6 @@ module.exports = function (env) {
             'babel-polyfill',
             './index.tsx'
           ]
-          // 'app': [
-          //   './index.tsx'
-          // ]
         },
         output: {
           path: path.join(__dirname, 'build'),
