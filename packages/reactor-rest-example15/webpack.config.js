@@ -12,6 +12,7 @@ module.exports = function (env) {
 
     const plugins = [
         new ExtJSReactorWebpackPlugin({
+            port: 8082,
             theme: 'theme-rest-example',
             production: isProd
         }),
