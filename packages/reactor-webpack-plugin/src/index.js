@@ -50,9 +50,12 @@ module.exports = class ReactExtJSWebpackPlugin {
   constructor(options) {
     this.count = 0
     //can be in devdependencies - account for this: react: "15.16.0"
-    var pkg = (fs.existsSync('package.json') && JSON.parse(fs.readFileSync('package.json', 'utf-8')) || {});
-    var reactEntry = pkg.dependencies.react
-    var is16 = reactEntry.includes("16");
+    //var pkg = (fs.existsSync('package.json') && JSON.parse(fs.readFileSync('package.json', 'utf-8')) || {});
+    //var reactEntry = pkg.dependencies.react
+    //var is16 = reactEntry.includes("16");
+    const REACT_VERSION = require('react').version
+    var is16 = REACT_VERSION.includes("16");
+
     if (is16) { reactVersion = 16 }
     else { reactVersion = 15 }
     this.reactVersion = reactVersion
