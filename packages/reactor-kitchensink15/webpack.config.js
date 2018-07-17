@@ -16,7 +16,8 @@ module.exports = function (env) {
 
     const plugins = [
         new ExtJSReactorWebpackPlugin({
-            sdk: local ? 'ext' : undefined,
+            //sdk: local ? 'ext' : undefined,
+            port: 8015,
             packages: local ? [
                 'font-ext', 
                 'ux', 
