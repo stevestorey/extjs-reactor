@@ -1,20 +1,21 @@
 
 var reactVersion = 0; 
 import chalk from 'chalk';
-import fs from 'fs';
+//import fs from 'fs';
 import path from 'path';
 const MODULE_PATTERN_GENERIC = /^@extjs\/reactor$/;
 const OLD_MODULE_PATTERN = /^@extjs\/reactor\/modern$/;
 const MODULE_PATTERN = /^@extjs\/(ext-react.*|reactor\/classic)$/;
 const app = `${chalk.green('ℹ ｢ext｣:')} reactor-babel-plugin: `;
-import * as readline from 'readline'
+//import * as readline from 'readline'
 
 module.exports = function(babel) {
-  var pkg = (fs.existsSync('package.json') && JSON.parse(fs.readFileSync('package.json', 'utf-8')) || {});
-  var reactEntry = pkg.dependencies.react
-  var is16 = reactEntry.includes("16");
-  if (is16) { reactVersion = 16 } else { reactVersion = 15 }
-  readline.cursorTo(process.stdout, 0);console.log('\n' + app + 'reactVersion: ' + reactVersion + '')
+//  var pkg = (fs.existsSync('package.json') && JSON.parse(fs.readFileSync('package.json', 'utf-8')) || {});
+//  var reactEntry = pkg.dependencies.react
+//  var is16 = reactEntry.includes("16");
+//  if (is16) { reactVersion = 16 } else { reactVersion = 15 }
+//  var reactVersion = ''
+//  readline.cursorTo(process.stdout, 0);console.log('\n' + app + 'reactVersion: ' + reactVersion + '')
 
   const t = babel.types;
 

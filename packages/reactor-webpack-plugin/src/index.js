@@ -53,7 +53,8 @@ module.exports = class ReactExtJSWebpackPlugin {
     var pkg = (fs.existsSync('package.json') && JSON.parse(fs.readFileSync('package.json', 'utf-8')) || {});
     var reactEntry = pkg.dependencies.react
     var is16 = reactEntry.includes("16");
-    //const REACT_VERSION = require('react').version
+    const REACT_VERSION = require('react').version
+    console.log(REACT_VERSION)
     //var is16 = REACT_VERSION.includes("16");
 
     if (is16) { reactVersion = 16 }
@@ -282,7 +283,7 @@ module.exports = class ReactExtJSWebpackPlugin {
 
       let js;
       if (this.treeShaking) {
-        let statements = ['Ext.require(["Ext.app.Application", "Ext.Component", "Ext.Widget", "Ext.layout.Fit"])']; // for some reason command doesn't load component when only panel is required
+        let statements = ['Ext.require(["Ext.app.Application", "Ext.Component", "Ext.Widget", "Ext.layout.Fit", "Ext.reactor.Transition"])']; // for some reason command doesn't load component when only panel is required
         if (packages.indexOf('reactor') !== -1) {
           statements.push('Ext.require("Ext.reactor.RendererCell")');
         }
