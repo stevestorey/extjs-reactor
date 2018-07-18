@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("fs"), require("path"), require("readline"), require("os"));
+		module.exports = factory(require("path"), require("os"));
 	else if(typeof define === 'function' && define.amd)
-		define("ReactorBabelPlugin", ["fs", "path", "readline", "os"], factory);
+		define("ReactorBabelPlugin", ["path", "os"], factory);
 	else if(typeof exports === 'object')
-		exports["ReactorBabelPlugin"] = factory(require("fs"), require("path"), require("readline"), require("os"));
+		exports["ReactorBabelPlugin"] = factory(require("path"), require("os"));
 	else
-		root["ReactorBabelPlugin"] = factory(root["fs"], root["path"], root["readline"], root["os"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__, __WEBPACK_EXTERNAL_MODULE_4__, __WEBPACK_EXTERNAL_MODULE_15__) {
+		root["ReactorBabelPlugin"] = factory(root["path"], root["os"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_13__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -81,7 +81,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, exports, __webpack_require__) {
 
 /* MIT license */
-var cssKeywords = __webpack_require__(11);
+var cssKeywords = __webpack_require__(9);
 
 // NOTE: conversions should only return primitive values (i.e. arrays, or
 //       values that give correct `typeof` results).
@@ -956,11 +956,11 @@ convert.rgb.gray = function (rgb) {
 
 "use strict";
 
-const escapeStringRegexp = __webpack_require__(12);
-const ansiStyles = __webpack_require__(6);
-const stdoutColor = __webpack_require__(7).stdout;
+const escapeStringRegexp = __webpack_require__(10);
+const ansiStyles = __webpack_require__(4);
+const stdoutColor = __webpack_require__(5).stdout;
 
-const template = __webpack_require__(8);
+const template = __webpack_require__(6);
 
 const isSimpleWindowsTerm = process.platform === 'win32' && !(process.env.TERM || '').toLowerCase().startsWith('xterm');
 
@@ -1189,22 +1189,10 @@ module.exports.default = module.exports; // For TypeScript
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("fs");
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
 module.exports = require("path");
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = require("readline");
-
-/***/ }),
-/* 5 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1214,40 +1202,28 @@ var _chalk = __webpack_require__(1);
 
 var _chalk2 = _interopRequireDefault(_chalk);
 
-var _fs = __webpack_require__(2);
-
-var _fs2 = _interopRequireDefault(_fs);
-
-var _path = __webpack_require__(3);
+var _path = __webpack_require__(2);
 
 var _path2 = _interopRequireDefault(_path);
-
-var _readline = __webpack_require__(4);
-
-var readline = _interopRequireWildcard(_readline);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var reactVersion = 0;
+//import fs from 'fs';
 
 var MODULE_PATTERN_GENERIC = /^@extjs\/reactor$/;
 var OLD_MODULE_PATTERN = /^@extjs\/reactor\/modern$/;
 var MODULE_PATTERN = /^@extjs\/(ext-react.*|reactor\/classic)$/;
 var app = _chalk2.default.green('ℹ ｢ext｣:') + ' reactor-babel-plugin: ';
-
+//import * as readline from 'readline'
 
 module.exports = function (babel) {
-  var pkg = _fs2.default.existsSync('package.json') && JSON.parse(_fs2.default.readFileSync('package.json', 'utf-8')) || {};
-  var reactEntry = pkg.dependencies.react;
-  var is16 = reactEntry.includes("16");
-  if (is16) {
-    reactVersion = 16;
-  } else {
-    reactVersion = 15;
-  }
-  readline.cursorTo(process.stdout, 0);console.log('\n' + app + 'reactVersion: ' + reactVersion + '');
+  //  var pkg = (fs.existsSync('package.json') && JSON.parse(fs.readFileSync('package.json', 'utf-8')) || {});
+  //  var reactEntry = pkg.dependencies.react
+  //  var is16 = reactEntry.includes("16");
+  //  if (is16) { reactVersion = 16 } else { reactVersion = 15 }
+  //  var reactVersion = ''
+  //  readline.cursorTo(process.stdout, 0);console.log('\n' + app + 'reactVersion: ' + reactVersion + '')
 
   var t = babel.types;
 
@@ -1327,12 +1303,12 @@ module.exports = function (babel) {
 //https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md
 
 /***/ }),
-/* 6 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(module) {
-const colorConvert = __webpack_require__(9);
+const colorConvert = __webpack_require__(7);
 
 const wrapAnsi16 = (fn, offset) => function () {
 	const code = fn.apply(colorConvert, arguments);
@@ -1497,16 +1473,16 @@ Object.defineProperty(module, 'exports', {
 	get: assembleStyles
 });
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)(module)))
 
 /***/ }),
-/* 7 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-const os = __webpack_require__(15);
-const hasFlag = __webpack_require__(13);
+const os = __webpack_require__(13);
+const hasFlag = __webpack_require__(11);
 
 const env = process.env;
 
@@ -1638,7 +1614,7 @@ module.exports = {
 
 
 /***/ }),
-/* 8 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1773,11 +1749,11 @@ module.exports = (chalk, tmp) => {
 
 
 /***/ }),
-/* 9 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var conversions = __webpack_require__(0);
-var route = __webpack_require__(10);
+var route = __webpack_require__(8);
 
 var convert = {};
 
@@ -1857,7 +1833,7 @@ module.exports = convert;
 
 
 /***/ }),
-/* 10 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var conversions = __webpack_require__(0);
@@ -1960,7 +1936,7 @@ module.exports = function (fromModel) {
 
 
 /***/ }),
-/* 11 */
+/* 9 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -2115,7 +2091,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 12 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2133,7 +2109,7 @@ module.exports = function (str) {
 
 
 /***/ }),
-/* 13 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2148,7 +2124,7 @@ module.exports = (flag, argv) => {
 
 
 /***/ }),
-/* 14 */
+/* 12 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -2176,7 +2152,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 15 */
+/* 13 */
 /***/ (function(module, exports) {
 
 module.exports = require("os");

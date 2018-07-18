@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const ExtJSReactorWebpackPlugin = require('@extjs/reactor-webpack-plugin');
 const WebpackShellPlugin = require('webpack-shell-plugin');
 
@@ -23,7 +22,6 @@ module.exports = function (env) {
         hash: true
       }), 
       new ExtJSReactorWebpackPlugin({
-        //sdk: local ? 'ext' : undefined,
         port: port,
         packages: local ? [
           'font-ext', 
