@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Window, TextField } from '@extjs/reactor/classic';
 
-Ext.require('Ext.button.Button');
-
 export default class Person extends Component {
     
     save = () => {
