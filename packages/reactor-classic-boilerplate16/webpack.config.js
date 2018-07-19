@@ -36,6 +36,7 @@ module.exports = function (env) {
         }
 
         return {
+          mode: 'development',
             devtool: isProd ? 'source-map' : 'eval',
             context: sourcePath,
 
