@@ -53,9 +53,6 @@ module.exports = class ReactExtJSWebpackPlugin {
     var pkg = (fs.existsSync('package.json') && JSON.parse(fs.readFileSync('package.json', 'utf-8')) || {});
     var reactEntry = pkg.dependencies.react
     var is16 = reactEntry.includes("16");
-    const REACT_VERSION = require('react').version
-    console.log(REACT_VERSION)
-    //var is16 = REACT_VERSION.includes("16");
 
     if (is16) { reactVersion = 16 }
     else { reactVersion = 15 }
