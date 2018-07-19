@@ -13,40 +13,44 @@ module.exports = function (env) {
     //const local = env && env.local;
     const local = true; //mjg
     const disableTreeShaking = env && env.treeShaking === 'false';
+    const port = 8017
 
     const plugins = [
+      new HtmlWebpackPlugin({
+        template: 'index.html',
+        hash: true
+      }),
         new ExtJSReactorWebpackPlugin({
-            //sdk: local ? 'ext' : undefined,
-            port: 8015,
-            packages: local ? [
-                'font-ext', 
-                'ux', 
-                'd3',
-                'pivot-d3',
-                'font-awesome', 
-                'exporter', 
-                'pivot', 
-                'calendar', 
-                'charts'
-            ] : undefined,
-            theme: 'theme-kitchensink',
-            overrides: [
-                path.join('.', 'ext-react', 'overrides')
-            ],
-            production: isProd,
-            treeShaking: !disableTreeShaking
+          port: port,
+          packages: local ? [
+              'font-ext', 
+              'ux', 
+              'd3',
+              'pivot-d3',
+              'font-awesome', 
+              'exporter', 
+              'pivot', 
+              'calendar', 
+              'charts'
+          ] : undefined,
+          theme: 'theme-kitchensink',
+          overrides: [
+              path.join('.', 'ext-react', 'overrides')
+          ],
+          production: isProd
+          //treeShaking: !disableTreeShaking
         }),
-        new webpack.EnvironmentPlugin({
-            NODE_ENV: nodeEnv
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: "vendor", 
-            filename: "vendor.bundle.js",
-            minChunks: function (module) {
-                // this assumes your vendor imports exist in the node_modules directory
-                return module.context && module.context.indexOf("node_modules") !== -1;
-            }            
-        }),
+        // new webpack.EnvironmentPlugin({
+        //   NODE_ENV: nodeEnv
+        // }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: "vendor", 
+        //     filename: "vendor.bundle.js",
+        //     minChunks: function (module) {
+        //         // this assumes your vendor imports exist in the node_modules directory
+        //         return module.context && module.context.indexOf("node_modules") !== -1;
+        //     }            
+        // }),
         new CopyWebpackPlugin([{
             from: path.join(__dirname, 'resources'), 
             to: 'resources'
@@ -59,33 +63,36 @@ module.exports = function (env) {
     ];
 
     if (isProd) {
-        plugins.push(
-            new webpack.LoaderOptionsPlugin({
-                minimize: true,
-                debug: false
-            }),
-            new webpack.optimize.UglifyJsPlugin({
-                compress: {
-                    warnings: false,
-                    screw_ie8: true
-                }
-            })
-        );
+        // plugins.push(
+        //     new webpack.LoaderOptionsPlugin({
+        //         minimize: true,
+        //         debug: false
+        //     }),
+        //     new webpack.optimize.UglifyJsPlugin({
+        //         compress: {
+        //             warnings: false,
+        //             screw_ie8: true
+        //         }
+        //     })
+        // );
     } else {
         plugins.push(
             new webpack.HotModuleReplacementPlugin()
         );
     }
 
-    plugins.push(new HtmlWebpackPlugin({
-        template: 'index.html',
-        cache: true,
-        hash: true
-    }), new OpenBrowserPlugin({ 
-        url: 'http://localhost:8015' 
-    }));
+  //   plugins.push(new HtmlWebpackPlugin({
+  //       template: 'index.html',
+  //       cache: true,
+  //       hash: true
+  //   }),
+  //    new OpenBrowserPlugin({ 
+  //       url: 'http://localhost:8015' 
+  //   })
+  // );
 
     return {
+      mode: 'development',
         cache: true,
         devtool: isProd ? 'source-map' : 'cheap-module-source-map',
         context: sourcePath,
@@ -140,7 +147,7 @@ module.exports = function (env) {
             historyApiFallback: true,
             host: '0.0.0.0',
             disableHostCheck: true,
-            port: 8015,
+            port: port,
             compress: isProd,
             inline: !isProd,
             hot: !isProd,
