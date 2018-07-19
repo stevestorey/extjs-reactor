@@ -6,10 +6,6 @@ import App from './App'
 
 let viewport;
 
-//verif this is needed
-Ext.require([
-  'Ext.layout.container.Fit'
-]);
 import {ExtReact} from '@extjs/ext-react';
 const render = (Component, target) => {
     ReactDOM.render(
@@ -21,7 +17,8 @@ const render = (Component, target) => {
         target
     )
 }
-launch(target => render(App, viewport = target),{debug:true});
+
+launch(target => render(App, viewport = target));
 
 if (module.hot) {
     module.hot.accept('./App', () => render(App, viewport));

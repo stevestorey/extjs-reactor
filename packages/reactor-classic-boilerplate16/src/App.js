@@ -5,8 +5,6 @@ import data from './data';
 import { Panel, Grid, Toolbar, TextField } from '@extjs/reactor/classic';
 var REACT_VERSION = ' - React v' + require('react').version
 
-Ext.require('Ext.window.Toast');
-
 export default class App extends Component {
 
   title = "Employees" + REACT_VERSION
@@ -48,7 +46,7 @@ export default class App extends Component {
               <Toolbar dock="top">
                   <TextField emptyText="Search" onChange={(field, value) => this.onSearch(value)} flex={1}/>
               </Toolbar>
-                <Grid
+                <Grid height={600}
                     store={this.store}
                     columns={[
                         { text: 'Name', dataIndex: 'name', flex: 1 },

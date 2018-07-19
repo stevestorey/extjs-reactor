@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const ExtJSReactorWebpackPlugin = require('@extjs/reactor-webpack-plugin');
 const portfinder = require('portfinder');
 
@@ -16,12 +15,14 @@ module.exports = function (env) {
         const isProd = nodeEnv === 'production';
 
         const plugins = [
+            new HtmlWebpackPlugin({
+                template: 'index.html',
+                hash: true
+            }),
             new ExtJSReactorWebpackPlugin({
-                sdk: 'ext', // you need to copy the Ext JS SDK to the root of this package, or you can specify a full path to some other location
-                toolkit: 'modern',
-                theme: 'custom-ext-react-theme',
-                overrides: ['./ext-react/overrides'],
-                packages: [],
+                // sdk: 'ext', // you need to copy the Ext JS SDK to the root of this package, or you can specify a full path to some other location
+                
+                port: port,
                 production: isProd
             }),
             new webpack.EnvironmentPlugin({
@@ -30,41 +31,20 @@ module.exports = function (env) {
             new webpack.NamedModulesPlugin()
         ];
 
-        if (isProd) {
-            plugins.push(
-                new webpack.LoaderOptionsPlugin({
-                    minimize: true,
-                    debug: false
-                }),
-                new webpack.optimize.UglifyJsPlugin({
-                    compress: {
-                        warnings: false,
-                        screw_ie8: true
-                    }
-                })
-            );
-        } else {
+        if (!isProd) {
             plugins.push(
                 new webpack.HotModuleReplacementPlugin()
             );
         }
 
-        plugins.push(new HtmlWebpackPlugin({
-            template: 'index.html',
-            hash: true
-        }), new OpenBrowserPlugin({ 
-            url: `http://localhost:${port}`
-        }));
-
         return {
             devtool: isProd ? 'source-map' : 'cheap-module-source-map',
             context: sourcePath,
-
             entry: {
+                reactor16: ['@extjs/reactor16'],
                 'app': [
                     'babel-polyfill',
-                    'react-hot-loader/patch',
-                    './index.js',
+                    './index.js'
                 ]
             },
 
@@ -104,12 +84,12 @@ module.exports = function (env) {
             devServer: {
                 contentBase: './build',
                 historyApiFallback: true,
+                hot: false,
                 host: '0.0.0.0',
                 disableHostCheck: true,
-                port,
+                port: port,
                 compress: isProd,
                 inline: !isProd,
-                hot: !isProd,
                 stats: {
                     assets: true,
                     children: false,
@@ -119,7 +99,7 @@ module.exports = function (env) {
                     publicPath: false,
                     timings: true,
                     version: false,
-                    warnings: true,
+                    warnings: false,
                     colors: {
                         green: '\u001b[32m'
                     }
