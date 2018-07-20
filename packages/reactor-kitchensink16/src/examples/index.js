@@ -95,6 +95,7 @@ import FileField from './FormFields/FileField/FileField';
 import NumberField from './FormFields/NumberField/NumberField';
 import ContainerField from './FormFields/ContainerField/ContainerField';
 import Validation from './FormFields/Validation/Validation';
+import TimeField from './FormFields/TimeField/TimeField';
 
 import Video from './Video/Video';
 import Audio from './Audio/Audio';
@@ -288,6 +289,7 @@ const root = {
                 { text: 'SpinnerField', component: SpinnerField, layout: 'center', navIcon: 'icon-Forms-SpinnerField' },
                 { text: 'TextAreaField', component: TextAreaField, layout: 'center', navIcon: 'icon-Forms-TextAreaField' },
                 { text: 'TextField', component: TextField, layout: 'center', navIcon: 'icon-Forms-TextField' },
+                { text: 'TimeField', component: TimeField, navIcon: 'icon-form-panel' },
                 { text: 'ToggleField', component: ToggleField, layout: 'center', navIcon: 'icon-Forms-ToggleField' },
                 { text: 'URLField', component: URLField, layout: 'center', navIcon: 'icon-Forms-URLField' },
                 { text: 'Validation', component: Validation, layout: 'auto', navIcon: 'icon-form-validation'}

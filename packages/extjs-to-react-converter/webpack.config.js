@@ -11,53 +11,55 @@ module.exports = function (env) {
     const isProd = nodeEnv === 'production';
 
     const plugins = [
+        new HtmlWebpackPlugin({
+            template: 'index.html',
+            hash: true
+        }),
         new ExtReactWebpackPlugin({
             theme: 'custom-ext-react-theme',
             overrides: ['ext-react/overrides'],
-            production: isProd
+            production: isProd,
+            port: 8080
         }),
         new webpack.EnvironmentPlugin({
             NODE_ENV: nodeEnv
         })
     ];
 
-    if (isProd) {
-        plugins.push(
-            new webpack.LoaderOptionsPlugin({
-                minimize: true,
-                debug: false
-            }),
-            new webpack.optimize.UglifyJsPlugin({
-                compress: {
-                    warnings: false,
-                    screw_ie8: true
-                }
-            })
-        );
-    } else {
+    if (!isProd) {
+    //     plugins.push(
+    //         new webpack.LoaderOptionsPlugin({
+    //             minimize: true,
+    //             debug: false
+    //         }),
+    //         new webpack.optimize.UglifyJsPlugin({
+    //             compress: {
+    //                 warnings: false,
+    //                 screw_ie8: true
+    //             }
+    //         })
+    //     );
+    // } else {
         plugins.push(
             new webpack.HotModuleReplacementPlugin()
         );
     }
 
-    plugins.push(new HtmlWebpackPlugin({
-        template: 'index.html',
-        hash: true
-    }), new OpenBrowserPlugin({ 
-        url: 'http://localhost:8080' 
-    }));
-
     return {
         devtool: isProd ? 'source-map' : 'cheap-module-source-map',
         context: sourcePath,
 
-        entry: [
-            './index.js'
-        ],
+        entry: {
+            reactor16: ['@extjs/reactor16'],
+            'app': [
+                'babel-polyfill',
+                './index.js'
+            ]
+        },
 
         output: {
             path: path.join(__dirname, 'build'),
-            filename: 'bundle.js',
+            filename: '[name].js',
         },
 
         module: {
