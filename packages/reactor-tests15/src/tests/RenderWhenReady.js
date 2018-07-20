@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { renderWhenReady } from '@extjs/reactor15'
+import { renderWhenReady } from '@extjs/reactor'
 import { Button } from '@extjs/ext-react'
 
 class App extends Component {

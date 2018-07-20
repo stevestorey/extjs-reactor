@@ -13,8 +13,13 @@ module.exports = function (env) {
     const local = env && env.local;
 
     const plugins = [
+        new HtmlWebpackPlugin({
+            template: 'index.html',
+            hash: true
+        }),
         new ExtJSReactorWebpackPlugin({
-            sdk: local ? 'ext' : undefined,
+            // sdk: local ? 'ext' : undefined,
+            port: port,
             packages: local ? ['reactor'] : undefined,
             production: isProd
         }),
@@ -27,44 +32,28 @@ module.exports = function (env) {
         }])
     ];
 
-    if (isProd) {
-        plugins.push(
-            new webpack.LoaderOptionsPlugin({
-                minimize: true,
-                debug: false
-            }),
-            new webpack.optimize.UglifyJsPlugin({
-                compress: {
-                    warnings: false,
-                    screw_ie8: true
-                }
-            })
-        );
-    } else {
+    if (!isProd) {
         plugins.push(
             new webpack.HotModuleReplacementPlugin()
         );
     }
-
-    plugins.push(new HtmlWebpackPlugin({
-        template: 'index.html',
-        hash: true
-    }), new OpenBrowserPlugin({ 
-        url: `http://localhost:${port}`
-    }));
 
     return {
         
         devtool: isProd ? 'source-map' : 'cheap-module-source-map',
         context: sourcePath,
 
-        entry: [
-            './index.js'
-        ],
+        entry: {
+            reactor16: ['@extjs/reactor16'],
+            'app': [
+                'babel-polyfill',
+                './index.js'
+            ]
+        },
 
         output: {
             path: path.join(__dirname, 'build'),
-            filename: 'bundle.js'
+            filename: '[name].js'
         },
 
         module: {
@@ -105,12 +94,12 @@ module.exports = function (env) {
         devServer: {
             contentBase: './build',
             historyApiFallback: true,
+            hot: false,
             host: '0.0.0.0',
             disableHostCheck: true,
-            port,
+            port: port,
             compress: isProd,
             inline: !isProd,
-            hot: !isProd,
             stats: {
                 assets: true,
                 children: false,
@@ -120,7 +109,7 @@ module.exports = function (env) {
                 publicPath: false,
                 timings: true,
                 version: false,
-                warnings: true,
+                warnings: false,
                 colors: {
                     green: '\u001b[32m'
                 }
