@@ -20,7 +20,7 @@ catch(ex) {
 
 
 module.exports = function(babel) {
-  if (fs != undefined) {
+  if (fs != undefined && fs != {} && typeof fs.existsSync === 'function') {
     var pkg = (fs.existsSync('package.json') && JSON.parse(fs.readFileSync('package.json', 'utf-8')) || {});
     var reactEntry = pkg.dependencies.react
     var is16 = reactEntry.includes("16");
