@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { SliderField, Gauge, FormPanel, Container} from '@extjs/ext-react';
+import { SliderField, Gauge, FormPanel, ToggleField, Container} from '@extjs/ext-react';
 
 Ext.require('Ext.ux.gauge.needle.Diamond');
 Ext.require('Ext.ux.gauge.needle.Arrow');
@@ -14,18 +14,35 @@ export default class NeedleGaugeExample extends Component {
         this.state = {
             value: 30
         }
+        this.liveUpdate=false;
     }
 
     updateGauges(slider, value) {
-        this.setState({ value })
+            this.setState({ value })
+    }
+
+    changeInfo(slider, info1, info2, newVal, oldVal) {
+        if(this.liveUpdate){
+            var val = newVal[newVal.length-1];
+            this.setState({ value: val });
+        }
+    }
+
+    updateToggle(toggle, value) {
+        this.liveUpdate=value;
     }
 
     render() {
-        const { value } = this.state;
+        const { value } = this.state,
+            { liveUpdate } = this.liveUpdate;
+
 
         return (
             <FormPanel shadow layout="vbox" width={850}>
-                <SliderField label="Value" width={350} onChange={this.updateGauges.bind(this)} value={value}/>
+                <Container margin={'10 0 10 0'} flex={1} width={'100%'} layout="hbox">
+                    <SliderField onDrag={this.changeInfo.bind(this)} width={"80%"} onChange={this.updateGauges.bind(this)} value={value} liveUpdate={liveUpdate}/>
+                    <ToggleField onChange={this.updateToggle.bind(this)} label="Live" padding="0 0 0 20" value={liveUpdate} layout={{align:'center'}} labelAlign="right" width={"20%"} tooltip="Live Update Value Change"/>
+                </Container>
                 <Container 
                     layout={{
                         type: 'hbox',
