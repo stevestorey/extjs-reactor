@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import { SliderField, Gauge, FormPanel, ToggleField, Container } from '@extjs/ext-react';
+import './styles.css';
 
 export default class DefaultGaugeExample extends Component {
 
