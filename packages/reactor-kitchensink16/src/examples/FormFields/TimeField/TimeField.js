@@ -50,7 +50,7 @@ export default class TimeFieldExample extends Component {
                         }
                     }}
                 >
-                    <FieldSet ref="personal" title="Personal Info" defaults={{labelAlign: "placeholder"}}>
+                    <FieldSet ref="personal" title="Time Field Example" defaults={{labelAlign: "placeholder"}}>
                         <TimeField required label="Time Field" value="3:42 PM" name="time" disabled={disabled}/>
                     </FieldSet>
                     <Toolbar shadow={false} docked="bottom" layout={{ type: 'hbox', pack: 'right' }}>
