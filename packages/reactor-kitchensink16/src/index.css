@@ -15,3 +15,7 @@ code {
   padding: 20px;
   font-size: 15px;
 }
+
+.x-button-fab .x-inner-el .x-body-el{
+  margin:0px;
+}

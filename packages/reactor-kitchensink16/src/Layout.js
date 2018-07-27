@@ -8,6 +8,9 @@ import NavView from './NavView';
 import Files from './Files';
 import * as actions from './actions';
 import Breadcrumbs from './Breadcrumbs';
+
+import './index.css';
+
 var REACT_VERSION = require('react').version
 
 Ext.require('Ext.panel.Collapser');
