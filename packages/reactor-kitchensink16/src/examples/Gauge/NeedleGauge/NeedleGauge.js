@@ -39,7 +39,10 @@ export default class NeedleGaugeExample extends Component {
 
         return (
             <FormPanel shadow layout="vbox" width={850}>
-                <Container margin={'10 0 10 0'} flex={1} width={'100%'} layout="hbox">
+                <Container margin={'10 0 10 0'} flex={1} width={'100%'} layout={{
+                   type: 'hbox',
+                   align: 'stretch' 
+                }} minHeight={40}>
                     <SliderField onDrag={this.changeInfo.bind(this)} width={"80%"} onChange={this.updateGauges.bind(this)} value={value} liveUpdate={liveUpdate}/>
                     <ToggleField onChange={this.updateToggle.bind(this)} label="Live" padding="0 0 0 20" value={liveUpdate} layout={{align:'center'}} labelAlign="right" width={"20%"} tooltip="Live Update Value Change"/>
                 </Container>
