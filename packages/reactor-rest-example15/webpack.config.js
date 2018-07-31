@@ -7,12 +7,13 @@ const ExtJSReactorWebpackPlugin = require('@extjs/reactor-webpack-plugin');
 const sourcePath = path.join(__dirname, './src');
 
 module.exports = function (env) {
+    const port = 8082;
     const nodeEnv = env && env.prod ? 'production' : 'development';
     const isProd = nodeEnv === 'production';
 
     const plugins = [
         new ExtJSReactorWebpackPlugin({
-            port: 8082,
+            port: port,
             theme: 'theme-rest-example',
             production: isProd
         }),
@@ -43,8 +44,6 @@ module.exports = function (env) {
     plugins.push(new HtmlWebpackPlugin({
         template: 'index.html',
         hash: true
-    }), new OpenBrowserPlugin({ 
-        url: 'http://localhost:8082' 
     }));
 
     return {
@@ -93,6 +92,30 @@ module.exports = function (env) {
             colors: {
                 green: '\u001b[32m',
             }
+        },
+        devServer: {
+            contentBase: './build',
+            historyApiFallback: true,
+            host: '0.0.0.0',
+            disableHostCheck: true,
+            port: port,
+            compress: isProd,
+            inline: !isProd,
+            hot: !isProd,
+            stats: {
+                assets: true,
+                children: false,
+                chunks: false,
+                hash: false,
+                modules: false,
+                publicPath: false,
+                timings: true,
+                version: false,
+                warnings: true,
+                colors: {
+                    green: '\u001b[32m'
+                }
+            },
         }
     };
 };

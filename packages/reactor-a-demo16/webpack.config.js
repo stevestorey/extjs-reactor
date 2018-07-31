@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+// const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const ExtReactWebpackPlugin = require('@extjs/reactor-webpack-plugin');
 const portfinder = require('portfinder');
 
@@ -15,16 +15,13 @@ module.exports = function (env) {
         const isProd = nodeEnv === 'production';
 
         return {
-//          mode: 'development',
+         mode: 'development',
           devtool: isProd ? 'source-map' : 'cheap-module-source-map',
             context: sourcePath,
 
             entry: {
-                'app': [
-                    'babel-polyfill',
-                    'react-hot-loader/patch',
-                    './index.js',
-                ]
+                reactify: ['@extjs/reactor16'],
+                app: './index.js'
             },
 
             output: {
@@ -55,7 +52,8 @@ module.exports = function (env) {
             plugins: [
               new ExtReactWebpackPlugin({
                 asynchronous: false,
-                production: isProd
+                production: isProd,
+                port: port
               }),
               new webpack.EnvironmentPlugin({
                   NODE_ENV: nodeEnv
@@ -71,10 +69,10 @@ module.exports = function (env) {
               new HtmlWebpackPlugin({
                 template: 'index.html',
                 hash: true
-              }), 
-              new OpenBrowserPlugin({ 
-                url: `http://localhost:${port}`
               })
+            //   new OpenBrowserPlugin({ 
+            //     url: `http://localhost:${port}`
+            //   })
              ],
 
             stats: {
