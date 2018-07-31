@@ -19,7 +19,7 @@
 	"dependencies": {
 		"@extjs/ext-react": "~6.6.0",
 		"@extjs/ext-react-modern": "~6.6.0",
-		"@extjs/ext-react-theme-material": "~6.6.0",
+		"@extjs/ext-react-modern-theme-material": "~6.6.0",
 		"@extjs/ext-react-calendar": "^6.5.1",
 		"@extjs/ext-react-d3": "^6.5.1",
 		"@extjs/reactor": "^1.1.2",
