@@ -34,14 +34,14 @@ export default class BigDataGridExample extends Component {
     //ref={grid => this.grid = grid}
 
     return (
-      <Container layout="fit" shadow>
+      <Container name="baseContainer" layout="fit" shadow>
           <ActionSheet displayed={showExportSheet}>
-              <Button handler={this.exportToXlsx} text="Excel xlsx"/>
-              <Button handler={this.exportToXml} text="Excel xml"/>
-              <Button handler={this.exportToCSV} text="CSV"/>
-              <Button handler={this.exportToTSV} text="TSV"/>
-              <Button handler={this.exportToHtml} text="HTML"/>
-              <Button handler={this.onCancelExport} text="Cancel"/>
+              <Button handler={this.exportToXlsx.bind(this)} text="Excel xlsx"/>
+              <Button handler={this.exportToXml.bind(this)} text="Excel xml"/>
+              <Button handler={this.exportToCSV.bind(this)} text="CSV"/>
+              <Button handler={this.exportToTSV.bind(this)} text="TSV"/>
+              <Button handler={this.exportToHtml.bind(this)} text="HTML"/>
+              <Button handler={this.onCancelExport.bind(this)} text="Cancel"/>
           </ActionSheet>
         <Grid
           title="Big Data Grid"        
@@ -316,48 +316,53 @@ export default class BigDataGridExample extends Component {
     this.setState({ showExportSheet: false })
   }
 
-  exportToXlsx = () => {
+  exportToXlsx = (button) => {
+    var grid=button.up('container[name=baseContainer]').down('grid');
     this.doExport({
       type: 'excel07',
       title: 'Grid Export Demo',
       fileName: 'GridExport.xlsx',
       includeGroups: true,
       includeSummary: true
-    });
+    }, grid);
   }
 
-  exportToXml = () => {
+  exportToXml = (button) => {
+    var grid=button.up('container[name=baseContainer]').down('grid');
     this.doExport({
       type: 'excel03',
       title: 'Grid Export Demo',
       fileName: 'GridExport.xml',
       includeGroups: true,
       includeSummary: true
-    });
+    }, grid);
   }
 
-  exportToCSV = () => {
+  exportToCSV = (button) => {
+    var grid=button.up('container[name=baseContainer]').down('grid');
     this.doExport({
       type: 'csv',
       title: 'Grid Export Demo',
       fileName: 'GridExport.csv'
-    });
+    }, grid);
   }
 
-  exportToTSV = () => {
-      this.doExport({
-        type: 'tsv',
-        title: 'Grid Export Demo',
-        fileName: 'GridExport.tsv'
-    });
+  exportToTSV = (button) => {
+    var grid=button.up('container[name=baseContainer]').down('grid');
+    this.doExport({
+      type: 'tsv',
+      title: 'Grid Export Demo',
+      fileName: 'GridExport.tsv'
+    }, grid);
   }
 
-  exportToHtml = () => {
-      this.doExport({
+  exportToHtml = (button) => {
+    var grid=button.up('container[name=baseContainer]').down('grid');
+    this.doExport({
         type: 'html',
         title: 'Grid Export Demo',
         fileName: 'GridExport.html'
-    });
+    }, grid);
   }
 
   onVerify = (button) => {
@@ -403,9 +408,9 @@ export default class BigDataGridExample extends Component {
     return Ext.util.Format.usMoney(value);
   }
 
-  doExport(config) {
+  doExport(config, grid) {
     this.setState({ showExportSheet: false });
-    this.grid.saveDocumentAs(config);
+    grid.saveDocumentAs(config);
   }
 
   renderRating = (value, record) => {
