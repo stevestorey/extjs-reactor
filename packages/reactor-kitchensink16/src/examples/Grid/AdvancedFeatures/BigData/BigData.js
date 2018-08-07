@@ -357,11 +357,12 @@ export default class BigDataGridExample extends Component {
   }
 
   exportToHtml = (button) => {
-      this.doExport({
+    var grid=button.up('container[name=baseContainer]').down('grid');
+    this.doExport({
         type: 'html',
         title: 'Grid Export Demo',
         fileName: 'GridExport.html'
-    });
+    }, grid);
   }
 
   onVerify = (button) => {
