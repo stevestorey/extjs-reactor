@@ -116,43 +116,34 @@ export default class BigDataGridExample extends Component {
               dataIndex="verified"
               headerCheckbox
           />
+          <Column text="Ratings">
+                        <NumberColumn
+                            text="Avg"
+                            dataIndex="averageRating"
+                            width="75"
+                            summary="average"
+                            renderer={this.renderRating}
+                            cell={{
+                                cls:'big-data-ratings-cell'
+                            }}
+                        />
+                        <Column
+                            text="All"
+                            dataIndex="rating"
+                            ignoreExport
+                            cell= {{
+                              xtype: 'widgetcell',
+                              forceWidth: true,
+                              widget: {
+                                xtype: 'sparklineline',
+                                tipTpl:'Price: {y:number("0.00")}'
+                              }
+                            }}
+                        >
+                            
+                        </Column>
 
-          <Column text="Ratings"
-            columns= {
-              [
-                {
-                  text: 'Avg',
-                  xtype: 'numbercolumn',
-                  dataIndex: 'averageRating',
-                  renderer : this.renderRating,
-                  summary: 'average',
-                  width: 75,
-                  cell: {
-                    cls: 'big-data-ratings-cell'
-                  },
-                  exportStyle: {
-                    format: 'Standard',
-                    alignment: {
-                      horizontal: 'Right'
-                    }
-                  }
-              }, 
-              {
-                text: 'All',
-                dataIndex: 'rating',
-                ignoreExport: true,
-                cell: {
-                  xtype: 'widgetcell',
-                  forceWidth: true,
-                  widget: {
-                    xtype: 'sparklineline',
-                    tipTpl:'Price: {y:number("0.00")}'
-                  }
-                }
-              }
-            ]
-          }
-          /> 
+                        </Column>
           <DateColumn
               text="Date of Birth"
               dataIndex="dob"

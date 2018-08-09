@@ -1123,7 +1123,7 @@ Ext.ux.ajax.SimManager.register({
             salary: 1000000,
             forename: "Nige",
             surname: "White",
-            verified: true,
+            verified: false,
             email: "nige.white@sentcha.com",
             department: "Accounting",
             dob: "19580226",
