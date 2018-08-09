@@ -19,3 +19,12 @@ code {
 .x-button-fab .x-inner-el .x-body-el{
   margin:0px;
 }
+
+.x-menu-body-el .x-menuitem:not(.x-indented):not(.x-has-left-icon) .x-text-el, .x-menu-body-el.x-has-separator > .x-menuitem .x-text-el {
+  margin: 0px 16px 0px 0px;
+}
+
+.x-left-icon-wrap-el.x-icon-wrap-el {
+  display: flex;
+  visibility: hidden;
+}
