@@ -1,4 +1,10 @@
-# Ext JS Reactor
+# [Deprecated] - Ext JS Reactor 
+
+## New Repository
+
+This repository code has been moved to: https://github.com/sencha/ext-react
+
+## about 
 
 The @extjs/reactor package makes it easy to use [Ext JS](https://www.sencha.com/products/extjs) components in your [React](https://facebook.github.io/react) app. 
 
