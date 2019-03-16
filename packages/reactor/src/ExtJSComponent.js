@@ -160,8 +160,10 @@ export default class ExtJSComponent extends Component {
 
             // remember the parent and position in parent for dangerouslyReplaceNodeWithMarkup
             // this not needed in fiber
-            this.el._extIndexInParent = indexInParent;
-            this.el._extParent = parentCmp;
+            if (this.el) {
+                this.el._extIndexInParent = indexInParent;
+                this.el._extParent = parentCmp;
+            }
         }
     }
 
