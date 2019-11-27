@@ -88,7 +88,9 @@ module.exports = function extractFromJSX(js, compilation, module) {
                     // example: const Grid = reactify('grid');
                     const varName = node.id.name;
                     const arg = node.init.arguments && node.init.arguments[0] && node.init.arguments[0];
-                    if (varName && arg) addType(varName, arg);
+                    if (varName && arg) {
+                        addType(varName, arg);
+                    }
                 }
             }
 

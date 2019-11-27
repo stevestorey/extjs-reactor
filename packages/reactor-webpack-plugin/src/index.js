@@ -159,7 +159,7 @@ module.exports = class ReactExtJSWebpackPlugin {
 
         // once all modules are processed, create the optimized ExtReact build.
         compiler.plugin('emit', (compilation, callback) => {
-            const modules = compilation.chunks.reduce((a, b) => a.concat(b.modules), []);
+            const modules = compilation.chunks.reduce((a, b) => a.concat(b.getModules()), []);
             const build = this.builds[Object.keys(this.builds)[0]];
 
             let outputPath = path.join(compiler.outputPath, this.output);
@@ -277,8 +277,8 @@ module.exports = class ReactExtJSWebpackPlugin {
      */
     _getSenchCmdPath() {
         try {
-            // use @extjs/sencha-cmd from node_modules
-            return require('@extjs/sencha-cmd');
+            // use @sencha/cmd from node_modules
+            return require('@sencha/cmd');
         } catch (e) {
             // attempt to use globally installed Sencha Cmd
             return 'sencha';
@@ -333,11 +333,24 @@ module.exports = class ReactExtJSWebpackPlugin {
                     statements.push('Ext.require("Ext.reactor.RendererCell")');
                 }
 
+                let hitAnyDeps = false;
                 for (let module of modules) {
+                    // console.log("Processing resource ", module.resource || module)
                     const deps = this.dependencies[module.resource];
-                    if (deps) statements = statements.concat(deps);
+                    if (deps) {
+                        statements = statements.concat(deps);
+                        hitAnyDeps = true;
+                    }
                 }
-
+                if (!hitAnyDeps) {
+                    // Then we should assume something "wacky" has happened in the module
+                    // processing with respect to the tree shaking, and we'll add all the
+                    // dependencies
+                    console.log("\nWARNING: Adding all ExtJS Reactor dependencies as shaking removed everything")
+                    for (var resource in this.dependencies) {
+                        statements = statements.concat(this.dependencies[resource])
+                    }
+                }                    
                 js = statements.join(';\n');
             } else {
                 js = 'Ext.require("Ext.*")';
