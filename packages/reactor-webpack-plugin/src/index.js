@@ -169,14 +169,6 @@ module.exports = class ReactExtJSWebpackPlugin {
                 outputPath = path.join(compiler.options.devServer.contentBase, outputPath);
             }
 
-            // the following is needed for html-webpack-plugin to include <script> and <link> tags for ExtReact
-            const jsChunk = compilation.addChunk(`${this.output}-js`);
-
-            jsChunk.hasRuntime = jsChunk.isInitial = () => true;
-            jsChunk.files.push(path.join(this.output, 'ext.js'));
-            jsChunk.files.push(path.join(this.output, 'ext.css'));
-            jsChunk.id = -2; // this forces html-webpack-plugin to include ext.js first
-
             if (this.asynchronous) callback();
 
             this._buildExtBundle('ext', modules, outputPath, build)
@@ -195,6 +187,17 @@ module.exports = class ReactExtJSWebpackPlugin {
                     compilation.errors.push(new Error('[@extjs/reactor-webpack-plugin]: ' + e.toString()));
                     !this.asynchronous && callback();
                 });
+
+            // the following is needed for html-webpack-plugin to include <script> and <link> tags for ExtReact
+            compilation.hooks.htmlWebpackPluginBeforeHtmlGeneration.tap(`ext-html-generation`,(data) => {
+                const path = require('path')
+                const plugin = data.plugin;
+                var jsPath = path.join(this.output, 'ext.js')
+                var cssPath = path.join(this.output, 'ext.css')
+                data.assets.js.unshift(plugin.appendHash(jsPath, plugin.options.hash ? compilation.hash : undefined))
+                data.assets.css.unshift(plugin.appendHash(cssPath, plugin.options.hash ? compilation.hash : undefined))
+                // log(app, `Adding ${jsPath} and ${cssPath} to index.html`)
+            })
         });
     }
 
